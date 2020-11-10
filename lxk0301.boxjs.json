@@ -3,7 +3,7 @@
   "name": "lxk0301脚本订阅",
   "author": "@lxk0301",
   "icon": "https://avatars0.githubusercontent.com/u/21308593?s=52&v=4",
-  "repo": "https://github.com/lxk0301/scripts/",
+  "repo": "https://github.com/lxk0301/jd_scripts/",
   "apps": [
     {
       "id": "JD_Cookies",
@@ -133,8 +133,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdnc_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png"
@@ -251,8 +251,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdmc_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdmc.png"
@@ -337,8 +337,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_plantBean.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdzd_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png"
@@ -411,8 +411,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
@@ -457,8 +457,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_reward.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
@@ -522,8 +522,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
@@ -550,8 +550,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png"
@@ -571,8 +571,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdjs_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png"
@@ -623,8 +623,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
@@ -730,11 +730,11 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
+      "repo": "https://github.com/lxk0301/jd_scripts",
       "scripts":[
         {
           "name" : "京小超",
-          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js"
+          "script" : "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js"
         }
       ],
       "icons": [
@@ -766,11 +766,11 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
+      "repo": "https://github.com/lxk0301/jd_scripts",
       "scripts": [
         {
           "name" : "京小超兑换奖品",
-          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js"
+          "script" : "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js"
         }
       ],
       "icons": [
@@ -818,8 +818,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/webhook.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/webhook.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/webhooks_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/webhooks.png"
@@ -857,8 +857,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/xmSports.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/xmyd_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png"
