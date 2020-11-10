@@ -4,14 +4,8 @@
 //此处填写京东账号cookie。
 //注：github action用户cookie填写到Settings-Secrets里面，新增JD_COOKIE，多个账号的cookie使用`&`隔开或者换行
 let CookieJDs = [
-  'pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;pt_key=AAJfiEZzAEDRcGffuD7SjMtkggHav_tLEGQKrHATc0-csk8i8YmsFG61dBic6NcF_nzF1KafS8Qk6ifcsjZlccpY4Rol4A6M;',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
-  'pt_key=AAJfqJhcADACx6FPR_HewSd5qCm4U6lFrP3ReM_8DVmk2eM7I9F56fchBgR8-c4OUksXLJvmCJI;pt_pin=jd_6cd93e613b0e5;',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
-  'pt_key=AAJfjkvZADB1lVyfAmTB_If3sJx1mg-Me8lkuh5abTAdKyf49gjluPmpk4SHM-XPr8uHK9YfLgk;pt_pin=jd_45a6b5953b15b;',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
-  'pt_key=AAJfgq5SADBPKbwp5VJnCH-W6EmlrD--P602-NGWVGqQXxw4dYeu42B9VYq6XanrCHOsa7_HSuU;pt_pin=jd_704a2e5e28a66;',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
-  'pt_key=AAJfjE-CADDTKbmisaX-EPer8Ybbasq1GuhYteIiL59Hka9tLLm-RilSF9Viprwqmj9x2jWcMG0;pt_pin=zooooo58;',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
-  'pt_key=AAJfkAlBADBm3nXsIQiNrFmv2gqs0EBTiKBcqglVoA6B22Shhbdx7Pf6275G7ouuZNk7dhgcXfc;pt_pin=jd_5851f32d4a083;',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
-
-  'pt_key=AAJfn9QgADC_R9SmgqVGq1RY2612YbvEOx5hk7_3yRLnfULIyQ-VXVo5DXa4ff6BpqnvN7Y4dVA;pt_pin=jd_479264ad454f0;',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
+  '',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
+  '',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
 ]
 // 判断github action里面是否有京东ck
 if (process.env.JD_COOKIE) {
