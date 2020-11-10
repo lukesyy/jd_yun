@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-05 18:54:37
+ * @Last Modified time: 2020-11-10 18:54:37
  */
 /*
 京小超(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
@@ -353,10 +353,16 @@ async function businessCircleActivity() {
         const receivedPkTeamPrize = await smtg_receivedPkTeamPrize();
         console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}`)
         if (receivedPkTeamPrize.data.bizCode === 0) {
-          const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
-          message += `【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
-          if ($.isNode()) {
-            await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+          if (receivedPkTeamPrize.data.result.pkResult === 1) {
+            const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
+            message += `【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
+            if ($.isNode()) {
+              await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈队伍】PK获胜\n【奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+            }
+          } else if (receivedPkTeamPrize.data.result.pkResult === 2) {
+            if ($.isNode()) {
+              await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈队伍】PK失败`)
+            }
           }
         }
       } else if (prizeInfo.pkPrizeStatus === 1) {
