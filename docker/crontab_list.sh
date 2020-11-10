@@ -24,3 +24,4 @@
 0 2 * * * node /scripts/jd_bean_change.js >> /scripts/logs/jd_bean_change.log 2>&1
 11 1 * * * node /scripts/jd_lotteryMachine.js >> /scripts/logs/jd_lotteryMachine.log 2>&1
 11 9 * * * node /scripts/jd_rankingList.js >> /scripts/logs/jd_rankingList.log 2>&1
+18 */3 * * * node /scripts/jd_daily_egg.js >> /scripts/jd_daily_egg.log 2>&1
