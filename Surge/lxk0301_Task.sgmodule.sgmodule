@@ -1,0 +1,33 @@
+#!name=lxk0301 iOS Tasks Module
+#!desc=iOS Tasks 模块配置
+#!system=ios
+
+# Task模块配置 By lxk0301
+# GitHub主页(https://github.com/lxk0301/scripts)
+# TG讨论组 (https://t.me/JD_fruit_pet)
+# TG通知频道 (https://t.me/jdfruit)
+# Surge的Task脚本模块地址: https://raw.githubusercontent.com/lxk0301/scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule
+
+[Script]
+
+cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js,timeout=530, wake-system=1, tag=东东农场
+cron "20 7-19/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js,timeout=530, wake-system=1, tag=东东萌宠
+cron "10 7-21/2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js,timeout=630, wake-system=1, tag=京东种豆得豆
+cron "15 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,timeout=330, wake-system=1, tag=宠汪汪
+cron "12 */1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_feedPets.js,timeout=30, wake-system=1, tag=宠汪汪喂食
+cron "0 0,6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js,timeout=420, wake-system=1, tag=宠汪汪偷好友积分与狗粮
+cron "1 0,8,12,16 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js,timeout=30, wake-system=1, tag=宠汪汪积分兑换奖品
+cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js,timeout=130, wake-system=1, tag=京东天天加速
+cron "15 */5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js,timeout=130, wake-system=1, tag=京东摇钱树
+cron "5 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_club_lottery.js, timeout=50, wake-system=1, tag=摇京豆
+cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js,timeout=530, wake-system=1, tag=京小超
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js,timeout=30, wake-system=1, tag=京小超领蓝币(兑换京豆)
+cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js,timeout=250, wake-system=1, tag=取关京东店铺商品
+cron "10 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_shop.js,timeout=30, wake-system=1, tag=进店领豆
+cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_818.js, timeout=150, wake-system=1, tag=京东手机狂欢城
+cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js, timeout=30, wake-system=1, tag=宠汪汪邀请助力与赛跑助力
+cron "1 1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js, wake-system=1, tag=京东全民开红包
+cron "0 0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js, timeout=550, wake-system=1, tag=京东星推官
+cron "2 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_change.js, timeout=650, wake-system=1, tag=京豆变动通知
+cron "20 * * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_collectProduceScore.js, wake-system=1, tag=京东全民营业领金币
+

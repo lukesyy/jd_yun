@@ -1,0 +1,33 @@
+{
+  "id": "iepngs.app.sub",
+  "name": "iepngs脚本订阅(自用，非作者本人的订阅)",
+  "author": "@iepngs",
+  "icon": "https://avatars2.githubusercontent.com/u/10695382?s=460&u=efc97d623c7c21170e6794f367fa80a97253f87b&v=4",
+  "repo": "https://github.com/iepngs/Script",
+  "apps": [
+    {
+      "id": "lxhealth",
+      "name": "乐心健康",
+      "keys": [
+        "lxhealthCookie",
+        "lxhealthStep"
+      ],
+      "settings": [
+        {
+          "id": "lxhealthStep",
+          "name": "运动步数",
+          "val": "",
+          "type": "text",
+          "desc": "修改乐心健康运动步数"
+        }
+      ],
+      "author": "@iepngs",
+      "repo": "https://github.com/iepngs/Script",
+      "script": "https://raw.githubusercontent.com/iepngs/Script/master/lxhealth/index.js",
+      "icons": [
+        "https://avatars2.githubusercontent.com/u/10695382?s=460&u=efc97d623c7c21170e6794f367fa80a97253f87b&v=4",
+        "https://avatars2.githubusercontent.com/u/10695382?s=460&u=efc97d623c7c21170e6794f367fa80a97253f87b&v=4"
+      ]
+    }
+  ]
+}
