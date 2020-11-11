@@ -57,3 +57,5 @@
 11 9 * * * node /scripts/jd_rankingList.js >> /scripts/logs/jd_rankingList.log 2>&1
 # 天天提鹅
 18 */3 * * * node /scripts/jd_daily_egg.js >> /scripts/logs/jd_daily_egg.log 2>&1
+# 金融养猪
+12 13 * * * node /scripts/jd_pigPet.js >> /scripts/logs/jd_pigPet.log 2>&1
