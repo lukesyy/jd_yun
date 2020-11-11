@@ -24,10 +24,10 @@ cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_
 cron "0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js,timeout=30, wake-system=1, tag=京小超领蓝币(兑换京豆)
 cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js,timeout=250, wake-system=1, tag=取关京东店铺商品
 cron "10 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_shop.js,timeout=30, wake-system=1, tag=进店领豆
-cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_818.js, timeout=150, wake-system=1, tag=京东手机狂欢城
+# cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_818.js, timeout=150, wake-system=1, tag=京东手机狂欢城
 cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, timeout=30, wake-system=1, tag=宠汪汪邀请助力与赛跑助力
 cron "1 1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_redPacket.js, wake-system=1, tag=京东全民开红包
-cron "0 0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js, timeout=550, wake-system=1, tag=京东星推官
+# cron "0 0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js, timeout=550, wake-system=1, tag=京东星推官
 cron "2 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js, timeout=650, wake-system=1, tag=京豆变动通知
-cron "20 * * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_collectProduceScore.js, wake-system=1, tag=京东全民营业领金币
+# cron "20 * * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_collectProduceScore.js, wake-system=1, tag=京东全民营业领金币
 
