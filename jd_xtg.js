@@ -7,7 +7,7 @@
 /**
  星推官脚本 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js
  星推官活动地址：https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html
- 活动时间：2020年10月21日 00:00:00-2020年11月12日 23:59:59
+ 活动时间：2020年10月21日 00:00:00-2020年11月11日 23:59:59
  京豆先到先得！！！！！！！！！！！
  出现任务做完没领取的情况，就再运行一次脚本
  能做完所有的任务，包括自动抽奖,脚本会给内置的shareId助力
@@ -25,7 +25,7 @@
  京东星推官 = type=cron,cronexp=2 0 * * *,wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js
  */
 const $ = new Env('京东星推官');
-const activeEndTime = '2020/11/12 23:59:59+08:00';//活动结束时间
+const activeEndTime = '2020/11/11 23:59:59+08:00';//活动结束时间
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
