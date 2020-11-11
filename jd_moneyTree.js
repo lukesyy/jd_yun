@@ -119,7 +119,7 @@ function user_info() {
                 userInfo = res.resultData.data;
                 // userInfo.realName = null;
                 if (userInfo.realName) {
-                  console.log(`助力码sharePin为：：${userInfo.sharePin}`);
+                  // console.log(`助力码sharePin为：：${userInfo.sharePin}`);
                   $.treeMsgTime = userInfo.sharePin;
                   if ($.getdata($.treeMsgTime)) {
                     if ($.getdata($.treeMsgTime) >= Notice) {

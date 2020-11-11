@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-10 18:54:37
+ * @Last Modified time: 2020-11-11 18:54:37
  */
 /*
 京小超(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
@@ -1339,7 +1339,6 @@ function requireConfig() {
     notify = $.isNode() ? require('./sendNotify') : '';
     //Node.js用户请在jdCookie.js处填写京东ck;
     const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-    const jdShareCodes = $.isNode() ? require('./jdSuperMarketShareCodes.js') : '';
     //IOS等用户直接用NobyDa的jd cookie
     if ($.isNode()) {
       Object.keys(jdCookieNode).forEach((item) => {
@@ -1349,47 +1348,10 @@ function requireConfig() {
       })
       if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
     } else {
-      cookiesArr.push($.getdata('CookieJD'));
-      cookiesArr.push($.getdata('CookieJD2'));
+      cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')])
     }
     console.log(`共${cookiesArr.length}个京东账号\n`);
     console.log(`京小超已改版,目前暂不用助力, 故无助力码`)
-    if ($.isNode()) {
-      Object.keys(jdShareCodes).forEach((item) => {
-        if (jdShareCodes[item]) {
-          jdSuperMarketShareArr.push(jdShareCodes[item])
-        }
-      })
-    } else {
-      const boxShareCodeArr = ['jd_supermarket1', 'jd_supermarket2', 'jd_supermarket3'];
-      const boxShareCodeArr2 = ['jd2_supermarket1', 'jd2_supermarket2', 'jd2_supermarket3'];
-      const isBox1 = boxShareCodeArr.some((item) => {
-        const boxShareCode = $.getdata(item);
-        return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
-      });
-      const isBox2 = boxShareCodeArr2.some((item) => {
-        const boxShareCode = $.getdata(item);
-        return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
-      });
-      if (isBox1) {
-        let temp = [];
-        for (const item of boxShareCodeArr) {
-          if ($.getdata(item)) {
-            temp.push($.getdata(item))
-          }
-        }
-        jdSuperMarketShareArr.push(temp.join('@'));
-      }
-      if (isBox2) {
-        let temp = [];
-        for (const item of boxShareCodeArr2) {
-          if ($.getdata(item)) {
-            temp.push($.getdata(item))
-          }
-        }
-        jdSuperMarketShareArr.push(temp.join('@'));
-      }
-    }
     // console.log(`\n京小超商圈助力码::${JSON.stringify(jdSuperMarketShareArr)}`);
     // console.log(`您提供了${jdSuperMarketShareArr.length}个账号的助力码\n`);
     resolve()
