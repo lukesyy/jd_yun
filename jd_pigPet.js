@@ -1,36 +1,12 @@
 /*
 京东金融养猪猪
+啥也没有， 刚新建一文件， 不小心提交上去了
  */
-/*
-东东萌宠 更新地址： https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js
-更新时间：2020-11-07
-已支持IOS双京东账号,Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
-互助码shareCode请先手动运行脚本查看打印可看到
-一天只能帮助5个人。多出的助力码无效
-
-=================================Quantumultx=========================
-[task_local]
-#东东萌宠
-15 6-18/6 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js, tag=东东萌宠, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdmc.png, enabled=true
-
-=================================Loon===================================
-[Script]
-cron "15 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js,tag=东东萌宠
-
-===================================Surge================================
-东东萌宠 = type=cron,cronexp="15 6-18/6 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js
-
-====================================小火箭=============================
-东东萌宠 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js, cronexpr="15 6-18/6 * * *", timeout=200, enable=true
-
-*/
 const $ = new Env('金融养猪');
 let cookiesArr = [], cookie = '', jdPetShareArr = [], isBox = false, notify, newShareCodes;
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 !(async () => {
-  await requireConfig();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
