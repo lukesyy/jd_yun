@@ -286,7 +286,7 @@ function smtgSign() {
 
 function smtgBeanSign() {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_sign',{“channel”: “1”), async (err, resp, data) => {
+    $.get(taskUrl('smtg_sign',{"channel": "1"}), async (err, resp, data) => {
       try {
         // console.log('ddd----ddd', data)
         if (err) {
