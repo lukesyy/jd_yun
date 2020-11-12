@@ -91,6 +91,7 @@ async function jdSuperMarket() {
   await receiveBlueCoin();//收蓝币（小费）
   await receiveLimitProductBlueCoin();//收限时商品的蓝币
   await smtgSign();//每日签到
+  await smtgBeanSign()//
   await doDailyTask();//做日常任务，分享，关注店铺，
   await help();//商圈助力
   //await smtgQueryPkTask();//做商品PK任务
@@ -283,6 +284,26 @@ function smtgSign() {
   })
 }
 
+function smtgBeanSign() {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_sign',{“channel”: “1”), async (err, resp, data) => {
+      try {
+        // console.log('ddd----ddd', data)
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          //data = JSON.parse(data);
+          console.log(data)
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 
 // 商圈活动
 async function businessCircleActivity() {
