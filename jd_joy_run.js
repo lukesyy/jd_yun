@@ -1,6 +1,6 @@
 /**
  宠汪汪邀请助力与赛跑助力脚本，感谢github@Zero-S1提供帮助
- 更新时间：2020-11-07（宠汪汪助力更新Token的配置正则表达式已改）
+ 更新时间：2020-11-12（宠汪汪助力更新Token的配置正则表达式已改）
 
  token时效很短，几个小时就失效了,闲麻烦的放弃就行
  每天拿到token后，可一次性运行完毕即可。
@@ -14,22 +14,22 @@
  surge
  [Script]
  宠汪汪邀请助力与赛跑助力 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
- 宠汪汪助力更新Token = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=\w+&, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
- 宠汪汪助力获取Token = type=http-request,pattern=^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId=\w+&, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+ 宠汪汪助力更新Token = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/addUser\?code=\w+&, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+ 宠汪汪助力获取Token = type=http-request,pattern=^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/user\/detail\?openId=\w+&, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
  圈X
  [task_local]
  # 宠汪汪邀请助力与赛跑助力
  15 10 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
  [rewrite_local]
  # 宠汪汪助力更新Token
- ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=\w+& url script-response-body https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+ ^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/addUser\?code=\w+& url script-response-body https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
  # 宠汪汪助力获取Token
- ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId=\w+& url script-request-header https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+ ^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/user\/detail\?openId=\w+& url script-request-header https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
  LOON：
  [Script]
  cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力
- http-response ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=\w+& script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力更新Token
- http-request ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId=\w+& script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力获取Token
+ http-response ^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/addUser\?code=\w+& script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力更新Token
+ http-request ^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/user\/detail\?openId=\w+& script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力获取Token
  **/
 const isRequest = typeof $request != "undefined"
 const $ = new Env('来客有礼宠汪汪');
@@ -101,7 +101,7 @@ if ($.isNode()) {
 function getToken() {
   const url = $request.url;
   $.log(`${$.name}url\n${url}\n`)
-  if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=\w+&/)) {
+  if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/addUser\?code=\w+&/)) {
     const body = JSON.parse($response.body);
     const LKYLToken = body.data.token;
     $.log(`${$.name} token\n${LKYLToken}\n`)
@@ -112,7 +112,7 @@ function getToken() {
     }
     $.setdata(LKYLToken, 'jdJoyRunToken');
     $.done({ body: JSON.stringify(body) })
-  } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId=\w+&/)){
+  } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/mirror\/\/api\/user\/user\/detail\?openId=\w+&/)){
     if ($request && $request.method !== 'OPTIONS') {
       const LKYLToken = $request.headers['LKYLToken'];
       //if ($.getdata('jdJoyRunToken')) {
