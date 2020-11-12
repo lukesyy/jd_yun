@@ -6,13 +6,7 @@
 
 
 ##############短期活动##############
-
-# 手机狂欢城
-0 0-18/6,9 * * * node /scripts/jd_818.js >> /scripts/logs/jd_818.log 2>&1
-# 星推官
-#0,10 0 * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1
-# 京东全民营业领金币
-0 */1 * * * node /scripts/jd_collectProduceScore.js >> /scripts/logs/jd_collectProduceScore.log 2>&1
+# 暂无
 
 
 ##############长期活动##############
