@@ -40,8 +40,8 @@ jd_scripts:
     #是否开启debug模式打印日志
     # 例: JD_DEBUG=false
     - JD_DEBUG=
-    #是否使用了自定义定时任务,这个名字改成my_crontab_list.sh
-    - CRONTAB_LIST_FILE=crontab_list.sh
+    #如果使用自定义定时任务,取消下面一行的注释
+    #- CRONTAB_LIST_FILE=my_crontab_list.sh
   command:
     - /bin/sh
     - -c
