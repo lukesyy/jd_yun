@@ -23,54 +23,62 @@ jd_scripts
 - `jd_scripts/docker-compose.yml`里面的环境变量(`environment:`)配置[参考这里](https://github.com/lxk0301/jd_scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
 ```yaml
 jd_scripts:
+jd_scripts:
   image: akyakya/jd_scripts
   container_name: jd_scripts
   restart: always
-  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面的注释 ，通过 `volumes`挂载进去。
+  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面的挂载注释 ，通过 `volumes`挂载进去。
   volumes:
+  #  - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
     - ./logs:/scripts/logs
-  #   - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
   tty: true
   environment:
-    # 注意环境变量填写值的时候一律不需要引号（"）下面这些只是事例，根据自己的需求增加删除
+    # 注意环境变量填写值的时候一律不需要引号（""或者''）下面这些只是事例，根据自己的需求增加删除
     #jd cookies
-    - JD_COOKIE=pt_key=AAJfjaNrADAS8ygfgIsOxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxxx5;
+    # 例: JD_COOKIE=pt_key=XXX;pt_pin=XXX
+    - JD_COOKIE=
     #微信server酱通
-    - PUSH_KEY=""
+    - PUSH_KEY=
     #Bark App通知
-    - BARK_PUSH=""
+    - BARK_PUSH=
     #telegram机器人通知
-    - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
-    - TG_USER_ID=12xxxx206
+    - TG_BOT_TOKEN=
+    - TG_USER_ID=
     #钉钉机器人通知
-    - DD_BOT_TOKEN=""
-    - DD_BOT_SECRET=""
+    - DD_BOT_TOKEN=
+    - DD_BOT_SECRET=
     #京东种豆得豆
-    - PLANT_BEAN_SHARECODES=""
+    - PLANT_BEAN_SHARECODES=
     #京东农场
-    - FRUITSHARECODES=""
+    # 例: FRUITSHARECODES=京东农场的互助码
+    - FRUITSHARECODES=
     #京东萌宠
-    - PETSHARECODES=""
-    - JOY_FEED_COUNT=""
+    # 例: PETSHARECODES=东东萌宠的互助码
+    - PETSHARECODES=
+    # 宠汪汪的喂食数量
+    - JOY_FEED_COUNT=
     #京小超
-    - SUPERMARKET_SHARECODES=""
-    #兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
-    - MARKET_COIN_TO_BEANS=""
+    # - SUPERMARKET_SHARECODES=
+    #兑换多少数量的京豆（20，或者1000京豆,或者其他奖品的文字）
+    # 例: MARKET_COIN_TO_BEANS=1000
+    - MARKET_COIN_TO_BEANS=
     #是否开启debug模式打印日志
-    - JD_DEBUG=""
-    #该字段必须配置是否使用了自定义定时任务列表,使用了需要把这个名字改成my_crontab_list.sh
-    - CRONTAB_LIST_FILE=crontab_list.sh
+    # 例: JD_DEBUG=false
+    - JD_DEBUG=
+    #如果使用自定义定时任务,取消下面一行的注释
+    #- CRONTAB_LIST_FILE=my_crontab_list.sh
   command:
     - /bin/sh
     - -c
     - |
-      #crontab /scripts/docker/my_crontab_list.sh #如果挂载了自定义任务文件 需要在 crond 的上面加行
+      #crontab /scripts/docker/my_crontab_list.sh  #如果挂载了自定义任务文件,取消此条注释即可
       crond
+      git -C /scripts/ pull
       node
 ```
-- `jd_scripts/my_crontab_list.sh` 参考内容如下：
+- `jd_scripts/my_crontab_list.sh` 参考内容如下（输出日志的最后加上 `|ts` 可在日志每一行前面显示时间）：
 ```shell
-0 */1 * * * git -C /scripts/ pull >> /scripts/logs/pull.log 2>&1
+0 */1 * * * git -C /scripts/ pull >> /scripts/logs/pull.log 2>&1|ts
 2 0 * * * node /scripts/jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
 2 0 * * * node /scripts/jd_blueCoin.js >> /scripts/logs/jd_blueCoin.log 2>&1
 2 0 * * * node /scripts/jd_club_lottery.js >> /scripts/logs/jd_club_lottery.log 2>&1
@@ -98,6 +106,9 @@ jd_scripts:
 - 如果是群晖用户，在docker注册表搜jd_scripts，双击下载映像。
 不需要docker-compose.yml，只需建个logs/目录，调整`jd_scripts.syno.json`里面对应的配置值，然后导入json配置新建容器。
 若要自定义my_crontab_list.sh，再建个my_crontab_list.sh文件，配置参考`jd_scripts.my_crontab_list.syno.json`。
-![image](./info.png)
-![image](./dir.png)
-![image](./import.png)
+![image](https://user-images.githubusercontent.com/6993269/99024743-32ac1480-25a2-11eb-8c0f-3cb3be90d54c.png)
+
+![image](https://user-images.githubusercontent.com/6993269/99024803-4ce5f280-25a2-11eb-9693-60e8910c182c.png)
+
+![image](https://user-images.githubusercontent.com/6993269/99024832-6424e000-25a2-11eb-8e31-287771f42ad2.png)
+
