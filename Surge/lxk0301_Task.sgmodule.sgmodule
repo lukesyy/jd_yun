@@ -36,3 +36,6 @@ http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detai
 http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/pet\/enterRoom\/h5\?reqSource=weapp&invitePin=.*+(&inviteSource=task_invite&shareSource=\w+&inviteTimeStamp=\d+&openId=\w+)?|^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/pet\/helpFriend\?friendPin script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_help.js, requires-body=1, tag=宠汪汪强制为别人助力
 http-response ^https:\/\/jdjoy\.jd\.com\/pet\/getPetTreasureBox|^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/pet\/getPetTreasureBox script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_petTreasureBox.js, requires-body=1, tag=聚宝盆投狗粮辅助
 http-response ^https:\/\/account\.huami\.com\/v2\/client\/login script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/xmSports.js, requires-body=1, tag=小米运动获取Token
+http-request  https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/xmly_speed_ccokie.js , requires-body=1, tag=喜马拉雅极速版Cookie
+[MITM]
+hostname = %APPEND% m.ximalaya.com, api.m.jd.com, draw.jdfcloud.com, jdjoy.jd.com
