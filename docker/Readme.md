@@ -76,9 +76,10 @@ jd_scripts:
       git -C /scripts/ pull
       node
 ```
-- `jd_scripts/my_crontab_list.sh` 参考内容如下（输出日志的最后加上 `|ts` 可在日志每一行前面显示时间）：
+- `jd_scripts/my_crontab_list.sh` 参考内容如下：
+
 ```shell
-0 */1 * * * git -C /scripts/ pull >> /scripts/logs/pull.log 2>&1|ts
+0 */1 * * * git -C /scripts/ pull |ts >> /scripts/logs/pull.log 2>&1
 2 0 * * * node /scripts/jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
 2 0 * * * node /scripts/jd_blueCoin.js >> /scripts/logs/jd_blueCoin.log 2>&1
 2 0 * * * node /scripts/jd_club_lottery.js >> /scripts/logs/jd_club_lottery.log 2>&1
@@ -95,6 +96,8 @@ jd_scripts:
 15 * * * * node /scripts/jd_superMarket.js >> /scripts/logs/jd_superMarket.log 2>&1
 55 23 * * * node /scripts/jd_unsubscribe.js >> /scripts/logs/jd_unsubscribe.log 2>&1
 ```
+> 定时任务命之后，也就是 `>>` 符号之前加上 `|ts` 可在日志每一行前面显示时间，如下图:
+> ![image](https://user-images.githubusercontent.com/6993269/99031839-09e04b00-25b3-11eb-8e47-0b6515a282bb.png)
 - 目录文件配置好之后在 `jd_scripts`目录执行  
  `docker-compose up -d` 启动；  
  `docker-compose logs` 打印日志；  
