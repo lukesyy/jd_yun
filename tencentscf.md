@@ -3,12 +3,12 @@
 
 ## 1. 安装 Node.js 环境
 
-Node.js 环境 [下载地址](https://nodejs.org/zh-tw/download/ ) ，根据自己的操作系统下载和安装。
+Node.js 环境 [下载地址](https://nodejs.org/zh-tw/download/) ，根据自己的操作系统下载和安装。
 
 ## 2. 下载代码
 
 点击红框处下载压缩包
-![下载代码](https://imgbed-bucket-1251971143.cos.ap-guangzhou.myqcloud.com/./1605262233829-download.png)
+![下载代码](https://imgbed-bucket-1251971143.cos.ap-guangzhou.myqcloud.com/1605497672397-zip.png)
 
 ## 3. 安装依赖，配置 cookie
 
@@ -62,7 +62,7 @@ npm install -g serverless
 serverless deploy
 ```
 
-如果已经配置了永久秘钥，则可以直接部署，如果没有，可以直接微信扫码登录腾讯云，并且授权部署。
+如果已经配置了永久秘钥，则可以直接部署，如果没有，可以直接**微信扫码**登录腾讯云，并且授权部署。
 
 过几秒后，查看输出，可以看到函数和定时触发器都已经配置完成。
 ```
