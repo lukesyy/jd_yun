@@ -540,13 +540,6 @@
           "val": true,
           "type": "boolean",
           "desc": "运行京东摇钱树脚本时不发出系统弹窗通知"
-        },
-        {
-          "id": "jdMoneyTreeNoticeTimes",
-          "name": "通知频率",
-          "val": 2,
-          "type": "number",
-          "desc": "脚本运行多少次后弹窗通知(默认2次，如果开启静默运行，此设置失效)"
         }
       ],
       "author": "@lxk0301",
