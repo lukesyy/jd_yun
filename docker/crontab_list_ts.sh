@@ -1,6 +1,7 @@
 0 */1 * * * git -C /scripts/ pull |ts >> /scripts/logs/pull.log 2>&1
 2 */1 * * * crontab /scripts/docker/${CRONTAB_LIST_FILE}
 3 */1 * * * npm install --prefix /scripts |ts >> /scripts/logs/npm_install.log 2>&1
+4 */1 * * * npm install request --prefix /tmp |ts >> /scripts/logs/npm_install_request.log 2>&1
 # 每3天的23:50分清理一次日志
 50 23 */3 * * rm -rf /scripts/logs/*.log
 
@@ -44,7 +45,7 @@
 # 取关京东店铺商品
 55 23 * * * node /scripts/jd_unsubscribe.js |ts >> /scripts/logs/jd_unsubscribe.log 2>&1
 # 京豆变动通知
-0 2 * * * node /scripts/jd_bean_change.js |ts >> /scripts/logs/jd_bean_change.log 2>&1
+0 10 * * * node /scripts/jd_bean_change.js |ts >> /scripts/logs/jd_bean_change.log 2>&1
 # 京东抽奖机
 11 1 * * * node /scripts/jd_lotteryMachine.js |ts >> /scripts/logs/jd_lotteryMachine.log 2>&1
 # 京东排行榜
