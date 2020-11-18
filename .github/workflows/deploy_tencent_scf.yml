@@ -22,6 +22,7 @@ jobs:
         run: |
           npm install
           sudo npm install serverless -g
+          env
         env:
           TG_USER_ID: ${{ secrets.TG_USER_ID}}
 
@@ -63,6 +64,8 @@ jobs:
           if [ ${{ secrets.TG_PROXY_PORT}} ]; then sed -i "/variables/a\      TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}" serverless.yml; fi;
           cat serverless.yml
           env
+        env:
+          TG_USER_ID: ${{ secrets.TG_USER_ID}}
 
       - name: "部署到腾讯云函数"
         run: serverless deploy
