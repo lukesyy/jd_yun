@@ -18,10 +18,16 @@ inputs:
   events: # 触发器
     - timer: # 定时触发器
         parameters:
-          # name: timer # 触发器名称，默认timer-${name}-${stage}
+          name: jd_bean_sign # 触发器名称
           cronExpression: "0 0 0 */1 * * *" # 每天零点执行一次
           enable: true
-          argument: argument # 额外的参数
+          argument: jd_bean_sign # 额外的参数
+    - timer: # 定时触发器
+        parameters:
+          name: jd_blueCoin
+          cronExpression: "0 0 0 */1 * * *" # 每天零点执行一次
+          enable: true
+          argument: jd_blueCoin,jd_club_lottery # 额外的参数
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
