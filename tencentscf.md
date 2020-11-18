@@ -1,9 +1,8 @@
 
 # 云函数快速部署京东脚本
-
-# 两种方式
-- 本地安装依赖使用serverless部署，[点这里]()
-- Github Action 部署[点这里]()
+>
+> - 本地安装依赖使用serverless部署，[点这里](tencentscf.md#1-安装-nodejs-环境)
+> - Github Action 部署[点这里](tencentscf.md#github-action-部署)
 
 ## 1. 安装 Node.js 环境
 
@@ -109,6 +108,14 @@ triggers:
 ## 2. 在这里新建一个访问密钥[新建密钥](https://console.cloud.tencent.com/cam/capi)
 > 将SecretId和SecretKey分别配置在仓库的secrets变量里面， TENCENT_SECRET_ID对应你的SecretId的值，TENCENT_SECRET_KEY对应你的SecretKey的值
 
-## 3. 配置自己需要secrets变量[参考这里](https://github.com/lxk0301/jd_scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
+## 3. 配置自己需要secrets变量[参考这里](githubAction.md#下方提供使用到的-secrets全集合)
 
 ## 4.执行action workflow进行部署，workflow未报错即部署成功
+![image](https://user-images.githubusercontent.com/6993269/99513289-6a152980-29c5-11eb-9266-3f56ba13d3b2.png)
+## 5. 查看和测试
+登录后，在 [腾讯云函数地址](https://console.cloud.tencent.com/scf/index) 点击管理控制台，查看最新部署的函数。
+
+在左侧栏的日志查询中，可以查看到触发的日志，包括是否打卡成功等。
+
+![测试函数](https://imgbed-bucket-1251971143.cos.ap-guangzhou.myqcloud.com/./1605263963294-test.png)
+## 6. 设置触发器[看这里](iCloud.md#5设置触发器)
