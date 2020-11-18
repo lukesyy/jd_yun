@@ -58,12 +58,6 @@ inputs:
           cronExpression: "0 8 */3 * * * *"
           enable: true
           argument: jd_speed
-    - timer: # 京东天天加速1
-        parameters:
-          name: jd_speed1
-          cronExpression: "0 8 */3 * * * *"
-          enable: true
-          argument: jd_speed
     - timer: # 东东超市
         parameters:
           name: jd_superMarket
