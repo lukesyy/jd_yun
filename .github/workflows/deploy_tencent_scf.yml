@@ -22,6 +22,8 @@ jobs:
         run: |
           npm install
           sudo npm install serverless -g
+        env:
+          TG_USER_ID: ${{ secrets.TG_USER_ID}}
 
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
@@ -34,7 +36,7 @@ jobs:
           if [ ${{ secrets.BARK_PUSH}} ]; then sed -i "/variables/a\      BARK_PUSH: ${{ secrets.BARK_PUSH}}" serverless.yml; fi;
           if [ ${{ secrets.BARK_SOUND}} ]; then sed -i "/variables/a\      BARK_SOUND: ${{ secrets.BARK_SOUND}}" serverless.yml; fi;
           if [ ${{ secrets.TG_BOT_TOKEN}} ]; then sed -i "/variables/a\      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}" serverless.yml; fi;
-          if [ ${{ secrets.TG_USER_ID}} ]; then sed -i "/variables/a\      TG_USER_ID: ${{ secrets.TG_USER_ID}}" serverless.yml; fi;
+          if [ $TG_USER_ID ]; then sed -i "/variables/a\      TG_USER_ID: $TG_USER_ID" serverless.yml; fi;
           if [ ${{ secrets.DD_BOT_TOKEN}} ]; then sed -i "/variables/a\      DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN}}" serverless.yml; fi;
           if [ ${{ secrets.DD_BOT_SECRET}} ]; then sed -i "/variables/a\      DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET}}" serverless.yml; fi;
           if [ ${{ secrets.IGOT_PUSH_KEY}} ]; then sed -i "/variables/a\      IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY}}" serverless.yml; fi;
