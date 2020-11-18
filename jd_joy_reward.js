@@ -1,9 +1,7 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
-更新时间：2020-11-05
+更新时间：2020-11-18
 兑换规则：一个账号一天只能兑换一次京豆。
-1-20级：340积分兑换20京豆, 21-25级：320积分换20京豆
-再往上的等级兑换规则目前不知，欢迎大家提供信息
 兑换奖品成功后才会有系统弹窗通知
 每日京豆库存会在0:00、8:00、16:00更新，经测试发现中午12:00也会有补发京豆。
 支持京东双账号
@@ -141,6 +139,8 @@ async function joyReward() {
             } else {
               console.log(`兑奖异常:${JSON.stringify($.exchangeRes)}`)
             }
+          } else {
+            console.log(`兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
           }
         } else {
           console.log(`兑换${rewardNum}京豆失败，原因：京豆库存不足，已抢完，请下一场再兑换`)
@@ -153,7 +153,7 @@ async function joyReward() {
       console.log('您设置了不兑换京豆,如需兑换京豆，请去BoxJs重新设置或修改第20行代码')
     }
   } else {
-    console.log(`${$.name}异常,${JSON.stringify($.getExchangeRewardsRes)}`)
+    console.log(`${$.name}getExchangeRewards异常,${JSON.stringify($.getExchangeRewardsRes)}`)
   }
 }
 function getExchangeRewards() {
@@ -175,10 +175,15 @@ function getExchangeRewards() {
     }
     $.get(option, (err, resp, data) => {
       try {
-        if (data) {
-          $.getExchangeRewardsRes = JSON.parse(data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(`${$.name}京豆api返回数据为空，请检查自身原因`)
+          if (data) {
+            $.getExchangeRewardsRes = JSON.parse(data);
+          } else {
+            console.log(`${$.name}api返回数据为空，请检查自身原因`)
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -210,11 +215,15 @@ function exchange(saleInfoId, orderSource) {
     }
     $.post(option, (err, resp, data) => {
       try {
-        // console.log('exchange', data)
-        if (data) {
-          $.exchangeRes = JSON.parse(data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(`${$.name}京豆api返回数据为空，请检查自身原因`)
+          if (data) {
+            $.exchangeRes = JSON.parse(data);
+          } else {
+            console.log(`${$.name}api返回数据为空，请检查自身原因`)
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
