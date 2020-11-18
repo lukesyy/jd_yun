@@ -1,0 +1,71 @@
+name: 部署到腾讯云函数
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: "安装依赖和serverless工具"
+        run: |
+          npm install
+          sudo npm install serverless -g
+
+      - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
+        run: |
+          sed -i "/variables/a\      JD_COOKIE: ${{ secrets.JD_COOKIE }}" serverless.yml
+          sed -i "/variables/a\      JD_COOKIE: ${{ secrets.JD_COOKIE}}" serverless.yml
+          sed -i "/variables/a\      JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}" serverless.yml
+          sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}" serverless.yml
+          sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}" serverless.yml
+          sed -i "/variables/a\      JD_DEBUG: ${{ secrets.JD_DEBUG}}" serverless.yml
+          sed -i "/variables/a\      PUSH_KEY: ${{ secrets.PUSH_KEY}}" serverless.yml
+          sed -i "/variables/a\      BARK_PUSH: ${{ secrets.BARK_PUSH}}" serverless.yml
+          sed -i "/variables/a\      BARK_SOUND: ${{ secrets.BARK_SOUND}}" serverless.yml
+          sed -i "/variables/a\      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}" serverless.yml
+          sed -i "/variables/a\      TG_USER_ID: ${{ secrets.TG_USER_ID}}" serverless.yml
+          sed -i "/variables/a\      DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN}}" serverless.yml
+          sed -i "/variables/a\      DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET}}" serverless.yml
+          sed -i "/variables/a\      IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY}}" serverless.yml
+          sed -i "/variables/a\      PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL}}" serverless.yml
+          sed -i "/variables/a\      FRUIT_NOTIFY_CONTROL: ${{ secrets.FRUIT_NOTIFY_CONTROL}}" serverless.yml
+          sed -i "/variables/a\      JD_JOY_REWARD_NOTIFY: ${{ secrets.JD_JOY_REWARD_NOTIFY}}" serverless.yml
+          sed -i "/variables/a\      JD_818_SHAREID_NOTIFY: ${{ secrets.JD_818_SHAREID_NOTIFY}}" serverless.yml
+          sed -i "/variables/a\      JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT}}" serverless.yml
+          sed -i "/variables/a\      JOY_HELP_FEED: ${{ secrets.JOY_HELP_FEED}}" serverless.yml
+          sed -i "/variables/a\      JOY_RUN_FLAG: ${{ secrets.JOY_RUN_FLAG}}" serverless.yml
+          sed -i "/variables/a\      JD_JOY_REWARD_NAME: ${{ secrets.JD_JOY_REWARD_NAME}}" serverless.yml
+          sed -i "/variables/a\      MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS}}" serverless.yml
+          sed -i "/variables/a\      MARKET_REWARD_NOTIFY: ${{ secrets.MARKET_REWARD_NOTIFY}}" serverless.yml
+          sed -i "/variables/a\      SUPERMARKET_UPGRADE: ${{ secrets.SUPERMARKET_UPGRADE}}" serverless.yml
+          sed -i "/variables/a\      BUSINESS_CIRCLE_JUMP: ${{ secrets.BUSINESS_CIRCLE_JUMP}}" serverless.yml
+          sed -i "/variables/a\      SUPERMARKET_LOTTERY: ${{ secrets.SUPERMARKET_LOTTERY}}" serverless.yml
+          sed -i "/variables/a\      FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD}}" serverless.yml
+          sed -i "/variables/a\      UN_SUBSCRIBES: ${{ secrets.UN_SUBSCRIBES}}" serverless.yml
+          sed -i "/variables/a\      FruitShareCodes: ${{ secrets.FruitShareCodes}}" serverless.yml
+          sed -i "/variables/a\      PETSHARECODES: ${{ secrets.PETSHARECODES}}" serverless.yml
+          sed -i "/variables/a\      PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES}}" serverless.yml
+          sed -i "/variables/a\      SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES}}" serverless.yml
+          sed -i "/variables/a\      TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}" serverless.yml
+          sed -i "/variables/a\      TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}" serverless.yml
+          cat serverless.yml
+
+      - name: "部署到腾讯云函数"
+        run: serverless deploy
+        env:
+          STAGE: dev
+          SERVERLESS_PLATFORM_VENDOR: tencent
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
