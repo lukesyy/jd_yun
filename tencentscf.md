@@ -1,6 +1,10 @@
 
 # 云函数快速部署京东脚本
 
+# 两种方式
+- 本地安装依赖使用serverless部署，[点这里]()
+- Github Action 部署[点这里]()
+
 ## 1. 安装 Node.js 环境
 
 Node.js 环境 [下载地址](https://nodejs.org/zh-tw/download/) ，根据自己的操作系统下载和安装。
@@ -93,3 +97,18 @@ triggers:
 ![测试函数](https://imgbed-bucket-1251971143.cos.ap-guangzhou.myqcloud.com/./1605263963294-test.png)
 
 > 如果需要配置永久秘钥，则可以在[访问秘钥页面](https://console.cloud.tencent.com/cam/capi)获取账号的 TENCENT_SECRET_ID，TENCENT_SECRET_KEY，并配置在代码根目录 .env 文件中。
+
+
+# Github Action 部署
+## 1. 开通服务
+
+依次登录 [SCF 云函数控制台](https://console.cloud.tencent.com/scf) 和 [SLS 控制台](https://console.cloud.tencent.com/sls) 开通相关服务，确保账户下已开通服务并创建相应[服务角色](https://console.cloud.tencent.com/cam/role) **SCF_QcsRole、SLS_QcsRole**
+
+> 注意！为了确保权限足够，获取这两个参数时不要使用子账户！此外，腾讯云账户需要[实名认证](https://console.cloud.tencent.com/developer/auth)。
+
+## 2. 在这里新建一个访问密钥[新建密钥](https://console.cloud.tencent.com/cam/capi)
+> 将SecretId和SecretKey分别配置在仓库的secrets变量里面， TENCENT_SECRET_ID对应你的SecretId的值，TENCENT_SECRET_KEY对应你的SecretKey的值
+
+## 3. 配置自己需要secrets变量[参考这里](https://github.com/lxk0301/jd_scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
+
+## 4.执行action workflow进行部署，workflow未报错即部署成功
