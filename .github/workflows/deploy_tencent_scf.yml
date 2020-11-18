@@ -62,6 +62,7 @@ jobs:
           if [ ${{ secrets.TG_PROXY_HOST}} ]; then sed -i "/variables/a\      TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}" serverless.yml; fi;
           if [ ${{ secrets.TG_PROXY_PORT}} ]; then sed -i "/variables/a\      TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}" serverless.yml; fi;
           cat serverless.yml
+          env
 
       - name: "部署到腾讯云函数"
         run: serverless deploy
