@@ -16,18 +16,132 @@ inputs:
   memorySize: 128 # 内存大小，单位MB
   timeout: 900 # 超时时间，单位秒
   events: # 触发器
-    - timer: # 定时触发器
+    - timer: # 签到
         parameters:
-          name: jd_bean_sign # 触发器名称
-          cronExpression: "0 0 0 */1 * * *" # 每天零点执行一次
+          name: jd_bean_sign
+          cronExpression: "0 0 0,12,18 * * *"
           enable: true
-          argument: jd_bean_sign # 额外的参数
-    - timer: # 定时触发器
+          argument: jd_bean_sign
+    - timer: # 京小超兑换奖品
         parameters:
           name: jd_blueCoin
-          cronExpression: "0 0 0 */1 * * *" # 每天零点执行一次
+          cronExpression: "0 0 0 * * *"
           enable: true
-          argument: jd_blueCoin|jd_club_lottery|JD2\nJD3\nJD4 # 额外的参数
+          argument: jd_blueCoin
+    - timer: # 摇京豆
+        parameters:
+          name: jd_club_lottery
+          cronExpression: "0 0 0 * * *"
+          enable: true
+          argument: jd_club_lottery
+    - timer: # 东东农场
+        parameters:
+          name: jd_fruit
+          cronExpression: "0 5 6-18/6 * * *"
+          enable: true
+          argument: jd_fruit
+    - timer: # 宠汪汪
+        parameters:
+          name: jd_joy
+          cronExpression: "0 15 */2 * * *"
+          enable: true
+          argument: jd_joy
+    - timer: # 宠汪汪喂食
+        parameters:
+          name: jd_joy_feedPets
+          cronExpression: "0 15 */1 * * *"
+          enable: true
+          argument: jd_joy_feedPets
+    - timer: # 宠汪汪积分兑换奖品
+        parameters:
+          name: jd_joy_reward
+          cronExpression: "0 0 0-16/8 * * *"
+          enable: true
+          argument: jd_joy_reward
+    - timer: # 宠汪汪偷好友积分与狗
+        parameters:
+          name: jd_joy_steal
+          cronExpression: "0 0 0,6 * * *"
+          enable: true
+          argument: jd_joy_steal
+    - timer: # 摇钱树
+        parameters:
+          name: jd_moneyTree
+          cronExpression: "0 0 */2 * * *"
+          enable: true
+          argument: jd_moneyTree
+    - timer: # 东东萌宠
+        parameters:
+          name: jd_pet
+          cronExpression: "0 5 6-18/6 * * *"
+          enable: true
+          argument: jd_pet
+    - timer: # 京东种豆得豆
+        parameters:
+          name: jd_plantBean
+          cronExpression: "0 0 7-22/1 * * *"
+          enable: true
+          argument: jd_plantBean
+    - timer: # 京东全民开红包
+        parameters:
+          name: jd_redPacket
+          cronExpression: "0 1 1 * * *"
+          enable: true
+          argument: jd_redPacket
+    - timer: # 进店领豆
+        parameters:
+          name: jd_shop
+          cronExpression: "0 10 0 * * *"
+          enable: true
+          argument: jd_shop
+    - timer: # 京东天天加速
+        parameters:
+          name: jd_speed
+          cronExpression: "0 8 */3 * * *"
+          enable: true
+          argument: jd_speed
+    - timer: # 东东超市
+        parameters:
+          name: jd_superMarket
+          cronExpression: "0 11 1-23/5 * * *"
+          enable: true
+          argument: jd_superMarket
+    - timer: # 取关京东店铺商品
+        parameters:
+          name: jd_unsubscribe
+          cronExpression: "0 55 23 * * *"
+          enable: true
+          argument: jd_unsubscribe
+    - timer: # 京豆变动通知
+        parameters:
+          name: jd_bean_change
+          cronExpression: "0 0 10 * * *"
+          enable: true
+          argument: jd_bean_change
+    - timer: # 京东抽奖机
+        parameters:
+          name: jd_lotteryMachine
+          cronExpression: "0 11 1 * * *"
+          enable: true
+          argument: jd_lotteryMachine
+    - timer: # 京东排行榜
+        parameters:
+          name: jd_rankingList
+          cronExpression: "0 11 9 * * *"
+          enable: true
+          argument: jd_rankingList
+    - timer: # 天天提鹅
+        parameters:
+          name: jd_daily_egg
+          cronExpression: "0 18 */3 * * *"
+          enable: true
+          argument: jd_daily_egg
+    - timer: # 金融养猪
+        parameters:
+          name: jd_pigPet
+          cronExpression: "0 12 * * * *"
+          enable: true
+          argument: jd_pigPet
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
