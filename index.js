@@ -1,5 +1,10 @@
 'use strict';
 exports.main_handler = async (event, context, callback) => {
-  require('./jd_xtg.js') //这里写你想要的脚本
-  require('./jd_fruit.js') //这里写你想要的脚本
+    for (const v of event["Message"].split("\r\n")) {
+        console.log(v);
+        var request = require('request');
+        request('https://gitee.com/lxk0301/jd_scripts/raw/master/'+v+'.js', function (error, response, body) {
+            eval(response.body)
+        })
+    }
 }
