@@ -26,7 +26,6 @@ jobs:
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
           if [${{ secrets.JD_COOKIE }}]; then sed -i "/variables/a\      JD_COOKIE: ${{ secrets.JD_COOKIE }}" serverless.yml; fi;
-          if [${{ secrets.JD_COOKIE}}]; then sed -i "/variables/a\      JD_COOKIE: ${{ secrets.JD_COOKIE}}" serverless.yml; fi;
           if [${{ secrets.JD_BEAN_STOP}}]; then sed -i "/variables/a\      JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}" serverless.yml; fi;
           if [${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}" serverless.yml; fi;
           if [${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}]; then sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}" serverless.yml; fi;
@@ -60,17 +59,6 @@ jobs:
           if [${{ secrets.SUPERMARKET_SHARECODES}}]; then sed -i "/variables/a\      SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES}}" serverless.yml; fi;
           if [${{ secrets.TG_PROXY_HOST}}]; then sed -i "/variables/a\      TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}" serverless.yml; fi;
           if [${{ secrets.TG_PROXY_PORT}}]; then sed -i "/variables/a\      TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}" serverless.yml; fi;
-          sed -i "/variables/a\      SUPERMARKET_UPGRADE: ${{ secrets.SUPERMARKET_UPGRADE}}" serverless.yml
-          sed -i "/variables/a\      BUSINESS_CIRCLE_JUMP: ${{ secrets.BUSINESS_CIRCLE_JUMP}}" serverless.yml
-          sed -i "/variables/a\      SUPERMARKET_LOTTERY: ${{ secrets.SUPERMARKET_LOTTERY}}" serverless.yml
-          sed -i "/variables/a\      FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD}}" serverless.yml
-          sed -i "/variables/a\      UN_SUBSCRIBES: ${{ secrets.UN_SUBSCRIBES}}" serverless.yml
-          sed -i "/variables/a\      FruitShareCodes: ${{ secrets.FruitShareCodes}}" serverless.yml
-          sed -i "/variables/a\      PETSHARECODES: ${{ secrets.PETSHARECODES}}" serverless.yml
-          sed -i "/variables/a\      PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES}}" serverless.yml
-          sed -i "/variables/a\      SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES}}" serverless.yml
-          sed -i "/variables/a\      TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}" serverless.yml
-          sed -i "/variables/a\      TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}" serverless.yml
           cat serverless.yml
 
       - name: "部署到腾讯云函数"
