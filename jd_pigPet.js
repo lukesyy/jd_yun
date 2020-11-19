@@ -7,14 +7,17 @@
 /*
 京东金融养猪猪
 一键开完所有的宝箱功能。耗时70秒
-抽奖
+大转盘抽奖
 喂食
+每日签到
+完成分享任务得猪粮
 12 * * * *
  */
 
 const $ = new Env('金融养猪');
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
+const MISSION_BASE_API = `https://ms.jr.jd.com/gw/generic/mission/h5/m`;
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -72,6 +75,8 @@ async function jdPigPet() {
   await pigPetOpenBox();
   await pigPetLotteryIndex();
   await pigPetLottery();
+  await pigPetMissionList();
+  await missions();
   await pigPetUserBag();
 }
 async function pigPetLottery() {
@@ -398,6 +403,202 @@ function pigPetLotteryPlay() {
                 console.log(`其他情况：${JSON.stringify(data)}`)
               }
             }
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+async function missions() {
+  for (let item of $.missions) {
+    if (item.status === 4) {
+      console.log(`\n${item.missionName}任务已做完,开始领取奖励`)
+      await pigPetDoMission(item.mid);
+    } else if (item.status === 5){
+      console.log(`\n${item.missionName}已领取`)
+    } else if (item.status === 3){
+      console.log(`\n${item.missionName}未完成`)
+      if (item.mid === 'CPD01') {
+        await pigPetDoMission(item.mid);
+      } else {
+        //TODO
+        // await pigPetDoMission(item.mid);
+        // await queryMissionReceiveAfterStatus(item.mid);
+        // await finishReadMission(item.mid);
+      }
+    }
+  }
+}
+//领取做完任务的奖品
+function pigPetDoMission(mid) {
+  return new Promise(async resolve => {
+    const body = {
+      "source":0,
+      "channelLV":"",
+      "riskDeviceParam":"{}",
+      mid
+    }
+    $.post(taskUrl('pigPetDoMission', body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log('pigPetDoMission',data)
+            data = JSON.parse(data);
+            if (data.resultCode === 0) {
+              if (data.resultData.resultCode === 0) {
+                if (data.resultData.resultData) {
+                  if (data.resultData.resultData.award) {
+                    console.log(`奖励${data.resultData.resultData.award.name},数量:${data.resultData.resultData.award.count}`)
+                  }
+                }
+              } else {
+                console.log(`其他情况：${JSON.stringify(data)}`)
+              }
+            }
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//查询任务列表
+function pigPetMissionList() {
+  return new Promise(async resolve => {
+    const body = {
+      "source":0,
+      "channelLV":"",
+      "riskDeviceParam":"{}",
+    }
+    $.post(taskUrl('pigPetMissionList', body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            // console.log(data)
+            data = JSON.parse(data);
+            if (data.resultCode === 0) {
+              if (data.resultData.resultCode === 0) {
+                if (data.resultData.resultData) {
+                  $.missions = data.resultData.resultData.missions;//抽奖后剩余的抽奖次数
+                }
+              } else {
+                console.log(`其他情况：${JSON.stringify(data)}`)
+              }
+            }
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function queryMissionReceiveAfterStatus(missionId) {
+  return new Promise(resolve => {
+    const body = {"missionId": missionId.toString()};
+    const options = {
+      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522%7D`,
+      "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-CN,zh;q=0.9",
+        "Connection": "keep-alive",
+        "Host": "ms.jr.jd.com",
+        "Cookie": cookie,
+        "Origin": "https://jdjoy.jd.com",
+        "Referer": "https://jdjoy.jd.com/",
+        "User-Agent": "jdapp;android;8.5.12;9;network/wifi;model/GM1910;addressid/1302541636;aid/ac31e03386ddbec6;oaid/;osVer/28;appBuild/73078;adk/;ads/;pap/JA2015_311210|8.5.12|ANDROID 9;osv/9;pv/117.24;jdv/0|kong|t_1000217905_|jingfen|644e9b005c8542c1ac273da7763971d8|1589905791552|1589905794;ref/com.jingdong.app.mall.WebActivity;partner/oppo;apprpd/Home_Main;Mozilla/5.0 (Linux; Android 9; GM1910 Build/PKQ1.190110.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044942 Mobile Safari/537.36 Edg/86.0.4240.111"
+      }
+    }
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log('queryMissionReceiveAfterStatus',data)
+            // data = JSON.parse(data);
+            // if (data.resultCode === 0) {
+            //   if (data.resultData.resultCode === 0) {
+            //     if (data.resultData.resultData) {
+            //       // console.log(`当前大转盘剩余免费抽奖次数：：${data.resultData.resultData.currentCount}`);
+            //       $.currentCount = data.resultData.resultData.currentCount;//抽奖后剩余的抽奖次数
+            //     }
+            //   } else {
+            //     console.log(`其他情况：${JSON.stringify(data)}`)
+            //   }
+            // }
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//做完浏览任务发送信息API
+function finishReadMission(missionId) {
+  return new Promise(async resolve => {
+    const body = {"missionId": missionId.toString(),"readTime":10};
+    const options = {
+      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:10%7D`,
+      "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-CN,zh;q=0.9",
+        "Connection": "keep-alive",
+        "Host": "ms.jr.jd.com",
+        "Cookie": cookie,
+        "Origin": "https://jdjoy.jd.com",
+        "Referer": "https://jdjoy.jd.com/",
+        "User-Agent": "jdapp;android;8.5.12;9;network/wifi;model/GM1910;addressid/1302541636;aid/ac31e03386ddbec6;oaid/;osVer/28;appBuild/73078;adk/;ads/;pap/JA2015_311210|8.5.12|ANDROID 9;osv/9;pv/117.24;jdv/0|kong|t_1000217905_|jingfen|644e9b005c8542c1ac273da7763971d8|1589905791552|1589905794;ref/com.jingdong.app.mall.WebActivity;partner/oppo;apprpd/Home_Main;Mozilla/5.0 (Linux; Android 9; GM1910 Build/PKQ1.190110.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044942 Mobile Safari/537.36 Edg/86.0.4240.111"
+      }
+    }
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log('finishReadMission',data)
+            // data = JSON.parse(data);
+            // if (data.resultCode === 0) {
+            //   if (data.resultData.resultCode === 0) {
+            //     if (data.resultData.resultData) {
+            //       // console.log(`当前大转盘剩余免费抽奖次数：：${data.resultData.resultData.currentCount}`);
+            //       $.currentCount = data.resultData.resultData.currentCount;//抽奖后剩余的抽奖次数
+            //     }
+            //   } else {
+            //     console.log(`其他情况：${JSON.stringify(data)}`)
+            //   }
+            // }
           } else {
             console.log(`京东服务器返回空数据`)
           }
