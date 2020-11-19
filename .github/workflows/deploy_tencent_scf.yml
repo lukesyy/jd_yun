@@ -29,7 +29,6 @@ jobs:
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_STOP_NOTIFY ]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: $JD_BEAN_SIGN_STOP_NOTIFY" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_NOTIFY_SIMPLE ]; then sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: $JD_BEAN_SIGN_NOTIFY_SIMPLE" serverless.yml; fi;
-          if [ $JD_DEBUG ]; then sed -i "/variables/a\      JD_DEBUG: $JD_DEBUG" serverless.yml; fi;
           if [ $PUSH_KEY ]; then sed -i "/variables/a\      PUSH_KEY: $PUSH_KEY" serverless.yml; fi;
           if [ $BARK_PUSH ]; then sed -i "/variables/a\      BARK_PUSH: $BARK_PUSH" serverless.yml; fi;
           if [ $BARK_SOUND ]; then sed -i "/variables/a\      BARK_SOUND: $BARK_SOUND" serverless.yml; fi;
@@ -66,7 +65,6 @@ jobs:
           JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
           JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}
           JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}
-          JD_DEBUG: ${{ secrets.JD_DEBUG}}
           PUSH_KEY: ${{ secrets.PUSH_KEY}}
           BARK_PUSH: ${{ secrets.BARK_PUSH}}
           BARK_SOUND: ${{ secrets.BARK_SOUND}}
