@@ -93,7 +93,7 @@ triggers:
 
 在左侧栏的日志查询中，可以查看到触发的日志，包括是否打卡成功等。
 
-![测试函数](https://imgbed-bucket-1251971143.cos.ap-guangzhou.myqcloud.com/./1605263963294-test.png)
+![测试函数](https://user-images.githubusercontent.com/6993269/99628053-5a9eea80-2a70-11eb-906f-f1d5ea2bfa3a.png)
 
 > 如果需要配置永久秘钥，则可以在[访问秘钥页面](https://console.cloud.tencent.com/cam/capi)获取账号的 TENCENT_SECRET_ID，TENCENT_SECRET_KEY，并配置在代码根目录 .env 文件中。
 
