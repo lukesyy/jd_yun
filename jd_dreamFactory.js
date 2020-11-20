@@ -7,7 +7,7 @@ cron 15 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_d
 const $ = new Env('京喜工厂');
 const JD_API_HOST = 'https://m.jingxi.com';
 
-let ele, factoryId;
+let ele, factoryId, productionId;
 
 let message = '', subTitle = '', option = {};
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -64,13 +64,6 @@ if ($.isNode()) {
     $.done();
   })
 
-function msleep(n) {
-  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n);
-}
-
-function sleep(n) {
-  msleep(n * 1000);
-}
 
 async function jdDreamFactory() {
   ele = 0;
@@ -179,7 +172,7 @@ function taskList() {
                 if (vo.completedTimes >= vo.targetTimes) {
                   console.log(`任务：${vo.description}可完成`)
                   await completeTask(vo.taskId, vo.taskName)
-                  sleep(1);
+                  await $.wait(1000);//延迟等待一秒
                 } else {
                   switch (vo.taskType) {
                     case 2: // 逛一逛任务
@@ -189,7 +182,7 @@ function taskList() {
                         console.log(`去做任务：${vo.taskName}`)
                         await doTask(vo.taskId)
                         await completeTask(vo.taskId, vo.taskName)
-                        sleep(1);
+                        await $.wait(1000);//延迟等待一秒
                       }
                       break
                     case 4: // 招工
