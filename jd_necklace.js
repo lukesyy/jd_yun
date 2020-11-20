@@ -48,7 +48,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  $.temp = [];
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -89,7 +88,8 @@ async function JD818() {
 }
 function showMsg() {
   return new Promise(resolve => {
-    $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n当前${$.name}${$.totalScore}个`)
+    $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n当前${$.name}${$.totalScore}个`);
+    resolve()
   })
 }
 async function doTask() {
