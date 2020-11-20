@@ -68,6 +68,7 @@ if ($.isNode()) {
 async function jdDreamFactory() {
   ele = 0;
   await userInfo();
+  if ($.unActive) return
   await getUserElectricity();
   await taskList();
   await investElectric();
@@ -398,7 +399,9 @@ function userInfo() {
           console.log(`生产进度：${(production.investedElectric / production.needElectric).toFixed(2) * 100}%`);
           message += `【生产进度】${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%\n`;
         } else {
-          console.log('【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n')
+          $.unActive = true;//标记是否开启了此活动
+          console.log('【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
+          $.msg($.name, '', `【提示】此账号[${$.nickName}]京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动`);
         }
       }
       resolve()
