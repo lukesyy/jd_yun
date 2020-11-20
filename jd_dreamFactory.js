@@ -1,5 +1,7 @@
 /*
 京东京喜工厂
+活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
+或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 cron 15 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js
  */
 
