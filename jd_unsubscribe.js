@@ -61,8 +61,6 @@ const JD_API_HOST = 'https://wq.jd.com/fav';
         }
         continue
       }
-      message = '';
-      subTitle = '';
       await requireConfig();
       await jdUnsubscribe();
       await showMsg();
