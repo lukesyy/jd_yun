@@ -85,7 +85,7 @@ async function jdDreamFactory() {
 
 
 // 收取发电机的电力
-function collectElectricity(factoryId = factoryId, help = false) {
+function collectElectricity(help = false) {
   return new Promise(async resolve => {
     const url = `/dreamfactory/generator/CollectCurrentElectricity?zone=dream_factory&apptoken=&pgtimestamp=&phoneID=&factoryid=${factoryId}&doubleflag=1&sceneval=2&g_login_type=1`;
 
