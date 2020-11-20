@@ -1,5 +1,6 @@
 /*
 京东京喜工厂
+cron 15 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js
  */
 
 
