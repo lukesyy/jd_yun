@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-10 14:07:07 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-19 14:10:19
+ * @Last Modified time: 2020-11-20 14:10:19
  */
 /*
 京东金融养猪猪
@@ -52,11 +52,6 @@ if ($.isNode()) {
         }
         continue
       }
-      message = '';
-      subTitle = '';
-      goodsUrl = '';
-      taskInfoKey = [];
-      option = {};
       await jdPigPet();
     }
   }

@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-10 14:10:27 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-19 14:11:01
+ * @Last Modified time: 2020-11-20 14:11:01
  */
 /*
 京东金融-天天提鹅
@@ -14,7 +14,6 @@ const $ = new Env('天天提鹅');
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 const notify = $.isNode() ? require('./sendNotify') : '';
-let jdNotify = false;//是否开启推送互助码
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
@@ -49,11 +48,6 @@ if ($.isNode()) {
         }
         continue
       }
-      message = '';
-      subTitle = '';
-      goodsUrl = '';
-      taskInfoKey = [];
-      option = {};
       await jdDailyEgg();
     }
   }
