@@ -112,8 +112,8 @@ function showMsg() {
 async function drawLottery() {
   console.log(`\n注意⚠:京小超抽奖已改版,花费500蓝币抽奖一次,现在脚本默认已关闭抽奖功能\n`);
   drawLotteryFlag = $.getdata('jdSuperMarketLottery') ? $.getdata('jdSuperMarketLottery') : drawLotteryFlag;
-  if ($.isNode() && process.env.jdSuperMarketLottery) {
-    drawLotteryFlag = process.env.jdSuperMarketLottery;
+  if ($.isNode() && process.env.SUPERMARKET_LOTTERY) {
+    drawLotteryFlag = process.env.SUPERMARKET_LOTTERY;
   }
   if (`${drawLotteryFlag}` === 'true') {
     const smtg_lotteryIndexRes = await smtg_lotteryIndex();
