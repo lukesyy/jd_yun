@@ -5,23 +5,22 @@
  * @Last Modified time: 2020-11-22 08:22:37
  */
 /*
-京小超(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
-现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
+东东超市(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
 Some Functions Modified From https://github.com/Zero-S1/JD_tools/blob/master/JD_superMarket.py
 支持京东双账号
 京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // QuantumultX
 [task_local]
-#京小超
-11 1-23/5 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js, tag=京小超, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
+#东东超市
+11 1-23/5 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js, tag=东东超市, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
 // Loon
 [Script]
-cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js,tag=京小超
+cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js,tag=东东超市
 // Surge
-京小超 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js
+东东超市 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js
  */
-const $ = new Env('京小超');
+const $ = new Env('东东超市');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', jdSuperMarketShareArr = [], notify, newShareCodes;
@@ -311,18 +310,13 @@ async function businessCircleActivity() {
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
     const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo, prizeInfo, pkActivityId, teamId } = smtg_getTeamPkDetailInfoRes.data.result;
-    console.log(`joinStatus:${joinStatus}`);
-    console.log(`pkStatus:${pkStatus}`);
-    console.log(`inviteCode: [${inviteCode}]`);
-    console.log(`PK队伍teamId: [${teamId}]`);
-    console.log(`PK队伍名称: [${currentUserPkInfo && currentUserPkInfo.teamName}]`);
-    await updatePkActivityId();
-    if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
-    console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes.pkActivityId}`);
-    console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
+    console.log(`\njoinStatus:${joinStatus}`);
+    console.log(`pkStatus:${pkStatus}\n`);
     if (joinStatus === 0) {
       await updatePkActivityId();
       if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
+      console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes.pkActivityId}`);
+      console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
       if ($.updatePkActivityIdRes && ($.updatePkActivityIdRes.pkActivityId === pkActivityId)) {
         let Teams = [
           {
@@ -365,12 +359,17 @@ async function businessCircleActivity() {
         console.log('\nupdatePkActivityId请求返回的pkActivityId与京东服务器返回不一致,暂时不加入战队')
       }
     } else if (joinStatus === 1) {
-      console.log(`我邀请的人数:${inviteCount}\n`)
-      console.log(`\n我方战队战队 [${currentUserPkInfo && currentUserPkInfo.teamName}]/【${currentUserPkInfo && currentUserPkInfo.teamCount}】`);
-      console.log(`对方战队战队 [${pkUserPkInfo && pkUserPkInfo.teamName}]/【${pkUserPkInfo && pkUserPkInfo.teamCount}】\n`);
+      if (teamId) {
+        console.log(`inviteCode: [${inviteCode}]`);
+        console.log(`PK队伍teamId: [${teamId}]`);
+        console.log(`PK队伍名称: [${currentUserPkInfo && currentUserPkInfo.teamName}]`);
+        console.log(`我邀请的人数:${inviteCount}\n`)
+        console.log(`\n我方战队战队 [${currentUserPkInfo && currentUserPkInfo.teamName}]/【${currentUserPkInfo && currentUserPkInfo.teamCount}】`);
+        console.log(`对方战队战队 [${pkUserPkInfo && pkUserPkInfo.teamName}]/【${pkUserPkInfo && pkUserPkInfo.teamCount}】\n`);
+      }
     }
     if (pkStatus === 1) {
-      console.log(`商圈PK进行中`)
+      console.log(`商圈PK进行中\n`)
     } else if (pkStatus === 2) {
       console.log(`商圈PK结束了`)
       if (prizeInfo.pkPrizeStatus === 2) {
@@ -391,10 +390,10 @@ async function businessCircleActivity() {
           }
         }
       } else if (prizeInfo.pkPrizeStatus === 1) {
-        console.log(`商圈PK奖励已经领取`)
+        console.log(`商圈PK奖励已经领取\n`)
       }
     } else if (pkStatus === 3) {
-      console.log(`商圈PK暂停中`)
+      console.log(`商圈PK暂停中\n`)
     }
   }
   return
