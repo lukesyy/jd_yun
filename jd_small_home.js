@@ -113,6 +113,8 @@ function showMsg() {
 async function lottery() {
   if ($.freeDrawCount > 0) {
     await drawRecord($.lotteryId);
+  } else {
+    console.log(`免费抽奖机会今日已使用\n`)
   }
 }
 //获取详情
