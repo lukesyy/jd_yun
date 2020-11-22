@@ -42,10 +42,10 @@ inputs:
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean
     - timer: # 宠汪汪积分兑换奖品# 宠汪汪偷好友积分与狗
         parameters:
-          name: jd_joy_reward_jd_joy_steal
+          name: jd_joy_reward_jd_joy_steal_jd_necklace
           cronExpression: "0 0 0-16/8 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_joy_steal
+          argument: jd_joy_reward&jd_joy_steal&jd_necklace
     - timer: # 京东全民开红包 # 进店领豆 # 取关京东店铺商品# 京东抽奖机
         parameters:
           name: jd_redPacket_jd_shop_jd_unsubscribe_jd_lotteryMachine
@@ -72,10 +72,10 @@ inputs:
           argument: jd_bean_change&jd_rankingList
     - timer: # 金融养猪# 天天提鹅
         parameters:
-          name: jd_pigPet_jd_daily_egg
+          name: jd_pigPet_jd_daily_egg_jd_dreamFactory
           cronExpression: "0 12 * * * * *"
           enable: true
-          argument: jd_pigPet&jd_daily_egg
+          argument: jd_pigPet&jd_daily_egg&jd_dreamFactory
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
