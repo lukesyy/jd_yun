@@ -123,6 +123,20 @@ async function doTasks() {
   }
 }
 async function shaking() {
+  for (let i = 0; i < new Array($.leftShakingTimes).fill('').length; i++) {
+    console.log(`开始新版-摇奖`)
+    // await $.wait(500);
+    const newShakeBeanRes = await vvipclub_shaking_lottery();
+    if (newShakeBeanRes.success) {
+      console.log(`新版-剩余摇奖次数：${newShakeBeanRes.data.remainLotteryTimes}`)
+      if (newShakeBeanRes.data && newShakeBeanRes.data.rewardBeanAmount) {
+        $.prizeBeanCount += newShakeBeanRes.data.rewardBeanAmount;
+        console.log(`恭喜你，中奖了，获得${newShakeBeanRes.data.rewardBeanAmount}京豆\n`)
+      } else {
+        console.log(`未中奖\n`)
+      }
+    }
+  }
   for (let i = 0; i < new Array($.freeTimes).fill('').length; i++) {
     console.log(`开始摇奖`)
     await $.wait(1000);
@@ -132,20 +146,6 @@ async function shaking() {
       if (shakeBeanRes.data && shakeBeanRes.data.prizeBean) {
         $.prizeBeanCount += shakeBeanRes.data.prizeBean.count;
         $.totalBeanCount = shakeBeanRes.data.luckyBox.totalBeanCount;
-      }
-    }
-  }
-  for (let i = 0; i < new Array($.leftShakingTimes).fill('').length; i++) {
-    console.log(`开始新版-摇奖`)
-    await $.wait(1000);
-    const newShakeBeanRes = await vvipclub_shaking_lottery();
-    if (newShakeBeanRes.success) {
-      console.log(`新版-剩余摇奖次数：${newShakeBeanRes.data.remainLotteryTimes}`)
-      if (newShakeBeanRes.data && newShakeBeanRes.data.rewardBeanAmount) {
-        $.prizeBeanCount += newShakeBeanRes.data.rewardBeanAmount;
-        console.log(`恭喜你，中奖了，获得${newShakeBeanRes.data.rewardBeanAmount}京豆\n`)
-      } else {
-        console.log(`未中奖\n`)
       }
     }
   }
