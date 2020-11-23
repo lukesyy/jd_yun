@@ -36,7 +36,7 @@ inputs:
           argument: jd_fruit&jd_pet
     - timer: # 宠汪汪喂食# 宠汪汪# 摇钱树# 京东种豆得豆# 京喜工厂
         parameters:
-          name: jd_joy_feedPets_jd_joy_jd_moneyTree_jd_plantBean_jd_dreamFactory
+          name: joy_feedPets_joy_moneyTree_plantBean_dreamFactory
           cronExpression: "0 15 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory
@@ -48,7 +48,7 @@ inputs:
           argument: jd_joy_reward&jd_joy_steal&jd_necklace
     - timer: # 京东全民开红包 # 进店领豆 # 取关京东店铺商品# 京东抽奖机# 东东小窝
         parameters:
-          name: jd_redPacket_jd_shop_jd_unsubscribe_jd_lotteryMachine_jd_small_home
+          name: redPacket_shop_unsubscribe_lotteryMachine_small_home
           cronExpression: "0 10 0 * * * *"
           enable: true
           argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_small_home
