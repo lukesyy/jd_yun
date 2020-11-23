@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 exports.main_handler = async (event, context, callback) => {
   try {
       //如果想在一个定时触发器里面执行多个js文件需要在定时触发器的【附加信息】里面填写对应的名称，用 & 链接
@@ -8,7 +8,9 @@ exports.main_handler = async (event, context, callback) => {
           var request = require('request');
           //1.执行自己上传的js文件
           //require('./'+v+'.js')
-
+          //delete require.cache[require.resolve('./'+v+'.js')];
+          //require('./'+v+'.js')
+        
           //2.执行国内gitee远端js文件如果部署，在国内节点，选择1或2的方式
           //request('https://gitee.com/lxk0301/jd_scripts/raw/master/'+v+'.js', function (error, response, body) {
           //    eval(response.body)
