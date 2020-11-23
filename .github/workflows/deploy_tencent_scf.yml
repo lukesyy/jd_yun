@@ -52,7 +52,7 @@ jobs:
           if [ $SUPERMARKET_LOTTERY ]; then sed -i "/variables/a\      SUPERMARKET_LOTTERY: $SUPERMARKET_LOTTERY" serverless.yml; fi;
           if [ $FRUIT_BEAN_CARD ]; then sed -i "/variables/a\      FRUIT_BEAN_CARD: $FRUIT_BEAN_CARD" serverless.yml; fi;
           if [ $UN_SUBSCRIBES ]; then sed -i "/variables/a\      UN_SUBSCRIBES: $UN_SUBSCRIBES" serverless.yml; fi;
-          if [ $FruitShareCodes ]; then sed -i "/variables/a\      FruitShareCodes: $FruitShareCodes" serverless.yml; fi;
+          if [ $FRUITSHARECODES ]; then sed -i "/variables/a\      FRUITSHARECODES: $FruitShareCodes" serverless.yml; fi;
           if [ $PETSHARECODES ]; then sed -i "/variables/a\      PETSHARECODES: $PETSHARECODES" serverless.yml; fi;
           if [ $PLANT_BEAN_SHARECODES ]; then sed -i "/variables/a\      PLANT_BEAN_SHARECODES: $PLANT_BEAN_SHARECODES" serverless.yml; fi;
           if [ $SUPERMARKET_SHARECODES ]; then sed -i "/variables/a\      SUPERMARKET_SHARECODES: $SUPERMARKET_SHARECODES" serverless.yml; fi;
@@ -88,7 +88,7 @@ jobs:
           SUPERMARKET_LOTTERY: ${{ secrets.SUPERMARKET_LOTTERY}}
           FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD}}
           UN_SUBSCRIBES: ${{ secrets.UN_SUBSCRIBES}}
-          FruitShareCodes: ${{ secrets.FruitShareCodes}}
+          FRUITSHARECODES: ${{ secrets.FRUITSHARECODES}}
           PETSHARECODES: ${{ secrets.PETSHARECODES}}
           PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES}}
           SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES}}
