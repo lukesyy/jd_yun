@@ -109,6 +109,13 @@ triggers:
 > 将SecretId和SecretKey分别配置在仓库的secrets变量里面， TENCENT_SECRET_ID对应你的SecretId的值，TENCENT_SECRET_KEY对应你的SecretKey的值
 
 ## 3. 配置自己需要secrets变量[参考这里](githubAction.md#下方提供使用到的-secrets全集合)
+### __重要的说三遍__   
+### 如果涉及一个变量配置多个值，如多个cookie，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
+### 如果涉及一个变量配置多个值，如多个cookie，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
+### 如果涉及一个变量配置多个值，如多个cookie，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
+> 排查问题第一步先看自己[腾讯云函数](https://console.cloud.tencent.com/scf/list-detail?rid=5&ns=default&id=scf-jdscript)那边的环境变量跟自己在仓库配置的 `secrets` 是否一致
+![image](https://user-images.githubusercontent.com/6993269/99937191-06617680-2da0-11eb-99ea-033f2c655683.png)
+
 
 ## 4.执行action workflow进行部署，workflow未报错即部署成功
 ![image](https://user-images.githubusercontent.com/6993269/99513289-6a152980-29c5-11eb-9266-3f56ba13d3b2.png)
@@ -117,5 +124,5 @@ triggers:
 
 在左侧栏的日志查询中，可以查看到触发的日志，包括是否打卡成功等。
 
-![测试函数](https://imgbed-bucket-1251971143.cos.ap-guangzhou.myqcloud.com/./1605263963294-test.png)
-## 6. 设置触发器[看这里](iCloud.md#5设置触发器)
+![测试函数](https://user-images.githubusercontent.com/6993269/99628053-5a9eea80-2a70-11eb-906f-f1d5ea2bfa3a.png)
+## 6. 设置触发器[看这里](iCloud.md#5设置触发器) 或者看这里的[注释说明](https://github.com/iouAkira/jd_scripts/blob/patch-1/index.js#L4)
