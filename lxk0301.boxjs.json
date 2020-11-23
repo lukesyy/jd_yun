@@ -34,6 +34,28 @@
       "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra.js"
     },
     {
+      "id": "JD_UA",
+      "name": "自定义京东脚本的UserAgent",
+      "keys": [
+        "JDUA"
+      ],
+      "settings": [
+        {
+          "id": "JDUA",
+          "name": "自定义京东脚本的UserAgent",
+          "val": "",
+          "type": "text",
+          "desc": "不懂不知不会UserAgent的请不要随意填写内容"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
+      ]
+    },
+    {
       "id": "jd_fruit",
       "name": "东东农场",
       "keys": [
@@ -631,16 +653,7 @@
     {
       "id": "jd_SuperMarket",
       "name": "京小超",
-      "keys": [
-        "jd_supermarket_name",
-        "jd_supermarket1",
-        "jd_supermarket2",
-        "jd_supermarket3",
-        "j2_supermarket_name",
-        "jd2_supermarket1",
-        "jd2_supermarket2",
-        "jd2_supermarket3"
-      ],
+      "keys": [],
       "settings": [
         {
           "id": "jdSuperMarketNotify",
@@ -669,62 +682,6 @@
           "val": false,
           "type": "boolean",
           "desc": "运行脚本消耗金币进行抽奖，默认抽奖"
-        },
-        {
-          "id": "jd_supermarket_name",
-          "name": "京东账号一昵称",
-          "val": "",
-          "type": "text",
-          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
-        },
-        {
-          "id": "jd_supermarket1",
-          "name": "京东账号一互助码1",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd_supermarket2",
-          "name": "京东账号一互助码2",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd_supermarket3",
-          "name": "京东账号一互助码3",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd2_supermarket_name",
-          "name": "京东账号二昵称",
-          "val": "",
-          "type": "text",
-          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
-        },
-        {
-          "id": "jd2_supermarket1",
-          "name": "京东账号二互助码1",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd2_supermarket2",
-          "name": "京东账号二互助码2",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd2_supermarket3",
-          "name": "京东账号二互助码3",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
         }
       ],
       "author": "@lxk0301",
