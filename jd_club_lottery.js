@@ -2,7 +2,7 @@
  * @Author: lxk0301 
  * @Date: 2020-11-03 20:35:07
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-22 20:37:10
+ * @Last Modified time: 2020-11-22 23:07:04
  摇京豆(京东APP首页-领京豆-摇京豆)
  更新时间:2020-10-12
  Modified from https://github.com/Zero-S1/JD_tools/blob/master/JD_vvipclub.py
@@ -168,7 +168,7 @@ function vvipclub_shaking_info() {
         "cookie": cookie,
         "origin": "https://skuivip.jd.com",
         "referer": "https://skuivip.jd.com/",
-        "user-agent": "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.get(options, (err, resp, data) => {
@@ -204,7 +204,7 @@ function vvipclub_shaking_lottery() {
         "cookie": cookie,
         "origin": "https://skuivip.jd.com",
         "referer": "https://skuivip.jd.com/",
-        "user-agent": "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.get(options, (err, resp, data) => {
@@ -236,7 +236,7 @@ function vvipclub_receive_lottery_times() {
         "cookie": cookie,
         "origin": "https://skuivip.jd.com",
         "referer": "https://skuivip.jd.com/",
-        "user-agent": "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.get(options, (err, resp, data) => {
