@@ -74,7 +74,10 @@ exports.main_handler = async (event, context, callback) => {
 [![B20KxI.png](https://s1.ax1x.com/2020/11/05/B20KxI.png)](https://imgchr.com/i/B20KxI)
 [![BRCG0H.png](https://s1.ax1x.com/2020/11/05/BRCG0H.png)](https://imgchr.com/i/BRCG0H)
 
-**注意：方案一与方案二不能混合到同一个index.js文件中使用，同一个仓库下，二者只能选择其一。感谢[issues#115](https://github.com/lxk0301/jd_scripts/issues/115)中的解决方案，目前云函数连续测试已经可以规避热启动问题了**
+**注意：**<br>
+Ⅰ方案一与方案二不能混合到同一个index.js文件中使用，同一个仓库下，二者只能选择其一。<br>
+Ⅱ感谢[issues#115](https://github.com/lxk0301/jd_scripts/issues/115)中的解决方案，目前云函数连续测试已经可以规避热启动问题了。<br>
+Ⅲ在确保完全按照本教程设置的情况下测试云函数运行情况，对于部分人运行日志中出现某些脚本运行失败其他正常，并且错误提示带有strict字样的，请自行删除index.js中的```'use strict';```，再做测试<br>
 
  **增加cookie**
 
@@ -131,7 +134,11 @@ let CookieJDs = [
 
 ![BcGvM4.png](https://s1.ax1x.com/2020/11/04/BcGvM4.png)
 
-![UTOOLS1604471299130.png](https://img01.sogoucdn.com/app/a/100520146/f8d70ea4f8e08d9e87ec8c13474f22c3)
+创建触发器
+
+![iCloud6](./icon/iCloud6.png)
+
+触发方式默认“**定时触发**”，定时任务名称随便起个名字，触发周期根据自己需要自行设置。
 
 想进阶使用触发器的自行查看本文中方案一和方案二中的说明
 
@@ -140,7 +147,8 @@ let CookieJDs = [
 
 [Corn文档](https://cloud.tencent.com/document/product/583/9708#cron-.E8.A1.A8.E8.BE.BE.E5.BC.8F)
 
-目前repo中按照每个脚本一个定时器的方式设置到云函数中，大约需要触发器10多个，由于云函数触发器限制最多10个，需要对触发器进行整合，整合后触发器共8个，以下设置仅供参考<br>
+目前repo中按照每个脚本一个定时器的方式设置到云函数中，大约需要触发器10多个，由于云函数触发器限制最多10个，需要对触发器进行整合，整合后触发器保持在10个以内，以下设置仅供参考<br>
+
 ![iCloud5](./icon/iCloud5.png)
 
 点击提交，所有流程就结束了。
