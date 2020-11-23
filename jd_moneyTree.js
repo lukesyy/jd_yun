@@ -257,6 +257,12 @@ function sell() {
     }
     params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
     console.log(`目前金果数量${fruitTotal}`)
+    if ($.isNode()) {
+        if (process.env.MONEY_TREE_SELL_FRUIT && process.env.MONEY_TREE_SELL_FRUIT === 'false') {
+            rs()
+            return
+        }
+    }
     if (fruitTotal > 380) {
       request('sell', params).then((sellRes) => {
         console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
