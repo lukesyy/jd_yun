@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-22 08:22:37
+ * @Last Modified time: 2020-11-24 08:22:37
  */
 /*
 东东超市(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
@@ -395,6 +395,8 @@ async function businessCircleActivity() {
     } else if (pkStatus === 3) {
       console.log(`商圈PK暂停中\n`)
     }
+  } else {
+    console.log(`\n${JSON.stringify(smtg_getTeamPkDetailInfoRes)}\n`)
   }
   return
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
