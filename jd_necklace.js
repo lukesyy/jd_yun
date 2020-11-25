@@ -67,7 +67,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         }
         continue
       }
-      await JD818();
+      await jd_necklace();
     }
   }
 })()
@@ -77,7 +77,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     .finally(() => {
       $.done();
     })
-async function JD818() {
+async function jd_necklace() {
   await necklace_homePage();
   await doTask();
   await necklace_homePage();
