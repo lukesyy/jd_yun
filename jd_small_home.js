@@ -148,7 +148,7 @@ function queryByUserId() {
 async function doChannelsListTask(taskId, taskType) {
   await queryChannelsList(taskId);
   for (let item of $.queryChannelsList) {
-    if (item.showOrder !== 1) {
+    if (item.showOrder === 1) {
       await $.wait(1000)
       await followChannel(taskId, item.id)
       await queryDoneTaskRecord(taskId, taskType);

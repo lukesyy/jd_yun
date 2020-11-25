@@ -16,6 +16,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 
 let cookiesArr = [], cookie = '';
+const inviteCodes = ['gB99tYLjvPcEFloDgamoBw==', 'V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k='];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -70,6 +71,7 @@ if ($.isNode()) {
 async function jdDreamFactory() {
   ele = 0;
   await userInfo();
+  await helpFriends(inviteCodes)
   if ($.unActive) return
   await getUserElectricity();
   await taskList();
@@ -282,7 +284,13 @@ function hireAward() {
     })
   })
 }
-
+async function helpFriends(codes) {
+  for (let code of codes) {
+    if (code) {
+      await assistFriend(code);
+    }
+  }
+}
 // 帮助用户
 function assistFriend(sharepin) {
 
@@ -421,11 +429,16 @@ function stealFriend() {
         data = data['data'];
         for (let i = 0; i < data.list.length; ++i) {
           let pin = data.list[i]['encryptPin'];
-          getFactoryIdByPin(pin).then(async (facId) => {
-            await collectElectricity(facId,true)
-          }).catch(err => {
+          if (data.list[i]['collectFlag'] === 1) {
+            //只有collectFlag为1的时候,才能偷取好友电力
+            getFactoryIdByPin(pin).then(async (facId) => {
+              if (facId) await collectElectricity(facId,true)
+            }).catch(err => {
 
-          })
+            })
+          } else {
+            console.log(`此好友[${pin}]暂不能被你收取电力`)
+          }
         }
       }
       resolve()
@@ -439,7 +452,12 @@ function getFactoryIdByPin(pin) {
     $.get(taskurl(url), (err, resp, data) => {
       data = JSON.parse(data);
       if (data['ret'] === 0) {
-        resolve(data['data']['factoryList'][0]['factoryId'])
+        if (data.data.factoryList) {
+          //做此判断,有时候返回factoryList为null
+          resolve(data['data']['factoryList'][0]['factoryId'])
+        } else {
+          resolve();
+        }
       } else {
         reject()
       }
