@@ -26,6 +26,7 @@ jobs:
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
           if [ $JD_COOKIE ]; then sed -i "/variables/a\      JD_COOKIE: $JD_COOKIE" serverless.yml; fi;
+          if [ $JD_USER_AGENT ]; then sed -i "/variables/a\      JD_USER_AGENT: $JD_USER_AGENT" serverless.yml; fi;
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_STOP_NOTIFY ]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: $JD_BEAN_SIGN_STOP_NOTIFY" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_NOTIFY_SIMPLE ]; then sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: $JD_BEAN_SIGN_NOTIFY_SIMPLE" serverless.yml; fi;
@@ -58,10 +59,13 @@ jobs:
           if [ $SUPERMARKET_SHARECODES ]; then sed -i "/variables/a\      SUPERMARKET_SHARECODES: $SUPERMARKET_SHARECODES" serverless.yml; fi;
           if [ $TG_PROXY_HOST ]; then sed -i "/variables/a\      TG_PROXY_HOST: $TG_PROXY_HOST" serverless.yml; fi;
           if [ $TG_PROXY_PORT ]; then sed -i "/variables/a\      TG_PROXY_PORT: $TG_PROXY_PORT" serverless.yml; fi;
+          if [ $MONEY_TREE_SELL_FRUIT ]; then sed -i "/variables/a\      MONEY_TREE_SELL_FRUIT: $MONEY_TREE_SELL_FRUIT" serverless.yml; fi;
+          if [ $FACTORAY_WANTPRODUCT_NAME ]; then sed -i "/variables/a\      FACTORAY_WANTPRODUCT_NAME: $FACTORAY_WANTPRODUCT_NAME" serverless.yml; fi;
           cat serverless.yml
           env
         env: #因为直接读取secrets里面的值很多字符不会自动转译，导致写入serverless.yml异常，所以设置到环境变量，在读取环境变量转译过的值
           JD_COOKIE: ${{ secrets.JD_COOKIE}}
+          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT}}
           JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
           JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}
           JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}
@@ -94,6 +98,8 @@ jobs:
           SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES}}
           TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}
           TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}
+          MONEY_TREE_SELL_FRUIT: ${{ secrets.MONEY_TREE_SELL_FRUIT}}
+          FACTORAY_WANTPRODUCT_NAME: ${{ secrets.FACTORAY_WANTPRODUCT_NAME}}
 
       - name: "部署到腾讯云函数"
         run: serverless deploy
