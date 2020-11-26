@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-25 18:19:21 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-26 10:20:02
+ * @Last Modified time: 2020-11-26 12:58:02
  */
 /*
 东东工厂，不是京喜工厂
@@ -85,7 +85,9 @@ const inviteCodes = [`P04z54XCjVWnYaS5u2ak7ZCdan1Bdd2GGiWvC6_uERj`, 'P04z54XCjVW
 async function jdFactory() {
   await jdfactory_getHomeData();
   await helpFriends(inviteCodes);
-  if ($.newUser === 1 || ($.newUser !==1 && $.haveProduct === 2)) return
+  // $.newUser !==1 && $.haveProduct === 2，老用户但未选购商品
+  // $.newUser === 1新用户
+  if ($.newUser === 1) return
   await jdfactory_collectElectricity();//收集产生的电量
   await jdfactory_getTaskDetail();
   await doTask();
@@ -117,6 +119,7 @@ async function algorithm() {
               $.haveProduct = data.data.result.haveProduct;
               $.userName = data.data.result.userName;
               $.newUser = data.data.result.newUser;
+              wantProduct = $.isNode() ? (process.env.FACTORAY_WANTPRODUCT_NAME ? process.env.FACTORAY_WANTPRODUCT_NAME : wantProduct) : ($.getdata('FACTORAY_WANTPRODUCT_NAME') ? $.getdata('FACTORAY_WANTPRODUCT_NAME') : wantProduct);
               if (data.data.result.factoryInfo) {
                 let { totalScore, useScore, produceScore, remainScore, couponCount, name } = data.data.result.factoryInfo
                 console.log(`\n已选商品：${name}`);
@@ -130,11 +133,10 @@ async function algorithm() {
                 message += `已选商品剩余量：${couponCount}\n`;
                 message += `当前总电量：${remainScore * 1 + useScore * 1}\n`;
                 message += `当前完成度：${((remainScore * 1 + useScore * 1)/(totalScore * 1)).toFixed(2) * 100}%\n`;
-                wantProduct = $.isNode() ? (process.env.FACTORAY_WANTPRODUCT_NAME ? process.env.FACTORAY_WANTPRODUCT_NAME : wantProduct) : ($.getdata('FACTORAY_WANTPRODUCT_NAME') ? $.getdata('FACTORAY_WANTPRODUCT_NAME') : wantProduct);
                 if (wantProduct) {
                   console.log(`BoxJs或环境变量提供的心仪商品：${wantProduct}\n`);
                   await jdfactory_getProductList(true);
-                  let wantProductSkuId = '', fullScore;
+                  let wantProductSkuId = '';
                   for (let item of $.canMakeList) {
                     if (item.name.indexOf(wantProduct) > - 1) {
                       totalScore = item['fullScore'] * 1;
@@ -166,6 +168,33 @@ async function algorithm() {
                     console.log(`\n所选商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【不满足】兑换此商品所需总电量：${totalScore}`)
                     console.log(`故不一次性投入电力，一直放到蓄电池累计\n`);
                   }
+                }
+              } else {
+                console.log(`\n此账号${$.index}${$.nickName}暂未选择商品\n`);
+                if (wantProduct) {
+                  console.log(`BoxJs或环境变量提供的心仪商品：${wantProduct}\n`);
+                  await jdfactory_getProductList(true);
+                  let wantProductSkuId = '', name, totalScore, couponCount, remainScore;
+                  for (let item of $.canMakeList) {
+                    if (item.name.indexOf(wantProduct) > - 1) {
+                      totalScore = item['fullScore'] * 1;
+                      couponCount = item.couponCount;
+                      name = item.name;
+                    }
+                    if (item.name.indexOf(wantProduct) > - 1 && item.couponCount > 0) {
+                      wantProductSkuId = item.skuId;
+                    }
+                  }
+                  if (wantProductSkuId && (($.batteryValue * 1) >= (totalScore))) {
+                    console.log(`\n提供的心仪商品${name}目前数量：${couponCount}，且当前总电量为：${$.batteryValue * 1}，【满足】兑换此商品所需总电量：${totalScore}`);
+                    console.log(`请去活动页面更换成心仪商品并手动投入电量兑换\n`);
+                    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n您提供的心仪商品${name}目前数量：${couponCount}\n当前总电量为：${$.batteryValue * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n请去活动页面选择此心仪商品并手动投入电量兑换`);
+                    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `您提供的心仪商品${name}目前数量：${couponCount}\n当前总电量为：${$.batteryValue * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n请去活动页面选择此心仪商品并手动投入电量兑换`);
+                  } else {
+                    console.log(`您心仪商品${name}\n当前数量为：${couponCount}\n兑换所需电量为：${totalScore}\n您当前总电量为：${$.batteryValue * 1}\n不满足兑换心仪商品的条件\n`)
+                  }
+                } else {
+                  console.log(`BoxJs或环境变量暂未提供心仪商品\n如需兑换心仪商品，请提供心仪商品名称\n`);
                 }
               }
             } else {
@@ -350,7 +379,8 @@ function jdfactory_collectElectricity() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.data.bizCode === 0) {
-              console.log(`成功收集${data.data.result.electricityValue}电量，当前蓄电池总电量：${data.data.result.batteryValue}\n`)
+              console.log(`成功收集${data.data.result.electricityValue}电量，当前蓄电池总电量：${data.data.result.batteryValue}\n`);
+              $.batteryValue = data.data.result.batteryValue;
             }
           }
         }
@@ -484,9 +514,9 @@ function jdfactory_getHomeData() {
                 // $.msg($.name, '暂未开启活动', `京东账号${$.index}${$.nickName}暂未开启${$.name}活动\n请去京东APP->搜索'玩一玩'->东东工厂->开启\n或点击弹窗即可到达${$.name}活动`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
               }
               if ($.newUser !== 1 && $.haveProduct === 2) {
-                console.log(`此京东账号${$.index}${$.nickName}暂未选购商品\n现在为您从库存里面现有数量中选择一商品`);
+                console.log(`此京东账号${$.index}${$.nickName}暂未选购商品\n现在也能为您做任务和收集免费电力`);
                 // $.msg($.name, '暂未选购商品', `京东账号${$.index}${$.nickName}暂未选购商品\n请去京东APP->搜索'玩一玩'->东东工厂->选购一件商品\n或点击弹窗即可到达${$.name}活动`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
-                await jdfactory_getProductList();//选购商品
+                // await jdfactory_getProductList();//选购商品
               }
             } else {
               console.log(`异常：${JSON.stringify(data)}`)

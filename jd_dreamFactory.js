@@ -290,7 +290,7 @@ function hireAward() {
               message += `【打工电力】：收取成功\n`
             } else {
               console.log(`打工电力：收取失败，${data.msg}`)
-              message += `【打工电力】：收取失败，${data.msg}\n`
+              message += `【打工电力】收取失败，${data.msg}\n`
             }
           } else {
             console.log(`京东服务器返回空数据`)
