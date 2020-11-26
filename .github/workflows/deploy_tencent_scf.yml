@@ -57,6 +57,7 @@ jobs:
           if [ $PETSHARECODES ]; then sed -i "/variables/a\      PETSHARECODES: $PETSHARECODES" serverless.yml; fi;
           if [ $PLANT_BEAN_SHARECODES ]; then sed -i "/variables/a\      PLANT_BEAN_SHARECODES: $PLANT_BEAN_SHARECODES" serverless.yml; fi;
           if [ $SUPERMARKET_SHARECODES ]; then sed -i "/variables/a\      SUPERMARKET_SHARECODES: $SUPERMARKET_SHARECODES" serverless.yml; fi;
+          if [ $DDFACTORY_SHARECODES ]; then sed -i "/variables/a\      DDFACTORY_SHARECODES: $DDFACTORY_SHARECODES" serverless.yml; fi;
           if [ $TG_PROXY_HOST ]; then sed -i "/variables/a\      TG_PROXY_HOST: $TG_PROXY_HOST" serverless.yml; fi;
           if [ $TG_PROXY_PORT ]; then sed -i "/variables/a\      TG_PROXY_PORT: $TG_PROXY_PORT" serverless.yml; fi;
           if [ $MONEY_TREE_SELL_FRUIT ]; then sed -i "/variables/a\      MONEY_TREE_SELL_FRUIT: $MONEY_TREE_SELL_FRUIT" serverless.yml; fi;
@@ -96,6 +97,7 @@ jobs:
           PETSHARECODES: ${{ secrets.PETSHARECODES}}
           PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES}}
           SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES}}
+          DDFACTORY_SHARECODES: ${{ secrets.DDFACTORY_SHARECODES}}
           TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}
           TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}
           MONEY_TREE_SELL_FRUIT: ${{ secrets.MONEY_TREE_SELL_FRUIT}}
