@@ -436,6 +436,7 @@ function jdfactory_getProductList(flag) {
                   console.log(`${item.name.slice(-4)}         ${item.sellOut === 1 ? '已抢光':'可选'}      ${item.couponCount}`);
                   if (item.name.indexOf(wantProduct) > -1 && item.couponCount > 0 && item.sellOut === 0) {
                     await jdfactory_makeProduct(item.skuId);
+                    break
                   }
                 }
               }

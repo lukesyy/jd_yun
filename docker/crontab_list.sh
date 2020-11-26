@@ -1,6 +1,6 @@
-0 */1 * * * git -C /scripts/ pull >> /scripts/logs/pull.log 2>&1
-2 */1 * * * crontab /scripts/docker/${CRONTAB_LIST_FILE}
-3 */1 * * * npm install --prefix /scripts >> /scripts/logs/npm_install.log 2>&1
+50 */1 * * * git -C /scripts/ pull >> /scripts/logs/pull.log 2>&1
+52 */1 * * * crontab /scripts/docker/${CRONTAB_LIST_FILE}
+53 */1 * * * npm install --prefix /scripts >> /scripts/logs/npm_install.log 2>&1
 # 每3天的23:50分清理一次日志
 50 23 */3 * * rm -rf /scripts/logs/*.log
 
