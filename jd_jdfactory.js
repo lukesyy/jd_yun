@@ -312,7 +312,7 @@ async function doTask() {
       //从数码电器首页进入
       if (item.status === 1) {
         console.log(`准备做此任务：${item.taskName}`);
-        // await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
+        await jdfactory_collectScore(item.simpleRecordInfoVo.taskToken);
       } else {
         console.log(`${item.taskName}已完成`);
       }
