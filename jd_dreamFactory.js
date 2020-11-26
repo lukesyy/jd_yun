@@ -425,6 +425,7 @@ function userInfo() {
           productionId = production.productionId;//商品ID
           subTitle = data.user.pin;
           await GetCommodityDetails(production.commodityDimId);
+          await DrawProductionStagePrize(productionId);
           console.log(`当前电力：${data.user.electric}`)
           console.log(`分享码: ${data.user.encryptPin}`);
           console.log(`生产进度：${(production.investedElectric / production.needElectric).toFixed(2) * 100}%`);
@@ -464,7 +465,21 @@ function GetCommodityDetails(commodityDimId) {
     })
   })
 }
-
+//领取红包
+function DrawProductionStagePrize(productionId) {
+  return new Promise(async resolve => {
+    const url = `/dreamfactory/userinfo/DrawProductionStagePrize?zone=dream_factory&sceneval=2&g_login_type=1&productionId=${productionId}`;
+    $.get(taskurl(url), (err, resp, data) => {
+      console.log(`领取红包(测试中)结果：${data}`)
+      data = JSON.parse(data);
+      if (data['ret'] === 0) {
+        // data = data['data'];
+        // $.productName = data['commodityList'][0].name;
+      }
+      resolve()
+    })
+  })
+}
 function stealFriend() {
   return new Promise(async resolve => {
     const url = `//dreamfactory/friend/QueryFactoryManagerList?zone=dream_factory&sceneval=2`;
