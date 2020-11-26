@@ -414,7 +414,7 @@ function doTask(taskId) {
 function userInfo() {
   return new Promise(async resolve => {
     const url = `/dreamfactory/userinfo/GetUserInfo?zone=dream_factory&pin=&sharePin=&shareType=&materialTuanPin=&materialTuanId=&sceneval=2`;
-    $.get(taskurl(url), (err, resp, data) => {
+    $.get(taskurl(url), async (err, resp, data) => {
       data = JSON.parse(data);
       if (data['ret'] === 0) {
         data = data['data'];
@@ -424,21 +424,46 @@ function userInfo() {
           factoryId = factory.factoryId;//工厂ID
           productionId = production.productionId;//商品ID
           subTitle = data.user.pin;
+          await GetCommodityDetails(production.commodityDimId);
           console.log(`当前电力：${data.user.electric}`)
           console.log(`分享码: ${data.user.encryptPin}`);
           console.log(`生产进度：${(production.investedElectric / production.needElectric).toFixed(2) * 100}%`);
+          message += `【京东账号${$.index}】${$.nickName}\n`
+          message += `【生产商品】${$.productName}\n`;
           message += `【生产进度】${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%\n`;
+          if (production.investedElectric >= production.needElectric) {
+            $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n已生产完,毕请速去兑换`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D'})
+            await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n已生产完,毕请速去兑换`)
+          }
         } else {
-          $.unActive = true;//标记是否开启了此活动
-          console.log('【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
-          $.msg($.name, '', `【提示】此账号[${$.nickName}]京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动`);
+          $.unActive = true;//标记是否开启了京喜活动或者选购了商品进行生产
+          if (!data.factoryList) {
+            console.log('【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
+            $.msg($.name, '', `【提示】此账号[${$.nickName}]京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动`);
+          } else if (data.factoryList && !data.productionList) {
+            console.log(`【提示】此账号京喜工厂未选购商品\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 选购\n`)
+            $.msg($.name, '', `【提示】此账号[${$.nickName}]京喜工厂未选择商品\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 选择商品`);
+          }
         }
       }
       resolve()
     })
   })
 }
-
+//查询当前生产的商品名称
+function GetCommodityDetails(commodityDimId) {
+  return new Promise(async resolve => {
+    const url = `/dreamfactory/diminfo/GetCommodityDetails?zone=dream_factory&sceneval=2&g_login_type=1&commodityId=${commodityDimId}`;
+    $.get(taskurl(url), (err, resp, data) => {
+      data = JSON.parse(data);
+      if (data['ret'] === 0) {
+        data = data['data'];
+        $.productName = data['commodityList'][0].name;
+      }
+      resolve()
+    })
+  })
+}
 
 function stealFriend() {
   return new Promise(async resolve => {
