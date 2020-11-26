@@ -19,7 +19,7 @@ inputs:
     - timer: # 签到
         parameters:
           name: jd_bean_sign
-          cronExpression: "0 0 0,12,18 * * * *"
+          cronExpression: "0 0 0,3 * * * *"
           enable: true
           argument: jd_bean_sign
     - timer: # 京小超兑换奖品# 摇京豆
@@ -37,7 +37,7 @@ inputs:
     - timer: # 宠汪汪喂食# 宠汪汪# 摇钱树# 京东种豆得豆# 京喜工厂 #东东工厂
         parameters:
           name: joy_feedPets_joy_moneyTree_plantBean_dreamFactory_jd_jdfactory
-          cronExpression: "0 15 */1 * * * *"
+          cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory
     - timer: # 宠汪汪积分兑换奖品# 宠汪汪偷好友积分与狗# 点点券
