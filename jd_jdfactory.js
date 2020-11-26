@@ -499,6 +499,7 @@ function jdfactory_getHomeData() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
+            console.log(data);
             data = JSON.parse(data);
             if (data.data.bizCode === 0) {
               $.haveProduct = data.data.result.haveProduct;
