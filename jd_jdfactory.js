@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-25 18:19:21 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-25 18:20:02
+ * @Last Modified time: 2020-11-26 10:20:02
  */
 /*
 东东工厂，不是京喜工厂
@@ -11,6 +11,22 @@
 开会员任务和去京东首页点击“数码电器任务目前未做
 不会每次运行脚本都投入电力
 只有当心仪的商品存在，并且收集起来的电量满足当前商品所需电力，才投入
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#京东工厂
+10 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js, tag=东东工厂, enabled=true
+
+================Loon==============
+[Script]
+cron "10 * * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js,tag=东东工厂
+
+===============Surge=================
+东东工厂 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js
+
+============小火箭=========
+东东工厂 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js, cronexpr="10 * * * *", timeout=200, enable=true
  */
 const $ = new Env('东东工厂');
 
@@ -28,7 +44,7 @@ if ($.isNode()) {
 } else {
   cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')]);
 }
-const wantProduct = `便携式手持风扇`;//心仪商品名称
+let wantProduct = `移动电源`;//心仪商品名称
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [`P04z54XCjVWnYaS5u2ak7ZCdan1Bdd2GGiWvC6_uERj`, 'P04z54XCjVWnYaS5m9cZ2ariXVJwHf0bgkG7Uo'];
 !(async () => {
@@ -102,7 +118,7 @@ async function algorithm() {
               $.userName = data.data.result.userName;
               $.newUser = data.data.result.newUser;
               if (data.data.result.factoryInfo) {
-                const { totalScore, useScore, produceScore, remainScore, couponCount, name } = data.data.result.factoryInfo
+                let { totalScore, useScore, produceScore, remainScore, couponCount, name } = data.data.result.factoryInfo
                 console.log(`\n已选商品：${name}`);
                 console.log(`当前已投入电量/所需电量：${useScore}/${totalScore}`);
                 console.log(`已选商品剩余量：${couponCount}`);
@@ -112,16 +128,44 @@ async function algorithm() {
                 message += `已选商品：${name}\n`;
                 message += `当前已投入电量/所需电量：${useScore}/${totalScore}\n`;
                 message += `已选商品剩余量：${couponCount}\n`;
-                message += `当前蓄电池电量：${remainScore}\n`;
+                message += `当前总电量：${remainScore * 1 + useScore * 1}\n`;
                 message += `当前完成度：${((remainScore * 1 + useScore * 1)/(totalScore * 1)).toFixed(2) * 100}%\n`;
-                if (((remainScore * 1 + useScore * 1) >= totalScore * 1) && (couponCount * 1 > 0)) {
-                  console.log(`\n所选商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【满足】兑换此商品所需总电量：${$.totalScore}`);
-                  console.log(`下面开始投入电量\n`);
-                  await jdfactory_addEnergy();
-                  await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `所选商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${$.totalScore}\n请去活动页面查看`);
+                wantProduct = $.isNode() ? (process.env.FACTORAY_WANTPRODUCT_NAME ? process.env.FACTORAY_WANTPRODUCT_NAME : wantProduct) : ($.getdata('FACTORAY_WANTPRODUCT_NAME') ? $.getdata('FACTORAY_WANTPRODUCT_NAME') : wantProduct);
+                if (wantProduct) {
+                  console.log(`BoxJs或环境变量提供的心仪商品：${wantProduct}\n`);
+                  await jdfactory_getProductList(true);
+                  let wantProductSkuId = '', fullScore;
+                  for (let item of $.canMakeList) {
+                    if (item.name.indexOf(wantProduct) > - 1) {
+                      totalScore = item['fullScore'] * 1;
+                      couponCount = item.couponCount;
+                      name = item.name;
+                    }
+                    if (item.name.indexOf(wantProduct) > - 1 && item.couponCount > 0) {
+                      wantProductSkuId = item.skuId;
+                    }
+                  }
+                  // console.log(`\n您心仪商品${name}\n当前数量为：${couponCount}\n兑换所需电量为：${totalScore}\n您当前总电量为：${remainScore * 1 + useScore * 1}\n`);
+                  if (wantProductSkuId && ((remainScore * 1 + useScore * 1) >= (totalScore + 100000))) {
+                    console.log(`\n提供的心仪商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【满足】兑换此商品所需总电量：${totalScore + 100000}`);
+                    console.log(`请去活动页面更换成心仪商品并手动投入电量兑换\n`);
+                    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n您提供的心仪商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n请去活动页面更换成心仪商品并手动投入电量兑换`);
+                    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `您提供的心仪商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n请去活动页面更换成心仪商品并手动投入电量兑换`);
+                  } else {
+                    console.log(`您心仪商品${name}\n当前数量为：${couponCount}\n兑换所需电量为：${totalScore}\n您当前总电量为：${remainScore * 1 + useScore * 1}\n不满足兑换心仪商品的条件\n`)
+                  }
                 } else {
-                  console.log(`\n所选商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【不满足】兑换此商品所需总电量：${$.totalScore}`)
-                  console.log(`故不一次性投入电力，一直放到蓄电池累计\n`);
+                  console.log(`BoxJs或环境变量暂未提供心仪商品\n如需兑换心仪商品，请提供心仪商品名称，否则满足条件后会为您兑换当前所选商品：${name}\n`);
+                  if (((remainScore * 1 + useScore * 1) >= totalScore * 1) && (couponCount * 1 > 0)) {
+                    console.log(`\n所选商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【满足】兑换此商品所需总电量：${totalScore}`);
+                    console.log(`BoxJs或环境变量暂未提供心仪商品，下面为您目前选的${name} 投入电量\n`);
+                    await jdfactory_addEnergy();
+                    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n您提供的心仪商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n已为您投入电量，请去活动页面查看`);
+                    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `所选商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n已为您投入电量，请去活动页面查看`);
+                  } else {
+                    console.log(`\n所选商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【不满足】兑换此商品所需总电量：${totalScore}`)
+                    console.log(`故不一次性投入电力，一直放到蓄电池累计\n`);
+                  }
                 }
               }
             } else {
@@ -374,7 +418,7 @@ function jdfactory_makeProduct(skuId) {
   })
 }
 //查询当前商品列表
-function jdfactory_getProductList() {
+function jdfactory_getProductList(flag) {
   return new Promise(resolve => {
     $.post(taskPostUrl('jdfactory_getProductList'), async (err, resp, data) => {
       try {
@@ -386,11 +430,13 @@ function jdfactory_getProductList() {
             data = JSON.parse(data);
             if (data.data.bizCode === 0) {
               $.canMakeList = data.data.result.canMakeList;//当前可选商品列表 sellOut:1为已抢光，0为目前可选择
-              console.log(`商品名称       可选状态    剩余量`)
-              for (let item of $.canMakeList) {
-                console.log(`${item.name.slice(-4)}         ${item.sellOut === 1 ? '已抢光':'可选'}      ${item.couponCount}`);
-                if (item.name.indexOf(wantProduct) > -1 && item.couponCount > 0 && item.sellOut === 0) {
-                  await jdfactory_makeProduct(item.skuId);
+              if (!flag) {
+                console.log(`商品名称       可选状态    剩余量`)
+                for (let item of $.canMakeList) {
+                  console.log(`${item.name.slice(-4)}         ${item.sellOut === 1 ? '已抢光':'可选'}      ${item.couponCount}`);
+                  if (item.name.indexOf(wantProduct) > -1 && item.couponCount > 0 && item.sellOut === 0) {
+                    await jdfactory_makeProduct(item.skuId);
+                  }
                 }
               }
             } else {
@@ -429,13 +475,17 @@ function jdfactory_getHomeData() {
                 $.hasProduceName = data.data.result.factoryInfo.name;//已选中商品当前剩余量
               }
               if ($.newUser === 1) {
-                console.log(`此京东账号${$.index}${$.nickName}暂未开启${$.name}活动\n`);
-                $.msg($.name, '暂未开启活动', `京东账号${$.index}${$.nickName}暂未开启${$.name}活动\n请去京东APP->搜索'玩一玩'->东东工厂->开启\n或点击弹窗即可到达${$.name}活动`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
+                //新用户
+                console.log(`此京东账号${$.index}${$.nickName}为新用户暂未开启${$.name}活动\n现在为您从库存里面现有数量中选择一商品`);
+                if ($.haveProduct === 2) {
+                  await jdfactory_getProductList();//选购商品
+                }
+                // $.msg($.name, '暂未开启活动', `京东账号${$.index}${$.nickName}暂未开启${$.name}活动\n请去京东APP->搜索'玩一玩'->东东工厂->开启\n或点击弹窗即可到达${$.name}活动`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
               }
               if ($.newUser !== 1 && $.haveProduct === 2) {
-                console.log(`此京东账号${$.index}${$.nickName}暂未选购商品\n`);
-                $.msg($.name, '暂未选购商品', `京东账号${$.index}${$.nickName}暂未选购商品\n请去京东APP->搜索'玩一玩'->东东工厂->选购一件商品\n或点击弹窗即可到达${$.name}活动`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
-                // await jdfactory_getProductList();//选购心仪的商品
+                console.log(`此京东账号${$.index}${$.nickName}暂未选购商品\n现在为您从库存里面现有数量中选择一商品`);
+                // $.msg($.name, '暂未选购商品', `京东账号${$.index}${$.nickName}暂未选购商品\n请去京东APP->搜索'玩一玩'->东东工厂->选购一件商品\n或点击弹窗即可到达${$.name}活动`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
+                await jdfactory_getProductList();//选购商品
               }
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
