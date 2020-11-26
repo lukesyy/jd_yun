@@ -818,6 +818,29 @@
         "https://raw.githubusercontent.com/58xinian/icon/master/xmyd_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png"
       ]
+    },
+    {
+      "id": "lxk_jdfactory",
+      "name": "东东工厂",
+      "keys": [
+        "FACTORAY_WANTPRODUCT_NAME"
+      ],
+      "settings": [
+        {
+          "id": "FACTORAY_WANTPRODUCT_NAME",
+          "name": "心仪商品名称",
+          "val": "",
+          "type": "text",
+          "desc": "请尽量填写完整和别的商品有区分度"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png"
+      ]
     }
   ]
 }
