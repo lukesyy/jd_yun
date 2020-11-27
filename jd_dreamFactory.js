@@ -102,7 +102,7 @@ async function jdDreamFactory() {
 
 
 // 收取发电机的电力
-function collectElectricity(facId = factoryId, help = false, master = '') {
+function collectElectricity(facId = factoryId, help = false, master) {
   return new Promise(async resolve => {
     let url = `/dreamfactory/generator/CollectCurrentElectricity?zone=dream_factory&apptoken=&pgtimestamp=&phoneID=&factoryid=${facId}&doubleflag=1&sceneval=2&g_login_type=1`;
     if (help && master) {
@@ -489,18 +489,8 @@ function stealFriend() {
         data = data['data'];
         for (let i = 0; i < data.list.length; ++i) {
           let pin = data.list[i]['encryptPin'];
-          if (data.list[i]['collectFlag'] === 1) {
-            //只有collectFlag为1的时候,才能偷取好友电力
-            const facId = await getFactoryIdByPin(pin);
-            if (facId) await collectElectricity(facId,true, data.list[i]['key'])
-            // getFactoryIdByPin(pin).then(async (facId) => {
-            //   if (facId) await collectElectricity(facId,true)
-            // }).catch(err => {
-            //
-            // })
-          } else {
-            console.log(`此好友[${pin}]暂不能被你收取电力`)
-          }
+          const facId = await getFactoryIdByPin(pin);
+          if (facId) await collectElectricity(facId,true, data.list[i]['key'])
         }
       }
       resolve()
