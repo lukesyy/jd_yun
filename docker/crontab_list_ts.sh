@@ -61,3 +61,5 @@
 16 6 * * * node /scripts/jd_small_home.js |ts >> /scripts/logs/jd_small_home.log 2>&1
 # 东东工厂
 36 * * * * node /scripts/jd_jdfactory.js |ts >> /scripts/logs/jd_jdfactory.log 2>&1
+#十元街
+36 8 * * * node /scripts/jd_syj.js |ts >> /scripts/logs/jd_syj.log 2>&1
