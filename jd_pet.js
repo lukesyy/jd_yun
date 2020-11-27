@@ -145,6 +145,7 @@ async function energyCollect() {
 async function feedPetsAgain() {
   const response = await request('initPetTown');//再次初始化萌宠
   if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
+    console.log(`添加log打印${JSON.stringify(response.result)}`);
     $.petInfo = response.result;
     let foodAmount = $.petInfo.foodAmount; //剩余狗粮
     if (foodAmount - 100 >= 10) {
