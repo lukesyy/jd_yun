@@ -315,7 +315,7 @@ async function helpFriends(codes) {
 function assistFriend(sharepin) {
 
   return new Promise(async resolve => {
-    const url = `/dreamfactory/friend/AssistFriend?zone=dream_factory&sharepin=${sharepin}&sceneval=2&g_login_type=1`
+    const url = `/dreamfactory/friend/AssistFriend?zone=dream_factory&sharepin=${escape(sharepin)}&sceneval=2&g_login_type=1`
     $.get(taskurl(url), async (err, resp, data) => {
       try {
         if (err) {
