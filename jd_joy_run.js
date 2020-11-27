@@ -35,7 +35,7 @@ http-response ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?c
 http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力获取Token
  **/
 const isRequest = typeof $request != "undefined"
-const $ = new Env('来客有礼宠汪汪');
+const $ = new Env('宠汪汪赛跑');
 const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 //此处填入你需要助力好友的京东用户名
 //给下面好友邀请助力的
@@ -115,7 +115,7 @@ function getToken() {
       console.log(`count: ${count}`)
       if (count === 3) {
         count = 0;
-        $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
+        $.msg($.name, '更新Token: 成功🎉', ``);
       }
       $.setdata(LKYLToken, 'jdJoyRunToken');
     }
@@ -133,7 +133,7 @@ function getToken() {
       //}
       $.setdata(LKYLToken, 'jdJoyRunToken');
 
-      $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
+      $.msg($.name, '获取Token: 成功🎉', ``);
 
       // $.done({ body: JSON.stringify(body) })
       $.done({ url: url })
