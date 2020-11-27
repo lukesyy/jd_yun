@@ -136,7 +136,7 @@ async function energyCollect() {
   let function_id = arguments.callee.name.toString();
   const response = await request(function_id);
   // console.log(`收取任务奖励好感度完成:${JSON.stringify(response)}`);
-  if (response.code === '0') {
+  if (response.resultCode === '0') {
     message += `【第${response.result.medalNum + 1}块勋章完成进度】${response.result.medalPercent}%，还需收集${response.result.needCollectEnergy}好感\n`;
     message += `【已获得勋章】${response.result.medalNum}块，还需收集${response.result.needCollectMedalNum}块即可兑换奖品“${$.petInfo.goodsInfo.goodsName}”\n`;
   }
@@ -145,7 +145,6 @@ async function energyCollect() {
 async function feedPetsAgain() {
   const response = await request('initPetTown');//再次初始化萌宠
   if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
-    console.log(`添加log打印${JSON.stringify(response.result)}`);
     $.petInfo = response.result;
     let foodAmount = $.petInfo.foodAmount; //剩余狗粮
     if (foodAmount - 100 >= 10) {
@@ -163,7 +162,7 @@ async function feedPetsAgain() {
       // message += `【剩余狗粮】${$.petInfo.foodAmount}g\n`;
     } else {
       console.log("目前剩余狗粮：【" + foodAmount + "】g,不再继续投食,保留部分狗粮用于完成第二天任务");
-      subTitle = $.petInfo.goodsInfo.goodsName;
+      subTitle = $.petInfo.goodsInfo && $.petInfo.goodsInfo.goodsName;
       // message += `【与爱宠相识】${$.petInfo.meetDays}天\n`;
       // message += `【剩余狗粮】${$.petInfo.foodAmount}g\n`;
     }
@@ -266,7 +265,7 @@ async function slaveHelp() {
     let response = await request(arguments.callee.name.toString(), {'shareCode': code});
     if (response.code === '0' && response.resultCode === '0') {
       if (response.result.helpStatus === 0) {
-        console.log('已给好友: 【' + response.result.masterNickName + '】助力');
+        console.log('已给好友: 【' + response.result.masterNickName + '】助力成功');
         helpPeoples += response.result.masterNickName + '，';
       } else if (response.result.helpStatus === 1) {
         // 您今日已无助力机会
