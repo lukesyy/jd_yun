@@ -36,7 +36,7 @@ inputs:
           argument: jd_fruit&jd_pet
     - timer: # 宠汪汪喂食# 宠汪汪# 摇钱树# 京东种豆得豆# 京喜工厂 #东东工厂
         parameters:
-          name: joy_feedPets_joy_moneyTree_plantBean_dreamFactory_jd_jdfactory
+          name: joy_feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory
           cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory
@@ -70,12 +70,12 @@ inputs:
           cronExpression: "0 0 10 * * * *"
           enable: true
           argument: jd_bean_change&jd_rankingList
-    - timer: # 金融养猪
+    - timer: # 金融养猪#十元街
         parameters:
-          name: jd_pigPet
+          name: jd_pigPet_jd_syj
           cronExpression: "0 12 13 * * * *"
           enable: true
-          argument: jd_pigPet
+          argument: jd_pigPet&jd_syj
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
