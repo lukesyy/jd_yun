@@ -101,19 +101,24 @@ if ($.isNode()) {
 }
 
 //获取来客有礼Token
+let count = 0, countFlag = 0;
 function getToken() {
   const url = $request.url;
   $.log(`${$.name}url\n${url}\n`)
   if (isURL(url, /^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code=/)) {
     const body = JSON.parse($response.body);
-    const LKYLToken = body.data.token;
-    $.log(`${$.name} token\n${LKYLToken}\n`)
-    if ($.getdata('jdJoyRunToken')) {
-      $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
-    } else {
-      $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
+    const LKYLToken = body.data && body.data.token;
+    if (LKYLToken) {
+      count ++;
+      countFlag ++;
+      $.log(`${$.name} token\n${LKYLToken}\n`);
+      console.log(`count: ${count}`)
+      if (count === 3) {
+        count = 0;
+        $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
+      }
+      $.setdata(LKYLToken, 'jdJoyRunToken');
     }
-    $.setdata(LKYLToken, 'jdJoyRunToken');
     $.done({ body: JSON.stringify(body) })
   } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId=/)){
     if ($request && $request.method !== 'OPTIONS') {
@@ -134,7 +139,7 @@ function getToken() {
       $.done({ url: url })
     }
   } else {
-    $.done({})
+    $.done()
   }
 }
 async function main() {
