@@ -614,7 +614,20 @@ function CreateTuan() {
 }
 function JoinTuan() {
   return new Promise((resolve) => {
-    $.get(taskurl('tuan/JoinTuan', `activeId=${escape('ilOin38J30PcT9xnWbx9lw==')}&tuanId=${escape('QvqM7GtgQQJUO8jaz1CYBA==')}&_time=${Date.now()}&_=${Date.now()}`), (err, resp, data) => {
+    const options = {
+      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('ilOin38J30PcT9xnWbx9lw==')}&tuanId=${escape('QvqM7GtgQQJUO8jaz1CYBA==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Host": "m.jingxi.com",
+        "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html?exchange=%7B%22activeId%22:%22ilOin38J30PcT9xnWbx9lw%3D%3D%22,%22sTuanId%22:%22QvqM7GtgQQJUO8jaz1CYBA%3D%3D%22,%22sPin%22:%22V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k%3D%22,%22sType%22:%22101%22%7D&ptag=139022.1.2?srv=jinshusongjin_https://wq.jd.com/cube/front/activePublish/dream_factory_report/380556.html_jing",
+        "User-Agent": "jdpingou;iPhone;3.15.2;13.5.1;90bab9217f465a83a99c0b554a946b0b0d5c2f7a;network/wifi;model/iPhone12,1;appBuild/100365;ADID/696F8BD2-0820-405C-AFC0-3C6D028040E5;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/14;pap/JA2015_311210;brand/apple;supportJDSHWK/1;"
+      }
+    }
+    $.get(options, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -625,7 +638,7 @@ function JoinTuan() {
             if (data['ret'] === 0) {
               console.log(`参团成功\n${data.data['tuanId']}`);
             } else {
-              console.log(`参团成功异常：${JSON.stringify(data)}`);
+              console.log(`参团失败：${JSON.stringify(data)}`);
             }
           }
         }
