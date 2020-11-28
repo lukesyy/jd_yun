@@ -39,13 +39,21 @@
 16.  进店领豆([jd_shop.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_shop.js))
 17.  摇京豆([jd_club_lottery.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js))
 18.  全名开红包([jd_redPacket.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_redPacket.js))
-19.  京东多合一签到([jd_bean_sign.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_sign.js)) 【可N个京东账号，Node.js专用，核心脚本是JD_DailyBonus.js， IOS软件用户请使用NobyDa的 [JD_DailyBonus.js](https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js) 】
+19.  京东多合一签到([jd_bean_sign.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_sign.js)) 【可N个京东账号，Node.js专用，核心脚本是JD_DailyBonus.js，iOS软件用户请使用NobyDa的 [JD_DailyBonus.js](https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js) 】
 20.  京豆变动通知([jd_bean_change.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js))
 21.  京喜工厂([jd_dreamFactory.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js))
 22.  东东小窝([jd_small_home.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js))
 23.  东东工厂([jd_jdfactory.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js))
 24.  点点券([jd_necklace.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_necklace.js))
-26.  以及其他一部分在特定时间可用的薅京豆脚本，如 [手机狂欢城](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_818.js) 、[星推官](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js) 等。
+25.  十元街([jd_syj.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js))
+26.  京东金融-天天提鹅([jd_daily_egg.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_daily_egg.js))
+27.  京东金融-养猪猪([jd_pigPet.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pigPet.js))
+28.  以及其他一部分在特定时间可用的薅京豆脚本：[手机狂欢城](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_818.js) 、[星推官](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js) 、[双十一活动领金币](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_collectProduceScore.js) 、[热8超级盲盒](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_mohe.js)
+29.  Webhook触发Action([webhook.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/webhook.js))
+
+搬运脚本
+1.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东抽奖机([jd_lotteryMachine.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_lotteryMachine.js))
+2.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东排行榜([jd_rankingList.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_rankingList.js))
 
 **脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), 小火箭, JSBox, Node.js**
 
