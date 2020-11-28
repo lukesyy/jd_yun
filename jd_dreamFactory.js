@@ -69,6 +69,7 @@ if ($.isNode()) {
         }
         continue
       }
+      // await JoinTuan();
       await shareCodesFormat();
       await jdDreamFactory();
     }
@@ -613,7 +614,7 @@ function CreateTuan() {
 }
 function JoinTuan() {
   return new Promise((resolve) => {
-    $.get(taskurl('tuan/JoinTuan', `activeId=${escape('ilOin38J30PcT9xnWbx9lw==')}&tuanId=${escape('QvqM7GtgQQJUO8jaz1CYBA==')}&isOpenApp=1&_time=${Date.now()}&_=${Date.now()}`), (err, resp, data) => {
+    $.get(taskurl('tuan/JoinTuan', `activeId=${escape('ilOin38J30PcT9xnWbx9lw==')}&tuanId=${escape('QvqM7GtgQQJUO8jaz1CYBA==')}&_time=${Date.now()}&_=${Date.now()}`), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
