@@ -109,12 +109,14 @@ function getToken() {
     const body = JSON.parse($response.body);
     const LKYLToken = body.data && body.data.token;
     if (LKYLToken) {
-      count ++;
-      countFlag ++;
       $.log(`${$.name} token\n${LKYLToken}\n`);
+      count = $.getdata('countFlag') ? $.getdata('countFlag') * 1 : 0;
+      count ++;
       console.log(`count: ${count}`)
-      if (count === 1) {
+      $.setdata(`${count}`, 'countFlag');
+      if ($.getdata('countFlag') * 1 === 3) {
         count = 0;
+        $.setdata(`${count}`, 'countFlag');
         $.msg($.name, '更新Token: 成功🎉', ``);
       }
       $.setdata(LKYLToken, 'jdJoyRunToken');
