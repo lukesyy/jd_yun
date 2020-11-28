@@ -113,7 +113,7 @@ function getToken() {
       countFlag ++;
       $.log(`${$.name} token\n${LKYLToken}\n`);
       console.log(`count: ${count}`)
-      if (count === 3) {
+      if (count === 1) {
         count = 0;
         $.msg($.name, '更新Token: 成功🎉', ``);
       }
