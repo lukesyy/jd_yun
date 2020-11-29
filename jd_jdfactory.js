@@ -198,6 +198,13 @@ async function algorithm() {
                   }
                 } else {
                   console.log(`BoxJs或环境变量暂未提供心仪商品\n如需兑换心仪商品，请提供心仪商品名称\n`);
+                  await jdfactory_getProductList(true);
+                  if ($.canMakeList[0].couponCount > 0 && $.batteryValue * 1 >= $.canMakeList[0].fullScore) {
+                    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n当前总电量为：${$.batteryValue * 1}\n当前总电量为：${$.batteryValue * 1}\n【满足】兑换${$.canMakeList[0].name}所需总电量：${$.canMakeList[0].totalScore}\n请点击弹窗直达活动页面\n选择此心仪商品并手动投入电量兑换`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
+                    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `当前总电量为：${$.batteryValue * 1}\n【满足】兑换${$.canMakeList[0].name}所需总电量：${$.canMakeList[0].totalScore}\n请速去活动页面查看`);
+                  } else {
+                    console.log(`\n目前电量${$.batteryValue * 1},不满足兑换\n`)
+                  }
                 }
               }
             } else {
@@ -477,7 +484,7 @@ function queryVkComponent() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log('queryVkComponent', data)
+          // console.log('queryVkComponent', data)
           if (safeGet(data)) {
             data = JSON.parse(data);
           }
@@ -491,7 +498,7 @@ function queryVkComponent() {
   })
 }
 //查询当前商品列表
-function jdfactory_getProductList(flag) {
+function jdfactory_getProductList(flag = false) {
   return new Promise(resolve => {
     $.post(taskPostUrl('jdfactory_getProductList'), async (err, resp, data) => {
       try {
@@ -503,6 +510,7 @@ function jdfactory_getProductList(flag) {
             data = JSON.parse(data);
             if (data.data.bizCode === 0) {
               $.canMakeList = data.data.result.canMakeList;//当前可选商品列表 sellOut:1为已抢光，0为目前可选择
+              $.canMakeList.sort(sortCouponCount);
               if (!flag) {
                 console.log(`商品名称       可选状态    剩余量`)
                 for (let item of $.canMakeList) {
@@ -526,6 +534,9 @@ function jdfactory_getProductList(flag) {
     })
   })
 }
+function sortCouponCount(a, b) {
+  return b['couponCount'] - a['couponCount']
+}
 function jdfactory_getHomeData() {
   return new Promise(resolve => {
     $.post(taskPostUrl('jdfactory_getHomeData'), async (err, resp, data) => {
@@ -535,7 +546,7 @@ function jdfactory_getHomeData() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
-            console.log(data);
+            // console.log(data);
             data = JSON.parse(data);
             if (data.data.bizCode === 0) {
               $.haveProduct = data.data.result.haveProduct;
