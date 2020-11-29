@@ -61,7 +61,7 @@ inputs:
     - timer: # 东东超市
         parameters:
           name: jd_superMarket
-          cronExpression: "0 11 1-23/5 * * * *"
+          cronExpression: "0 15 * * * * *"
           enable: true
           argument: jd_superMarket
     - timer: # 京豆变动通知 # 京东排行榜
