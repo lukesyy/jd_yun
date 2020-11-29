@@ -664,7 +664,7 @@ function CreateTuan() {
 function JoinTuan() {
   return new Promise((resolve) => {
     const options = {
-      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('ilOin38J30PcT9xnWbx9lw==')}&tuanId=${escape('3lSXPWXkC_7a5fF1gwYCTA==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('ilOin38J30PcT9xnWbx9lw==')}&tuanId=${escape('8W4VdqMEQfzmZnSGRgMRCw==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -685,7 +685,7 @@ function JoinTuan() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
-              console.log(`参团成功\n${data.data['tuanId']}`);
+              console.log(`参团成功\n${JSON.stringify(data)}\n`);
             } else {
               console.log(`参团失败：${JSON.stringify(data)}`);
             }

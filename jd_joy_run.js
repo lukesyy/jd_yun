@@ -179,12 +179,13 @@ async function main() {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  const readTokenRes = await readToken();
-  if (readTokenRes && readTokenRes.code === 200) {
-    $.LKYLToken = readTokenRes.data[0] || $.getdata('jdJoyRunToken');
-  } else {
-    $.LKYLToken = $.getdata('jdJoyRunToken');
-  }
+  // const readTokenRes = await readToken();
+  // if (readTokenRes && readTokenRes.code === 200) {
+  //   $.LKYLToken = readTokenRes.data[0] || $.getdata('jdJoyRunToken');
+  // } else {
+  //   $.LKYLToken = $.getdata('jdJoyRunToken');
+  // }
+  $.LKYLToken = $.getdata('jdJoyRunToken');
   console.log(`打印token \n${$.LKYLToken}\n`)
   if (!$.LKYLToken) {
     $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
