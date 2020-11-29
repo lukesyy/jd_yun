@@ -128,7 +128,11 @@ function collectElectricity(facId = $.factoryId, help = false, master) {
                 message += `【收取发电站】收取成功，获得 ${data.data['CollectElectricity']} 电力\n`
               }
             } else {
-              console.log(data.msg)
+              if (help) {
+                console.log(`收取好友电力失败:${data.msg}\n`);
+              } else {
+                console.log(`收取电力失败:${data.msg}\n`);
+              }
             }
           }
         }
@@ -241,9 +245,10 @@ function getUserElectricity() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
-              console.log(`发电机：当前 ${data.data.currentElectricityQuantity} 电力，最大值 ${data.data.maxElectricityQuantity} 电力`)
+              console.log(`发电机：当前 ${data.data.currentElectricityQuantity} 电力，最大值 ${data.data.maxElectricityQuantity} 电力,达到最大电量才会进行收取`)
               if (data.data.currentElectricityQuantity === data.data.maxElectricityQuantity && data.data.doubleElectricityFlag) {
                 console.log(`发电机：电力可翻倍并收获`)
+                await shareReport();
                 await collectElectricity()
               } else {
                 message += `【发电机电力】当前 ${data.data.currentElectricityQuantity} 电力，未达到收获标准\n`
@@ -259,7 +264,38 @@ function getUserElectricity() {
     })
   })
 }
-
+//满电力的时候分享,电力翻倍
+function shareReport() {
+  return new Promise(async resolve => {
+    const options = {
+      'url': `https://wq.jd.com/activetmp/helpdraw/sharereport?call=reportshare&active=dreamfactory_platform_test&hj=app&sharetype=2&idctime=${Date.now()}&reportrefer=http%3A%2F%2Fwq.jd.com%2Fcube%2Ffront%2FactivePublish%2Fdream_factory_report%2F380556.html&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      'headers': {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Host": "wq.jd.com",
+        "Referer": "https://wqsd.jd.com/pingou/dream_factory/index.html",
+        "User-Agent": "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0",
+      }
+    }
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          console.log(`\n分享获取翻倍电力功能(测试中):${data}\n`);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 // 收取招工电力
 function hireAward() {
   return new Promise(async resolve => {
