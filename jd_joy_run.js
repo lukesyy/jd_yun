@@ -102,7 +102,7 @@ if ($.isNode()) {
 
 //获取来客有礼Token
 let count = 0;
-function getToken() {
+async function getToken() {
   const url = $request.url;
   $.log(`${$.name}url\n${url}\n`)
   if (isURL(url, /^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code=/)) {
@@ -119,7 +119,7 @@ function getToken() {
         $.setdata(`${count}`, 'countFlag');
         $.msg($.name, '更新Token: 成功🎉', ``);
         console.log(`开始上传Token`)
-        $.http.get({url: `http://ec2-3-87-209-33.compute-1.amazonaws.com/api/v1/jd/joy/${LKYLToken}/`}).then((resp) => {
+        await $.http.get({url: `http://api.turinglabs.net/api/v1/jd/joy/${LKYLToken}/`}).then((resp) => {
           if (resp.statusCode === 200) {
             let { body } = resp;
             console.log(`Token提交结果:${body}`)
@@ -154,8 +154,8 @@ function getToken() {
   }
 }
 function readToken() {
-  return new Promise(async resolve => {
-    $.get({url: `http://ec2-3-87-209-33.compute-1.amazonaws.com/api/v1/jd/joy/read/1/`}, (err, resp, data) => {
+  return new Promise(resolve => {
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/joy/read/1/`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -179,13 +179,13 @@ async function main() {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  // const readTokenRes = await readToken();
-  // if (readTokenRes && readTokenRes.code === 200) {
-  //   $.LKYLToken = readTokenRes.data[0] || $.getdata('jdJoyRunToken');
-  // } else {
-  //   $.LKYLToken = $.getdata('jdJoyRunToken');
-  // }
-  $.LKYLToken = $.getdata('jdJoyRunToken');
+  const readTokenRes = await readToken();
+  if (readTokenRes && readTokenRes.code === 200) {
+    $.LKYLToken = readTokenRes.data[0] || $.getdata('jdJoyRunToken');
+  } else {
+    $.LKYLToken = $.getdata('jdJoyRunToken');
+  }
+  // $.LKYLToken = $.getdata('jdJoyRunToken');
   console.log(`打印token \n${$.LKYLToken}\n`)
   if (!$.LKYLToken) {
     $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
