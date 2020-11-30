@@ -1,5 +1,6 @@
 /*
 京东京喜工厂
+更新时间：2020-11-30
 活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
 或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 
@@ -93,7 +94,7 @@ async function jdDreamFactory() {
   await investElectric();
   await hireAward();
   await PickUp();
-  // await stealFriend();
+  await stealFriend();
   await showMsg();
 }
 
