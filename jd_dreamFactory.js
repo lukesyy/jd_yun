@@ -470,7 +470,7 @@ function userInfo() {
                 await DrawProductionStagePrize();//领取红包
                 console.log(`当前电力：${data.user.electric}`)
                 console.log(`分享码: ${data.user.encryptPin}`);
-                console.log(`生产进度：${(production.investedElectric / production.needElectric).toFixed(2) * 100}%`);
+                console.log(`生产进度：${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%`);
                 message += `【京东账号${$.index}】${$.nickName}\n`
                 message += `【生产商品】${$.productName}\n`;
                 message += `【生产进度】${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%\n`;
