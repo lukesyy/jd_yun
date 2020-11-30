@@ -834,7 +834,7 @@ function safeGet(data) {
 
 function taskurl(functionId, body = '') {
   return {
-    url: `${JD_API_HOST}/dreamfactory/${functionId}?zone=dream_factory&${body}&sceneval=2&g_login_type=1`,
+    url: `${JD_API_HOST}/dreamfactory/${functionId}?zone=dream_factory&${body}&sceneval=2&g_login_type=1&_time=${Date.now()}&_=${Date.now()}`,
     headers: {
       'Cookie': cookie,
       'Host': 'm.jingxi.com',
@@ -848,7 +848,7 @@ function taskurl(functionId, body = '') {
   }
 }
 function newtasksysUrl(functionId, taskId) {
-  let url = `${JD_API_HOST}/newtasksys/newtasksys_front/${functionId}?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
+  let url = `${JD_API_HOST}/newtasksys/newtasksys_front/${functionId}?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1&_time=${Date.now()}&_=${Date.now()}`;
   if (taskId) {
     url += `&taskId=${taskId}`;
   }
