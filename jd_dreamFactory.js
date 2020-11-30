@@ -105,9 +105,9 @@ function collectElectricity(facId = $.factoryId, help = false, master) {
     // if (help && master) {
     //   url = `/dreamfactory/generator/CollectCurrentElectricity?zone=dream_factory&factoryid=${facId}&master=${master}&sceneval=2&g_login_type=1`;
     // }
-    let body = `factoryid=${facId}`;
-    if (master) {
-      body += `&master=${master}`;
+    let body = `factoryid=${facId}&apptoken=&pgtimestamp=&phoneID=&doubleflag=1`;
+    if (help && master) {
+      body += `factoryid=${facId}&master=${master}`;
     }
     $.get(taskurl(`generator/CollectCurrentElectricity`, body), (err, resp, data) => {
       try {
@@ -248,7 +248,7 @@ function getUserElectricity() {
               console.log(`发电机：当前 ${data.data.currentElectricityQuantity} 电力，最大值 ${data.data.maxElectricityQuantity} 电力,达到最大电量才会进行收取`)
               if (data.data.currentElectricityQuantity === data.data.maxElectricityQuantity && data.data.doubleElectricityFlag) {
                 console.log(`发电机：电力可翻倍并收获`)
-                await shareReport();
+                // await shareReport();
                 await collectElectricity()
               } else {
                 message += `【发电机电力】当前 ${data.data.currentElectricityQuantity} 电力，未达到收获标准\n`
