@@ -57,6 +57,8 @@ if ($.isNode()) {
       $.nickName = '';
       message = '';
       $.ele = 0;
+      $.pickEle = 0;
+      $.pickFriendEle = 0
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -90,7 +92,8 @@ async function jdDreamFactory() {
   await taskList();
   await investElectric();
   await hireAward();
-  await stealFriend();
+  await PickUp();
+  // await stealFriend();
   await showMsg();
 }
 
@@ -469,10 +472,12 @@ function userInfo() {
                 await GetCommodityDetails();//获取已选购的商品信息
                 await DrawProductionStagePrize();//领取红包
                 console.log(`当前电力：${data.user.electric}`)
+                console.log(`当前等级：${data.user.currentLevel}`)
                 console.log(`分享码: ${data.user.encryptPin}`);
                 console.log(`生产进度：${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%`);
                 message += `【京东账号${$.index}】${$.nickName}\n`
                 message += `【生产商品】${$.productName}\n`;
+                message += `【当前等级】${data.user.currentLevel}\n`;
                 message += `【生产进度】${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%\n`;
                 if (production.investedElectric >= production.needElectric) {
                   $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n已生产完,请速去兑换`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D'})
@@ -557,6 +562,50 @@ function DrawProductionStagePrize() {
     })
   })
 }
+async function PickUp(encryptPin = $.encryptPin, help = false) {
+  for (let i = 0; i < new Array(5).fill('').length; i++) {
+    await $.wait(1000);
+    await PickUpComponent(i + 1, encryptPin, help);
+  }
+}
+//收取地下随机零件电力API
+//usermaterial/GetUserComponent
+function PickUpComponent(index, encryptPin, help) {
+  return new Promise(resolve => {
+    $.get(taskurl('usermaterial/PickUpComponent', `placeId=${index}&pin=${encryptPin}`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['ret'] === 0) {
+              data = data['data'];
+              if (help) {
+                console.log(`收取好友零件成功:获得${data['increaseElectric']}电力\n`);
+                $.pickFriendEle += data['increaseElectric'];
+              } else {
+                console.log(`收取自家零件成功:获得${data['increaseElectric']}电力\n`);
+                $.pickEle += data['increaseElectric'];
+              }
+            } else {
+              if (help) {
+                console.log(`收好友零件失败：${JSON.stringify(data)}`)
+              } else {
+                console.log(`收零件失败：${JSON.stringify(data)}`)
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 //偷好友的电力
 function stealFriend() {
   return new Promise(async resolve => {
@@ -573,7 +622,8 @@ function stealFriend() {
               for (let i = 0; i < data.list.length; i++) {
                 let pin = data.list[i]['encryptPin'];
                 await getFactoryIdByPin(pin);
-                if ($.stealFactoryId) await collectElectricity($.stealFactoryId,true, data.list[i]['key'])
+                if ($.stealFactoryId) await collectElectricity($.stealFactoryId,true, data.list[i]['key']);
+                await PickUp(pin, true)
               }
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
@@ -709,10 +759,10 @@ async function showMsg() {
     if (ctrTemp) {
       $.msg($.name, '', message);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${message}`);
+        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${message}\n【收取零件】获得${$.pickEle}电力`);
       }
     } else {
-      $.log(`\n${message}\n`);
+      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取好友零件】获得${$.pickFriendEle}电力`);
     }
     resolve()
   })
