@@ -313,6 +313,7 @@ async function businessCircleActivity() {
     console.log(`\njoinStatus:${joinStatus}`);
     console.log(`pkStatus:${pkStatus}\n`);
     if (joinStatus === 0) {
+      console.log(`\n注：PK会在每天的七点自动随机加入lxk0301创建的队伍\n`)
       await updatePkActivityId();
       if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
       console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes.pkActivityId}`);
