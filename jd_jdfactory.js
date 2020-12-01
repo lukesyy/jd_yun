@@ -102,7 +102,10 @@ function showMsg() {
     if (!jdNotify) {
       $.msg($.name, '', `${message}`);
     } else {
-      $.log(message);
+      $.log(`京东账号${$.index}${$.nickName}\n${message}`);
+    }
+    if (new Date().getHours() === 23) {
+      $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     }
     resolve()
   })
@@ -174,6 +177,8 @@ async function algorithm() {
                 }
               } else {
                 console.log(`\n此账号${$.index}${$.nickName}暂未选择商品\n`);
+                message += `已选商品：暂无\n`;
+                message += `心仪商品：${wantProduct ? wantProduct : '暂无'}\n`;
                 if (wantProduct) {
                   console.log(`BoxJs或环境变量提供的心仪商品：${wantProduct}\n`);
                   await jdfactory_getProductList(true);
@@ -188,6 +193,9 @@ async function algorithm() {
                       wantProductSkuId = item.skuId;
                     }
                   }
+                  message += `心仪商品数量：${couponCount}\n`;
+                  message += `心仪商品所需电量：${totalScore}\n`;
+                  message += `您当前总电量：${$.batteryValue * 1}\n`;
                   if (wantProductSkuId && (($.batteryValue * 1) >= (totalScore))) {
                     console.log(`\n提供的心仪商品${name}目前数量：${couponCount}，且当前总电量为：${$.batteryValue * 1}，【满足】兑换此商品所需总电量：${totalScore}`);
                     console.log(`请去活动页面选择心仪商品并手动投入电量兑换\n`);
@@ -199,6 +207,9 @@ async function algorithm() {
                 } else {
                   console.log(`BoxJs或环境变量暂未提供心仪商品\n如需兑换心仪商品，请提供心仪商品名称\n`);
                   await jdfactory_getProductList(true);
+                  message += `当前剩余最多商品：${$.canMakeList[0].name}\n`;
+                  message += `兑换所需电量：${$.canMakeList[0].fullScore}\n`;
+                  message += `您当前总电量：${$.batteryValue * 1}\n`;
                   if ($.canMakeList[0].couponCount > 0 && $.batteryValue * 1 >= $.canMakeList[0].fullScore) {
                     $.msg($.name, '', `京东账号${$.index}${$.nickName}\n当前总电量为：${$.batteryValue * 1}\n当前总电量为：${$.batteryValue * 1}\n【满足】兑换${$.canMakeList[0].name}所需总电量：${$.canMakeList[0].totalScore}\n请点击弹窗直达活动页面\n选择此心仪商品并手动投入电量兑换`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
                     await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `当前总电量为：${$.batteryValue * 1}\n【满足】兑换${$.canMakeList[0].name}所需总电量：${$.canMakeList[0].totalScore}\n请速去活动页面查看`);
