@@ -333,7 +333,16 @@ async function helpFriends() {
         console.log(`不能为自己助力,跳过`);
         continue;
       }
-      await assistFriend(code);
+      const assistFriendRes = await assistFriend(code);
+      if (assistFriendRes && assistFriendRes['ret'] === 0) {
+        console.log(`助力朋友：${code}成功，因一次只能助力一个，故跳出助力`)
+        break
+      } else if (assistFriendRes && assistFriendRes['ret'] === 11009) {
+        console.log(`助力朋友[${code}]失败：${assistFriendRes.msg}，跳出助力`);
+        break
+      } else {
+        console.log(`助力朋友[${code}]失败：${assistFriendRes.msg}`)
+      }
     }
   }
 }
@@ -362,17 +371,17 @@ function assistFriend(sharepin) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data['ret'] === 0) {
-              console.log(`助力朋友：${sharepin}成功`)
-            } else {
-              console.log(`助力朋友[${sharepin}]失败：${data.msg}`)
-            }
+            // if (data['ret'] === 0) {
+            //   console.log(`助力朋友：${sharepin}成功`)
+            // } else {
+            //   console.log(`助力朋友[${sharepin}]失败：${data.msg}`)
+            // }
           }
         }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve();
+        resolve(data);
       }
     })
   })
