@@ -32,7 +32,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
 let cookiesArr = [], cookie = '', message = '';
-const inviteCodes = ['PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw=="];
+const inviteCodes = ['V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=', 'PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw=="];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -86,7 +86,7 @@ if ($.isNode()) {
 
 async function jdDreamFactory() {
   await userInfo();
-  await JoinTuan();
+  // await JoinTuan();参团功能暂时无效，
   await helpFriends();
   if (!$.unActive) return
   await getUserElectricity();
@@ -487,7 +487,7 @@ function userInfo() {
                 console.log(`生产进度：${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%`);
                 message += `【京东账号${$.index}】${$.nickName}\n`
                 message += `【生产商品】${$.productName}\n`;
-                message += `【当前等级】${data.user.currentLevel}\n`;
+                message += `【当前等级】${data.user.userIdentity} ${data.user.currentLevel}\n`;
                 message += `【生产进度】${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%\n`;
                 if (production.investedElectric >= production.needElectric) {
                   $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n已生产完,请速去兑换`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D'})
@@ -593,7 +593,7 @@ function PickUpComponent(index, encryptPin, help) {
             if (data['ret'] === 0) {
               data = data['data'];
               if (help) {
-                console.log(`收取好友零件成功:获得${data['increaseElectric']}电力\n`);
+                console.log(`收取好友[${encryptPin}]零件成功:获得${data['increaseElectric']}电力\n`);
                 $.pickFriendEle += data['increaseElectric'];
               } else {
                 console.log(`收取自家零件成功:获得${data['increaseElectric']}电力\n`);
@@ -601,7 +601,7 @@ function PickUpComponent(index, encryptPin, help) {
               }
             } else {
               if (help) {
-                console.log(`收好友零件失败：${JSON.stringify(data)}`)
+                console.log(`收好友[${encryptPin}]零件失败：${JSON.stringify(data)}`)
               } else {
                 console.log(`收零件失败：${JSON.stringify(data)}`)
               }
@@ -630,10 +630,13 @@ function stealFriend() {
             if (data['ret'] === 0) {
               data = data['data'];
               for (let i = 0; i < data.list.length; i++) {
-                let pin = data.list[i]['encryptPin'];
-                await getFactoryIdByPin(pin);
-                if ($.stealFactoryId) await collectElectricity($.stealFactoryId,true, data.list[i]['key']);
-                await PickUp(pin, true)
+                let pin = data.list[i]['encryptPin'];//好友的encryptPin
+                if (pin === 'V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=' || pin === 'Bo-jnVs_m9uBvbRzraXcSA==') {
+                  continue
+                }
+                await PickUp(pin, true);
+                // await getFactoryIdByPin(pin);//获取好友工厂ID
+                // if ($.stealFactoryId) await collectElectricity($.stealFactoryId,true, pin);
               }
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
@@ -771,6 +774,9 @@ async function showMsg() {
       if ($.isNode()) {
         await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${message}\n【收取零件】获得${$.pickEle}电力`);
       }
+    } else if (new Date().getHours() === 22) {
+      $.msg($.name, '', `${message}【收取自己零件】获得${$.pickEle}电力\n【收取好友零件】获得${$.pickFriendEle}电力`)
+      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取好友零件】获得${$.pickFriendEle}电力`);
     } else {
       $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取好友零件】获得${$.pickFriendEle}电力`);
     }
