@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2020-11-30
+更新时间：2020-12-02
 活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
 或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 
@@ -92,7 +92,7 @@ async function jdDreamFactory() {
   await getUserElectricity();
   await taskList();
   await investElectric();
-  await hireAward();
+  await QueryHireReward();//收取招工电力
   await PickUp();
   await stealFriend();
   await showMsg();
@@ -297,11 +297,42 @@ function shareReport() {
     })
   })
 }
-// 收取招工电力
-function hireAward() {
+//查询有多少的招工电力可收取
+function QueryHireReward() {
   return new Promise(async resolve => {
     // const url = `/dreamfactory/friend/HireAward?zone=dream_factory&date=${new Date().Format("yyyyMMdd")}&type=0&sceneval=2&g_login_type=1`
-    $.get(taskurl('friend/HireAward', `date=${new Date().Format("yyyyMMdd")}&type=0`), async (err, resp, data) => {
+    $.get(taskurl('friend/QueryHireReward'), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['ret'] === 0) {
+              for (let item of data['data']['hireReward']) {
+                if (item.date !== new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).Format("yyyyMMdd")) {
+                  await hireAward(item.date);
+                }
+              }
+            } else {
+              console.log(`异常：${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+// 收取招工电力
+function hireAward(date) {
+  return new Promise(async resolve => {
+    // const url = `/dreamfactory/friend/HireAward?zone=dream_factory&date=${new Date().Format("yyyyMMdd")}&type=0&sceneval=2&g_login_type=1`
+    $.get(taskurl('friend/HireAward', `date=${date}&type=0`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
