@@ -474,7 +474,7 @@ function qqreadtime() {
     };
 
     $.get(toqqreadtimeurl, (error, response, data) => {
-      if (logs) $.log(`${jsname}, 阅读时长: ${data}`)
+      if (logs) $.log(`${jsname}, qqreadtime-阅读时长: ${data}`)
       let time = JSON.parse(data)
       if (time && time.code == 0) tz += '【阅读时长】:上传' + TIME / 6 + '分钟\n'
       resolve()
