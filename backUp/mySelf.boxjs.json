@@ -17,7 +17,7 @@
       "settings": [
         {
           "id": "qqreadurl1",
-          "name": "qqreadurlVal",
+          "name": "qqreadurl1",
           "val": "https://mqqapi.reader.qq.com/mqq/user/init",
           "type": "text",
           "desc": ""
