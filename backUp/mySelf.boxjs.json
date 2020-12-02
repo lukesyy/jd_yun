@@ -9,10 +9,10 @@
       "id": "QQ_READ",
       "name": "企鹅阅读(QQ小程序)",
       "keys": [
-        "qqreadurl1",
-        "qqreadhd1",
-        "qqreadtimeurl1",
-        "qqreadtimehd1"
+        "qqreadurl",
+        "qqreadhd",
+        "qqreadtimeurl",
+        "qqreadtimehd"
       ],
       "settings": [],
       "author": "@ziye12",
