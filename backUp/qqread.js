@@ -1,6 +1,15 @@
 /*
+******************************************************************************
  改用，nodejs云端专用。可N个账号。by；lxk0301
-
+ 一个账号需三个环境变量/secret
+ 分别为 QQ_READ_HEADER_VAL   QQ_READ_TIME_URL_VAL   QQ_READ_TIME_HEADER_VAL
+ 多个账号  对应三个环境变量/secret 使用@符号或者换行隔开
+ iOS可使用BoxJs可使用此订阅修改复制所需的环境变量 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/mySelf.boxjs.json
+ 环境变量与BoxJs里面对应关系
+ QQ_READ_HEADER_VAL  ------》   qqreadhd1
+ QQ_READ_TIME_URL_VAL  ------》   qqreadtimeurl1
+ QQ_READ_TIME_HEADER_VAL  ------》   qqreadtimehd1
+ *****************************************************************************************************************
 ziye
 本人github地址     https://github.com/ziye12/JavaScript 
 转载请备注个名字，谢谢
