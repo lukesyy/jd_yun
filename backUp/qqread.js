@@ -109,7 +109,7 @@ function getNodeCookie() {
         QQ_READ_HEADER_VAL = [process.env.QQ_READ_HEADER_VAL];
       }
       // QQ_READ_HEADER_VAL = [...new Set(QQ_READ_HEADER_VAL)]
-      $.log(QQ_READ_HEADER_VAL)
+      // $.log(QQ_READ_HEADER_VAL)
     }
     if (process.env.QQ_READ_TIME_URL_VAL) {
       if (process.env.QQ_READ_TIME_URL_VAL.indexOf('@') > -1) {
@@ -198,6 +198,7 @@ function GetCookie() {
 }
 async function QQ_READ() {
   for (let item of QQ_READ_COOKIES) {
+    tz = '';
     if (!item["qqreadheaderVal"] || !item['qqreadtimeurlVal'] || !item['qqreadtimeheaderVal']) {
       $.log(`账号暂未提供脚本执行所需的cookie`);
       continue
@@ -505,6 +506,7 @@ function qqreadssr1() {
         resolve()
       })
     }
+    resolve()
   })
 }
 
