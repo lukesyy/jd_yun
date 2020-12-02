@@ -75,7 +75,7 @@ const maxtime = 20//每日上传时长限制，默认20小时
 const wktimess = 1200//周奖励领取标准，默认1200分钟
 var tz = ''
 const qqreadurlVal = `https://mqqapi.reader.qq.com/mqq/user/init`;
-// const qqreadurlKey = 'qqreadurl' + jbid
+const qqreadurlKey = 'qqreadurl' + jbid
 // const qqreadurlVal = $.getdata(qqreadurlKey)
 
 const qqreadheaderKey = 'qqreadhd' + jbid
@@ -174,7 +174,7 @@ function GetCookie() {
     // if (qqreadbodyVal) $.setdata(qqreadbodyVal, qqreadbodyKey)
     // $.log(`[${jsname}] 获取阅读: 成功,qqreadbodyVal: ${qqreadbodyVal}`)
 
-
+    $.setdata(qqreadurlVal, qqreadurlKey);
     const qqreadheaderVal = JSON.stringify($request.headers)
     if (qqreadheaderVal) $.setdata(qqreadheaderVal, qqreadheaderKey)
     $.log(`[${jsname}] 获取Cookie: 成功,qqreadheaderVal: ${qqreadheaderVal}`)

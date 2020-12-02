@@ -14,15 +14,7 @@
         "qqreadtimeurl1",
         "qqreadtimehd1"
       ],
-      "settings": [
-        {
-          "id": "qqreadurl1",
-          "name": "qqreadurl1",
-          "val": "https://mqqapi.reader.qq.com/mqq/user/init",
-          "type": "text",
-          "desc": ""
-        }
-      ],
+      "settings": [],
       "author": "@ziye12",
       "repo": "https://github.com/ziye12/JavaScript ",
       "icons": [
