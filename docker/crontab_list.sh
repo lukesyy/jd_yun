@@ -7,7 +7,7 @@
 
 ##############短期活动##############
 # 京喜故事
-10 7 * * * node /scripts/jd_jxstory.js  >> /scripts/logs/jd_jxstory.log 2>&1
+10 7 * * * node /scripts/jd_jxstory.js >> /scripts/logs/jd_jxstory.log 2>&1
 
 ##############长期活动##############
 
