@@ -6,8 +6,8 @@
 
 
 ##############短期活动##############
-# 京喜故事
-10 7 * * * node /scripts/jd_jxstory.js |ts >> /scripts/logs/jd_jxstory.log 2>&1
+# 京喜故事(2020.12.12活动过期)
+10 * * * * node /scripts/jd_jxstory.js |ts >> /scripts/logs/jd_jxstory.log 2>&1
 
 
 ##############长期活动##############
