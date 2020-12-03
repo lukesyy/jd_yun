@@ -125,7 +125,7 @@ function collectElectricity(facId = $.factoryId, help = false, master) {
                 message += `【帮助好友】帮助成功，获得 ${data.data['loginPinCollectElectricity']} 电力\n`
               } else {
                 $.ele += Number(data.data['CollectElectricity'])
-                console.log(`收取 ${data.data['loginPinCollectElectricity']} 电力`);
+                console.log(`收取 ${data.data['CollectElectricity']} 电力`);
                 message += `【收取发电站】收取成功，获得 ${data.data['CollectElectricity']} 电力\n`
               }
             } else {
@@ -246,13 +246,21 @@ function getUserElectricity() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
-              console.log(`发电机：当前 ${data.data.currentElectricityQuantity} 电力，最大值 ${data.data.maxElectricityQuantity} 电力,达到最大电量才会进行收取`)
-              if (data.data.currentElectricityQuantity === data.data.maxElectricityQuantity && data.data.doubleElectricityFlag) {
-                console.log(`发电机：电力可翻倍并收获`)
-                // await shareReport();
-                await collectElectricity()
+              console.log(`\nnextCollectDoubleFlag::${data.data.nextCollectDoubleFlag}`);
+              console.log(`nextCollectDoubleType::${data.data.nextCollectDoubleType}\n`);
+              $.log(`下次集满收取${data.data.nextCollectDoubleFlag === 1 ? '可' : '不可'}双倍电力`)
+              console.log(`发电机：当前 ${data.data.currentElectricityQuantity} 电力，最大值 ${data.data.maxElectricityQuantity} 电力`)
+              if (data.data.nextCollectDoubleFlag === 1) {
+                if (data.data.currentElectricityQuantity === data.data.maxElectricityQuantity && data.data.doubleElectricityFlag) {
+                  console.log(`发电机：电力可翻倍并收获`)
+                  // await shareReport();
+                  await collectElectricity()
+                } else {
+                  message += `【发电机电力】当前 ${data.data.currentElectricityQuantity} 电力，未达到收获标准\n`
+                }
               } else {
-                message += `【发电机电力】当前 ${data.data.currentElectricityQuantity} 电力，未达到收获标准\n`
+                //再收取双倍电力达到上限时，直接收取，不再等到满级
+                await collectElectricity()
               }
             }
           }
