@@ -86,7 +86,7 @@ if ($.isNode()) {
 
 async function jdDreamFactory() {
   await userInfo();
-  await JoinTuan();参团功能暂时无效，
+  await JoinTuan();//参团功能暂时无效，
   await helpFriends();
   if (!$.unActive) return
   await getUserElectricity();
