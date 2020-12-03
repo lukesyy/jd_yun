@@ -1,6 +1,6 @@
 /*
 京喜故事
-活动入口 :京喜APP->首页浮动窗口去领钱
+活动入口 :京喜APP->首页浮动窗口去领钱/京喜工厂-金牌厂长
 每天运行一次即可
 
 
@@ -29,9 +29,9 @@ const JD_API_HOST = 'https://m.jingxi.com';
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = 1;
+const randomCount = 3;
 let cookiesArr = [], cookie = '', message = '';
-const inviteCodes = ['PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw=="];
+const inviteCodes = ['qSDHMwUOz7onHcMyaju4KmdSXWf0dlv7LVnTt1Wzemo='];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -70,7 +70,7 @@ if ($.isNode()) {
         continue
       }
       await shareCodesFormat();
-      await jdDreamFactory()
+      await jdJxStory()
     }
   }
 })()
@@ -81,14 +81,19 @@ if ($.isNode()) {
       $.done();
     })
 
-async function jdDreamFactory() {
+async function jdJxStory() {
+  await userInfo()
+  await helpFriends()
   await sign()
   await taskList()
-  await userInfo()
   for(let i =0;i<Math.trunc($.currentMoneyNum/20000);++i){
     await upgrade();
   }
   await cardList()
+  $.click = true;
+  while($.click){
+    await increase()
+  }
 }
 // 签到
 function sign() {
@@ -121,7 +126,6 @@ function sign() {
 // 初始化任务
 function taskList() {
   return new Promise(async resolve => {
-    // const url = `/newtasksys/newtasksys_front/GetUserTaskStatusList?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
     $.get(newtasksysUrl('GetUserTaskStatusList'), async (err, resp, data) => {
       try {
         if (err) {
@@ -270,7 +274,6 @@ function finishCard(cardId) {
 // 升级
 function upgrade() {
   return new Promise(async resolve => {
-    // const url = `/dreamfactory/friend/HireAward?zone=dream_factory&date=${new Date().Format("yyyyMMdd")}&type=0&sceneval=2&g_login_type=1`
     $.get(taskurl('UpgradeUserLevelDraw', `date=${new Date().Format("yyyyMMdd")}&type=0`), async (err, resp, data) => {
       try {
         if (err) {
@@ -292,35 +295,10 @@ function upgrade() {
     })
   })
 }
-async function helpFriends() {
-  for (let code of $.newShareCodes) {
-    if (code) {
-      if ($.encryptPin === code) {
-        console.log(`不能为自己助力,跳过`);
-        continue;
-      }
-      await assistFriend(code);
-    }
-  }
-}
-// 帮助用户
-function assistFriend(sharepin) {
+// 点击
+function increase() {
   return new Promise(async resolve => {
-    // const url = `/dreamfactory/friend/AssistFriend?zone=dream_factory&sharepin=${escape(sharepin)}&sceneval=2&g_login_type=1`
-    const options = {
-      'url': `https://m.jingxi.com/dreamfactory/friend/AssistFriend?zone=dream_factory&sharepin=${escape(sharepin)}&sceneval=2&g_login_type=1`,
-      'headers': {
-        "Host": "wq.jd.com",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
-        "Accept": "*/*",
-        "Accept-Language": "zh,en-US;q=0.7,en;q=0.3",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Referer": "https://wqsd.jd.com/pingou/dream_factory/index.html",
-        "Cookie": cookie
-      }
-    }
-    $.get(options, (err, resp, data) => {
+    $.get(taskurl('IncreaseUserMoney'), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -329,9 +307,50 @@ function assistFriend(sharepin) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
-              console.log(`助力朋友：${sharepin}成功`)
+              console.log(`点击厂长成功，获得 ${data['data']['moneyNum']} 钞票`)
+            }else if(data['ret'] === 2005){
+              // 点击上限
+              $.click = false
+            }else{
+              console.log(`点击厂长过快，休息25秒`)
+              await $.wait(25000);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+async function helpFriends() {
+  for (let code of $.newShareCodes) {
+    if (code) {
+      if ($.shareId === code) {
+        console.log(`不能为自己助力,跳过`);
+        continue;
+      }
+      await assistFriend(code);
+    }
+  }
+}
+// 帮助用户
+function assistFriend(shareId) {
+  return new Promise(async resolve => {
+    $.get(taskurl('AssistFriend',`shareId=${escape(shareId)}`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['ret'] === 0) {
+              console.log(`助力朋友：${shareId}成功`)
             } else {
-              console.log(`助力朋友[${sharepin}]失败：${data.msg}`)
+              console.log(`助力朋友[${shareId}]失败：${data.msg}`)
             }
           }
         }
@@ -347,7 +366,6 @@ function assistFriend(sharepin) {
 // 任务领奖
 function completeTask(taskId, taskName) {
   return new Promise(async resolve => {
-    // const url = `/newtasksys/newtasksys_front/Award?source=dreamfactory&bizCode=dream_factory&taskId=${taskId}&sceneval=2&g_login_type=1`;
     $.get(newtasksysUrl('Award', taskId), (err, resp, data) => {
       try {
         if (err) {
@@ -388,7 +406,6 @@ function completeTask(taskId, taskName) {
 // 完成任务
 function doTask(taskId) {
   return new Promise(async resolve => {
-    // const url = `/newtasksys/newtasksys_front/DoTask?source=dreamfactory&bizCode=dream_factory&taskId=${taskId}&sceneval=2&g_login_type=1`;
     $.get(newtasksysUrl('DoTask', taskId), (err, resp, data) => {
       try {
         if (err) {
@@ -426,68 +443,9 @@ function userInfo() {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
               data = data['data'];
-              $.unActive = true;//标记是否开启了京喜活动或者选购了商品进行生产
-              $.encryptPin = data.encryptPin;
+              $.shareId = data['shareId'];
+              console.log(`分享码: ${data['shareId']}`);
               $.currentMoneyNum = data.currentMoneyNum;
-            } else {
-              console.log(`异常：${JSON.stringify(data)}`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-//领取红包
-function DrawProductionStagePrize() {
-  return new Promise(async resolve => {
-    // const url = `/dreamfactory/userinfo/DrawProductionStagePrize?zone=dream_factory&sceneval=2&g_login_type=1&productionId=${$.productionId}`;
-    $.get(taskurl('userinfo/DrawProductionStagePrize', `productionId=${$.productionId}`), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          console.log(`领取红包功能(测试中)：${data}`);
-          // if (safeGet(data)) {
-          //   data = JSON.parse(data);
-          //   if (data['ret'] === 0) {
-          //
-          //   } else {
-          //     console.log(`异常：${JSON.stringify(data)}`)
-          //   }
-          // }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-
-function getFactoryIdByPin(pin) {
-  return new Promise((resolve, reject) => {
-    // const url = `/dreamfactory/userinfo/GetUserInfoByPin?zone=dream_factory&pin=${pin}&sceneval=2`;
-    $.get(taskurl('userinfo/GetUserInfoByPin', `pin=${pin}`), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data['ret'] === 0) {
-              if (data.data.factoryList) {
-                //做此判断,有时候返回factoryList为null
-                // resolve(data['data']['factoryList'][0]['factoryId'])
-                $.stealFactoryId = data['data']['factoryList'][0]['factoryId'];
-              }
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
             }
@@ -504,10 +462,10 @@ function getFactoryIdByPin(pin) {
 async function showMsg() {
   return new Promise(async resolve => {
     let ctrTemp;
-    if ($.isNode() && process.env.DREAMFACTORY_NOTIFY_CONTROL) {
-      ctrTemp = `${process.env.DREAMFACTORY_NOTIFY_CONTROL}` === 'false';
-    } else if ($.getdata('jdDreamFactory')) {
-      ctrTemp = $.getdata('jdDreamFactory') === 'false';
+    if ($.isNode() && process.env.JXSTORY_NOTIFY_CONTROL) {
+      ctrTemp = `${process.env.JXSTORY_NOTIFY_CONTROL}` === 'false';
+    } else if ($.getdata('jdJxStory')) {
+      ctrTemp = $.getdata('jdJxStory') === 'false';
     } else {
       ctrTemp = `${jdNotify}` === 'false';
     }
@@ -525,7 +483,7 @@ async function showMsg() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/jxfactory/read/${randomCount}/`}, (err, resp, data) => {
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/jxstory/read/${randomCount}/`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -570,7 +528,7 @@ function requireConfig() {
   return new Promise(resolve => {
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
-    const shareCodes = $.isNode() ? require('./jdDreamFactoryShareCodes.js') : '';
+    const shareCodes = $.isNode() ? require('./jdJxStoryShareCodes.js') : '';
     console.log(`共${cookiesArr.length}个京东账号\n`);
     $.shareCodesArr = [];
     if ($.isNode()) {
@@ -666,7 +624,7 @@ function newtasksysUrl(functionId, taskId) {
       'Connection': 'keep-alive',
       'User-Agent': "jdpingou;iPhone;3.15.2;13.5.1;90bab9217f465a83a99c0b554a946b0b0d5c2f7a;network/wifi;model/iPhone12,1;appBuild/100365;ADID/696F8BD2-0820-405C-AFC0-3C6D028040E5;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/14;pap/JA2015_311210;brand/apple;supportJDSHWK/1;",
       'Accept-Language': 'zh-cn',
-      'Referer': 'https://wqsd.jd.com/pingou/dream_factory/index.html',
+      'Referer': 'https://st.jingxi.com/pingou/jx_factory_story/index.html',
       'Accept-Encoding': 'gzip, deflate, br',
     }
   }
