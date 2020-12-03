@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2020-12-02
+更新时间：2020-12-03
 活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
 或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 
@@ -86,7 +86,7 @@ if ($.isNode()) {
 
 async function jdDreamFactory() {
   await userInfo();
-  // await JoinTuan();参团功能暂时无效，
+  await JoinTuan();参团功能暂时无效，
   await helpFriends();
   if (!$.unActive) return
   await getUserElectricity();
@@ -763,7 +763,7 @@ function CreateTuan() {
 function JoinTuan() {
   return new Promise((resolve) => {
     const options = {
-      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('ilOin38J30PcT9xnWbx9lw==')}&tuanId=${escape('8W4VdqMEQfzmZnSGRgMRCw==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('jfkcidGQavswLOBcAWljrw==')}&tuanId=${escape('Vvx2b7wVTWaeqwm9Yf5Kfw==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -772,7 +772,7 @@ function JoinTuan() {
         "Cookie": cookie,
         "Host": "m.jingxi.com",
         "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html?exchange=%7B%22activeId%22:%22ilOin38J30PcT9xnWbx9lw%3D%3D%22,%22sTuanId%22:%22QvqM7GtgQQJUO8jaz1CYBA%3D%3D%22,%22sPin%22:%22V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k%3D%22,%22sType%22:%22101%22%7D&ptag=139022.1.2?srv=jinshusongjin_https://wq.jd.com/cube/front/activePublish/dream_factory_report/380556.html_jing",
-        "User-Agent": "jdpingou;iPhone;3.15.2;13.5.1;90bab9217f465a83a99c0b554a946b0b0d5c2f7a;network/wifi;model/iPhone12,1;appBuild/100365;ADID/696F8BD2-0820-405C-AFC0-3C6D028040E5;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/14;pap/JA2015_311210;brand/apple;supportJDSHWK/1;"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"
       }
     }
     $.get(options, (err, resp, data) => {
