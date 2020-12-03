@@ -9,7 +9,6 @@
       "id": "QQ_READ",
       "name": "企鹅阅读(QQ小程序)",
       "keys": [
-        "qqreadurl",
         "qqreadhd",
         "qqreadtimeurl",
         "qqreadtimehd"

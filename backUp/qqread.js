@@ -98,9 +98,9 @@ let qqreadtimeheaderVal = $.getdata(qqreadtimeheaderKey)
 let QQ_READ_COOKIES = [
   {
     qqreadurlVal,
-    "qqreadheaderVal": "",
-    "qqreadtimeurlVal": "",
-    "qqreadtimeheaderVal": ""
+    "qqreadheaderVal": ``,
+    "qqreadtimeurlVal": ``,
+    "qqreadtimeheaderVal": ``
   }
 ]
 function getNodeCookie() {
@@ -185,7 +185,7 @@ function GetCookie() {
     // if (qqreadbodyVal) $.setdata(qqreadbodyVal, qqreadbodyKey)
     // $.log(`[${jsname}] 获取阅读: 成功,qqreadbodyVal: ${qqreadbodyVal}`)
 
-    $.setdata(qqreadurlVal, qqreadurlKey);
+    // $.setdata(qqreadurlVal, qqreadurlKey);
     const qqreadheaderVal = JSON.stringify($request.headers)
     if (qqreadheaderVal) $.setdata(qqreadheaderVal, qqreadheaderKey)
     $.log(`[${jsname}] 获取Cookie: 成功,qqreadheaderVal: ${qqreadheaderVal}`)
