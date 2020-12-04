@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2020-12-03
+更新时间：2020-12-04
 活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
 或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 
@@ -887,11 +887,12 @@ function CreateTuan() {
   })
 }
 async function joinLeaderTuan() {
- for (let tuanId of tuanIDs) {
-   if (tuanId) {
-     await JoinTuan(tuanId);
-   }
- }
+  await updateTuanIds();
+  if (!$.tuanIdS) await updateTuanIdsCDN();
+  for (let tuanId of $.tuanIdS.tuanIds) {
+    if (!tuanId) continue
+    await JoinTuan(tuanId);
+  }
 }
 function JoinTuan(tuanId) {
   return new Promise((resolve) => {
@@ -1035,6 +1036,40 @@ function tuanAward(activeId, tuanId, isTuanLeader = true) {
               console.log(`异常：${JSON.stringify(data)}`);
             }
           }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function updateTuanIds(url = 'https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateFactoryTuanId.json') {
+  return new Promise(resolve => {
+    $.get({url}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          $.tuanIdS = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function updateTuanIdsCDN(url = 'https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateFactoryTuanId.json') {
+  return new Promise(resolve => {
+    $.get({url}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          $.tuanIdS = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp)

@@ -157,7 +157,7 @@ async function doChannelsListTask(taskId, taskType) {
 }
 async function helpFriends() {
   await updateInviteCode();
-  if (!$.updatePkActivityIdRes) await updateInviteCodeCDN();
+  if (!$.inviteCodes) await updateInviteCodeCDN();
   for (let item of $.inviteCodes.inviteCode) {
     if (!item) continue
     await createAssistUser(item, $.createAssistUserID || "1318106976846299138");
