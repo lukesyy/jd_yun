@@ -763,7 +763,7 @@ function CreateTuan() {
 function JoinTuan() {
   return new Promise((resolve) => {
     const options = {
-      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('jfkcidGQavswLOBcAWljrw==')}&tuanId=${escape('DIgeLKl6_15TRDSHgzqc1A==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('jfkcidGQavswLOBcAWljrw==')}&tuanId=${escape('CATqQ7rzehBqvRdZTpXgdA==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
