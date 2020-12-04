@@ -32,11 +32,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
 const tuanActiveId = `jfkcidGQavswLOBcAWljrw==`;
-const tuanIDs = [
-  "XgKt9JBOEZEqFpTk1gw79g==",
-  'lvArkUAPQtXfjt9O7PGh9A==',
-  'Edcyq9n8AFJH16varH0-bw=='
-]
+
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = ['V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=', 'PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw=="];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -1123,7 +1119,7 @@ function readShareCode() {
         resolve(data);
       }
     })
-    await $.wait(5000);
+    await $.wait(10000);
     resolve()
   })
 }
