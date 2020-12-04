@@ -31,6 +31,12 @@ const JD_API_HOST = 'https://m.jingxi.com';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
+const tuanActiveId = `jfkcidGQavswLOBcAWljrw==`;
+const tuanIDs = [
+  'VOcrtYB9nzwxcRGHZAIirA==',
+  'A-CujUJn3N3XDU4y7Yusvg==',
+  '22uTFAf6W--EBN0Z64tXZg==',
+]
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = ['V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=', 'PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw=="];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -86,7 +92,7 @@ if ($.isNode()) {
 
 async function jdDreamFactory() {
   await userInfo();
-  await JoinTuan();//参团
+  await joinLeaderTuan();//参团
   await helpFriends();
   if (!$.unActive) return
   await getUserElectricity();
@@ -96,6 +102,7 @@ async function jdDreamFactory() {
   await PickUp();
   await stealFriend();
   await tuanActivity();
+  await QueryAllTuan();
   await showMsg();
 }
 
@@ -726,6 +733,8 @@ async function tuanActivity() {
   const tuanConfig = await QueryActiveConfig();
   if (tuanConfig && tuanConfig.ret === 0) {
     const { activeId, surplusOpenTuanNum, tuanId } = tuanConfig['data']['userTuanInfo'];
+    console.log(`今日剩余开团次数：${surplusOpenTuanNum}次`);
+    $.surplusOpenTuanNum = surplusOpenTuanNum;
     if (!tuanId && surplusOpenTuanNum > 0) {
       //开团
       $.log(`准备开团`)
@@ -736,11 +745,19 @@ async function tuanActivity() {
       if (QueryTuanRes && QueryTuanRes.ret === 0) {
         const { tuanInfo } = QueryTuanRes.data;
         for (let item of tuanInfo) {
-          const { realTuanNum, tuanNum } = item;
-          $.log(`\n开团情况:${realTuanNum}/${tuanNum}\n`)
+          const { realTuanNum, tuanNum, userInfo } = item;
+          $.log(`\n开团情况:${realTuanNum}/${tuanNum}\n`);
           if (realTuanNum === tuanNum) {
-            $.log(`开始领取开团奖励`);
-            await tuanAward(activeId, tuanId);
+            for (let user of userInfo) {
+              if (user.encryptPin === $.encryptPin) {
+                if (user.receiveElectric && user.receiveElectric > 0) {
+                  console.log(`您在${new Date(user.joinTime * 1000).toLocaleString()}开团奖励已经领取成功\n`)
+                } else {
+                  $.log(`开始领取开团奖励`);
+                  await tuanAward(item.tuanActiveId, item.tuanId);//isTuanLeader
+                }
+              }
+            }
           } else {
             $.log(`\n此团未达领取团奖励人数：${tuanNum}人\n`)
           }
@@ -754,7 +771,7 @@ async function tuanActivity() {
 function QueryActiveConfig() {
   return new Promise((resolve) => {
     const options = {
-      'url': `https://m.jingxi.com/dreamfactory/tuan/QueryActiveConfig?activeId=${escape('jfkcidGQavswLOBcAWljrw==')}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      'url': `https://m.jingxi.com/dreamfactory/tuan/QueryActiveConfig?activeId=${escape(tuanActiveId)}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -833,7 +850,7 @@ function QueryTuan(activeId, tuanId) {
 function CreateTuan() {
   return new Promise((resolve) => {
     const options = {
-      'url': `https://m.jingxi.com/dreamfactory/tuan/CreateTuan?activeId=${escape('jfkcidGQavswLOBcAWljrw==')}&isOpenApp=1&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      'url': `https://m.jingxi.com/dreamfactory/tuan/CreateTuan?activeId=${escape(tuanActiveId)}&isOpenApp=1&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -868,10 +885,17 @@ function CreateTuan() {
     })
   })
 }
-function JoinTuan(tuanId = 'V74lkIg_O8jWXDkl_2swMA==') {
+async function joinLeaderTuan() {
+ for (let tuanId of tuanIDs) {
+   if (tuanId) {
+     await JoinTuan(tuanId);
+   }
+ }
+}
+function JoinTuan(tuanId) {
   return new Promise((resolve) => {
     const options = {
-      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape('jfkcidGQavswLOBcAWljrw==')}&tuanId=${escape(tuanId)}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      'url': `https://m.jingxi.com/dreamfactory/tuan/JoinTuan?activeId=${escape(tuanActiveId)}&tuanId=${escape(tuanId)}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -906,7 +930,65 @@ function JoinTuan(tuanId = 'V74lkIg_O8jWXDkl_2swMA==') {
     })
   })
 }
-function tuanAward(activeId, tuanId) {
+//查询所有的团情况(自己开团以及参加别人的团)
+function QueryAllTuan() {
+  return new Promise((resolve) => {
+    const options = {
+      'url': `https://m.jingxi.com/dreamfactory/tuan/QueryAllTuan?activeId=${escape(tuanActiveId)}&pageNo=1&pageSize=10&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
+      "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Host": "m.jingxi.com",
+        "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html",
+        "User-Agent": "jdpingou;iPhone;3.15.2;13.5.1;90bab9217f465a83a99c0b554a946b0b0d5c2f7a;network/wifi;model/iPhone12,1;appBuild/100365;ADID/696F8BD2-0820-405C-AFC0-3C6D028040E5;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/14;pap/JA2015_311210;brand/apple;supportJDSHWK/1;"
+      }
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`);
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['ret'] === 0) {
+              const { tuanInfo } = data;
+              for (let item of tuanInfo) {
+                if (item.tuanNum === item.realTuanNum) {
+                  // console.log(`参加团主【${item.tuanLeader}】已成功`)
+                  const { userInfo } = item;
+                  for (let item2 of userInfo) {
+                    if (item2.encryptPin === $.encryptPin) {
+                      if (item2.receiveElectric && item2.receiveElectric > 0) {
+                        console.log(`${new Date(item2.joinTime * 1000).toLocaleString()}参加团主【${item2.nickName}】的奖励已经领取成功`)
+                      } else {
+                        console.log(`开始领取${new Date(item2.joinTime * 1000).toLocaleString()}参加团主【${item2.nickName}】的奖励`)
+                        await tuanAward(item.tuanActiveId, item.tuanId, item.tuanLeader === $.encryptPin);//isTuanLeader
+                      }
+                    }
+                  }
+                } else {
+                  console.log(`${new Date(item.beginTime * 1000).toLocaleString()}参加团主【${item.tuanLeader}】失败`)
+                }
+              }
+            } else {
+              console.log(`QueryAllTuan异常：${JSON.stringify(data)}`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+//开团人的领取奖励API
+function tuanAward(activeId, tuanId, isTuanLeader = true) {
   return new Promise((resolve) => {
     const options = {
       'url': `https://m.jingxi.com/dreamfactory/tuan/Award?activeId=${escape(activeId)}&tuanId=${escape(tuanId)}&_time=${Date.now()}&_=${Date.now()}&sceneval=2&g_login_type=1`,
@@ -930,12 +1012,20 @@ function tuanAward(activeId, tuanId) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
-              console.log(`开团奖励${data.data['electric']}领取成功`);
-              message += `【开团奖励】${data.data['electric']}领取成功\n`;
+              if (isTuanLeader) {
+                console.log(`开团奖励(团长)${data.data['electric']}领取成功`);
+                message += `【开团(团长)奖励】${data.data['electric']}领取成功\n`;
+              } else {
+                console.log(`参团奖励${data.data['electric']}领取成功`);
+                message += `【参团奖励】${data.data['electric']}领取成功\n`;
+              }
             } else if (data['ret'] === 10212) {
               console.log(`${JSON.stringify(data)}`);
-              $.log(`准备开团`)
-              await CreateTuan();
+
+              if (isTuanLeader && $.surplusOpenTuanNum > 0) {
+                $.log(`团奖励已领取，准备开团`);
+                await CreateTuan();
+              }
             } else {
               console.log(`异常：${JSON.stringify(data)}`);
             }
@@ -993,8 +1083,8 @@ function readShareCode() {
         resolve(data);
       }
     })
-    // await $.wait(2000);
-    // resolve()
+    await $.wait(5000);
+    resolve()
   })
 }
 //格式化助力码
