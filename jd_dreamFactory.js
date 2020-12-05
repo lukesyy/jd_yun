@@ -63,6 +63,7 @@ if ($.isNode()) {
       $.pickEle = 0;
       $.pickFriendEle = 0;
       $.friendList = [];
+      $.canHelpFlag = true;//能否助力朋友
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -75,7 +76,6 @@ if ($.isNode()) {
         }
         continue
       }
-      await shareCodesFormat();
       await jdDreamFactory()
     }
   }
@@ -89,6 +89,7 @@ if ($.isNode()) {
 
 async function jdDreamFactory() {
   await userInfo();
+  await QueryFriendList();//查询今日招工情况以及剩余助力次数
   await joinLeaderTuan();//参团
   await helpFriends();
   if (!$.unActive) return
@@ -340,23 +341,28 @@ function hireAward(date) {
   })
 }
 async function helpFriends() {
-  for (let code of $.newShareCodes) {
-    if (code) {
-      if ($.encryptPin === code) {
-        console.log(`不能为自己助力,跳过`);
-        continue;
-      }
-      const assistFriendRes = await assistFriend(code);
-      if (assistFriendRes && assistFriendRes['ret'] === 0) {
-        console.log(`助力朋友：${code}成功，因一次只能助力一个，故跳出助力`)
-        break
-      } else if (assistFriendRes && assistFriendRes['ret'] === 11009) {
-        console.log(`助力朋友[${code}]失败：${assistFriendRes.msg}，跳出助力`);
-        break
-      } else {
-        console.log(`助力朋友[${code}]失败：${assistFriendRes.msg}`)
+  if ($.canHelpFlag) {
+    await shareCodesFormat();
+    for (let code of $.newShareCodes) {
+      if (code) {
+        if ($.encryptPin === code) {
+          console.log(`不能为自己助力,跳过`);
+          continue;
+        }
+        const assistFriendRes = await assistFriend(code);
+        if (assistFriendRes && assistFriendRes['ret'] === 0) {
+          console.log(`助力朋友：${code}成功，因一次只能助力一个，故跳出助力`)
+          break
+        } else if (assistFriendRes && assistFriendRes['ret'] === 11009) {
+          console.log(`助力朋友[${code}]失败：${assistFriendRes.msg}，跳出助力`);
+          break
+        } else {
+          console.log(`助力朋友[${code}]失败：${assistFriendRes.msg}`)
+        }
       }
     }
+  } else {
+    $.log(`今日助力好友机会已耗尽\n`);
   }
 }
 // 帮助用户
@@ -399,7 +405,38 @@ function assistFriend(sharepin) {
     })
   })
 }
-
+//查询助力招工情况
+function QueryFriendList() {
+  return new Promise(async resolve => {
+    $.get(taskurl('friend/QueryFriendList'), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['ret'] === 0) {
+              data = data['data'];
+              const { assistListToday = [], assistNumMax, hireListToday = [], hireNumMax } = data;
+              if (assistListToday.length === assistNumMax) {
+                $.canHelpFlag = false;
+              }
+              $.log(`【今日招工进度】${hireListToday.length}/${hireNumMax}`);
+              message += `【招工进度】${hireListToday.length}/${hireNumMax}\n`;
+            } else {
+              console.log(`异常：${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 // 任务领奖
 function completeTask(taskId, taskName) {
   return new Promise(async resolve => {
