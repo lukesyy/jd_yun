@@ -61,7 +61,8 @@ if ($.isNode()) {
       message = '';
       $.ele = 0;
       $.pickEle = 0;
-      $.pickFriendEle = 0
+      $.pickFriendEle = 0;
+      $.friendList = [];
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -95,7 +96,7 @@ async function jdDreamFactory() {
   await taskList();
   await investElectric();
   await QueryHireReward();//收取招工电力
-  await PickUp();
+  await PickUp();//收取自家的地下零件
   await stealFriend();
   await tuanActivity();
   await QueryAllTuan();
@@ -277,38 +278,7 @@ function getUserElectricity() {
     })
   })
 }
-//满电力的时候分享,电力翻倍
-function shareReport() {
-  return new Promise(async resolve => {
-    const options = {
-      'url': `https://wq.jd.com/activetmp/helpdraw/sharereport?call=reportshare&active=dreamfactory_platform_test&hj=app&sharetype=2&idctime=${Date.now()}&reportrefer=http%3A%2F%2Fwq.jd.com%2Fcube%2Ffront%2FactivePublish%2Fdream_factory_report%2F380556.html&_=${Date.now()}&sceneval=2&g_login_type=1`,
-      'headers': {
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "zh-cn",
-        "Connection": "keep-alive",
-        "Cookie": cookie,
-        "Host": "wq.jd.com",
-        "Referer": "https://wqsd.jd.com/pingou/dream_factory/index.html",
-        "User-Agent": "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0",
-      }
-    }
-    $.get(options, (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          console.log(`\n分享获取翻倍电力功能(测试中):${data}\n`);
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
+
 //查询有多少的招工电力可收取
 function QueryHireReward() {
   return new Promise(async resolve => {
@@ -616,14 +586,69 @@ function DrawProductionStagePrize() {
   })
 }
 async function PickUp(encryptPin = $.encryptPin, help = false) {
-  for (let i = 0; i < new Array(5).fill('').length; i++) {
-    await $.wait(1000);
-    await PickUpComponent(i + 1, encryptPin, help);
+  const GetUserComponentRes = await GetUserComponent(encryptPin);
+  if (GetUserComponentRes && GetUserComponentRes['ret'] === 0) {
+    const { componentList } = GetUserComponentRes['data'];
+    if (componentList && componentList.length <= 0) {
+      if (help) {
+        $.log(`好友【${encryptPin}】地下暂无零件可收`)
+      } else {
+        $.log(`自家地下暂无零件可收`)
+      }
+    }
+    for (let item of componentList) {
+      await $.wait(1000);
+      const PickUpComponentRes = await PickUpComponent(item['placeId'], encryptPin);
+      if (PickUpComponentRes) {
+        if (PickUpComponentRes['ret'] === 0) {
+          const data = PickUpComponentRes['data'];
+          if (help) {
+            console.log(`收取好友[${encryptPin}]零件成功:获得${data['increaseElectric']}电力\n`);
+            $.pickFriendEle += data['increaseElectric'];
+          } else {
+            console.log(`收取自家零件成功:获得${data['increaseElectric']}电力\n`);
+            $.pickEle += data['increaseElectric'];
+          }
+        } else {
+          if (help) {
+            console.log(`收好友[${encryptPin}]零件失败：${PickUpComponentRes.msg},直接跳出`)
+          } else {
+            console.log(`收自己地下零件失败：${PickUpComponentRes.msg},直接跳出`)
+          }
+          break
+        }
+      }
+    }
   }
 }
+function GetUserComponent(pin = $.encryptPin) {
+  return new Promise(resolve => {
+    $.get(taskurl('usermaterial/GetUserComponent', `pin=${pin}`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['ret'] === 0) {
+
+            } else {
+              console.log(`GetUserComponent失败：${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 //收取地下随机零件电力API
-//usermaterial/GetUserComponent
-function PickUpComponent(index, encryptPin, help) {
+
+function PickUpComponent(index, encryptPin) {
   return new Promise(resolve => {
     $.get(taskurl('usermaterial/PickUpComponent', `placeId=${index}&pin=${encryptPin}`), (err, resp, data) => {
       try {
@@ -633,36 +658,49 @@ function PickUpComponent(index, encryptPin, help) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data['ret'] === 0) {
-              data = data['data'];
-              if (help) {
-                console.log(`收取好友[${encryptPin}]零件成功:获得${data['increaseElectric']}电力\n`);
-                $.pickFriendEle += data['increaseElectric'];
-              } else {
-                console.log(`收取自家零件成功:获得${data['increaseElectric']}电力\n`);
-                $.pickEle += data['increaseElectric'];
-              }
-            } else {
-              if (help) {
-                console.log(`收好友[${encryptPin}]零件失败：${JSON.stringify(data)}`)
-              } else {
-                console.log(`收零件失败：${JSON.stringify(data)}`)
-              }
-            }
+            // if (data['ret'] === 0) {
+            //   data = data['data'];
+            //   if (help) {
+            //     console.log(`收取好友[${encryptPin}]零件成功:获得${data['increaseElectric']}电力\n`);
+            //     $.pickFriendEle += data['increaseElectric'];
+            //   } else {
+            //     console.log(`收取自家零件成功:获得${data['increaseElectric']}电力\n`);
+            //     $.pickEle += data['increaseElectric'];
+            //   }
+            // } else {
+            //   if (help) {
+            //     console.log(`收好友[${encryptPin}]零件失败：${JSON.stringify(data)}`)
+            //   } else {
+            //     console.log(`收零件失败：${JSON.stringify(data)}`)
+            //   }
+            // }
           }
         }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve();
+        resolve(data);
       }
     })
   })
 }
 //偷好友的电力
-function stealFriend() {
+async function stealFriend() {
+  await getFriendList();
+  $.friendList = [...new Set($.friendList)];
+  for (let i = 0; i < $.friendList.length; i++) {
+    let pin = $.friendList[i];//好友的encryptPin
+    if (pin === 'V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=' || pin === 'Bo-jnVs_m9uBvbRzraXcSA==') {
+      continue
+    }
+    await PickUp(pin, true);
+    // await getFactoryIdByPin(pin);//获取好友工厂ID
+    // if ($.stealFactoryId) await collectElectricity($.stealFactoryId,true, pin);
+  }
+}
+function getFriendList(sort = 0) {
   return new Promise(async resolve => {
-    $.get(taskurl('friend/QueryFactoryManagerList', 'sort=0'), async (err, resp, data) => {
+    $.get(taskurl('friend/QueryFactoryManagerList', `sort=${sort}`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -672,17 +710,19 @@ function stealFriend() {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
               data = data['data'];
-              for (let i = 0; i < data.list.length; i++) {
-                let pin = data.list[i]['encryptPin'];//好友的encryptPin
-                if (pin === 'V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=' || pin === 'Bo-jnVs_m9uBvbRzraXcSA==') {
-                  continue
-                }
-                await PickUp(pin, true);
-                // await getFactoryIdByPin(pin);//获取好友工厂ID
-                // if ($.stealFactoryId) await collectElectricity($.stealFactoryId,true, pin);
+              if (data.list && data.list.length <= 0) {
+                console.log(`查询好友列表完成，共${$.friendList.length}好友，下面开始拾取好友地下的零件\n`);
+                return
               }
+              let friendsEncryptPins = [];
+              for (let item of data.list) {
+                friendsEncryptPins.push(item.encryptPin);
+              }
+              $.friendList = [...$.friendList, ...friendsEncryptPins];
+              if (!$.isNode()) return
+              await getFriendList(data.sort);
             } else {
-              console.log(`异常：${JSON.stringify(data)}`)
+              console.log(`QueryFactoryManagerList异常：${JSON.stringify(data)}`)
             }
           }
         }
@@ -694,7 +734,6 @@ function stealFriend() {
     })
   })
 }
-
 function getFactoryIdByPin(pin) {
   return new Promise((resolve, reject) => {
     // const url = `/dreamfactory/userinfo/GetUserInfoByPin?zone=dream_factory&pin=${pin}&sceneval=2`;
@@ -1091,10 +1130,10 @@ async function showMsg() {
         await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${message}\n【收取零件】获得${$.pickEle}电力`);
       }
     } else if (new Date().getHours() === 22) {
-      $.msg($.name, '', `${message}【收取自己零件】获得${$.pickEle}电力\n【收取好友零件】获得${$.pickFriendEle}电力`)
-      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取好友零件】获得${$.pickFriendEle}电力`);
+      $.msg($.name, '', `${message}【收取自己零件】获得${$.pickEle}电力\n【收取${$.friendList.length}好友零件】获得${$.pickFriendEle}电力`)
+      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取${$.friendList.length}好友零件】获得${$.pickFriendEle}电力`);
     } else {
-      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取好友零件】获得${$.pickFriendEle}电力`);
+      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取${$.friendList.length}好友零件】获得${$.pickFriendEle}电力`);
     }
     resolve()
   })
