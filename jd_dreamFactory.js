@@ -1058,7 +1058,7 @@ function updateTuanIds(url = 'https://raw.githubusercontent.com/lxk0301/updateTe
     })
   })
 }
-function updateTuanIdsCDN(url = 'https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateFactoryTuanId.json') {
+function updateTuanIdsCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_updateFactoryTuanId.json') {
   return new Promise(resolve => {
     $.get({url}, (err, resp, data) => {
       try {

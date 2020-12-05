@@ -847,7 +847,7 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/lxk0301/updat
     })
   })
 }
-function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_shareCodes.json') {
+function updateShareCodesCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_shareCodes.json') {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_shareCodes.json
     //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_shareCodes.json
