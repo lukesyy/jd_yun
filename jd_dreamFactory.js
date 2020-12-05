@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2020-12-04
+更新时间：2020-12-05
 活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
 或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 
@@ -524,13 +524,19 @@ function userInfo() {
               if (data.factoryList && data.productionList) {
                 const production = data.productionList[0];
                 const factory = data.factoryList[0];
+                const productionStage = data.productionStage;
                 $.factoryId = factory.factoryId;//工厂ID
                 $.productionId = production.productionId;//商品ID
                 $.commodityDimId = production.commodityDimId;
                 $.encryptPin = data.user.encryptPin;
                 // subTitle = data.user.pin;
                 await GetCommodityDetails();//获取已选购的商品信息
-                await DrawProductionStagePrize();//领取红包
+                if (productionStage['productionStageAwardStatus'] === 1) {
+                  $.log(`可以开红包了\n`);
+                  await DrawProductionStagePrize();//领取红包
+                } else {
+                  $.log(`再加${productionStage['productionStageProgress']}电力可开红包\n`)
+                }
                 console.log(`当前电力：${data.user.electric}`)
                 console.log(`当前等级：${data.user.currentLevel}`)
                 console.log(`分享码: ${data.user.encryptPin}`);
