@@ -1,6 +1,6 @@
 /*
  * @Author: lxk0301 https://github.com/lxk0301 
- * @Date: 2020-11-25 18:19:21 
+ * @Date: 2020-12-06 18:19:21
  * @Last Modified by: lxk0301
  * @Last Modified time: 2020-12-06 22:58:02
  */
@@ -45,7 +45,7 @@ if ($.isNode()) {
 } else {
   cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')]);
 }
-let wantProduct = `移动电源`;//心仪商品名称
+let wantProduct = ``;//心仪商品名称
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [`P04z54XCjVWnYaS5u2ak7ZCdan1Bdd2GGiWvC6_uERj`, 'P04z54XCjVWnYaS5m9cZ2ariXVJwHf0bgkG7Uo'];
 !(async () => {
@@ -289,11 +289,11 @@ async function doTask() {
     }
     if (item.taskType === 10) {
       if (item.status === 1) {
-        if (item.threeMealInfoVos.status === 1) {
+        if (item.threeMealInfoVos[0].status === 1) {
           //可以做此任务
           console.log(`准备做此任务：${item.taskName}`);
-          await jdfactory_collectScore(item.threeMealInfoVos.taskToken);
-        } else if (item.threeMealInfoVos.status === 0) {
+          await jdfactory_collectScore(item.threeMealInfoVos[0].taskToken);
+        } else if (item.threeMealInfoVos[0].status === 0) {
           console.log(`${item.taskName} 任务已错过时间`)
         }
       } else if (item.status === 2){
