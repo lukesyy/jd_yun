@@ -629,6 +629,7 @@ function DrawProductionStagePrize() {
   })
 }
 async function PickUp(encryptPin = $.encryptPin, help = false) {
+  $.pickUpMyselfComponent = true;
   const GetUserComponentRes = await GetUserComponent(encryptPin);
   if (GetUserComponentRes && GetUserComponentRes['ret'] === 0) {
     const { componentList } = GetUserComponentRes['data'];
@@ -638,6 +639,7 @@ async function PickUp(encryptPin = $.encryptPin, help = false) {
       } else {
         $.log(`自家地下暂无零件可收`)
       }
+      $.pickUpMyselfComponent = false;
     }
     for (let item of componentList) {
       await $.wait(1000);
@@ -656,7 +658,8 @@ async function PickUp(encryptPin = $.encryptPin, help = false) {
           if (help) {
             console.log(`收好友[${encryptPin}]零件失败：${PickUpComponentRes.msg},直接跳出`)
           } else {
-            console.log(`收自己地下零件失败：${PickUpComponentRes.msg},直接跳出`)
+            console.log(`收自己地下零件失败：${PickUpComponentRes.msg},直接跳出`);
+            $.pickUpMyselfComponent = false;
           }
           break
         }
@@ -729,6 +732,10 @@ function PickUpComponent(index, encryptPin) {
 }
 //偷好友的电力
 async function stealFriend() {
+  if (!$.pickUpMyselfComponent) {
+    $.log(`今日收取零件已达上限，偷好友零件也达到上限，故跳出`)
+    return
+  }
   await getFriendList();
   $.friendList = [...new Set($.friendList)];
   for (let i = 0; i < $.friendList.length; i++) {
@@ -1159,6 +1166,8 @@ function updateTuanIdsCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/mast
 }
 async function showMsg() {
   return new Promise(async resolve => {
+    message += `【收取自己零件】${$.pickUpMyselfComponent ? `获得${$.pickEle}电力` : `今日已达上限`}\n`;
+    message += `【收取好友零件】${$.pickUpMyselfComponent ? `获得${$.pickFriendEle}电力` : `今日已达上限`}\n`;
     let ctrTemp;
     if ($.isNode() && process.env.DREAMFACTORY_NOTIFY_CONTROL) {
       ctrTemp = `${process.env.DREAMFACTORY_NOTIFY_CONTROL}` === 'false';
@@ -1170,13 +1179,13 @@ async function showMsg() {
     if (ctrTemp) {
       $.msg($.name, '', message);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${message}\n【收取零件】获得${$.pickEle}电力`);
+        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${message}`);
       }
     } else if (new Date().getHours() === 22) {
-      $.msg($.name, '', `${message}【收取自己零件】获得${$.pickEle}电力\n【收取${$.friendList.length}好友零件】获得${$.pickFriendEle}电力`)
-      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取${$.friendList.length}好友零件】获得${$.pickFriendEle}电力`);
+      $.msg($.name, '', `${message}`)
+      $.log(`\n${message}`);
     } else {
-      $.log(`\n${message}【收取自己零件】获得${$.pickEle}电力\n【收取${$.friendList.length}好友零件】获得${$.pickFriendEle}电力`);
+      $.log(`\n${message}`);
     }
     resolve()
   })
