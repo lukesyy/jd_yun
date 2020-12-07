@@ -501,7 +501,7 @@ async function plantBeanIndex() {
   $.plantBeanIndexResult = await request('plantBeanIndex');//plantBeanIndexBody
 }
 function readShareCode() {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     $.get({url: `http://api.turinglabs.net/api/v1/jd/bean/read/${randomCount}/`}, (err, resp, data) => {
       try {
         if (err) {
@@ -519,6 +519,8 @@ function readShareCode() {
         resolve(data);
       }
     })
+    await $.wait(15000);
+    resolve()
   })
 }
 //格式化助力码

@@ -624,8 +624,8 @@ function readShareCode() {
         resolve(data);
       }
     })
-    // await $.wait(2000);
-    // resolve()
+    await $.wait(10000);
+    resolve()
   })
 }
 //格式化助力码
