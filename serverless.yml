@@ -19,7 +19,7 @@ inputs:
     - timer: # 签到
         parameters:
           name: jd_bean_sign
-          cronExpression: "0 0 0,3 * * * *"
+          cronExpression: "0 0 0,7 * * * *"
           enable: true
           argument: jd_bean_sign
     - timer: # 京小超兑换奖品# 摇京豆
@@ -70,12 +70,12 @@ inputs:
           cronExpression: "0 0 10 * * * *"
           enable: true
           argument: jd_bean_change&jd_rankingList&jd_bean_home&jd_car
-    - timer: # 金融养猪#十元街
+    - timer: # 金融养猪#十元街# 京东快递
         parameters:
-          name: jd_pigPet_jd_syj
-          cronExpression: "0 12 13 * * * *"
+          name: pigPet_syj_kd
+          cronExpression: "0 3 2 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj
+          argument: jd_pigPet&jd_syj&jd_kd
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
