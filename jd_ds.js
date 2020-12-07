@@ -5,7 +5,7 @@
  * @Last Modified time: 2020-12-7 17:39:02
  */
 /*
-京东代属脚本，类似十元街，限校园用户
+京东代属脚本，类似十元街，⚠️⚠️⚠️⚠️限校园用户可使用,其他用户签到失败无京豆
 一周签到下来可获得30京豆，一天任意时刻运行一次即可
 
 更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ds.js
