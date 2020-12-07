@@ -8,7 +8,8 @@
 ##############短期活动##############
 # 京喜故事(2020.12.12活动过期)
 10 * * * * node /scripts/jd_jxstory.js >> /scripts/logs/jd_jxstory.log 2>&1
-
+# 金榜年终奖(2020.12.12活动过期)
+10 7 * * * node /scripts/jd_split.js >> /scripts/logs/jd_split.log 2>&1
 ##############长期活动##############
 
 # 签到
@@ -63,3 +64,5 @@
 36 * * * * node /scripts/jd_jdfactory.js >> /scripts/logs/jd_jdfactory.log 2>&1
 #十元街
 36 8 * * * node /scripts/jd_syj.js >> /scripts/logs/jd_syj.log 2>&1
+#秒杀红包雨
+40 8 * * * node /scripts/jd_ms_redrain.js >> /scripts/logs/jd_ms_redrain.log 2>&1
