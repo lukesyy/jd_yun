@@ -45,6 +45,7 @@ jobs:
           if [ $JOY_FEED_COUNT ]; then sed -i "/variables/a\      JOY_FEED_COUNT: $JOY_FEED_COUNT" serverless.yml; fi;
           if [ $JOY_HELP_FEED ]; then sed -i "/variables/a\      JOY_HELP_FEED: $JOY_HELP_FEED" serverless.yml; fi;
           if [ $JOY_RUN_FLAG ]; then sed -i "/variables/a\      JOY_RUN_FLAG: $JOY_RUN_FLAG" serverless.yml; fi;
+          if [ $JOY_TEAM_LEVEL ]; then sed -i "/variables/a\      JOY_TEAM_LEVEL: $JOY_TEAM_LEVEL" serverless.yml; fi;
           if [ $JD_JOY_REWARD_NAME ]; then sed -i "/variables/a\      JD_JOY_REWARD_NAME: $JD_JOY_REWARD_NAME" serverless.yml; fi;
           if [ $MARKET_COIN_TO_BEANS ]; then sed -i "/variables/a\      MARKET_COIN_TO_BEANS: $MARKET_COIN_TO_BEANS" serverless.yml; fi;
           if [ $MARKET_REWARD_NOTIFY ]; then sed -i "/variables/a\      MARKET_REWARD_NOTIFY: $MARKET_REWARD_NOTIFY" serverless.yml; fi;
@@ -86,6 +87,7 @@ jobs:
           JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT}}
           JOY_HELP_FEED: ${{ secrets.JOY_HELP_FEED}}
           JOY_RUN_FLAG: ${{ secrets.JOY_RUN_FLAG}}
+          JOY_TEAM_LEVEL: ${{ secrets.JOY_TEAM_LEVEL}}
           JD_JOY_REWARD_NAME: ${{ secrets.JD_JOY_REWARD_NAME}}
           MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS}}
           MARKET_REWARD_NOTIFY: ${{ secrets.MARKET_REWARD_NOTIFY}}

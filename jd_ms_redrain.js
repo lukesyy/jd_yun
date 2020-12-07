@@ -1,12 +1,14 @@
 /*
 秒杀红包雨，可以获取3次，一天运行一次即可
+活动时间：2020-12-1 到 2020-12-31
+活动入口：首页👉秒杀👉往下拉(手指向上滑动)👉可以看到狂撒2亿京东
 更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #秒杀红包雨
-10 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, tag=秒杀红包雨, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_ms_redrain.png, enabled=true
+10 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, tag=秒杀红包雨, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
 
 ================Loon==============
 [Script]
@@ -95,11 +97,12 @@ function getRedRain() {
             data = JSON.parse(data);
             if (data.subCode === '0') {
               console.log(`领取成功，获得${JSON.stringify(data.lotteryResult)}`)
-              message+= `领取成功，获得${JSON.stringify(data.lotteryResult)}\n`
+              // message+= `领取成功，获得${JSON.stringify(data.lotteryResult)}\n`
+              message+= `${data.lotteryResult.jPeasList[0].ext}:${(data.lotteryResult.jPeasList[0].quantity)}京豆\n`
 
             } else if (data.subCode === '8') {
               console.log(`今日次数已满`)
-              message += `领取失败，今日已签到`;
+              message += `领取失败，今日已签到\n`;
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
             }
