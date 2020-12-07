@@ -96,7 +96,7 @@ async function jdPlantBean() {
     awardState = roundList[0].awardState;
     $.taskList = $.plantBeanIndexResult.data.taskList;
     subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
-    message += `【上期时间】${roundList[0].dateDesc}\n`;
+    message += `【上期时间】${roundList[0].dateDesc.replace('上期 ', '')}\n`;
     message += `【上期成长值】${roundList[0].growth}\n`;
     await receiveNutrients();//定时领取营养液
     await doHelp();//助力
