@@ -45,6 +45,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     return;
   }
   await getRedRain();
+  if(!$.activityId) return
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -65,7 +66,14 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         }
         continue
       }
-      await receiveRedRain();
+      let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
+      // console.log(nowTs, $.startTime, $.endTime)
+      if ($.startTime <= nowTs && nowTs < $.endTime) {
+        await receiveRedRain();
+      } else {
+        console.log(`不在红包雨时间之内`)
+        message += `不在红包雨时间之内`
+      }
       await showMsg();
     }
   }
@@ -94,8 +102,13 @@ function getRedRain() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
+            let act = data.data.iconArea[0]
             let url = data.data.iconArea[0].data.activityUrl
             $.activityId = url.substr(url.indexOf("id=") + 3)
+            $.startTime = act.startTime
+            $.endTime = act.endTime
+            console.log(`下一场红包雨开始时间：${new Date(act.startTime)}`)
+            console.log(`下一场红包雨结束时间：${new Date(act.endTime)}`)
           }
         }
       } catch (e) {
