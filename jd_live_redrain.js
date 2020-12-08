@@ -102,13 +102,17 @@ function getRedRain() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            let act = data.data.iconArea[0]
-            let url = data.data.iconArea[0].data.activityUrl
-            $.activityId = url.substr(url.indexOf("id=") + 3)
-            $.startTime = act.startTime
-            $.endTime = act.endTime
-            console.log(`下一场红包雨开始时间：${new Date(act.startTime)}`)
-            console.log(`下一场红包雨结束时间：${new Date(act.endTime)}`)
+            if (data.data.iconArea) {
+              let act = data.data.iconArea[0]
+              let url = data.data.iconArea[0].data.activityUrl
+              $.activityId = url.substr(url.indexOf("id=") + 3)
+              $.startTime = act.startTime
+              $.endTime = act.endTime
+              console.log(`下一场红包雨开始时间：${new Date(act.startTime)}`)
+              console.log(`下一场红包雨结束时间：${new Date(act.endTime)}`)
+            } else {
+              console.log(`暂无红包雨`)
+            }
           }
         }
       } catch (e) {
