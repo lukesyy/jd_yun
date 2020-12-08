@@ -2,26 +2,25 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-11 18:54:37
+ * @Last Modified time: 2020-11-24 08:22:37
  */
 /*
-京小超(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
-现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
+东东超市(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
 Some Functions Modified From https://github.com/Zero-S1/JD_tools/blob/master/JD_superMarket.py
 支持京东双账号
 京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // QuantumultX
 [task_local]
-#京小超
-11 1-23/5 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js, tag=京小超, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
+#东东超市
+11 1-23/5 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js, tag=东东超市, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
 // Loon
 [Script]
-cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js,tag=京小超
+cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js,tag=东东超市
 // Surge
-京小超 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js
+东东超市 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js
  */
-const $ = new Env('京小超');
+const $ = new Env('东东超市');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', jdSuperMarketShareArr = [], notify, newShareCodes;
@@ -113,8 +112,8 @@ function showMsg() {
 async function drawLottery() {
   console.log(`\n注意⚠:京小超抽奖已改版,花费500蓝币抽奖一次,现在脚本默认已关闭抽奖功能\n`);
   drawLotteryFlag = $.getdata('jdSuperMarketLottery') ? $.getdata('jdSuperMarketLottery') : drawLotteryFlag;
-  if ($.isNode() && process.env.jdSuperMarketLottery) {
-    drawLotteryFlag = process.env.jdSuperMarketLottery;
+  if ($.isNode() && process.env.SUPERMARKET_LOTTERY) {
+    drawLotteryFlag = process.env.SUPERMARKET_LOTTERY;
   }
   if (`${drawLotteryFlag}` === 'true') {
     const smtg_lotteryIndexRes = await smtg_lotteryIndex();
@@ -311,18 +310,14 @@ async function businessCircleActivity() {
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
     const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo, prizeInfo, pkActivityId, teamId } = smtg_getTeamPkDetailInfoRes.data.result;
-    console.log(`joinStatus:${joinStatus}`);
-    console.log(`pkStatus:${pkStatus}`);
-    console.log(`inviteCode: [${inviteCode}]`);
-    console.log(`PK队伍teamId: [${teamId}]`);
-    console.log(`PK队伍名称: [${currentUserPkInfo && currentUserPkInfo.teamName}]`);
-    await updatePkActivityId();
-    if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
-    console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes.pkActivityId}`);
-    console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
+    console.log(`\njoinStatus:${joinStatus}`);
+    console.log(`pkStatus:${pkStatus}\n`);
     if (joinStatus === 0) {
+      console.log(`\n注：PK会在每天的七点自动随机加入lxk0301创建的队伍\n`)
       await updatePkActivityId();
       if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
+      console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes.pkActivityId}`);
+      console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
       if ($.updatePkActivityIdRes && ($.updatePkActivityIdRes.pkActivityId === pkActivityId)) {
         let Teams = [
           {
@@ -365,12 +360,17 @@ async function businessCircleActivity() {
         console.log('\nupdatePkActivityId请求返回的pkActivityId与京东服务器返回不一致,暂时不加入战队')
       }
     } else if (joinStatus === 1) {
-      console.log(`我邀请的人数:${inviteCount}\n`)
-      console.log(`\n我方战队战队 [${currentUserPkInfo.teamName}]/【${currentUserPkInfo.teamCount}】`);
-      console.log(`对方战队战队 [${pkUserPkInfo.teamName}]/【${pkUserPkInfo.teamCount}】\n`);
+      if (teamId) {
+        console.log(`inviteCode: [${inviteCode}]`);
+        console.log(`PK队伍teamId: [${teamId}]`);
+        console.log(`PK队伍名称: [${currentUserPkInfo && currentUserPkInfo.teamName}]`);
+        console.log(`我邀请的人数:${inviteCount}\n`)
+        console.log(`\n我方战队战队 [${currentUserPkInfo && currentUserPkInfo.teamName}]/【${currentUserPkInfo && currentUserPkInfo.teamCount}】`);
+        console.log(`对方战队战队 [${pkUserPkInfo && pkUserPkInfo.teamName}]/【${pkUserPkInfo && pkUserPkInfo.teamCount}】\n`);
+      }
     }
     if (pkStatus === 1) {
-      console.log(`商圈PK进行中`)
+      console.log(`商圈PK进行中\n`)
     } else if (pkStatus === 2) {
       console.log(`商圈PK结束了`)
       if (prizeInfo.pkPrizeStatus === 2) {
@@ -391,11 +391,13 @@ async function businessCircleActivity() {
           }
         }
       } else if (prizeInfo.pkPrizeStatus === 1) {
-        console.log(`商圈PK奖励已经领取`)
+        console.log(`商圈PK奖励已经领取\n`)
       }
     } else if (pkStatus === 3) {
-      console.log(`商圈PK暂停中`)
+      console.log(`商圈PK暂停中\n`)
     }
+  } else {
+    console.log(`\n${JSON.stringify(smtg_getTeamPkDetailInfoRes)}\n`)
   }
   return
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
@@ -547,8 +549,8 @@ async function unlockProductByCategory(category) {
 //升级货架和商品
 async function upgrade() {
   superMarketUpgrade = $.getdata('jdSuperMarketUpgrade') ? $.getdata('jdSuperMarketUpgrade') : superMarketUpgrade;
-  if ($.isNode() && process.env.jdSuperMarketUpgrade) {
-    superMarketUpgrade = process.env.jdSuperMarketUpgrade;
+  if ($.isNode() && process.env.SUPERMARKET_UPGRADE) {
+    superMarketUpgrade = process.env.SUPERMARKET_UPGRADE;
   }
   if (`${superMarketUpgrade}` === 'false') {
     console.log(`\n自动升级: 您设置的是关闭自动升级\n`);
@@ -722,7 +724,7 @@ function updatePkActivityId(url = 'https://raw.githubusercontent.com/lxk0301/upd
     })
   })
 }
-function updatePkActivityIdCDN(url = 'https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json') {
+function updatePkActivityIdCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_updateTeam.json') {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json
     //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateTeam.json
@@ -1390,7 +1392,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -1422,7 +1424,7 @@ function taskUrl(function_id, body = {}) {
   return {
     url: `${JD_API_HOST}?functionId=${function_id}&appid=jdsupermarket&clientVersion=8.0.0&client=m&body=${escape(JSON.stringify(body))}&t=${Date.now()}`,
     headers: {
-      'User-Agent': 'jdapp;iPhone;9.0.8;13.6;Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
       'Host': 'api.m.jd.com',
       'Cookie': cookie,
       'Referer': 'https://jdsupermarket.jd.com/game',

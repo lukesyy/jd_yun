@@ -9,6 +9,11 @@
       "id": "JD_Cookies",
       "name": "京东多账号 Ck 管理",
       "keys": ["CookiesJD"],
+      "descs_html": [
+        "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改。",
+        "脚本地址【<a href=\"https://raw.githubusercontent.com/lxk0301/jd_scripts/master/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
+        "使用方式【<a href=\"https://home.m.jd.com/myJd/newhome.action\">个人中心</a>】获取对应的数据Code"
+      ],
       "settings": [
         {
           "id": "CookiesJD",
@@ -27,6 +32,28 @@
       "author": "@dompling",
       "repo": "https://github.com/dompling/Script",
       "script": "https://raw.githubusercontent.com/dompling/Script/master/jd/JD_extra.js"
+    },
+    {
+      "id": "JD_UA",
+      "name": "自定义京东脚本的UserAgent",
+      "keys": [
+        "JDUA"
+      ],
+      "settings": [
+        {
+          "id": "JDUA",
+          "name": "自定义京东脚本的UserAgent",
+          "val": "",
+          "type": "text",
+          "desc": "不懂不知不会UserAgent的请不要随意填写内容"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
+      ]
     },
     {
       "id": "jd_fruit",
@@ -379,10 +406,31 @@
         },
         {
           "id": "joyRunFlag",
-          "name": "是否参加双人赛跑(默认参加)",
+          "name": "是否参加赛跑(默认参加)",
           "val": true,
           "type": "boolean",
-          "desc": "开启脚本将会为您自动参加双人赛跑"
+          "desc": "开启脚本将会为您自动参加赛跑(默认参加双人赛跑)"
+        },
+        {
+          "id": "JOY_TEAM_LEVEL",
+          "name": "宠汪汪赛跑级别选择",
+          "val": "2",
+          "type": "radios",
+          "desc": "参加多少人的赛跑比赛，其中2代表参加双人PK赛，10代表参加10人突围赛，50代表参加50人挑战赛",
+          "items": [
+            {
+              "key": "2",
+              "label": "双人PK赛"
+            },
+            {
+              "key": "10",
+              "label": "10人突围赛"
+            },
+            {
+              "key": "50",
+              "label": "50人挑战赛"
+            }
+          ]
         },
         {
           "id": "joyFeedCount",
@@ -540,13 +588,6 @@
           "val": true,
           "type": "boolean",
           "desc": "运行京东摇钱树脚本时不发出系统弹窗通知"
-        },
-        {
-          "id": "jdMoneyTreeNoticeTimes",
-          "name": "通知频率",
-          "val": 2,
-          "type": "number",
-          "desc": "脚本运行多少次后弹窗通知(默认2次，如果开启静默运行，此设置失效)"
         }
       ],
       "author": "@lxk0301",
@@ -633,16 +674,7 @@
     {
       "id": "jd_SuperMarket",
       "name": "京小超",
-      "keys": [
-        "jd_supermarket_name",
-        "jd_supermarket1",
-        "jd_supermarket2",
-        "jd_supermarket3",
-        "j2_supermarket_name",
-        "jd2_supermarket1",
-        "jd2_supermarket2",
-        "jd2_supermarket3"
-      ],
+      "keys": [],
       "settings": [
         {
           "id": "jdSuperMarketNotify",
@@ -671,62 +703,6 @@
           "val": false,
           "type": "boolean",
           "desc": "运行脚本消耗金币进行抽奖，默认抽奖"
-        },
-        {
-          "id": "jd_supermarket_name",
-          "name": "京东账号一昵称",
-          "val": "",
-          "type": "text",
-          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
-        },
-        {
-          "id": "jd_supermarket1",
-          "name": "京东账号一互助码1",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd_supermarket2",
-          "name": "京东账号一互助码2",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd_supermarket3",
-          "name": "京东账号一互助码3",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd2_supermarket_name",
-          "name": "京东账号二昵称",
-          "val": "",
-          "type": "text",
-          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
-        },
-        {
-          "id": "jd2_supermarket1",
-          "name": "京东账号二互助码1",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd2_supermarket2",
-          "name": "京东账号二互助码2",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
-        },
-        {
-          "id": "jd2_supermarket3",
-          "name": "京东账号二互助码3",
-          "val": "",
-          "type": "text",
-          "desc": "京小超商圈互助码"
         }
       ],
       "author": "@lxk0301",
@@ -862,6 +838,29 @@
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/xmyd_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png"
+      ]
+    },
+    {
+      "id": "lxk_jdfactory",
+      "name": "东东工厂",
+      "keys": [
+        "FACTORAY_WANTPRODUCT_NAME"
+      ],
+      "settings": [
+        {
+          "id": "FACTORAY_WANTPRODUCT_NAME",
+          "name": "心仪商品名称",
+          "val": "",
+          "type": "text",
+          "desc": "请尽量填写完整和别的商品有区分度"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png"
       ]
     }
   ]

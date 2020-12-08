@@ -36,6 +36,8 @@
 ```javascript
 'use strict';
 exports.main_handler = async (event, context, callback) => {
+  //解决云函数热启动问题
+  delete require.cache[require.resolve('./jd_xtg1.js')];
   require('./jd_xtg1.js') //这里写你想要的脚本
   require('./jd_xtg2.js') //这里写你想要的脚本
   require('./jd_xtg3.js') //这里写你想要的脚本
@@ -44,8 +46,7 @@ exports.main_handler = async (event, context, callback) => {
 ```
 此时，同一时间点下，会同时执行多个脚本，触发器触发后，index.js文件中require()下的所有脚本都会被执行
 
-**优点**：同一时间下可以同时执行多个脚本，适合脚本种类少的repository，对脚本数量少的repository推荐使用此方案
-**缺点**：多个脚本不同时间点运行无法满足
+**优点**：同一时间下可以同时执行多个脚本，适合脚本种类少的repository，对脚本数量少的repository推荐使用此方案<br>**缺点**：多个脚本不同时间点运行无法满足
 
 方案二：同一个仓库下不同的时间点，分别执行不同的脚本（类似GitHub Action执行机制）
 
@@ -57,6 +58,8 @@ exports.main_handler = async (event, context, callback) => {
 'use strict';
 exports.main_handler = async (event, context, callback) => {
     for (const v of event["Message"].split("\r\n")) {
+        //解决云函数热启动问题
+        delete require.cache[require.resolve(`./${v}.js`)];
         console.log(v);
         require(`./${v}.js`)
     }
@@ -66,14 +69,15 @@ exports.main_handler = async (event, context, callback) => {
 
 此时触发管理按照下图中进行设置，附加信息选择“是”，内容填写需要传递执行的具体脚本文件名，以回车键换行。触发器触发后，附加信息栏内的脚本会被执行，设置多个不同时间点的触发器达到类似GitHub Action的效果
 
-**优点**：可以满足个性化需求，同一个repository下只需要设置不同的触发器，可以实现不同时间点分别执行不同的脚本
-**缺点**：repository下脚本过多，如果需要设置多个触发器，实现个性化运行效果，由于云函数的限制，最多只能设置10个
+**优点**：可以满足个性化需求，同一个repository下只需要设置不同的触发器，可以实现不同时间点分别执行不同的脚本<br>**缺点**：repository下脚本过多，如果需要设置多个触发器，实现个性化运行效果，由于云函数的限制，最多只能设置10个
 
 [![B20KxI.png](https://s1.ax1x.com/2020/11/05/B20KxI.png)](https://imgchr.com/i/B20KxI)
 [![BRCG0H.png](https://s1.ax1x.com/2020/11/05/BRCG0H.png)](https://imgchr.com/i/BRCG0H)
 
-**注意：方案一与方案二不能混合到同一个index.js文件中使用，同一个仓库下，二者只能选择其一。目前由于云函数热启动问题的存在，频繁的触发器启动，虽然日志显示“调用成功”，但实际内容却没有执行，方案一与方案二暂时无法规避此问题，期待之后能解决**
-
+**注意：**<br>
+Ⅰ方案一与方案二不能混合到同一个index.js文件中使用，同一个仓库下，二者只能选择其一。<br>
+Ⅱ感谢[issues#115](https://github.com/lxk0301/jd_scripts/issues/115)中的解决方案，目前云函数连续测试已经可以规避热启动问题了。<br>
+Ⅲ在确保完全按照本教程设置的情况下测试云函数运行情况，对于部分人运行日志中出现某些脚本运行失败其他正常，并且错误提示带有strict字样的，请自行删除index.js中的```'use strict';```，再做测试<br>
 
  **增加cookie**
 
@@ -110,11 +114,9 @@ let CookieJDs = [
 
 ![iCloud2](./icon/iCloud2.png)
 
-函数名称：可以自定义，比如为jd。
-运行环境：选择 “Nodejs 12.16”。
-创建方式：选择 “空白函数”。
+**函数名称**：可以自定义，比如为jd。<br>**运行环境**：选择 “Nodejs 12.16”。<br>**创建方式**：选择 “空白函数”。
 
-确保环境为Nodejs 12.16，执行方法改为：index.main_handler，提交方式建议选本地文件夹，然后从GitHub项目克隆Zip压缩包，解压成文件夹，然后点击这个上传把文件夹上传进来（记得node_modules文件夹一并上传），完了后点击下面的高级设置。
+确保环境为Nodejs 12.16，执行方法改为：index.main_handler，提交方式建议选本地文件夹，然后从GitHub项目克隆Zip压缩包，解压成文件夹，然后点击这个上传把文件夹上传进来（记得node_modules文件夹一并上传或者将node_modules文件夹上传到“层”，之后选择“函数管理”-“层管理”绑定上传好的层），完了后点击下面的高级设置。
 
 ![iCloud3](./icon/iCloud3.png)
 
@@ -132,14 +134,21 @@ let CookieJDs = [
 
 ![BcGvM4.png](https://s1.ax1x.com/2020/11/04/BcGvM4.png)
 
-![UTOOLS1604471299130.png](https://img01.sogoucdn.com/app/a/100520146/f8d70ea4f8e08d9e87ec8c13474f22c3)
+创建触发器
+
+![iCloud6](./icon/iCloud6.png)
+
+触发方式默认“**定时触发**”，定时任务名称随便起个名字，触发周期根据自己需要自行设置。
 
 想进阶使用触发器的自行查看本文中方案一和方案二中的说明
 
 关于触发周期中的自定义触发周期，使用的是 Cron表达式，这个自行学习下吧
 
+
 [Corn文档](https://cloud.tencent.com/document/product/583/9708#cron-.E8.A1.A8.E8.BE.BE.E5.BC.8F)
 
+目前repo中按照每个脚本一个定时器的方式设置到云函数中，大约需要触发器10多个，由于云函数触发器限制最多10个，需要对触发器进行整合，整合后触发器保持在10个以内，以下设置仅供参考<br>
 
+![iCloud5](./icon/iCloud5.png)
 
 点击提交，所有流程就结束了。

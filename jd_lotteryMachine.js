@@ -47,7 +47,7 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/yangtingxiao/
     })
   })
 }
-function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/yangtingxiao/QuantumultX@master/scripts/jd/jd_lotteryMachine.js') {
+function updateShareCodesCDN(url = 'https://raw.fastgit.org/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(resolve => {
     $.get({url}, async (err, resp, data) => {
       try {

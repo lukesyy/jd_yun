@@ -2,7 +2,7 @@
  * @Author: lxk0301 
  * @Date: 2020-11-03 18:12:38
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-30 20:37:24
+ * @Last Modified time: 2020-11-23 12:27:18
 */
 /*
 京东全民开红包（京东app->主页->领券->抢红包(在底部)）
@@ -268,7 +268,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -309,7 +309,7 @@ function taskUrl(function_id, body) {
       "Cookie": cookie,
       "Connection": "keep-alive",
       "Accept": "*/*",
-      "User-Agent": "jdapp;iPhone;9.0.2;13.5.1;e35caf0a69be42084e3c97eef56c3af7b0262d01;network/wifi;ADID/3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;model/iPhone11,8;addressid/;hasOCPay/0;appBuild/167249;supportBestPay/0;jdSupportDarkMode/0;pv/2.76;apprpd/CouponCenter;ref/NewCouponCenterViewController;psq/0;ads/;psn/e35caf0a69be42084e3c97eef56c3af7b0262d01|28;jdv/0|;adk/;app_device/IOS;pap/JA2015_311210|9.0.2|IOS 13.5.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
       "Referer": "https://happy.m.jd.com/babelDiy/zjyw/3ugedFa7yA6NhxLN5gw2L3PF9sQC/index.html",
       "Content-Length": "36",
       "Accept-Language": "zh-cn"

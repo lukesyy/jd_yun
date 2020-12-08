@@ -1,6 +1,6 @@
 /*
 京东摇钱树 ：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js
-更新时间：2020-11-07
+更新时间：2020-11-16
 京东摇钱树支持京东双账号
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
@@ -30,7 +30,6 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD2'));
 }
 
-const Notice = $.getdata('jdMoneyTreeNoticeTimes') * 1 || 2;//设置运行多少次才通知。默认运行两次脚本通知，其他设置请在BoxJs进行设置
 let jdNotify = true;//是否开启静默运行，默认true开启
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
@@ -78,18 +77,10 @@ async function jd_moneyTree() {
   await sell();
   await myWealth();
   await stealFriendFruit()
-  await msgControl();
 
-  console.log(`运行脚本次数和设置的次数是否相等::${($.getdata($.treeMsgTime) * 1) === Notice}`);
-  jdNotify = $.getdata('jdMoneyTreeNotify') ? $.getdata('jdMoneyTreeNotify') : jdNotify;
-  console.log(`box订阅静默运行-是否打开::${jdNotify || jdNotify === 'true'}`);
-  console.log(`是否弹窗通知::${(($.getdata($.treeMsgTime) * 1) === Notice) && (!jdNotify || jdNotify === 'false')}`);
   $.log(`\n${message}\n`);
   if (!jdNotify || jdNotify === 'false') {
-    if (($.getdata($.treeMsgTime) * 1) === Notice) {
-      $.msg($.name, subTitle, message);
-      $.setdata('0', $.treeMsgTime);
-    }
+    $.msg($.name, subTitle, message);
   }
 }
 function user_info() {
@@ -121,13 +112,6 @@ function user_info() {
                 if (userInfo.realName) {
                   // console.log(`助力码sharePin为：：${userInfo.sharePin}`);
                   $.treeMsgTime = userInfo.sharePin;
-                  if ($.getdata($.treeMsgTime)) {
-                    if ($.getdata($.treeMsgTime) >= Notice) {
-                      $.setdata('0', $.treeMsgTime);
-                    }
-                  } else {
-                    $.setdata('0', $.treeMsgTime);
-                  }
                   subTitle = `【${userInfo.nick}】${userInfo.treeInfo.treeName}`;
                   // message += `【我的金果数量】${userInfo.treeInfo.fruit}\n`;
                   // message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
@@ -273,6 +257,12 @@ function sell() {
     }
     params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
     console.log(`目前金果数量${fruitTotal}`)
+    if ($.isNode()) {
+        if (process.env.MONEY_TREE_SELL_FRUIT && process.env.MONEY_TREE_SELL_FRUIT === 'false') {
+            rs()
+            return
+        }
+    }
     if (fruitTotal > 380) {
       request('sell', params).then((sellRes) => {
         console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
@@ -583,7 +573,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -648,7 +638,7 @@ function taskurl(function_id, body) {
       'Content-Type' : `application/x-www-form-urlencoded;charset=UTF-8`,
       'Host' : `ms.jr.jd.com`,
       'Connection' : `keep-alive`,
-      'User-Agent' : `jdapp;iPhone;9.0.0;13.4.1;e35caf0a69be42084e3c97eef56c3af7b0262d01;network/4g;ADID/F75E8AED-CB48-4EAC-A213-E8CE4018F214;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/1;model/iPhone11,8;addressid/2005183373;hasOCPay/0;appBuild/167237;supportBestPay/0;jdSupportDarkMode/0;pv/1287.19;apprpd/MyJD_GameMain;ref/https%3A%2F%2Fuua.jr.jd.com%2Fuc-fe-wxgrowing%2Fmoneytree%2Findex%2F%3Fchannel%3Dyxhd%26lng%3D113.325843%26lat%3D23.204628%26sid%3D2d98e88cf7d182f60d533476c2ce777w%26un_area%3D19_1601_50258_51885;psq/1;ads/;psn/e35caf0a69be42084e3c97eef56c3af7b0262d01|3485;jdv/0|kong|t_1000170135|tuiguang|notset|1593059927172|1593059927;adk/;app_device/IOS;pap/JA2015_311210|9.0.0|IOS 13.4.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`,
+      'User-Agent' : $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
       'Referer' : `https://uua.jr.jd.com/uc-fe-wxgrowing/moneytree/index/?channel=yxhd&lng=113.325896&lat=23.204600&sid=2d98e88cf7d182f60d533476c2ce777w&un_area=19_1601_50258_51885`,
       'Accept-Language' : `zh-cn`
     }

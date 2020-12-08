@@ -81,7 +81,7 @@ async function sendNotify(text, desp, params = {}) {
   await iGotNotify(text, desp, params);
 }
 
-function serverNotify(text, desp) {
+function serverNotify(text, desp, timeout = 2100) {
   return  new Promise(resolve => {
     if (SCKEY) {
       //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
@@ -93,25 +93,29 @@ function serverNotify(text, desp) {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }
-      $.post(options, (err, resp, data) => {
-        try {
-          if (err) {
-            console.log('\n发送通知调用API失败！！\n')
-            console.log(err);
-          } else {
-            data = JSON.parse(data);
-            if (data.errno === 0) {
-              console.log('\nserver酱发送通知消息成功\n')
-            } else if (data.errno === 1024) {
-              console.log('\nPUSH_KEY 错误\n')
+      setTimeout(() => {
+        $.post(options, (err, resp, data) => {
+          try {
+            if (err) {
+              console.log('\n发送通知调用API失败！！\n')
+              console.log(err);
+            } else {
+              data = JSON.parse(data);
+              if (data.errno === 0) {
+                console.log('\nserver酱发送通知消息成功\n')
+              } else if (data.errno === 1024) {
+                console.log('\nPUSH_KEY 错误\n')
+              } else {
+                console.log(`server酱发送通知消息异常\n${JSON.stringify(data)}`)
+              }
             }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve(data);
           }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
-        }
-      })
+        })
+      }, timeout)
     } else {
       console.log('\n您未提供server酱的SCKEY，取消微信推送消息通知\n');
       resolve()

