@@ -79,4 +79,4 @@
 # 京东汽车(签到满500赛点可兑换500京豆)
 33 2 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
 # 领京豆额外奖励(每日可获得3京豆)
-33 4 * * * node /scripts/jd_baen_home.js >> /scripts/logs/jd_baen_home.log 2>&1
+33 4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
