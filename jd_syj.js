@@ -86,10 +86,11 @@ function showMsg() {
     resolve()
   })
 }
+let signFlag = 0;
 function userSignIn() {
   return new Promise(resolve => {
     const body = {"activityId":"8d6845fe2e77425c82d5078d314d33c5","inviterId":"VMIQlLQqjQyjZokQmv5bIDgq011L0Ov8","channel":"MiniProgram"};
-    $.get(taskUrl('userSignIn', body), (err, resp, data) => {
+    $.get(taskUrl('userSignIn', body), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -98,7 +99,8 @@ function userSignIn() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.code === 0) {
-              console.log(`今日签到成功`)
+              signFlag = 0;
+              console.log(`${$.name}今日签到成功`);
               if (data.data) {
                 let { alreadySignDays, beanTotalNum, todayPrize, eachDayPrize } = data.data;
                 message += `【第${alreadySignDays}日签到】成功，获得${todayPrize.beanAmount}京豆 🐶\n`;
@@ -109,6 +111,13 @@ function userSignIn() {
             } else if (data.code === 81) {
               console.log(`今日已签到`)
               message += `【签到】失败，今日已签到`;
+            } else if (data.code === 6) {
+              //此处有时会遇到 服务器繁忙 导致签到失败,故重复三次签到
+              $.log(`${$.name}签到失败${signFlag}:${data.msg}`);
+              if (signFlag < 3) {
+                signFlag ++;
+                await userSignIn();
+              }
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
             }
