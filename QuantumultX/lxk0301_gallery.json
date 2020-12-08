@@ -21,7 +21,7 @@
         "2 9 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js , tag=京豆变动通知 , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
         "20 0,20 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_necklace.js , tag=点点券 , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
         "10 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js, tag=京喜工厂, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png",
-        "10 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js, tag=东东工厂, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
+        "10 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js, tag=东东工厂, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png",
         "10 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js, tag=十元街, img-url=https://github.com/58xinian/icon/raw/master/jd_syj.png",
         "10 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_split.js, tag=年终奖, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
         "10 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, tag=秒杀红包雨, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
