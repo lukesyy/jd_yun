@@ -43,7 +43,7 @@ inputs:
     - timer: # 宠汪汪积分兑换奖品# 宠汪汪偷好友积分与狗# 点点券
         parameters:
           name: jd_joy_reward_jd_joy_steal_jd_necklace
-          cronExpression: "0 0 0-16/8 * * * *"
+          cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_joy_steal&jd_necklace
     - timer: # 京东全民开红包 # 进店领豆 # 取关京东店铺商品# 京东抽奖机# 东东小窝# 秒杀红包雨# 健康抽奖机
