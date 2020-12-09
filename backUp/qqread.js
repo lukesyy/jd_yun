@@ -6,7 +6,7 @@
  多个账号  对应三个环境变量/secret 使用@符号或者换行隔开
  iOS可使用BoxJs可使用此订阅修改复制所需的环境变量 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/mySelf.boxjs.json
  环境变量与BoxJs里面对应关系
- QQ_READ_HEADER_VAL  ------》   qqreadhd
+ QQ_READ_HEADER_VAL  ------》   qqreadbodyVal
  QQ_READ_TIME_URL_VAL  ------》   qqreadtimeurl
  QQ_READ_TIME_HEADER_VAL  ------》   qqreadtimehd
  *****************************************************************************************************************
@@ -68,7 +68,7 @@ const logs = 1;   //0为关闭日志，1为开启
 const TIME = 30//单次时长上传限制，默认5分钟
 const maxtime = 20//每日上传时长限制，默认20小时
 const wktimess = 1200//周奖励领取标准，默认1200分钟
-let tz = ''
+let tz = '',kz;
 const qqreadbodyValKey = 'qqreadbodyVal'
 let qqreadbodyVal = $.getdata(qqreadbodyValKey)
 
@@ -232,10 +232,12 @@ async function QQ_READ() {
 
     await qqreadwktime();//周时长查询
     await qqreadpick();//领周时长奖励
-    // await showmsg();//通知
+    await showmsg();//通知
   }
 }
-
+function showmsg() {
+  $.msg(jsname, "", tz); // 宝箱每15次通知一次
+}
 // 任务列表
 function qqreadtask() {
   return new Promise((resolve, reject) => {
@@ -359,7 +361,7 @@ function qqreadtime() {
       headers: JSON.parse(qqreadtimeheaderVal),
     };
     $.get(toqqreadtimeurl, (error, response, data) => {
-      if (logs) $.log(`${jsname}, 阅读时长: ${data}`);
+      if (logs) $.log(`${jsname}, 阅读时长qqreadtime: ${data}`);
       let time = JSON.parse(data);
       if (time.code == 0) tz += `【阅读时长】:上传${TIME / 6}分钟\n`;
 
@@ -614,6 +616,7 @@ function qqreadpick() {
       });
       resolve();
     }
+    resolve();
   });
 }
 
