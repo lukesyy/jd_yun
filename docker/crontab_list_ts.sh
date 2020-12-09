@@ -10,6 +10,14 @@
 10 * * * * node /scripts/jd_jxstory.js |ts >> /scripts/logs/jd_jxstory.log 2>&1
 # 金榜年终奖(2020.12.12活动过期)
 10 7 * * * node /scripts/jd_split.js |ts >> /scripts/logs/jd_split.log 2>&1
+# 秒杀红包雨(2020.12.31活动过期)
+40 8 * * * node /scripts/jd_ms_redrain.js |ts >> /scripts/logs/jd_ms_redrain.log 2>&1
+# 健康抽奖机(2020.12.31活动过期)
+10 0 * * * node /scripts/jd_health.js |ts >> /scripts/logs/jd_health.log 2>&1
+# 直播红包雨(2020.12.12活动过期)
+0 0,9,11,13,15,17,19,20,21,23 * * * node /scripts/jd_live_redrain.js |ts >> /scripts/logs/jd_live_redrain.log 2>&1
+# 数码加购京豆(2020.12.11活动过期)
+8 0 * * * node /scripts/jd_digital_floor.js |ts >> /scripts/logs/jd_digital_floor.log 2>&1
 ##############长期活动##############
 
 # 签到
@@ -62,7 +70,13 @@
 16 6 * * * node /scripts/jd_small_home.js |ts >> /scripts/logs/jd_small_home.log 2>&1
 # 东东工厂
 36 * * * * node /scripts/jd_jdfactory.js |ts >> /scripts/logs/jd_jdfactory.log 2>&1
-#十元街
-36 8 * * * node /scripts/jd_syj.js |ts >> /scripts/logs/jd_syj.log 2>&1
-#秒杀红包雨
-40 8 * * * node /scripts/jd_ms_redrain.js |ts >> /scripts/logs/jd_ms_redrain.log 2>&1
+# 十元街
+36 8,18 * * * node /scripts/jd_syj.js |ts >> /scripts/logs/jd_syj.log 2>&1
+# 京东代属(注:限校园用户可使用)
+36 9 * * * node /scripts/jd_ds.js |ts >> /scripts/logs/jd_ds.log 2>&1
+# 京东快递签到
+23 1 * * * node /scripts/jd_kd.js |ts >> /scripts/logs/jd_kd.log 2>&1
+# 京东汽车(签到满500赛点可兑换500京豆)
+33 2 * * * node /scripts/jd_car.js |ts >> /scripts/logs/jd_car.log 2>&1
+# 领京豆额外奖励(每日可获得3京豆)
+33 4 * * * node /scripts/jd_bean_home.js |ts >> /scripts/logs/jd_bean_home.log 2>&1
