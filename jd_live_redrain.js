@@ -103,8 +103,8 @@ function getRedRain() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.data.iconArea) {
-              let act = data.data.iconArea[0]
-              let url = data.data.iconArea[0].data.activityUrl
+              let act = data.data.iconArea.filter(vo=>vo['type']==="platform_red_packege_rain")[0]
+              let url = act.data.activityUrl
               $.activityId = url.substr(url.indexOf("id=") + 3)
               $.startTime = act.startTime
               $.endTime = act.endTime
