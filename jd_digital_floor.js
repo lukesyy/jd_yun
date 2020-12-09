@@ -1,5 +1,6 @@
 /*
 数码加购京豆
+脚本会给内置的码进行助力
 共计25京豆，一天运行一次即可
 活动时间：2020-12-4 到 2020-12-11
 活动入口：https://prodev.m.jd.com/mall/active/nKxVyPnuLwAsQSTfidZ9z4RKVZy/index.html#/

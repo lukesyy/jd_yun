@@ -18,6 +18,10 @@
 0 0,9,11,13,15,17,19,20,21,23 * * * node /scripts/jd_live_redrain.js |ts >> /scripts/logs/jd_live_redrain.log 2>&1
 # 数码加购京豆(2020.12.11活动过期)
 8 0 * * * node /scripts/jd_digital_floor.js |ts >> /scripts/logs/jd_digital_floor.log 2>&1
+# jd_apple_live
+8 0,20 * * * node /scripts/jd_apple_live.js |ts >> /scripts/logs/jd_apple_live.log 2>&1
+# jd_pubg
+8 1,20 * * * node /scripts/jd_pubg.js |ts >> /scripts/logs/jd_pubg.log 2>&1
 ##############长期活动##############
 
 # 签到
