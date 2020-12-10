@@ -1,5 +1,6 @@
 /*
 健康抽奖机 ，活动于2020-12-31日结束
+脚本会给内置的码进行助力
 活动地址：https://h5.m.jd.com/babelDiy/Zeus/3HBUP66Gnx92mRt2bXbT9VamYWSx/index.html
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js

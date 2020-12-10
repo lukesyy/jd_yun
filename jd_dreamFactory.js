@@ -34,7 +34,7 @@ const randomCount = $.isNode() ? 20 : 5;
 const tuanActiveId = `gaVXW_NJ0KPEA2LyUhoXzA==`;
 const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
 let cookiesArr = [], cookie = '', message = '';
-const inviteCodes = ['V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=', 'PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw=="];
+const inviteCodes = ['V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=', 'PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw==", '-OvElMzqeyeGBWazWYjI1Q=='];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -542,6 +542,8 @@ function userInfo() {
                 console.log(`当前电力：${data.user.electric}`)
                 console.log(`当前等级：${data.user.currentLevel}`)
                 console.log(`分享码: ${data.user.encryptPin}`);
+                console.log(`已投入电力：${production.investedElectric}`);
+                console.log(`所需电力：${production.needElectric}`);
                 console.log(`生产进度：${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%`);
                 message += `【京东账号${$.index}】${$.nickName}\n`
                 message += `【生产商品】${$.productName}\n`;
@@ -1008,6 +1010,7 @@ function CreateTuan() {
 async function joinLeaderTuan() {
   await updateTuanIds();
   if (!$.tuanIdS) await updateTuanIdsCDN();
+  if (!$.tuanIdS) await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateFactoryTuanId.json');
   for (let tuanId of $.tuanIdS.tuanIds) {
     if (!tuanId) continue
     await JoinTuan(tuanId);
@@ -1182,7 +1185,7 @@ function updateTuanIds(url = 'https://raw.githubusercontent.com/lxk0301/updateTe
   })
 }
 function updateTuanIdsCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_updateFactoryTuanId.json') {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     $.get({url}, (err, resp, data) => {
       try {
         if (err) {
@@ -1196,6 +1199,8 @@ function updateTuanIdsCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/mast
         resolve();
       }
     })
+    await $.wait(3000)
+    resolve();
   })
 }
 function checkExchange() {

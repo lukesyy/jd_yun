@@ -158,6 +158,7 @@ async function doChannelsListTask(taskId, taskType) {
 async function helpFriends() {
   await updateInviteCode();
   if (!$.inviteCodes) await updateInviteCodeCDN();
+  if (!$.inviteCodes) await updateInviteCodeCDN('https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateSmallHomeInviteCode.json');
   for (let item of $.inviteCodes.inviteCode) {
     if (!item) continue
     await createAssistUser(item, $.createAssistUserID || "1318106976846299138");
@@ -711,7 +712,7 @@ function updateInviteCode(url = 'https://raw.githubusercontent.com/lxk0301/updat
   })
 }
 function updateInviteCodeCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_updateSmallHomeInviteCode.json') {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     $.get({url}, async (err, resp, data) => {
       try {
         if (err) {
@@ -726,6 +727,8 @@ function updateInviteCodeCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/m
         resolve();
       }
     })
+    await $.wait(3000)
+    resolve();
   })
 }
 function taskUrl(url, body = {}) {
