@@ -42,6 +42,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
   $.newShareCodes = []
   await getAuthorShareCode()
+  return
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
@@ -100,7 +101,7 @@ async function jdBeanHome() {
 
 function getAuthorShareCode() {
   return new Promise(resolve => {
-    $.get({url: "http://ql4kk90rw.hb-bkt.clouddn.com/catch"}, async (err, resp, data) => {
+    $.get({url: "https://cdn.jsdelivr.net/gh/shylocks/updateTeam@main/jd_bean_home"}, async (err, resp, data) => {
       try {
         if (err) {
         } else {
