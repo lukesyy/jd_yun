@@ -208,7 +208,7 @@ function taskList(get=1) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             let vo = data.data[0]
-            console.log(`您的${$.name}好友助力码为：${vo.shareId}`)
+            if (vo.shareId) console.log(`您的${$.name}好友助力码为：${vo.shareId}`)
             for (let i = 0; i< vo.venueList.length;++i){
               let venue = vo.venueList[i]
               if(venue.venueStatus === 1) {
@@ -234,7 +234,7 @@ function taskList(get=1) {
             }
             for (let i = 0; i< vo.shopList.length;++i){
               let shop = vo.shopList[i]
-              if(shop.shopStatus === 0) {
+              if(shop.shopStatus === 0 || shop.shopStatus === 1) {
                 console.log(`【关注店铺】去关注店铺 ${shop.shopName}`)
                 await doTask(`starId=PUBG&type=shop&id=${shop.shopId}&status=1`)
                 await $.wait(10000)
