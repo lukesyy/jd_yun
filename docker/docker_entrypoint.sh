@@ -34,6 +34,8 @@ function version_gt() {
 ######################################对比版本版本号大小方法-end###################################################################
 
 #######################################通知用户更新镜像-start#####################################################################
+echo "check docker images update..."
+echo "检查docker镜像更新更新..."
 if type jq >/dev/null 2>&1; then
     updateContext=$(getDockerImageLabel ｜ jq .UPDATE_CONTEXT)
     export NOTIFY_CONTEXT=$updateContext
