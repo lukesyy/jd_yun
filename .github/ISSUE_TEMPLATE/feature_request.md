@@ -1,5 +1,5 @@
 ---
-name: 功能建议
+name: 功能与建议
 about: 请求实现新功能或改进已有功能
 title: ''
 labels: ''
