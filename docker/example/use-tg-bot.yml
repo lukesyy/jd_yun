@@ -1,0 +1,40 @@
+jd_scripts:
+  image: akyakya/jd_scripts:supportbot
+  container_name: jd_scripts
+  restart: always
+  volumes:
+    - ./logs:/scripts/logs
+  tty: true
+  environment:
+    # 注意环境变量填写值的时候一律不需要引号（""或者''）下面这些只是事例，根据自己的需求增加删除
+    #jd cookies
+    # 例: JD_COOKIE=pt_key=XXX;pt_pin=XXX
+    - JD_COOKIE=
+    #微信server酱通
+    - PUSH_KEY=
+    #Bark App通知
+    - BARK_PUSH=
+    #telegram机器人通知
+    - TG_BOT_TOKEN=
+    - TG_USER_ID=
+    #钉钉机器人通知
+    - DD_BOT_TOKEN=
+    - DD_BOT_SECRET=
+    #京东种豆得豆
+    - PLANT_BEAN_SHARECODES=
+    #京东农场
+    # 例: FRUITSHARECODES=京东农场的互助码
+    - FRUITSHARECODES=
+    #京东萌宠
+    # 例: PETSHARECODES=东东萌宠的互助码
+    - PETSHARECODES=
+    # 宠汪汪的喂食数量
+    - JOY_FEED_COUNT=
+    #京小超
+    # - SUPERMARKET_SHARECODES=
+    #兑换多少数量的京豆（20，或者1000京豆,或者其他奖品的文字）
+    # 例: MARKET_COIN_TO_BEANS=1000
+    - MARKET_COIN_TO_BEANS=
+    #是否开启debug模式打印日志
+    # 例: JD_DEBUG=false
+    - JD_DEBUG=

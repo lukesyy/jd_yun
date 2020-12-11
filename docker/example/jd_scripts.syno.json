@@ -1,7 +1,7 @@
 {
    "cap_add" : null,
    "cap_drop" : null,
-   "cmd" : "/bin/sh -c 'crond && node'",
+   "cmd" : "",
    "cpu_priority" : 0,
    "devices" : null,
    "enable_publish_all_ports" : false,

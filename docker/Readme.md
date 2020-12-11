@@ -6,7 +6,14 @@
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-### 如果需要使用 docker 多个账户独立并发执行定时任务，[参考这里](https://github.com/iouAkira/scripts/blob/patch-1/docker/docker%E5%A4%9A%E8%B4%A6%E6%88%B7%E4%BD%BF%E7%94%A8%E7%8B%AC%E7%AB%8B%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md#%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%96%B9%E5%BC%8F%E8%AF%B7%E5%85%88%E7%90%86%E8%A7%A3%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8docker%E5%8A%9E%E6%B3%95%E4%B8%80%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F)   
+### 如果需要使用 docker 多个账户独立并发执行定时任务，[参考这里](https://github.com/iouAkira/scripts/blob/patch-1/docker/docker%E5%A4%9A%E8%B4%A6%E6%88%B7%E4%BD%BF%E7%94%A8%E7%8B%AC%E7%AB%8B%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md#%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%96%B9%E5%BC%8F%E8%AF%B7%E5%85%88%E7%90%86%E8%A7%A3%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8docker%E5%8A%9E%E6%B3%95%E4%B8%80%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F)  
+
+⚠️⚠️⚠️2020-12-11更新镜像启动方式，虽然兼容旧版的运行启动方式，但是强烈建议更新镜像和配置后使用
+- 更新后`commad:`指令配置不再需要
+- 更新后可以使用自定义任务文件追加在默任务文件之后，比以前的完全覆盖多一个选择
+- - 新的自定两个环境变量为 `CUSTOM_LIST_MERGE_TYPE`:自定文件的生效方式可选值为`append`，`overwrite`默认为`append` ; `CUSTOM_LIST_FILE`: 自定义文件的名字
+- 更新镜像增减镜像更新通知，以后镜像如果更新之后，会通知用户更新
+
 > 注⚠️：前提先理解学会使用这下面的教程
 ### 创建一个目录`jd_scripts`用于存放备份配置等数据，迁移重装的时候只需要备份整个jd_scripts目录即可
 需要新建的目录文件结构参考如下:
@@ -19,63 +26,18 @@ jd_scripts
 └── docker-compose.yml
 ```
 - `jd_scripts/logs`建一个空文件夹就行
-- `jd_scripts/docker-compose.yml` 参考内容如下：
+- `jd_scripts/docker-compose.yml` 参考内容如下(自己动手能力不行搞不定请使用默认配置)：
+- - [使用默认配置用这个](./example/default.yml)
+- - [使用自定义任务追加到默认任务之后用这个](./example/custom-append.yml)
+- - [使用自定义任务覆盖默认任务用这个](./example/custom-overwrite.yml)
+- - [使用TG机器人交互的用这个](./example/use-tg-bot.yml)
+- - [一次启动多容器并发用这个](./example/multi.yml)
+- - [使用群晖默认配置用这个](./example/jd_scripts.syno.json)
+- - [使用群晖自定义任务追加到默认任务之后用这个](./example/jd_scripts.custom-append.syno.json)
+- - [使用群晖自定义任务覆盖默认任务用这个](./example/jd_scripts.custom-overwrite.syno.json)
 - `jd_scripts/docker-compose.yml`里面的环境变量(`environment:`)配置[参考这里](https://github.com/lxk0301/jd_scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
-```yaml
-jd_scripts:
-jd_scripts:
-  image: akyakya/jd_scripts
-  container_name: jd_scripts
-  restart: always
-  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面的挂载注释 ，通过 `volumes`挂载进去。
-  volumes:
-  #  - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
-    - ./logs:/scripts/logs
-  tty: true
-  environment:
-    # 注意环境变量填写值的时候一律不需要引号（""或者''）下面这些只是事例，根据自己的需求增加删除
-    #jd cookies
-    # 例: JD_COOKIE=pt_key=XXX;pt_pin=XXX
-    - JD_COOKIE=
-    #微信server酱通
-    - PUSH_KEY=
-    #Bark App通知
-    - BARK_PUSH=
-    #telegram机器人通知
-    - TG_BOT_TOKEN=
-    - TG_USER_ID=
-    #钉钉机器人通知
-    - DD_BOT_TOKEN=
-    - DD_BOT_SECRET=
-    #京东种豆得豆
-    - PLANT_BEAN_SHARECODES=
-    #京东农场
-    # 例: FRUITSHARECODES=京东农场的互助码
-    - FRUITSHARECODES=
-    #京东萌宠
-    # 例: PETSHARECODES=东东萌宠的互助码
-    - PETSHARECODES=
-    # 宠汪汪的喂食数量
-    - JOY_FEED_COUNT=
-    #京小超
-    # - SUPERMARKET_SHARECODES=
-    #兑换多少数量的京豆（20，或者1000京豆,或者其他奖品的文字）
-    # 例: MARKET_COIN_TO_BEANS=1000
-    - MARKET_COIN_TO_BEANS=
-    #是否开启debug模式打印日志
-    # 例: JD_DEBUG=false
-    - JD_DEBUG=
-    #如果使用自定义定时任务,取消下面一行的注释
-    #- CRONTAB_LIST_FILE=my_crontab_list.sh
-  command:
-    - /bin/sh
-    - -c
-    - |
-      #crontab /scripts/docker/my_crontab_list.sh  #如果挂载了自定义任务文件,取消此条注释即可
-      crond
-      git -C /scripts/ pull
-      node
-```
+
+
 - `jd_scripts/my_crontab_list.sh` 参考内容如下,自己根据需要调整增加删除，不熟悉用户推荐使用默认配置：
 
 ```shell
