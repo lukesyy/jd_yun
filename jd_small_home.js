@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-12 11:42:12 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-23 12:27:20
+ * @Last Modified time: 2020-12-11 12:27:20
  */
 /*
 东东小窝 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js
@@ -103,6 +103,7 @@ async function smallHome() {
   await lottery();
   await doAllTask();
   await queryByUserId();
+  await queryFurnituresCenterList();
   await showMsg();
 }
 function showMsg() {
@@ -118,33 +119,7 @@ async function lottery() {
     console.log(`免费抽奖机会今日已使用\n`)
   }
 }
-//获取详情
-function queryByUserId() {
-  return new Promise(resolve => {
-    $.get(taskUrl(`ssjj-wo-home-info/queryByUserId/2`), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.head.code === 200) {
-              if (data.body) {
-                message += `【小窝名】${data.body.name}\n`;
-                message += `【当前WO币】${data.body.woB}\n`;
-              }
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
+
 async function doChannelsListTask(taskId, taskType) {
   await queryChannelsList(taskId);
   for (let item of $.queryChannelsList) {
@@ -269,6 +244,94 @@ async function doAllTask() {
       // await doAllTask();
     }
   }
+}
+function queryFurnituresCenterList() {
+  return new Promise(resolve => {
+    $.get(taskUrl(`ssjj-furnitures-center/queryFurnituresCenterList`), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.head.code === 200) {
+              let { buy, list } = data.body;
+              $.canBuyList = [];
+              list.map((item, index) => {
+                if (buy.some((buyItem) => buyItem === item.id)) return
+                $.canBuyList.push(item);
+              })
+              $.canBuyList.sort(sortByjdBeanNum);
+              for (let canBuyItem of $.canBuyList) {
+                if (canBuyItem.needWoB <= $.woB) {
+                  await furnituresCenterPurchase(canBuyItem.id, canBuyItem.jdBeanNum);
+                  break
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+//装饰领京豆
+function furnituresCenterPurchase(id, jdBeanNum) {
+  return new Promise(resolve => {
+    $.post(taskPostUrl(`ssjj-furnitures-center/furnituresCenterPurchase/${id}`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.head.code === 200) {
+              message += `【装饰领京豆】${jdBeanNum}兑换成功\n`;
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+//获取详情
+function queryByUserId() {
+  return new Promise(resolve => {
+    $.get(taskUrl(`ssjj-wo-home-info/queryByUserId/2`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.head.code === 200) {
+              if (data.body) {
+                message += `【小窝名】${data.body.name}\n`;
+                $.woB = data.body.woB;
+                message += `【当前WO币】${data.body.woB}\n`;
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 //获取需要关注的频道列表
 function queryChannelsList(taskId) {
@@ -746,6 +809,25 @@ function taskUrl(url, body = {}) {
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
     }
   }
+}
+function taskPostUrl(url) {
+  return {
+    url: `${JD_API_HOST}/${url}`,
+    headers: {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Accept-Language": "zh-CN,zh;q=0.9",
+      "Connection": "keep-alive",
+      "content-type": "application/json",
+      "Host": "lkyl.dianpusoft.cn",
+      "Referer": "https://h5.m.jd.com/babelDiy/Zeus/2HFSytEAN99VPmMGZ6V4EYWus1x/index.html",
+      "token": $.token,
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+    }
+  }
+}
+function sortByjdBeanNum(a, b) {
+  return b['jdBeanNum'] - a['jdBeanNum'];
 }
 function TotalBean() {
   return new Promise(async resolve => {
