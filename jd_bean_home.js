@@ -1,5 +1,6 @@
 /*
-领京豆额外奖励
+领京豆额外奖励&抢京豆
+脚本自带助力码，介意者可将 29行 helpAuthor 变量设置为 false
 入口：首页-领京豆
 更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_home.js
 已支持IOS双京东账号, Node.js支持N个京东账号
@@ -25,7 +26,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = $.isNode() ? 20 : 5;
+const helpAuthor = true; // 是否帮助作者助力，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
@@ -39,6 +40,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
+  $.newShareCodes = []
+  await getAuthorShareCode()
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
@@ -66,6 +69,21 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await jdBeanHome();
     }
   }
+    for (let i = 0; i < cookiesArr.length; i++) {
+      if (cookiesArr[i]) {
+        $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+        console.log(`${$.UserName}去帮助下一个人`)
+        cookie = cookiesArr[i];
+        if ($.newShareCodes.length > 1) {
+          let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
+          await help(code[0], code[1])
+        }
+        if (helpAuthor && $.authorCode) {
+          console.log(`去帮助作者`)
+          await help($.authorCode[0], $.authorCode[1])
+        }
+      }
+    }
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -75,8 +93,129 @@ const JD_API_HOST = 'https://api.m.jd.com/';
   })
 
 async function jdBeanHome() {
+  await getUserInfo()
   await getTaskList()
   await showMsg();
+}
+
+function getAuthorShareCode() {
+  return new Promise(resolve => {
+    $.get({url: "https://cdn.jsdelivr.net/gh/shylocks/updateTeam@main/jd_bean_home"}, async (err, resp, data) => {
+      try {
+        if (err) {
+        } else {
+          $.authorCode = data.replace('\n', '').split(' ')
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+function getUserInfo() {
+  return new Promise(resolve => {
+    $.post(taskUrl('signBeanGroupStageIndex', 'body'), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            $.actId = data.data.jklInfo.keyId
+            let {shareCode, groupCode} = data.data
+            if (!shareCode) {
+              console.log(`未获取到助力码，去开团`)
+              await hitGroup()
+            } else {
+              console.log(shareCode, groupCode)
+              // 去做逛会场任务
+              if (data.data.beanActivityVisitVenue.taskStatus === '0') {
+                await help(shareCode, groupCode, 1)
+              }
+              $.newShareCodes.push([shareCode, groupCode])
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+function hitGroup() {
+  return new Promise(resolve => {
+    const body = {"activeType": 2,};
+    $.get(taskGetUrl('signGroupHit', body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.data.respCode === "SG150") {
+              let {shareCode, groupCode} = data.data.signGroupMain
+              if (shareCode) {
+                $.newShareCodes.push([shareCode, groupCode])
+                console.log('开团成功')
+                await help(shareCode, groupCode, 1)
+              } else {
+                console.log(`为获取到助力码，错误信息${JSON.stringify(data.data)}`)
+              }
+            } else {
+              console.log(`开团失败，错误信息${JSON.stringify(data.data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+function help(shareCode, groupCode, isTask = 0) {
+  return new Promise(resolve => {
+    const body = {
+      "activeType": 2,
+      "groupCode": groupCode,
+      "shareCode": shareCode,
+      "activeId": $.actId,
+    };
+    if (isTask) {
+      console.log(`【抢京豆】做任务获取助力`)
+      body['isTask'] = "1"
+    } else {
+      console.log(`【抢京豆】去助力好友${shareCode}`)
+      body['source'] = "guest"
+    }
+    $.get(taskGetUrl('signGroupHelp', body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`【抢京豆】${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            console.log(`【抢京豆】${data.data.helpToast}`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
 
 function showMsg() {
@@ -135,8 +274,7 @@ function receiveTask(itemId = "zddd", type = "3") {
             data = JSON.parse(data);
             if (data.data) {
               console.log(`完成任务成功，进度${data.data.taskProgress}/${data.data.taskThreshold}`)
-            }
-            else{
+            } else {
               console.log(`完成任务失败，${data.errorMessage}`)
             }
           }
@@ -179,6 +317,23 @@ function award() {
     })
   })
 }
+
+function taskGetUrl(function_id, body) {
+  return {
+    url: `${JD_API_HOST}client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&clientVersion=9.2.0`,
+    headers: {
+      'Cookie': cookie,
+      'Host': 'api.m.jd.com',
+      'Accept': '*/*',
+      'Connection': 'keep-alive',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Content-Type': "application/x-www-form-urlencoded"
+    }
+  }
+}
+
 
 function taskUrl(function_id, body) {
   body["version"] = "9.0.0.1";
