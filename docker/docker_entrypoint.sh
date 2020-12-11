@@ -19,7 +19,7 @@ echo "##########################################################################
 ######################################获取docker构建文件里面的自定义信息方法-start#####################################################
 function getDockerImageLabel() {
     repo=akyakya/jd_scripts
-    imageTag=test
+    imageTag=dev
     token=$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:${repo}:pull" | jq -r '.token')
     digest=$(curl -s -H "Accept: application/vnd.docker.distribution.manifest.v2+json" -H "Authorization: Bearer $token" "https://registry-1.docker.io/v2/${repo}/manifests/${imageTag}" | jq .config.digest -r)
     labels=$(curl -s -L -H "Accept: application/vnd.docker.distribution.manifest.v2+json" -H "Authorization: Bearer $token" "https://registry-1.docker.io/v2/${repo}/blobs/$digest" | jq .config.Labels)
@@ -102,6 +102,12 @@ else
     echo "The currently used is the default crontab task file: $DEFAULT_LIST_FILE ..."
     echo "当前使用的为默认定时任务文件 $DEFAULT_LIST_FILE ..."
     cat $defaultListFile >$mergedListFile
+fi
+
+# 判断最后要加载的定时任务是否包含默认定时任务，不包含的话就加进去
+if [ $(grep -c "default_task.sh" $mergedListFile) -eq '0' ]; then
+    echo -e >>$mergedListFile
+    echo "52 */1 * * * sh /scripts/docker/default_task.sh |ts >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
 fi
 
 echo "Load the latest crontab task file..."

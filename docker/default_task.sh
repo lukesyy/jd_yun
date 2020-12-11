@@ -16,7 +16,6 @@ function getDockerImageLabel() {
 }
 ######################################获取docker构建文件里面的自定义信息方法-end#####################################################
 
-
 ######################################对比版本版本号大小方法-start###################################################################
 function version_gt() {
     test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1"
@@ -53,7 +52,6 @@ customListFile="/scripts/docker/$CUSTOM_LIST_FILE"
 mergedListFile="/scripts/docker/merged_list_file.sh"
 
 if type ts >/dev/null 2>&1; then
-    echo 'moreutils tools installed, default task append |ts output'
     echo '系统已安装moreutils工具包，默认定时任务增加｜ts 输出'
     ##复制一个新文件来追加|ts，防止git pull的时候冲突
     cp $defaultListFile /scripts/docker/default_list.sh
@@ -88,6 +86,12 @@ if [ $CUSTOM_LIST_FILE ]; then
 else
     echo "当前使用的为默认定时任务文件 $DEFAULT_LIST_FILE ..."
     cat $defaultListFile >$mergedListFile
+fi
+
+# 判断最后要加载的定时任务是否包含默认定时任务，不包含的话就加进去
+if [ $(grep -c "default_task.sh" $mergedListFile) -eq '0' ]; then
+    echo -e >>$mergedListFile
+    echo "52 */1 * * * sh /scripts/docker/default_task.sh |ts >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
 fi
 
 echo "加载最新的定时任务文件..."
