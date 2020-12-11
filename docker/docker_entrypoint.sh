@@ -27,18 +27,23 @@ function getDockerImageLabel() {
 }
 ######################################获取docker构建文件里面的自定义信息方法-end#####################################################
 
-
 ######################################对比版本版本号大小方法-start###################################################################
 function version_gt() {
     test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1"
 }
 ######################################对比版本版本号大小方法-end###################################################################
+
 #######################################通知用户更新镜像-start#####################################################################
 if type jq >/dev/null 2>&1; then
     updateContext=$(getDockerImageLabel ｜ jq .UPDATE_CONTEXT)
+    export NOTIFY_CONTEXT=$updateContext
     version=$(getDockerImageLabel ｜ jq .VERSION)
+else
+    #第一版通知逻辑无法包含在上面判断里面，镜像构建好直接开启通知
+    export NOTIFY_CONTEXT="更新内容较多，重新阅读仓库Readme()，更新镜像并更新配置后使用。"
+    cd /scripts/docker
+    node notify_docker_user.js
 fi
-
 #通知通知用户更新镜像
 if [ ! $BUILD_VERSION ]; then
     if [ $version ]; then
