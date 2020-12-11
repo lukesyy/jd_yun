@@ -1377,7 +1377,9 @@ function requireConfig() {
       let cookiesData = $.getdata('CookiesJD') || "[]";
       cookiesData = jsonParse(cookiesData);
       cookiesArr = cookiesData.map(item => item.cookie);
-      cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')]);
+      cookiesArr.reverse();
+      cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
+      cookiesArr.reverse();
     }
     console.log(`共${cookiesArr.length}个京东账号\n`);
     console.log(`京小超已改版,目前暂不用助力, 故无助力码`)
