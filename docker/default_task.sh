@@ -30,6 +30,7 @@ if type jq >/dev/null 2>&1; then
     version=$(echo $labels | jq .VERSION)
 else
     # 第一版通知逻辑无法包含在上面判断里面，镜像构建好直接开启通知
+    echo "当前容版版本过旧，发送镜像更新通知"
     export NOTIFY_CONTEXT="更新内容较多，重新阅读仓库Readme()，更新镜像并更新配置后使用。"
     cd /scripts/docker
     node notify_docker_user.js
@@ -38,11 +39,13 @@ fi
 #通知通知用户更新镜像
 if [ ! $BUILD_VERSION ]; then
     if [ $version ]; then
+        echo "当前容器版本为空，dockerhub仓库版本为$version，发送通知"
         cd /scripts/docker
         node notify_docker_user.js
     fi
 else
     if version_gt $version $BUILD_VERSION; then
+        echo "当前容器版本为$BUILD_VERSION，dockerhub仓库版本为$version，发送通知"
         cd /scripts/docker
         node notify_docker_user.js
     fi
@@ -98,6 +101,7 @@ fi
 
 # 判断最后要加载的定时任务是否包含默认定时任务，不包含的话就加进去
 if [ $(grep -c "default_task.sh" $mergedListFile) -eq '0' ]; then
+    echo "合并后的定时任务文件，未包含必须的默认定时任务，增加默认定时任务..."
     echo -e >>$mergedListFile
     echo "52 */1 * * * sh /scripts/docker/default_task.sh |ts >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
 fi
