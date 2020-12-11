@@ -1196,7 +1196,10 @@ function updateTuanIds(url = 'https://raw.githubusercontent.com/lxk0301/updateTe
 }
 function updateTuanIdsCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_updateFactoryTuanId.json') {
   return new Promise(async resolve => {
-    $.get({url}, (err, resp, data) => {
+    $.get({url,
+      headers:{
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
