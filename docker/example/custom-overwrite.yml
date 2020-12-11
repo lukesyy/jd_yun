@@ -2,9 +2,8 @@ jd_scripts:
   image: akyakya/jd_scripts
   container_name: jd_scripts
   restart: always
-  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面的挂载注释 ，通过 `volumes`挂载进去。
   volumes:
-  #  - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
+    - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
     - ./logs:/scripts/logs
   tty: true
   environment:
@@ -40,13 +39,6 @@ jd_scripts:
     #是否开启debug模式打印日志
     # 例: JD_DEBUG=false
     - JD_DEBUG=
-    #如果使用自定义定时任务,取消下面一行的注释
-    #- CRONTAB_LIST_FILE=my_crontab_list.sh
-  command:
-    - /bin/sh
-    - -c
-    - |
-      #crontab /scripts/docker/my_crontab_list.sh  #如果挂载了自定义任务文件,取消此条注释即可
-      crond
-      git -C /scripts/ pull
-      node
+    #使用自定义定任务追加默认任务之后，上面volumes挂载之后这里配置对应的文件名，和自定义文件使用方式为overwrite
+    - CUSTOM_LIST_FILE=my_crontab_list.sh
+    - CUSTOM_LIST_MERGE_TYPE=overwrite

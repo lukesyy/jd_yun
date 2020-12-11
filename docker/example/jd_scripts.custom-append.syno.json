@@ -1,12 +1,12 @@
 {
-   "cap_add" : null,
-   "cap_drop" : null,
+   "cap_add" : [],
+   "cap_drop" : [],
    "cmd" : "",
-   "cpu_priority" : 0,
+   "cpu_priority" : 50,
    "devices" : null,
    "enable_publish_all_ports" : false,
    "enable_restart_policy" : true,
-   "enabled" : false,
+   "enabled" : true,
    "env_variables" : [
       {
          "key" : "PATH",
@@ -18,39 +18,19 @@
       },
       {
          "key" : "JD_COOKIE",
-         "value" : "pt_key=AAJfjaNrADASxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxx5;"
+         "value" : "pt_key=xxx;pt_pin=xxx;"
       },
       {
-         "key" : "TG_BOT_TOKEN",
-         "value" : "13xxxxxx80:AAEkNxxxxxxzNf91WQ"
-      },
-      {
-         "key" : "TG_USER_ID",
-         "value" : "12xxxx206"
-      },
-      {
-         "key" : "PLANT_BEAN_SHARECODES",
+         "key" : "PUSH_KEY",
          "value" : ""
       },
       {
-         "key" : "FRUITSHARECODES",
-         "value" : ""
-      },
-      {
-         "key" : "PETSHARECODES",
-         "value" : ""
-      },
-      {
-         "key" : "SUPERMARKET_SHARECODES",
-         "value" : ""
-      },
-      {
-         "key" : "CRONTAB_LIST_FILE",
-         "value" : "crontab_list.sh"
+         "key" : "CUSTOM_LIST_FILE",
+         "value" : "my_crontab_list.sh"
       }
    ],
    "exporting" : false,
-   "id" : "18af38bc0ac37a40e4b9608a86fef56c464577cc160bbdddec90155284fcf4e5",
+   "id" : "3a2f6f27c23f93bc104585c22569c760cc9ce82df09cdb41d53b491fe1d0341c",
    "image" : "akyakya/jd_scripts",
    "is_ddsm" : false,
    "is_package" : false,
@@ -67,13 +47,15 @@
    "port_bindings" : [],
    "privileged" : false,
    "shortcut" : {
-      "enable_shortcut" : false,
-      "enable_status_page" : false,
-      "enable_web_page" : false,
-      "web_page_url" : ""
+      "enable_shortcut" : false
    },
    "use_host_network" : false,
    "volume_bindings" : [
+      {
+         "host_volume_file" : "/docker/jd_scripts/my_crontab_list.sh",
+         "mount_point" : "/scripts/docker/my_crontab_list.sh",
+         "type" : "rw"
+      },
       {
          "host_volume_file" : "/docker/jd_scripts/logs",
          "mount_point" : "/scripts/logs",
