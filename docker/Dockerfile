@@ -11,7 +11,7 @@ RUN set -ex \
 
 RUN git clone https://github.com/iouAkira/jd_scripts /scripts \
         && cd /scripts \
-        && git checkout dev \
+        && git checkout master \
         && mkdir logs \
         && npm install \
         && cd /tmp \
