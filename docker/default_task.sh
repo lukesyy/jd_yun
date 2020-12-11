@@ -25,9 +25,10 @@ function version_gt() {
 #######################################通知用户更新镜像-start#####################################################################
 echo "检查docker镜像更新更新..."
 if type jq >/dev/null 2>&1; then
+    echo "获取dockerhub仓库镜像labels信息..."
     labels=$(getDockerImageLabel)
-    export NOTIFY_CONTENT=$(echo $labels | jq .UPDATE_CONTENT)
-    version=$(echo $labels | jq .VERSION)
+    export NOTIFY_CONTENT=$(echo $labels | jq -r .UPDATE_CONTENT)
+    version=$(echo $labels | jq -r .VERSION)
 else
     # 第一版通知逻辑无法包含在上面判断里面，镜像构建好直接开启通知
     echo "当前容版版本过旧，发送镜像更新通知"
