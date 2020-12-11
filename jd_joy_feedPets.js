@@ -30,7 +30,9 @@ if ($.isNode()) {
   let cookiesData = $.getdata('CookiesJD') || "[]";
   cookiesData = jsonParse(cookiesData);
   cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')]);
+  cookiesArr.reverse();
+  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
+  cookiesArr.reverse();
 }
 let jdNotify = true;//是否开启静默运行。默认true开启
 let message = '', subTitle = '';

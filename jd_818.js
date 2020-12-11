@@ -47,7 +47,9 @@ if ($.isNode()) {
   let cookiesData = $.getdata('CookiesJD') || "[]";
   cookiesData = jsonParse(cookiesData);
   cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')]);
+  cookiesArr.reverse();
+  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
+  cookiesArr.reverse();
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';

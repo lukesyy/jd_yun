@@ -1,7 +1,7 @@
 {
    "cap_add" : [],
    "cap_drop" : [],
-   "cmd" : "/bin/sh -c 'crontab /scripts/docker/my_crontab_list.sh && crond && node'",
+   "cmd" : "",
    "cpu_priority" : 50,
    "devices" : null,
    "enable_publish_all_ports" : false,
@@ -25,8 +25,12 @@
          "value" : ""
       },
       {
-         "key" : "CRONTAB_LIST_FILE",
+         "key" : "CUSTOM_LIST_FILE",
          "value" : "my_crontab_list.sh"
+      },
+      {
+         "key" : "CUSTOM_LIST_MERGE_TYPE",
+         "value" : "overwrite"
       }
    ],
    "exporting" : false,

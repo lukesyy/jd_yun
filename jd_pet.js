@@ -115,7 +115,7 @@ async function jdPet() {
       }
       return
     }
-    console.log(`\n【您的互助码shareCode】 ${$.petInfo.shareCode}\n`);
+    console.log(`\n【您的${$.name}互助码shareCode】 ${$.petInfo.shareCode}\n`);
     await taskInit();
     if ($.taskInit.resultCode === '9999' || !$.taskInit.result) {
       console.log('初始化任务异常, 请稍后再试');

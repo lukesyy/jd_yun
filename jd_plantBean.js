@@ -89,7 +89,7 @@ async function jdPlantBean() {
   if ($.plantBeanIndexResult.code === '0') {
     const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl
     $.myPlantUuid = getParam(shareUrl, 'plantUuid')
-    console.log(`\n【您的互助码plantUuid】 ${$.myPlantUuid}\n`);
+    console.log(`\n【您的${$.name}互助码】 ${$.myPlantUuid}\n`);
     roundList = $.plantBeanIndexResult.data.roundList;
     currentRoundId = roundList[1].roundId;//本期的roundId
     lastRoundId = roundList[0].roundId;//上期的roundId
