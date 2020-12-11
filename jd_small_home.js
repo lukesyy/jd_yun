@@ -2,15 +2,13 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-12 11:42:12 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-12-11 12:27:20
+ * @Last Modified time: 2020-12-11 14:27:20
  */
 /*
 东东小窝 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js
 现有功能：
 做日常任务任务，每日抽奖（有机会活动京豆，使用的是免费机会，不消耗WO币）
-助力好友：一个账号一天只能助力一次(即：每个人助力机会只有一次)
-后期有空优化相互助力功能
-TODO；装扮领京豆（使用WO币购买装饰品可以获得京豆，分别可获得5,20，50,100,200,400,700，1200京豆）
+自动使用WO币购买装饰品可以获得京豆，分别可获得5,20，50,100,200,400,700，1200京豆）
 
 注：目前使用此脚本会给脚本内置的两个码进行助力，请知晓
 
@@ -263,12 +261,18 @@ function queryFurnituresCenterList() {
                 $.canBuyList.push(item);
               })
               $.canBuyList.sort(sortByjdBeanNum);
-              for (let canBuyItem of $.canBuyList) {
-                if (canBuyItem.needWoB <= $.woB) {
-                  await furnituresCenterPurchase(canBuyItem.id, canBuyItem.jdBeanNum);
-                  break
-                }
+              if ($.canBuyList[0].needWoB <= $.woB) {
+                await furnituresCenterPurchase($.canBuyList[0].id, $.canBuyList[0].jdBeanNum);
+              } else {
+                console.log(`\n兑换${$.canBuyList[0].jdBeanNum}京豆失败:当前wo币${$.woB}不够兑换所需的${$.canBuyList[0].needWoB}WO币`)
+                message += `【装饰领京豆】兑换${$.canBuyList[0].jdBeanNum}京豆失败,原因:WO币不够\n`;
               }
+              // for (let canBuyItem of $.canBuyList) {
+              //   if (canBuyItem.needWoB <= $.woB) {
+              //     await furnituresCenterPurchase(canBuyItem.id, canBuyItem.jdBeanNum);
+              //     break
+              //   }
+              // }
             }
           }
         }
