@@ -105,7 +105,7 @@ async function jdBeanHome() {
 
 function getAuthorShareCode() {
   return new Promise(resolve => {
-    $.get({url: "https://cdn.jsdelivr.net/gh/shylocks/updateTeam@main/jd_bean_home"}, async (err, resp, data) => {
+    $.get({url: "https://gitee.com/shylocks/updateTeam/raw/main/jd_bean_home"}, async (err, resp, data) => {
       try {
         if (err) {
         } else {
