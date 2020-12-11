@@ -37,12 +37,12 @@ function version_gt() {
 echo "check docker images update..."
 echo "检查docker镜像更新更新..."
 if type jq >/dev/null 2>&1; then
-    updateContext=$(getDockerImageLabel ｜ jq .UPDATE_CONTEXT)
-    export NOTIFY_CONTEXT=$updateContext
-    version=$(getDockerImageLabel ｜ jq .VERSION)
+    labels=$(getDockerImageLabel)
+    export NOTIFY_CONTENT=$(echo $labels | jq .UPDATE_CONTENT)
+    version=$(echo $labels | jq .VERSION)
 else
     #第一版通知逻辑无法包含在上面判断里面，镜像构建好直接开启通知
-    export NOTIFY_CONTEXT="更新内容较多，重新阅读仓库Readme()，更新镜像并更新配置后使用。"
+    export NOTIFY_CONTENT="更新内容较多，重新阅读仓库Readme()，更新镜像并更新配置后使用。"
     cd /scripts/docker
     node notify_docker_user.js
 fi
