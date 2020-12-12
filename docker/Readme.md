@@ -9,7 +9,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ### 如果需要使用 docker 多个账户独立并发执行定时任务，[参考这里](https://github.com/iouAkira/scripts/blob/patch-1/docker/docker%E5%A4%9A%E8%B4%A6%E6%88%B7%E4%BD%BF%E7%94%A8%E7%8B%AC%E7%AB%8B%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md#%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%96%B9%E5%BC%8F%E8%AF%B7%E5%85%88%E7%90%86%E8%A7%A3%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8docker%E5%8A%9E%E6%B3%95%E4%B8%80%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F)  
 
 ⚠️⚠️⚠️2020-12-11更新镜像启动方式，虽然兼容旧版的运行启动方式，但是强烈建议更新镜像和配置后使用
-- 更新后`commad:`指令配置不再需要
+- 更新后`command:`指令配置不再需要
 - 更新后可以使用自定义任务文件追加在默任务文件之后，比以前的完全覆盖多一个选择
 - - 新的自定两个环境变量为 `CUSTOM_LIST_MERGE_TYPE`:自定文件的生效方式可选值为`append`，`overwrite`默认为`append` ; `CUSTOM_LIST_FILE`: 自定义文件的名字
 - 更新镜像增减镜像更新通知，以后镜像如果更新之后，会通知用户更新
