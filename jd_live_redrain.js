@@ -50,7 +50,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     return;
   }
   await getRedRain();
-  if(!$.activityId) return
+	if(!$.activityId) return
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -99,26 +99,23 @@ function showMsg() {
 
 function getRedRain() {
   return new Promise(resolve => {
-    $.post(taskPostUrl('liveActivityV842'), (err, resp, data) => {
+    $.get({
+      url: "https://gitee.com/shylocks/updateTeam/raw/main/jd_live_redRain.json",
+      headers:{
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }}, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
+          console.log(`1111${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.data.iconArea) {
-              let act = data.data.iconArea.filter(vo=>vo['type']==="platform_red_packege_rain")[0]
-              let url = act.data.activityUrl
-              $.activityId = url.substr(url.indexOf("id=") + 3)
-              console.log($.activityId)
-              $.startTime = act.startTime
-              $.endTime = act.endTime
-              console.log(`下一场红包雨开始时间：${new Date(act.startTime)}`)
-              console.log(`下一场红包雨结束时间：${new Date(act.endTime)}`)
-            } else {
-              console.log(`暂无红包雨`)
-            }
+            $.activityId = data.activityId
+            $.startTime = data.startTime
+            $.endTime = data.endTime
+            console.log(`下一场红包雨开始时间：${new Date(data.startTime)}`)
+            console.log(`下一场红包雨结束时间：${new Date(data.endTime)}`)
           }
         }
       } catch (e) {
@@ -161,21 +158,6 @@ function receiveRedRain() {
       }
     })
   })
-}
-
-function taskPostUrl(function_id, body = {}) {
-  return {
-    url: `https://api.m.jd.com/client.action?functionId=${function_id}`,
-    body: 'area=12_904_908_57903&body=%7B%22liveId%22%3A%223008955%22%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=194&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=84a8772e9514dbb656a9380a6aebe89f&st=1607702502921&sv=100&uts=0f31TVRjBSvsWkFfTKQ4BP2gCulJKdkkzdua/T3WharHW3uKzIyZUGDGVuaLMDsU1giMbDTZJekY7lE5Qrru6H7a3I8CGFQ%2Br5QYZwgXCHBigChRD//oGdcd4WB0sfq6bWBzI8FjqbHJffT0ttGiNEy6zqimtHZUV9DD6tpJTTC%2BZrtSFC17giE/EByWeNUEOw0jYdGaJ27M9I7O2U7oXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D&wifiBssid=null',
-    headers: {
-      'Host': 'api.m.jd.com',
-      'content-type': 'application/x-www-form-urlencoded',
-      'accept': '*/*',
-      'user-agent': 'JD4iPhone/167408 (iPhone; iOS 14.2; Scale/3.00)',
-      'accept-language': 'zh-Hans-JP;q=1, en-JP;q=0.9, zh-Hant-TW;q=0.8, ja-JP;q=0.7, en-US;q=0.6',
-      //"Cookie": cookie,
-    }
-  }
 }
 
 function taskUrl(function_id, body = {}) {
