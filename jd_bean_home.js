@@ -74,21 +74,21 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await jdBeanHome();
     }
   }
-    for (let i = 0; i < cookiesArr.length; i++) {
-      if (cookiesArr[i]) {
-        $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-        console.log(`${$.UserName}去帮助下一个人`)
-        cookie = cookiesArr[i];
-        if ($.newShareCodes.length > 1) {
-          let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
-          await help(code[0], code[1])
-        }
-        if (helpAuthor && $.authorCode) {
-          console.log(`去帮助作者`)
-          await help($.authorCode[0], $.authorCode[1])
-        }
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      console.log(`${$.UserName}去帮助下一个人`)
+      cookie = cookiesArr[i];
+      if ($.newShareCodes.length > 1) {
+        let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
+        await help(code[0], code[1])
+      }
+      if (helpAuthor && $.authorCode) {
+        console.log(`去帮助作者`)
+        await help($.authorCode[0], $.authorCode[1])
       }
     }
+  }
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')

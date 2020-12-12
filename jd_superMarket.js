@@ -315,7 +315,7 @@ async function businessCircleActivity() {
     if (joinStatus === 0) {
       console.log(`\n注：PK会在每天的七点自动随机加入lxk0301创建的队伍\n`)
       await updatePkActivityId();
-      if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
+      if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN('https://gitee.com/lxk0301/updateTeam/raw/master/jd_updateTeam.json');
       if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN('https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json');
       console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes.pkActivityId}`);
       console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
@@ -729,7 +729,10 @@ function updatePkActivityIdCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam
   return new Promise(async resolve => {
     //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json
     //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateTeam.json
-    $.get({url}, async (err, resp, data) => {
+    const headers = {
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+    }
+    $.get({ url, headers }, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)

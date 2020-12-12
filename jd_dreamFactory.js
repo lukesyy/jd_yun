@@ -31,7 +31,7 @@ const JD_API_HOST = 'https://m.jingxi.com';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
-const tuanActiveId = `gaVXW_NJ0KPEA2LyUhoXzA==`;
+const tuanActiveId = `cKw-LGBsjl0XLu9coQ0d4A==`;
 const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = ['V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=', 'PDPM257r_KuQhil2Y7koNw==', "gB99tYLjvPcEFloDgamoBw==", '-OvElMzqeyeGBWazWYjI1Q=='];
@@ -1014,7 +1014,7 @@ function CreateTuan() {
 }
 async function joinLeaderTuan() {
   await updateTuanIds();
-  if (!$.tuanIdS) await updateTuanIdsCDN();
+  if (!$.tuanIdS) await updateTuanIdsCDN('https://gitee.com/lxk0301/updateTeam/raw/master/jd_updateFactoryTuanId.json');
   if (!$.tuanIdS) await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateFactoryTuanId.json');
   for (let tuanId of $.tuanIdS.tuanIds) {
     if (!tuanId) continue
@@ -1204,7 +1204,9 @@ function updateTuanIdsCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/mast
         if (err) {
           console.log(`${JSON.stringify(err)}`)
         } else {
-          $.tuanIdS = JSON.parse(data);
+          if (safeGet(data)) {
+            $.tuanIdS = JSON.parse(data);
+          }
         }
       } catch (e) {
         $.logErr(e, resp)
