@@ -10,6 +10,8 @@
 10 0 * * * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
 # PUBG游戏盛典(2020.12.13活动过期)
 8 1,20 * * * node /scripts/jd_pubg.js >> /scripts/logs/jd_pubg.log 2>&1
+# 苹果超品日互动抽奖机(2020.12.14活动过期)
+8 0,20 * * * node /scripts/jd_apple_live.js >> /scripts/logs/jd_apple_live.log 2>&1
 
 ##############长期活动##############
 # 签到
@@ -74,3 +76,5 @@
 33 4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 京东直播(每日18豆)
 10-20/5 11 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
+# 京东金融签到
+10 6 * * * node /scripts/jr_sign.js >> /scripts/logs/jr_sign.log 2>&1
