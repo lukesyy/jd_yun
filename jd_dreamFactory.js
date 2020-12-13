@@ -1014,7 +1014,7 @@ function CreateTuan() {
 }
 async function joinLeaderTuan() {
   await updateTuanIds();
-  if (!$.tuanIdS) await updateTuanIdsCDN();
+  if (!$.tuanIdS) await updateTuanIdsCDN('https://gitee.com/lxk0301/updateTeam/raw/master/jd_updateFactoryTuanId.json');
   if (!$.tuanIdS) await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateFactoryTuanId.json');
   for (let tuanId of $.tuanIdS.tuanIds) {
     if (!tuanId) continue
@@ -1204,7 +1204,9 @@ function updateTuanIdsCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/mast
         if (err) {
           console.log(`${JSON.stringify(err)}`)
         } else {
-          $.tuanIdS = JSON.parse(data);
+          if (safeGet(data)) {
+            $.tuanIdS = JSON.parse(data);
+          }
         }
       } catch (e) {
         $.logErr(e, resp)
