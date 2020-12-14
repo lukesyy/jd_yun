@@ -60,8 +60,8 @@ jd_scripts
 ```
 > 定时任务命之后，也就是 `>>` 符号之前加上 `|ts` 可在日志每一行前面显示时间，如下图:
 > ![image](https://user-images.githubusercontent.com/6993269/99031839-09e04b00-25b3-11eb-8e47-0b6515a282bb.png)
-- 目录文件配置好之后在 `jd_scripts`目录执行  
- `docker-compose up -d` 启动；  
+- 目录文件配置好之后在 `jd_scripts`目录执行。  
+ `docker-compose up -d` 启动（修改docker-compose.yml后需要使用此命令使更改生效）；  
  `docker-compose logs` 打印日志；  
  `docker-compose pull` 更新镜像；  
  `docker-compose stop` 停止容器；  
