@@ -1,5 +1,11 @@
 jd_scripts:
   image: akyakya/jd_scripts:supportbot
+  # 配置服务器资源约束。此例子中服务被限制为使用内存不超过200M以及cpu不超过0.2（单核的20%）
+  # deploy:
+  #   resources:
+  #     limits:
+  #       cpus: '0.2'
+  #       memory: 200M
   container_name: jd_scripts
   restart: always
   volumes:
