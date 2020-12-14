@@ -347,7 +347,7 @@ async function businessCircleActivity() {
           }
         ]
         Teams = $.updatePkActivityIdRes['Teams'] || Teams;
-        const randomNum = randomFriendPin(0, Teams.length - 1);
+        const randomNum = randomNumber(0, Teams.length);
 
         const res = await smtg_joinPkTeam(Teams[randomNum].teamId, Teams[randomNum].inviteCode, pkActivityId);
         if (res && res.data.bizCode === 0) {
@@ -463,7 +463,7 @@ async function businessCircleActivity() {
       const BusinessCircleList = await smtg_getBusinessCircleList();
       if (BusinessCircleList.data.bizCode === 0) {
         const { businessCircleVOList } = BusinessCircleList.data.result;
-        const { circleId } = businessCircleVOList[randomFriendPin(0, businessCircleVOList.length -1)];
+        const { circleId } = businessCircleVOList[randomNumber(0, businessCircleVOList.length)];
         const joinBusinessCircleRes = await smtg_joinBusinessCircle(circleId);
         console.log(`随机加入商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
       }
@@ -1446,10 +1446,10 @@ function taskUrl(function_id, body = {}) {
 /**
  * 生成随机数字
  * @param {number} min 最小值（包含）
- * @param {number} max 最大值（包含）
+ * @param {number} max 最大值（不包含）
  */
-function randomFriendPin(min, max) {
-  return Math.round(Math.random()*(max - min) + min);
+function randomNumber(min = 0, max = 100) {
+  return Math.min(Math.floor(min + Math.random() * (max - min)), max);
 }
 function jsonParse(str) {
   if (typeof str == "string") {
