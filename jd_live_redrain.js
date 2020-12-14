@@ -22,9 +22,9 @@ cron "0 0,9,11,13,15,17,19,20,21,23 * * *" script-path=https://raw.githubusercon
  */
 const $ = new Env('直播红包雨');
 
-const notify = $.isNode() ? require('../sendNotify') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
@@ -34,6 +34,24 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
+  process.env.TZ = "Asia/Shanghai";
+  Date.prototype.TimeZone = new Map([
+    ['Asia/Shanghai',+8],
+  ])
+  Date.prototype.zoneDate = function(){
+    if(process.env.TZ === undefined){
+      return new Date();
+    }else{
+      for (let item of this.TimeZone.entries()) {
+        if(item[0] === process.env.TZ){
+          let d = new Date();
+          d.setHours(d.getHours()+item[1]);
+          return d;
+        }
+      }
+      return new Date();
+    }
+  }
 } else {
   let cookiesData = $.getdata('CookiesJD') || "[]";
   cookiesData = jsonParse(cookiesData);
@@ -51,7 +69,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   await getRedRain();
 	if(!$.activityId) return
   let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
-  message = `【${new Date($.st).getHours()}点红包雨】`
   if (!($.st <= nowTs && nowTs < $.ed)) {
     console.log(`不在红包雨时间之内`)
     return
@@ -63,6 +80,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      message = `【${new Date($.st).getHours()}点${$.name}】`
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
