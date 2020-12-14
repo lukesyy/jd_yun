@@ -1,24 +1,24 @@
 /*
 直播红包雨
 每天0,9,11,13,15,17,19,20,21,23可领，每日上限未知
-活动时间：2020-12-7 到 2020-12-12
-更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js
+活动时间：2020-12-14 到 2020-12-31
+更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/activity/jd_live_redrain.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #直播红包雨
-0 0,9,11,13,15,17,19,20,21,23 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, tag=直播红包雨, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
+0 0,9,11,13,15,17,19,20,21,23 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/activity/jd_live_redrain.js, tag=直播红包雨, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 0,9,11,13,15,17,19,20,21,23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, tag=直播红包雨
+cron "0 0,9,11,13,15,17,19,20,21,23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/activity/jd_live_redrain.js, tag=直播红包雨
 
 ===============Surge=================
-直播红包雨 = type=cron,cronexp="0 0,9,11,13,15,17,19,20,21,23 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js
+直播红包雨 = type=cron,cronexp="0 0,9,11,13,15,17,19,20,21,23 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/activity/jd_live_redrain.js
 
 ============小火箭=========
-直播红包雨 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, cronexpr="0 0,9,11,13,15,17,19,20,21,23 * * *", timeout=200, enable=true
+直播红包雨 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/activity/jd_live_redrain.js, cronexpr="0 0,9,11,13,15,17,19,20,21,23 * * *", timeout=200, enable=true
  */
 const $ = new Env('直播红包雨');
 
@@ -26,7 +26,6 @@ const notify = $.isNode() ? require('../sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = $.isNode() ? 20 : 5;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
@@ -51,6 +50,12 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   }
   await getRedRain();
 	if(!$.activityId) return
+  let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
+  message = `【${new Date($.st).getHours()}点红包雨】`
+  if (!($.st <= nowTs && nowTs < $.ed)) {
+    console.log(`不在红包雨时间之内`)
+    return
+  }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -58,7 +63,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
-      message = '';
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -71,14 +75,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         }
         continue
       }
-      let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
-      // console.log(nowTs, $.startTime, $.endTime)
-      if ($.startTime <= nowTs && nowTs < $.endTime) {
-        await receiveRedRain();
-      } else {
-        console.log(`不在红包雨时间之内`)
-        message += `不在红包雨时间之内`
-      }
+      await receiveRedRain();
       await showMsg();
     }
   }
@@ -90,7 +87,10 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.done();
   })
 
-function showMsg() {
+async function showMsg() {
+  if ($.isNode() && !jdNotify) {
+    await notify.sendNotify(`【京东账号${$.index}】${$.nickName}`, message)
+  }
   return new Promise(resolve => {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
@@ -100,10 +100,8 @@ function showMsg() {
 function getRedRain() {
   return new Promise(resolve => {
     $.get({
-      url: "https://gitee.com/shylocks/updateTeam/raw/main/jd_live_redRain.json",
-      headers:{
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }}, (err, resp, data) => {
+      url: "http://ql4kk90rw.hb-bkt.clouddn.com/jd_live_redRain.json",
+      }, (err, resp, data) => {
       try {
         if (err) {
           console.log(`1111${JSON.stringify(err)}`)
@@ -112,8 +110,8 @@ function getRedRain() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.activityId = data.activityId
-            $.startTime = data.startTime
-            $.endTime = data.endTime
+            $.st = data.startTime
+            $.ed = data.endTime
             console.log(`下一场红包雨开始时间：${new Date(data.startTime)}`)
             console.log(`下一场红包雨结束时间：${new Date(data.endTime)}`)
           }
@@ -141,11 +139,11 @@ function receiveRedRain() {
             if (data.subCode === '0') {
               console.log(`领取成功，获得${JSON.stringify(data.lotteryResult)}`)
               // message+= `领取成功，获得${JSON.stringify(data.lotteryResult)}\n`
-              message += `${data.lotteryResult.jPeasList[0].ext}:${(data.lotteryResult.jPeasList[0].quantity)}京豆\n`
+              message += `领取成功，获得 ${(data.lotteryResult.jPeasList[0].quantity)} 京豆\n`
 
             } else if (data.subCode === '8') {
-              console.log(`今日次数已满`)
-              message += `领取失败，今日已签到\n`;
+              console.log(`领取失败，已领过`)
+              message += `领取失败，已领过\n`;
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
             }
