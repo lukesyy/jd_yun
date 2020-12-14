@@ -65,5 +65,9 @@ cron "20 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scri
 cron "20 12 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js, timeout=750, wake-system=1, tag=京东直播
 #秒杀红包雨
 cron "20 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, timeout=750, wake-system=1, tag=秒杀红包雨
+# 以下为短期活动
 #金融打卡领年终奖
 cron "30 7 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jr_sign.js, timeout=750, wake-system=1, tag=金融打卡领年终奖
+#健康抽奖机
+cron "30 2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, timeout=750, wake-system=1, tag=健康抽奖机
+
