@@ -68,7 +68,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   }
   await getRedRain();
 	if(!$.activityId) return
-  let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
+  let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
     console.log(`不在红包雨时间之内`)
     return
@@ -178,7 +178,7 @@ function receiveRedRain() {
 
 function taskUrl(function_id, body = {}) {
   return {
-    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0&_=${new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000}`,
+    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0&_=${new Date().getTime()}`,
     headers: {
       "Accept": "*/*",
       "Accept-Encoding": "gzip, deflate, br",
