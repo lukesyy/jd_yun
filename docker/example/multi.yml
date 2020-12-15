@@ -3,6 +3,7 @@ services:
   jd_scripts1: #默认
     image: akyakya/jd_scripts
     # 配置服务器资源约束。此例子中服务被限制为使用内存不超过200M以及cpu不超过 0.2（单核的20%）
+    # 经过实际测试，建议不低于200M
     # deploy:
     #   resources:
     #     limits:
@@ -17,6 +18,10 @@ services:
       - JD_COOKIE=pt_key=AAJfjaNrADAS8ygfgIsOxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxxx5;
       - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
       - TG_USER_ID=12xxxx206
+      # 互助助码等参数可自行增加，如下。
+      # 京东种豆得豆
+      # - PLANT_BEAN_SHARECODES=
+      
   jd_scripts2: #默认
     image: akyakya/jd_scripts
     restart: always

@@ -7,10 +7,17 @@
 ![image](https://user-images.githubusercontent.com/6993269/97781610-a1af6380-1bc7-11eb-9397-903b47f5ad6b.png)
 #### `docker-compose.yml`文件参考
 ```yaml
-version: '3'
+version: "3"
 services:
-  jd_scripts1:
+  jd_scripts1: #默认
     image: akyakya/jd_scripts
+    # 配置服务器资源约束。此例子中服务被限制为使用内存不超过200M以及cpu不超过 0.2（单核的20%）
+    # 经过实际测试，建议不低于200M
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.2'
+    #       memory: 200M
     restart: always
     container_name: jd_scripts1
     tty: true
@@ -20,15 +27,11 @@ services:
       - JD_COOKIE=pt_key=AAJfjaNrADAS8ygfgIsOxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxxx5;
       - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
       - TG_USER_ID=12xxxx206
-      - CRONTAB_LIST_FILE=crontab_list.sh
-    command:
-      - /bin/sh
-      - -c
-      - |
-        git -C /scripts/ pull
-        crond
-        node
-  jd_scripts2:
+      # 互助助码等参数可自行增加，如下。
+      # 京东种豆得豆
+      # - PLANT_BEAN_SHARECODES=
+      
+  jd_scripts2: #默认
     image: akyakya/jd_scripts
     restart: always
     container_name: jd_scripts2
@@ -39,36 +42,7 @@ services:
       - JD_COOKIE=pt_key=AAJfjaNrADAS8ygfgIsOxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxxx5;
       - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
       - TG_USER_ID=12xxxx206
-      - CRONTAB_LIST_FILE=crontab_list.sh
-    command:
-      - /bin/sh
-      - -c
-      - |
-        git -C /scripts/ pull
-        crond
-        node
-  jd_scripts3:
-    image: akyakya/jd_scripts
-    restart: always
-    container_name: jd_scripts3
-    tty: true
-    volumes:
-      - ./logs3:/scripts/logs
-      - ./my_crontab_list3.sh:/scripts/docker/my_crontab_list.sh
-    environment:
-      - JD_COOKIE=pt_key=AAJfjaNrADAS8ygfgIsOxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxxx5;
-      - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
-      - TG_USER_ID=12xxxx206
-      - CRONTAB_LIST_FILE=my_crontab_list.sh
-    command:
-      - /bin/sh
-      - -c
-      - |
-        crontab /scripts/docker/my_crontab_list.sh
-        git -C /scripts/ pull
-        crond
-        node
-  jd_scripts4:
+  jd_scripts4: #自定义追加默认之后
     image: akyakya/jd_scripts
     restart: always
     container_name: jd_scripts4
@@ -80,16 +54,8 @@ services:
       - JD_COOKIE=pt_key=AAJfjaNrADAS8ygfgIsOxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxxx5;
       - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
       - TG_USER_ID=12xxxx206
-      - CRONTAB_LIST_FILE=my_crontab_list.sh
-    command:
-      - /bin/sh
-      - -c
-      - |
-        crontab /scripts/docker/my_crontab_list.sh
-        git -C /scripts/ pull
-        crond
-        node
-  jd_scripts5:
+      - CUSTOM_LIST_FILE=my_crontab_list.sh
+  jd_scripts5: #自定义覆盖默认
     image: akyakya/jd_scripts
     restart: always
     container_name: jd_scripts5
@@ -101,15 +67,9 @@ services:
       - JD_COOKIE=pt_key=AAJfjaNrADAS8ygfgIsOxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxxx5;
       - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
       - TG_USER_ID=12xxxx206
-      - CRONTAB_LIST_FILE=my_crontab_list.sh
-    command:
-      - /bin/sh
-      - -c
-      - |
-        crontab /scripts/docker/my_crontab_list.sh
-        git -C /scripts/ pull
-        crond
-        node
+      - CUSTOM_LIST_FILE=my_crontab_list.sh
+      - CUSTOM_LIST_MERGE_TYPE=overwrite
+
 ```
 #### 目录文件配置好之后在 `jd_scripts_multi`目录执行  
  `docker-compose up -d` 启动；  
