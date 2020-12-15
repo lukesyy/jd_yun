@@ -347,7 +347,8 @@ function hireAward(date, type = 0) {
   })
 }
 async function helpFriends() {
-  if ($.canHelpFlag) {
+  let Hours = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).getHours();
+  if ($.canHelpFlag && Hours >= 6) {
     await shareCodesFormat();
     for (let code of $.newShareCodes) {
       if (code) {

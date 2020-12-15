@@ -12,7 +12,7 @@
 #东东农场
 cron "40 8-18/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js,timeout=530, wake-system=1, tag=东东农场
 #东东萌宠
-cron "20 7-19/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js,timeout=530, wake-system=1, tag=东东萌宠
+cron "20 8-18/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js,timeout=530, wake-system=1, tag=东东萌宠
 #京东种豆得豆
 cron "50 7-21/2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_plantBean.js,timeout=630, wake-system=1, tag=京东种豆得豆
 #宠汪汪
