@@ -1,7 +1,7 @@
 /*
 京小超兑换奖品 脚本地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js
 感谢@yangtingxiao提供PR
-更新时间：2020-11-23
+更新时间：2020-12-15
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ======================quantumultx===============
@@ -337,24 +337,27 @@ function smtgHome() {
 }
 
 //通知
-async function msgShow() {
+function msgShow() {
   // $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
-  $.log(`\n【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}\n`);
-  let ctrTemp;
-  if ($.isNode() && process.env.MARKET_REWARD_NOTIFY) {
-    ctrTemp = `${process.env.MARKET_REWARD_NOTIFY}` === 'false';
-  } else if ($.getdata('jdSuperMarketRewardNotify')) {
-    ctrTemp = $.getdata('jdSuperMarketRewardNotify') === 'false';
-  } else {
-    ctrTemp = `${jdNotify}` === 'false';
-  }
-  //默认只在兑换奖品成功后弹窗提醒。情况情况加，只打印日志，不弹窗
-  if ($.beanscount && ctrTemp) {
-    $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
-    if ($.isNode()) {
-      await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`)
+  return new Promise(async resolve => {
+    $.log(`\n【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}\n`);
+    let ctrTemp;
+    if ($.isNode() && process.env.MARKET_REWARD_NOTIFY) {
+      ctrTemp = `${process.env.MARKET_REWARD_NOTIFY}` === 'false';
+    } else if ($.getdata('jdSuperMarketRewardNotify')) {
+      ctrTemp = $.getdata('jdSuperMarketRewardNotify') === 'false';
+    } else {
+      ctrTemp = `${jdNotify}` === 'false';
     }
-  }
+    //默认只在兑换奖品成功后弹窗提醒。情况情况加，只打印日志，不弹窗
+    if ($.beanscount && ctrTemp) {
+      $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
+      if ($.isNode()) {
+        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`)
+      }
+    }
+    resolve()
+  })
 }
 function TotalBean() {
   return new Promise(async resolve => {
@@ -425,7 +428,7 @@ function jsonParse(str) {
       return JSON.parse(str);
     } catch (e) {
       console.log(e);
-      $.msg($.name, '', '不要在BoxJS手动复制粘贴修改cookie')
+      $.msg($.name, '', '请勿随意在BoxJs输入框修改内容\n建议通过脚本去获取cookie')
       return [];
     }
   }

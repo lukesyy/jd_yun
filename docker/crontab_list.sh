@@ -5,11 +5,13 @@
 
 ##############短期活动##############
 # 秒杀红包雨(2020.12.31活动过期)
-40 8 * * * node /scripts/jd_ms_redrain.js >> /scripts/logs/jd_ms_redrain.log 2>&1
+40 8 1-31 12 * node /scripts/jd_ms_redrain.js >> /scripts/logs/jd_ms_redrain.log 2>&1
 # 健康抽奖机(2020.12.31活动过期)
-10 0 * * * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
-# 苹果超品日互动抽奖机(2020.12.14活动过期)
-8 0,20 * * * node /scripts/jd_apple_live.js >> /scripts/logs/jd_apple_live.log 2>&1
+10 0 1-31 12 * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
+# 直播红包雨(2020.12.31活动过期)
+0 0,20,9-23/2 15-31 12 * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
+# 京东金融打卡领年终奖(2020.12.31活动过期)
+10 6 1-31 12 * node /scripts/jr_sign.js >> /scripts/logs/jr_sign.log 2>&1
 
 ##############长期活动##############
 # 签到
@@ -74,5 +76,3 @@
 33 4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 京东直播(每日18豆)
 10-20/5 11 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
-# 京东金融签到
-10 6 * * * node /scripts/jr_sign.js >> /scripts/logs/jr_sign.log 2>&1
