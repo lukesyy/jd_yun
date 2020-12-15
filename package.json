@@ -1,0 +1,27 @@
+{
+  "name": "lxk0301",
+  "version": "1.0.0",
+  "description": "{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}",
+  "main": "AlipayManor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lxk0301/jd_scripts.git"
+  },
+  "keywords": [
+    "京东薅羊毛工具, 京东水果、宠物、种豆等等"
+  ],
+  "author": "lxk0301",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "got": "^11.5.1",
+    "http-server": "^0.12.3",
+    "tough-cookie": "^4.0.0",
+    "download": "^8.0.0",
+    "request": "^2.88.2",
+    "tunnel": "0.0.6"
+  }
+}
