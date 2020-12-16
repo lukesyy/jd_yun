@@ -74,7 +74,7 @@ cron "30 7 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_s
 #健康抽奖机
 cron "30 2 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, timeout=750, wake-system=1, tag=健康抽奖机
 #直播红包雨(2020-12-31活动结束)
-cron "0 0,20,9-23/2 15-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, timeout=750, wake-system=1, tag=直播红包雨
+cron "1 0,20,9-23/2 15-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, timeout=750, wake-system=1, tag=直播红包雨
 #秒杀红包雨(2020-12-31活动结束)
 cron "20 9 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, timeout=750, wake-system=1, tag=秒杀红包雨
 

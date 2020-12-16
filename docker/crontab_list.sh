@@ -9,7 +9,7 @@
 # 健康抽奖机(2020.12.31活动过期)
 10 0 1-31 12 * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
 # 直播红包雨(2020.12.31活动过期)
-0 0,20,9-23/2 15-31 12 * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
+1 0,20,9-23/2 15-31 12 * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
 # 京东金融打卡领年终奖(2020.12.31活动过期)
 10 6 1-31 12 * node /scripts/jr_sign.js >> /scripts/logs/jr_sign.log 2>&1
 # 京东健康APP集汪汪卡瓜分百万红包(2021.1.6活动过期)
