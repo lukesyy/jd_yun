@@ -67,9 +67,16 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   if($.isNode()){
-    const stats = await util.promisify(fs.stat)('watch.chlsj');
-    if(stats.isFile()){
-      preload()
+    const fs = require('fs');
+    try {
+      if (fs.existsSync('watch.chlsj')) {
+        preload()
+        if (doBody.length < 40){
+          console.log(`${$.name}Body数小于40，无法完成任务！`)
+        }
+      }
+    } catch(err) {
+      console.error(err)
     }
   }
   if (!cookiesArr[0]) {
