@@ -6,7 +6,7 @@
 ============Quantumultx===============
 [task_local]
 #京东健康
-10 8 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdh.js, tag=京东健康, enabled=true
+10 8 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdh.js, tag=京东健康, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_jdh.png, enabled=true
 
 ================Loon==============
 [Script]
