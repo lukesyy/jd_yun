@@ -67,7 +67,7 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   if($.isNode()){
-    const stats = await util.promisify(fs.stat)('watch.json');
+    const stats = await util.promisify(fs.stat)('watch.chlsj');
     if(stats.isFile()){
       preload()
     }
