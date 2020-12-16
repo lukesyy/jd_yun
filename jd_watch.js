@@ -6,17 +6,17 @@
 ============Quantumultx===============
 [task_local]
 #京东看一看
-10 9 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js, tag=京东看一看, enabled=true
+10 9 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_watch.js, tag=京东看一看, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js,tag=京东看一看
+cron "10 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_watch.js,tag=京东看一看
 
 ===============Surge=================
-京东看一看 = type=cron,cronexp="10 9 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js
+京东看一看 = type=cron,cronexp="10 9 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_watch.js
 
 ============小火箭=========
-京东看一看 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js, cronexpr="10 9 * * *", timeout=200, enable=true
+京东看一看 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_watch.js, cronexpr="10 9 * * *", timeout=900, enable=true
  */
 const $ = new Env('京东看一看');
 let acceptBody = [
