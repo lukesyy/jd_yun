@@ -82,6 +82,7 @@ const JD_API_HOST = 'https://car-member.jd.com/api/';
   })
 
 async function jdCar() {
+  await check()
   await sign()
   await $.wait(1000)
   await mission()
@@ -93,6 +94,29 @@ function showMsg() {
   return new Promise(resolve => {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
+  })
+}
+
+function check() {
+  return new Promise(resolve => {
+    $.get(taskUrl('v1/user/exchange/bean/check'), (err, resp, data) => {
+      try {
+        if (err) {
+          data = JSON.parse(resp.body)
+          console.log(`${data.error.msg}`)
+          message += `签到失败，${data.error.msg}\n`
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            console.log(`兑换结果：${JSON.stringify(data)}`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
   })
 }
 
