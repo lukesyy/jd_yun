@@ -28,8 +28,9 @@ let doBody = [
   "area=12_904_908_57903&body=%7B%22referPageId%22%3A%22discRecommend%22%2C%22itemId%22%3A%22239972247%7C11%22%2C%22bizType%22%3A1%2C%22taskId%22%3A%223%22%2C%22role%22%3A1%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=200&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=98f4ebd2ff64c2b05e3323fc37131b12&st=1608105318845&sv=100&uts=0f31TVRjBSueCA6d1433N/VvOpFVgTQ3ayM3m/f8v%2B5SZcxHDy1W0aeMpwRE60%2B5NCC1QBAEVnTfdyUBY1v5dzjJYNmtBpfPHeEOqjU2lcvvt9i4lMwuL6cFvhiheX1QlG4SCsmZu6Zhj5aCQji0PhIRINWPoPq7tOwraAhYokfkEoI1Vcv3DgT8TKdKMtBfCtTr%2BEIaEPSfItFIJPlqXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D"
 ]
 /*
-使用 Charles 抓包，使用正则表达式：functionId=disc(AcceptTask|doTask) 过滤请求
+使用 Charles 抓包，使用正则表达式：functionId=disc(AcceptTask|DoTask) 过滤请求
 选中所有请求，将所有请求保存为 JSON Session File 名称为 watch.chlsj，将该文件与jd_watch.js放在相同目录中
+使用手机抓包，将functionId=discAcceptTask的请求填入acceptBody，将discDoTask的body填入doBody
 */
 function preload(){
   const fs = require('fs');
@@ -65,6 +66,12 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
+  if($.isNode()){
+    const stats = await util.promisify(fs.stat)('watch.json');
+    if(stats.isFile()){
+      preload()
+    }
+  }
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
