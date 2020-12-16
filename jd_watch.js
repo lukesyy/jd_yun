@@ -20,9 +20,31 @@ cron "10 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scrip
  */
 const $ = new Env('京东看一看');
 let acceptBody = [
-  ]
-let doBody = [
+  "area=12_904_908_57903&body=%7B%22referPageId%22%3A%22discRecommend%22%2C%22itemId%22%3A%22240499056%7C11%22%2C%22bizType%22%3A1%2C%22taskId%22%3A%223%22%2C%22mType%22%3A0%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=200&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=cb37ff7634295c0ac13d3344ec94a996&st=1608105243070&sv=112&uts=0f31TVRjBSueCA6d1433N/VvOpFVgTQ3ayM3m/f8v%2B5SZcxHDy1W0aeMpwRE60%2B5NCC1QBAEVnTfdyUBY1v5dzjJYNmtBpfPHeEOqjU2lcvvt9i4lMwuL6cFvhiheX1QlG4SCsmZu6Zhj5aCQji0PhIRINWPoPq7tOwraAhYokfkEoI1Vcv3DgT8TKdKMtBfCtTr%2BEIaEPSfItFIJPlqXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D",
+  "area=12_904_908_57903&body=%7B%22referPageId%22%3A%22discRecommend%22%2C%22itemId%22%3A%22239972247%7C11%22%2C%22bizType%22%3A1%2C%22taskId%22%3A%223%22%2C%22mType%22%3A0%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=200&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=56c93bfb9ff0ff270b9b110ef74ffa23&st=1608105308757&sv=100&uts=0f31TVRjBSueCA6d1433N/VvOpFVgTQ3ayM3m/f8v%2B5SZcxHDy1W0aeMpwRE60%2B5NCC1QBAEVnTfdyUBY1v5dzjJYNmtBpfPHeEOqjU2lcvvt9i4lMwuL6cFvhiheX1QlG4SCsmZu6Zhj5aCQji0PhIRINWPoPq7tOwraAhYokfkEoI1Vcv3DgT8TKdKMtBfCtTr%2BEIaEPSfItFIJPlqXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D",
 ]
+let doBody = [
+  "area=12_904_908_57903&body=%7B%22referPageId%22%3A%22discRecommend%22%2C%22itemId%22%3A%22240499056%7C11%22%2C%22bizType%22%3A1%2C%22taskId%22%3A%223%22%2C%22role%22%3A1%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=200&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=de79fac772336c4f2452580f01c9fc51&st=1608105253494&sv=112&uts=0f31TVRjBSueCA6d1433N/VvOpFVgTQ3ayM3m/f8v%2B5SZcxHDy1W0aeMpwRE60%2B5NCC1QBAEVnTfdyUBY1v5dzjJYNmtBpfPHeEOqjU2lcvvt9i4lMwuL6cFvhiheX1QlG4SCsmZu6Zhj5aCQji0PhIRINWPoPq7tOwraAhYokfkEoI1Vcv3DgT8TKdKMtBfCtTr%2BEIaEPSfItFIJPlqXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D",
+  "area=12_904_908_57903&body=%7B%22referPageId%22%3A%22discRecommend%22%2C%22itemId%22%3A%22239972247%7C11%22%2C%22bizType%22%3A1%2C%22taskId%22%3A%223%22%2C%22role%22%3A1%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=200&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=98f4ebd2ff64c2b05e3323fc37131b12&st=1608105318845&sv=100&uts=0f31TVRjBSueCA6d1433N/VvOpFVgTQ3ayM3m/f8v%2B5SZcxHDy1W0aeMpwRE60%2B5NCC1QBAEVnTfdyUBY1v5dzjJYNmtBpfPHeEOqjU2lcvvt9i4lMwuL6cFvhiheX1QlG4SCsmZu6Zhj5aCQji0PhIRINWPoPq7tOwraAhYokfkEoI1Vcv3DgT8TKdKMtBfCtTr%2BEIaEPSfItFIJPlqXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D"
+]
+/*
+使用 Charles 抓包，使用正则表达式：functionId=disc(AcceptTask|DoTask) 过滤请求
+选中所有请求，将所有请求保存为 JSON Session File 名称为 watch.chlsj，将该文件与jd_watch.js放在相同目录中
+使用手机抓包，将functionId=discAcceptTask的请求填入acceptBody，将discDoTask的body填入doBody
+*/
+function preload(){
+  const fs = require('fs');
+  let raw = fs.readFileSync('watch.chlsj');
+  let s = JSON.parse(raw);
+  s.map(vo=>{
+    let doTask = vo.request.header.headers.filter(vo=>vo['name'] === ":path" && vo['value'].indexOf('discDoTask')>0)[0]
+    if(doTask){
+      doBody.push(vo.request.body.text)
+    }else{
+      acceptBody.push(vo.request.body.text)
+    }
+  })
+}
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -44,6 +66,19 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
+  if($.isNode()){
+    const fs = require('fs');
+    try {
+      if (fs.existsSync('watch.chlsj')) {
+        preload()
+        if (doBody.length < 40){
+          console.log(`${$.name}Body数小于40，无法完成任务！`)
+        }
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
@@ -81,16 +116,22 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 async function jdHealth() {
   $.bean = 0
   await getTaskList()
+  console.log(`${$.name}浏览次数：${$.task.times}/${$.task.maxTimes}`)
   if($.task) {
-    for (let i = $.task.times; i < $.task.maxTimes; ++i) {
+    let i = 0, j = $.task.times
+    while(j < $.task.maxTimes) {
       if (!acceptBody[i]) break
-      let res = await acceptTask(acceptBody[i])
+      let res = await acceptTask(acceptBody[++i])
       if (res['success']) {
-        await $.wait(12000)
-        await doTask(doBody[i])
+        await $.wait(10000)
+        await doTask(doBody[i-1])
+        j++
       }
+      await $.wait(500);
     }
-    await reward()
+    await getTaskList()
+    if ($.task.times===$.task.maxTimes)
+      await reward()
     await showMsg();
   }
 }
@@ -140,9 +181,9 @@ function acceptTask(body) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if(data.success){
-              console.log('浏览开始请求成功')
+              // console.log('浏览开始请求成功')
             }else{
-              console.log(`${data.message}`)
+              // console.log(`${data.message}`)
             }
           }
         }
@@ -182,7 +223,7 @@ function doTask(body) {
 }
 // 完成看
 function reward() {
-  let body = "body=%7B%22taskId%22%3A%222%22%2C%22bizType%22%3A1%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=200&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=23e57970b79e373fd94ae8ac75ba9777&st=1607943120275&sv=112&uts=0f31TVRjBStSN/KN45aFsqdm3cWx37OzS1DDtk92Jjb1GFDLcR3WqIplv0XA1h/hn4ycbABQbxmY2Z6OJ41XlUNqODg0xhlFxdy9vzwBobHzhtVmCcORklu9W1cB6YcW0kYJNzSsy5ypxaQvGUf1oq/yMw/Hbo5lD3f4srHsrWzrsnKQ4K7HYtCFiZ5kn/AC%2B/tEmJRu9yM5j2nCMqdvmg%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D"
+  let body = "area=12_904_908_57903&body=%7B%22taskId%22%3A%223%22%2C%22bizType%22%3A1%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=200&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=17715aee2221001db42054582e246b12&st=1608106937687&sv=102&uts=0f31TVRjBSueCA6d1433N/VvOpFVgTQ3ayM3m/f8v%2B5SZcxHDy1W0aeMpwRE60%2B5NCC1QBAEVnTfdyUBY1v5dzjJYNmtBpfPHeEOqjU2lcvvt9i4lMwuL6cFvhiheX1QlG4SCsmZu6Zhj5aCQji0PhIRINWPoPq7tOwraAhYokfkEoI1Vcv3DgT8TKdKMtBfCtTr%2BEIaEPSfItFIJPlqXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D"
   return new Promise(resolve => {
     $.post(taskPostUrl("discReceiveTaskAward", body), async (err, resp, data) => {
       try {
