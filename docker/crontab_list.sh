@@ -83,4 +83,4 @@
 # 宠汪汪邀请助力
 10 10,11 * * * node /scripts/jd_joy_run.js >> /scripts/logs/jd_joy_run.log 2>&1
 # 京东发现-看一看，看40个视频领80京豆（非常耗时）
-13 10-16/3 * * * node /scripts/jd_watch.js >> /scripts/logs/jd_watch.log 2>&1
+13 11,14 * * * node /scripts/jd_watch.js >> /scripts/logs/jd_watch.log 2>&1
