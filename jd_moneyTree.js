@@ -35,6 +35,7 @@ if ($.isNode()) {
 }
 
 let jdNotify = true;//是否开启静默运行，默认true开启
+let sellFruit = false;//是否卖出金果得到金币，默认'false'不卖
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
 !(async () => {
@@ -262,11 +263,11 @@ function sell() {
     }
     params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
     console.log(`目前金果数量${fruitTotal}`)
-    if ($.isNode()) {
-        if (process.env.MONEY_TREE_SELL_FRUIT && process.env.MONEY_TREE_SELL_FRUIT === 'false') {
-            rs()
-            return
-        }
+    sellFruit = $.isNode() ? (process.env.MONEY_TREE_SELL_FRUIT ? process.env.MONEY_TREE_SELL_FRUIT : `${sellFruit}`) : ($.getdata('MONEY_TREE_SELL_FRUIT') ? $.getdata('MONEY_TREE_SELL_FRUIT') : `${sellFruit}`);
+    if (sellFruit && sellFruit === 'false') {
+      console.log(`\n设置的不卖出金果\n`)
+      rs()
+      return
     }
     if (fruitTotal > 380) {
       request('sell', params).then((sellRes) => {
