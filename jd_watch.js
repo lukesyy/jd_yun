@@ -157,15 +157,17 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         }
       }
       if (process.env.WATCH_ACCEPTBODY && process.env.WATCH_DOBODY) {
-        acceptBody = process.env.WATCH_ACCEPTBODYs.split('@');
+        acceptBody = process.env.WATCH_ACCEPTBODY.split('@');
         doBody = process.env.WATCH_DOBODY.split('@');
+        console.log(`\n环境变量提供的acceptBody数量：${acceptBody.length}`)
+        console.log(`环境变量提供的doBody：数量${doBody.length}\n`)
       }
     } catch (err) {
       console.error(err)
     }
+    console.log(`\nacceptBody数量：${acceptBody.length}`)
+    console.log(`doBody：数量${doBody.length}\n`)
   }
-  console.log(`\nacceptBody数量：${acceptBody.length}`)
-  console.log(`doBody：数量${doBody.length}\n`)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
