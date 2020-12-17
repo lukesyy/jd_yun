@@ -227,11 +227,7 @@ async function jdHealth() {
 
 function showMsg() {
   return new Promise(resolve => {
-    if (!jdNotify) {
-      $.msg($.name, '', `${message}`);
-    } else {
-      $.log(`京东账号${$.index}${$.nickName}\n${message}`);
-    }
+    $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`);
     resolve()
   })
 }
@@ -324,6 +320,7 @@ function reward() {
             data = JSON.parse(data);
             if(data.success){
               console.log(`领奖成功，${$.task.taskSubTitleExt}`)
+              message += `京东看一看：${$.task.taskSubTitleExt}`;
             }else{
               console.log(`领奖失败，${data.message}`)
             }
