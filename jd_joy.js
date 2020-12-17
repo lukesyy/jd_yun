@@ -173,7 +173,7 @@ async function joinTwoPeopleRun() {
         console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
         if ($.receiveJoyRunAwardRes.success) {
           $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n太棒了,${teamLevelTemp}人赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`);
-          if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n${teamLevelTemp}人赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
+          if ($.isNode()&&(`${jdNotify}` === 'false')) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n${teamLevelTemp}人赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
         }
       }
       if (petRaceResult === 'participate') {
