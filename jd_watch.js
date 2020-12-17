@@ -221,7 +221,6 @@ async function jdHealth() {
     await getTaskList()
     if ($.task.times===$.task.maxTimes)
       await reward()
-    await showMsg();
   }
 }
 
@@ -321,6 +320,7 @@ function reward() {
             if(data.success){
               console.log(`领奖成功，${$.task.taskSubTitleExt}`)
               message += `京东看一看：${$.task.taskSubTitleExt}`;
+              await showMsg();
             }else{
               console.log(`领奖失败，${data.message}`)
             }
