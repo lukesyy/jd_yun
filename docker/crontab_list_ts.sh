@@ -78,7 +78,9 @@
 33 4 * * * node /scripts/jd_bean_home.js | ts >> /scripts/logs/jd_bean_home.log 2>&1
 # 京东直播(每日18豆)
 10-20/5 11 * * * node /scripts/jd_live.js | ts >> /scripts/logs/jd_live.log 2>&1
-#微信小程序京东赚赚
+# 微信小程序京东赚赚
 10 11 * * * node /scripts/jd_jdzz.js | ts >> /scripts/logs/jd_jdzz.log 2>&1
-#宠汪汪邀请助力
-10 10,11 * * * node /scripts/jd_joy_run.js >> /scripts/logs/jd_joy_run.log 2>&1
+# 宠汪汪邀请助力
+10 10,11 * * * node /scripts/jd_joy_run.js | ts >> /scripts/logs/jd_joy_run.log 2>&1
+# 京东发现-看一看，看40个视频领80京豆（非常耗时）
+13 11,14 * * * node /scripts/jd_watch.js | ts >> /scripts/logs/jd_watch.log 2>&1
