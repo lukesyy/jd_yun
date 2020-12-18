@@ -114,8 +114,10 @@
 | `DREAM_FACTORY_SHARE_CODES`|  京喜工厂互助码  | 非必须 | 填写规则请看 [jdDreamFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `TG_PROXY_HOST`   |  Telegram 代理的 IP  | 非必须 | 代理类型为 http。例子：http代理 http://127.0.0.1:1080 则填写 127.0.0.1 |
 | `TG_PROXY_PORT`   |  Telegram 代理的端口  | 非必须 | 例子：http代理 http://127.0.0.1:1080 则填写 1080 |
-| `MONEY_TREE_SELL_FRUIT` |  摇钱树是否卖出金果  | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认`true` |
+| `MONEY_TREE_SELL_FRUIT` |  摇钱树是否卖出金果  | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认`false` |
 | `FACTORAY_WANTPRODUCT_NAME` |  东东工厂心仪商品  | 非必须 | 提供心仪商品名称(请尽量填写完整和别的商品有区分度)，达到条件后兑换，如不提供则会兑换当前所选商品 |
+| `WATCH_ACCEPTBODY` |  京东看一看(jd_watch.js)脚本  | 非必须 | 抓包`functionId=discAcceptTask`(需40个，每个之间使用@符号隔开) |
+| `WATCH_DOBODY` |  京东看一看(jd_watch.js)脚本  | 非必须 | 抓包`functionId=discDoTask`(需40个，每个之间使用@符号隔开) |
 
 
 ##### 互助码的填写规则
