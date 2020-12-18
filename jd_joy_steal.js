@@ -140,6 +140,9 @@ async function stealFriendsFood() {
         if (getRandomFoodRes && getRandomFoodRes.success) {
           if (getRandomFoodRes.errorCode === 'steal_ok') {
             $.stealFood += getRandomFoodRes.data;
+          } else if (getRandomFoodRes.errorCode === 'chance_full') {
+            console.log('偷好友狗粮已达上限，跳出循环');
+            break;
           }
         }
       } else if (stealStatus === 'chance_full') {
