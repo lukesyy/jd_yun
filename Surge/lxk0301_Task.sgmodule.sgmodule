@@ -63,7 +63,8 @@ cron "30 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scri
 cron "20 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_kd.js, timeout=750, wake-system=1, tag=京东快递签到
 #京东直播(活动结束时间未知)
 cron "20 12 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js, timeout=750, wake-system=1, tag=京东直播
-
+#京东看一看
+cron "40 9,10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_watch.js, timeout=7750, wake-system=1, tag=京东看一看
 #京东健康
 cron "20 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdh.js, timeout=750, wake-system=1, tag=京东健康
 #京东赚赚
