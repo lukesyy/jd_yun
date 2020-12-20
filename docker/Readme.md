@@ -30,7 +30,6 @@ jd_scripts
 - - [使用默认配置用这个](./example/default.yml)
 - - [使用自定义任务追加到默认任务之后用这个](./example/custom-append.yml)
 - - [使用自定义任务覆盖默认任务用这个](./example/custom-overwrite.yml)
-- - [使用TG机器人交互的用这个](./example/use-tg-bot.yml)
 - - [一次启动多容器并发用这个](./example/multi.yml)
 - - [使用群晖默认配置用这个](./example/jd_scripts.syno.json)
 - - [使用群晖自定义任务追加到默认任务之后用这个](./example/jd_scripts.custom-append.syno.json)
