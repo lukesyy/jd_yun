@@ -130,7 +130,7 @@ fi
 
 if [ $RANDOM_DELAY_MAX -ge 1 ]; then
     echo "已设置随机延迟为 $RANDOM_DELAY_MAX , 设置延迟任务中... "
-    source replaceNode_withRandomSleep.sh $mergedListFile
+    sed -i "/\(jd_bean_sign.js\|jd_blueCoin.js\|jd_joy_reawrd.js\|jd_joy_steal.js\|jd_joy_feedPets.js\)/!s/node/sleep \$((RANDOM % \$RANDOM_DELAY_MAX)); node/g" $mergedListFile
 fi
 
 echo "Load the latest crontab task file..."
