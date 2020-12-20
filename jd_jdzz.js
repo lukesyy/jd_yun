@@ -44,10 +44,10 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
- `AX2QI2PzOmnZQUT2ngTkV@AAzZWmKSRzjcIZ2H62H5IkQz4iQ@AUWE54cr5k0ZecB2BnBkz@AUWE5mauWyj1cXWT9iXVJwQ@AUWE5m_uZnDEIXWLxiC5Lkg@AUWE53fjmskhiYR67qjYK@ATHYK1_XVlA@AUWE5mviVmzEIDmn823obwQ`,
- `AX2QI2PzOmnZQUT2ngTkV@AAzZWmKSRzjcIZ2H62H5IkQz4iQ@AUWE54cr5k0ZecB2BnBkz@AUWE5mauWyj1cXWT9iXVJwQ@AUWE5m_uZnDEIXWLxiC5Lkg@AUWE53fjmskhiYR67qjYK@ATHYK1_XVlA@AUWE5mviVmzEIDmn823obwQ`
+ `AX2QI2PzOmnZQUT2ngTkV@AAzZWmKSRzjcIZ2H62H5IkQz4iQ@AUWE54cr5k0ZecB2BnBkz@AUWE5mq7FmWZdCDTx1C9JlQ@AUWE5mviVmzEIDmn823obwQ@AUWE5m_uZnDEIXWLxiC5Lkg@ATHYK1_XVlA@AWGQJxfTBhWxWCw`,
+ `AX2QI2PzOmnZQUT2ngTkV@AAzZWmKSRzjcIZ2H62H5IkQz4iQ@AUWE54cr5k0ZecB2BnBkz@AUWE5mq7FmWZdCDTx1C9JlQ@AUWE5mviVmzEIDmn823obwQ@AUWE5m_uZnDEIXWLxiC5Lkg@ATHYK1_XVlA@AWGQJxfTBhWxWCw`,
 ]
-!(async () => {
+!(async () => { 
   $.tuanList = []
   await requireConfig();
   if (helpAuthor) await getAuthorShareCode('https://gitee.com/shylocks/updateTeam/raw/main/jd_zz.json');

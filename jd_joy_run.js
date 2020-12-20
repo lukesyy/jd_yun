@@ -208,7 +208,7 @@ async function main() {
       console.log(`=============【开始邀请助力】===============`)
       const inviteIndex = $.index > invite_pins.length ? (invite_pins.length - 1) : ($.index - 1);
       let new_invite_pins = invite_pins[inviteIndex].split(',');
-      new_invite_pins = [...new_invite_pins, ...getRandomArrayElements(friendsArr, 6)];
+      new_invite_pins = [...new_invite_pins, ...getRandomArrayElements(friendsArr, 0)];
       await invite(new_invite_pins);
       if ($.jdLogin && $.LKYLLogin) {
         console.log(`===========【开始助力好友赛跑】===========`)
