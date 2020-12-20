@@ -25,18 +25,13 @@ async function main() {
     }
   });
   await updateShareCodes();
-  if (!$.body) 
-  {
-	  await updateShareCodesCDN();
-	  console.log(`使用CDN网络使用CDN网络使用CDN网络使用CDN网络使用CDN网络`)
-  }
-
+  if (!$.body) await updateShareCodesCDN();
   if ($.body) {
     eval($.body);
   }
   $.done()
 }
-function updateShareCodes(url = 'https://raw.githubusercontent.com/danwangshimoluo/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
+function updateShareCodes(url = 'https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(resolve => {
     $.get({url}, async (err, resp, data) => {
       try {
@@ -53,7 +48,7 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/danwangshimol
     })
   })
 }
-function updateShareCodesCDN(url = 'https://raw.githubusercontent.com/danwangshimoluo/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
+function updateShareCodesCDN(url = 'https://raw.fastgit.org/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(async resolve => {
     $.get({url}, async (err, resp, data) => {
       try {
