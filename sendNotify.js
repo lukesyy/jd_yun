@@ -1,3 +1,9 @@
+/*
+ * @Author: lxk0301 https://github.com/lxk0301 
+ * @Date: 2020-08-19 16:12:40 
+ * @Last Modified by: lxk0301
+ * @Last Modified time: 2020-12-20 13:52:54
+ */
 const querystring = require("querystring");
 const $ = new Env();
 // =======================================微信server酱通知设置区域===========================================
