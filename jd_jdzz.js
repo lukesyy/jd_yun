@@ -25,6 +25,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let helpAuthor=true; // 帮助作者
+const randomCount = 5;
 let jdNotify = true; // 是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
@@ -51,6 +52,7 @@ const inviteCodes = [
   $.tuanList = []
   await requireConfig();
   if (helpAuthor) await getAuthorShareCode('https://gitee.com/shylocks/updateTeam/raw/main/jd_zz.json');
+  if (helpAuthor) await getAuthorShareCode('https://gitee.com/lxk0301/updateTeam/raw/master/jd_zz.json');
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
@@ -173,7 +175,7 @@ function helpFriendTuan(body) {
               if (data.resultCode === '9200008') console.log('不能助力自己')
               else if (data.resultCode === '9200011') console.log('已经助力过')
               else if (data.resultCode === '2400205') console.log('团已满')
-              else if (data.resultCode === '2400203') {console.log('助力次数已满');$.canHelp = false}
+              else if (data.resultCode === '2400203') {console.log('助力次数已耗尽');$.canHelp = false}
               else console.log(`未知错误`)
             }
           }
@@ -329,7 +331,30 @@ async function helpFriends() {
     await doTask({"itemId": code, "taskId": "3", "mpVersion": "3.1.0"}, "doHelpTask")
   }
 }
-
+function readShareCode() {
+  console.log(`开始`)
+  return new Promise(async resolve => {
+    $.get({url: `https://code.chiang.fun/api/v1/jd/jdzz/read/${randomCount}/`}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log(`随机取${randomCount}个码放到您固定的互助码后面`)
+            data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+    await $.wait(10000);
+    resolve()
+  })
+}
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
@@ -342,7 +367,7 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    const readShareCodeRes = null //await readShareCode();
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }
@@ -355,7 +380,8 @@ function requireConfig() {
   return new Promise(resolve => {
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
-    const shareCodes = [] //$.isNode() ? require('./jdSplitShareCodes.js') : '';
+    // TODO 互助
+    const shareCodes = [];
     console.log(`共${cookiesArr.length}个京东账号\n`);
     $.shareCodesArr = [];
     if ($.isNode()) {
