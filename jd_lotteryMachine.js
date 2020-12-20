@@ -27,8 +27,8 @@ async function main() {
   await updateShareCodes();
   if (!$.body) 
   {
+	  console.log(`---------------------使用CDN---------------------`)
 	  await updateShareCodesCDN();
-	  console.log(`使用CDN网络使用CDN网络使用CDN网络使用CDN网络使用CDN网络`)
   }
 
   if ($.body) {
@@ -53,7 +53,7 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/danwangshimol
     })
   })
 }
-function updateShareCodesCDN(url = 'https://raw.githubusercontent.com/danwangshimoluo/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
+function updateShareCodesCDN(url = 'https://raw.fastgit.org/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(async resolve => {
     $.get({url}, async (err, resp, data) => {
       try {
