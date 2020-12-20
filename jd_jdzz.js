@@ -384,7 +384,7 @@ function requireConfig() {
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
     // TODO 互助
-    const shareCodes = [];
+    const shareCodes = $.isNode() ? process.env.JDZZ_SHARECODES.split('&') : [];
     console.log(`共${cookiesArr.length}个京东账号\n`);
     $.shareCodesArr = [];
     if ($.isNode()) {

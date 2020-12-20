@@ -112,6 +112,7 @@
 | `SUPERMARKET_SHARECODES`|  京小超商圈互助码  | 非必须 | 填写规则请看 [jdSuperMarketShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdSuperMarketShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `DDFACTORY_SHARECODES`|  东东工厂互助码  | 非必须 | 填写规则请看 [jdFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdFactoryShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `DREAM_FACTORY_SHARE_CODES`|  京喜工厂互助码  | 非必须 | 填写规则请看 [jdDreamFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
+| `JDZZ_SHARECODES` |  京东赚赚(jd_jdzz.js)脚本互助码  | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 | `TG_PROXY_HOST`   |  Telegram 代理的 IP  | 非必须 | 代理类型为 http。例子：http代理 http://127.0.0.1:1080 则填写 127.0.0.1 |
 | `TG_PROXY_PORT`   |  Telegram 代理的端口  | 非必须 | 例子：http代理 http://127.0.0.1:1080 则填写 1080 |
 | `MONEY_TREE_SELL_FRUIT` |  摇钱树是否卖出金果  | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认`false` |
