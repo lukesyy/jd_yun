@@ -30,7 +30,7 @@ async function main() {
 	  console.log(`---------------------使用CDN---------------------`)
 	  await updateShareCodesCDN();
   }
-
+  else console.log('-------------github访问成功，不使用CDN-------------')
   if ($.body) {
     eval($.body);
   }
