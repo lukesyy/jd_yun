@@ -36,7 +36,7 @@ async function main() {
   }
   $.done()
 }
-function updateShareCodes(url = 'https://raw.githubusercontent.com/danwangshimoluo/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
+function updateShareCodes(url = 'https://raw.githubusercontent.com/danwangshimoluo/QuantumultX/quanLottery/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(resolve => {
     $.get({url}, async (err, resp, data) => {
       try {
