@@ -9,9 +9,9 @@
 // 如: 京东账号1的shareCode1@京东账号1的shareCode2&京东账号2的shareCode1@京东账号2的shareCode2
 let PlantBeanShareCodes = [
   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'eikydcsb6qgb6vzcnpbvuhj4yqwpxjpkrwsqthi@urahfsfiinkvoaazloezfalirm@mlrdw3aw26j3wfyostskcnx3sude4ojhx5ze6za@e7lhibzb3zek2eoqjepbpvk33lvmhp2utkjhkay',
+  'eikydcsb6qgb6vzcnpbvuhj4yqwpxjpkrwsqthi@urahfsfiinkvoaazloezfalirm@mlrdw3aw26j3wfyostskcnx3sude4ojhx5ze6za@olmijoxgmjutznhkcrgg3urla2gpgef5qscsssa@olmijoxgmjutz2lzuiqhlaetagxozsuyibzao3q@e7lhibzb3zek2eoqjepbpvk33lvmhp2utkjhkay',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'eikydcsb6qgb6vzcnpbvuhj4yqwpxjpkrwsqthi@urahfsfiinkvoaazloezfalirm@mlrdw3aw26j3wfyostskcnx3sude4ojhx5ze6za@e7lhibzb3zek2eoqjepbpvk33lvmhp2utkjhkay',
+  'eikydcsb6qgb6vzcnpbvuhj4yqwpxjpkrwsqthi@urahfsfiinkvoaazloezfalirm@mlrdw3aw26j3wfyostskcnx3sude4ojhx5ze6za@olmijoxgmjutznhkcrgg3urla2gpgef5qscsssa@olmijoxgmjutz2lzuiqhlaetagxozsuyibzao3q@e7lhibzb3zek2eoqjepbpvk33lvmhp2utkjhkay',
 ]
 // 判断github action里面是否有东东萌宠互助码
 if (process.env.PLANT_BEAN_SHARECODES) {
