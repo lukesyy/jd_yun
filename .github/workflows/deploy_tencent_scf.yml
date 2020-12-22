@@ -40,6 +40,8 @@ jobs:
           if [ $IGOT_PUSH_KEY ]; then sed -i "/variables/a\      IGOT_PUSH_KEY: $IGOT_PUSH_KEY" serverless.yml; fi;
           if [ $QQ_SKEY ]; then sed -i "/variables/a\      QQ_SKEY: $QQ_SKEY" serverless.yml; fi;
           if [ $QQ_MODE ]; then sed -i "/variables/a\      QQ_MODE: $QQ_MODE" serverless.yml; fi;
+          if [ $PUSH_PLUS_TOKEN ]; then sed -i "/variables/a\      PUSH_PLUS_TOKEN: $PUSH_PLUS_TOKEN" serverless.yml; fi;
+          if [ $PUSH_PLUS_USER ]; then sed -i "/variables/a\      PUSH_PLUS_USER: $PUSH_PLUS_USER" serverless.yml; fi;
           if [ $PET_NOTIFY_CONTROL ]; then sed -i "/variables/a\      PET_NOTIFY_CONTROL: $PET_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $FRUIT_NOTIFY_CONTROL ]; then sed -i "/variables/a\      FRUIT_NOTIFY_CONTROL: $FRUIT_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $JD_JOY_REWARD_NOTIFY ]; then sed -i "/variables/a\      JD_JOY_REWARD_NOTIFY: $JD_JOY_REWARD_NOTIFY" serverless.yml; fi;
@@ -85,6 +87,8 @@ jobs:
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY}}
           QQ_SKEY: ${{ secrets.QQ_SKEY}}
           QQ_MODE: ${{ secrets.QQ_MODE}}
+          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN}}
+          PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER}}
           PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL}}
           FRUIT_NOTIFY_CONTROL: ${{ secrets.FRUIT_NOTIFY_CONTROL}}
           JD_JOY_REWARD_NOTIFY: ${{ secrets.JD_JOY_REWARD_NOTIFY}}
