@@ -84,3 +84,5 @@
 10 10,11 * * * node /scripts/jd_joy_run.js >> /scripts/logs/jd_joy_run.log 2>&1
 # 京东发现-看一看，看40个视频领80京豆（非常耗时）
 13 11,14 * * * node /scripts/jd_watch.js >> /scripts/logs/jd_watch.log 2>&1
+# 注销京东已开的店铺会员，不是注销京东plus会员，个别店铺无法注销
+44 4 * * 6 node /scripts/jd_unbind.js >> /scripts/logs/jd_unbind.log 2>&1
