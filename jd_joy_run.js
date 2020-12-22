@@ -40,12 +40,10 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 //此处填入你需要助力好友的京东用户名
 //下面给出好友邀请助力的示例填写规则
 let invite_pins = ["danwangshimoluo","danwangshimoluo","830791320_125224661","830791320_125224661","jd_NWYnCfHMIqUI","jd_53edce0d99c30","jd_NWYnCfHMIqUI"];
+
 //下面给出好友赛跑助力的示例填写规则
-<<<<<<< HEAD
 let run_pins = ["danwangshimoluo","danwangshimoluo","830791320_125224661","830791320_125224661","jd_NWYnCfHMIqUI","jd_53edce0d99c30","jd_NWYnCfHMIqUI"];
-=======
-let run_pins = ["被折叠的记忆33,jd_6cd93e613b0e5,jd_45a6b5953b15b,zooooo58,jd_66f5cecc1efcd,jd_sIhNpDXJehOr,jd_704a2e5e28a66"];
->>>>>>> 513ed51e7ba9cb5dc46674ed3795b1f8d4ec215b
+
 // $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
 // $.LKYLToken = $.getdata('jdJoyRunToken');
 const friendsArr = ["danwangshimoluo", "830791320_125224661", "jd_NWYnCfHMIqUI", "jd_53edce0d99c30", "jd_6169ef6a14e73", "jd_66678de45d93d"]
