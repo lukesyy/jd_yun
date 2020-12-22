@@ -1,6 +1,7 @@
 /*
 注销京东会员卡
 是注销京东已开的店铺会员,不是京东plus会员
+查看已开店铺会员入口:我的=>我的钱包=>卡包
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==========Quantumult X==========
 [task_local]
@@ -126,7 +127,7 @@ function getCards() {
     $.post(option, (err, resp, data) => {
       try {
         data = JSON.parse(data);
-        $.cardsTotalNum = data.result.cardList.length;
+        $.cardsTotalNum = data.result.cardList ? data.result.cardList.length : 0;
         $.cardList = data.result.cardList
       } catch (e) {
         $.logErr(e, resp);
