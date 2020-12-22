@@ -41,7 +41,11 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 //下面给出好友邀请助力的示例填写规则
 let invite_pins = ["danwangshimoluo","danwangshimoluo","830791320_125224661","830791320_125224661","jd_NWYnCfHMIqUI","jd_53edce0d99c30","jd_NWYnCfHMIqUI"];
 //下面给出好友赛跑助力的示例填写规则
+<<<<<<< HEAD
 let run_pins = ["danwangshimoluo","danwangshimoluo","830791320_125224661","830791320_125224661","jd_NWYnCfHMIqUI","jd_53edce0d99c30","jd_NWYnCfHMIqUI"];
+=======
+let run_pins = ["被折叠的记忆33,jd_6cd93e613b0e5,jd_45a6b5953b15b,zooooo58,jd_66f5cecc1efcd,jd_sIhNpDXJehOr,jd_704a2e5e28a66"];
+>>>>>>> 513ed51e7ba9cb5dc46674ed3795b1f8d4ec215b
 // $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
 // $.LKYLToken = $.getdata('jdJoyRunToken');
 const friendsArr = ["danwangshimoluo", "830791320_125224661", "jd_NWYnCfHMIqUI", "jd_53edce0d99c30", "jd_6169ef6a14e73", "jd_66678de45d93d"]
@@ -225,8 +229,15 @@ function showMsg() {
   return new Promise(async resolve => {
     if ($.inviteReward || $.runReward) {
       let message = '';
-      message += `给${$.inviteReward / 30}人邀请助力成功,获得${$.inviteReward}积分\n给${$.runReward / 5}人赛跑助力成功,获得狗粮${$.runReward}g`;
-      $.msg($.name, '', `京东账号${$.index} ${UserName}\n${message}`);
+      if ($.inviteReward > 0) {
+        message += `给${$.inviteReward / 30}人邀请助力成功,获得${$.inviteReward}积分\n`;
+      }
+      if ($.runReward > 0) {
+        message += `给${$.runReward / 5}人赛跑助力成功,获得狗粮${$.runReward}g`;
+      }
+      if (message) {
+        $.msg($.name, '', `京东账号${$.index} ${UserName}\n${message}`);
+      }
     }
     resolve();
   })

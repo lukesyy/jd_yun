@@ -270,7 +270,7 @@ function doTask(taskType,taskId,infoId) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            console.log(data.data.msg)
+            console.log(data.message)
             // await rewardTask(taskType,taskId,infoId)
           }
         }
@@ -293,7 +293,7 @@ function doTask2(taskType,taskId,infoId) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            console.log(data.data.msg)
+            console.log(data.message)
             // await rewardTask(taskType,taskId,infoId)
           }
         }
