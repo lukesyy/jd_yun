@@ -255,7 +255,7 @@ function getUserInfo() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.data.shareTaskRes) {
-              console.log(`\n您的${$.name}好友助力码为： ${data.data.shareTaskRes.itemId}\n`);
+              console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
             } else {
               console.log(`已满5人助力,暂时看不到您的${$.name}好友助力码`)
             }

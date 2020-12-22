@@ -114,3 +114,5 @@ fi
 
 echo "加载最新的定时任务文件..."
 crontab $mergedListFile
+
+sh -x /scripts/docker/proc_file.sh
