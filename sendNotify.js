@@ -130,7 +130,8 @@ function serverNotify(text, desp, timeout = 2100) {
               if (data.errno === 0) {
                 console.log('server酱发送通知消息成功\n')
               } else if (data.errno === 1024) {
-                console.log('PUSH_KEY 错误\n')
+                // 一分钟内发送相同的内容会触发
+                console.log(`server酱发送通知消息异常: ${data.errmsg}\n`)
               } else {
                 console.log(`server酱发送通知消息异常\n${JSON.stringify(data)}`)
               }
