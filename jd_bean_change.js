@@ -128,6 +128,7 @@ async function bean() {
       $.expenseBean += Number(item.amount);
     }
   }
+  await queryexpirejingdou();
   // console.log(`昨日收入：${$.incomeBean}个京豆 🐶`);
   // console.log(`昨日支出：${$.expenseBean}个京豆 🐶`)
 }
