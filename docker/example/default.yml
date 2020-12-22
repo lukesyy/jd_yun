@@ -27,6 +27,8 @@ jd_scripts:
     #钉钉机器人通知
     - DD_BOT_TOKEN=
     - DD_BOT_SECRET=
+    #企业微信机器人通知
+    - QYWX_KEY=
     #京东种豆得豆
     - PLANT_BEAN_SHARECODES=
     #京东农场
@@ -50,4 +52,3 @@ jd_scripts:
     #并不是所有的脚本都会被启用延迟，因为有一些脚本需要整点触发。延迟的目的有两个，1是降低抢占cpu资源几率，2是降低检查风险（主要是1）
     #填写数字，单位为秒，比如写为 RANDOM_DELAY_MAX=30  就是随机产生0到29之间的一个秒数，执行延迟的意思。
     - RANDOM_DELAY_MAX=
-
