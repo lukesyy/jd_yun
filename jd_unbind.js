@@ -83,8 +83,8 @@ async function jdUnbind() {
 async function unsubscribeCards() {
   let count = 0
   for (let item of $.cardList) {
-    if (count === cardPageSize){
-      console.log(`已达到设定数量`)
+    if (count === cardPageSize * 1){
+      console.log(`已达到设定数量:${cardPageSize * 1}`)
       break
     }
     if (stopCards && (item.brandName && stopCards.includes(item.brandName))) {
