@@ -92,6 +92,8 @@
 | `IGOT_PUSH_KEY`         |   iGot推送   | 非必须 | iGot聚合推送，支持多方式推送，确保消息可达。 [参考文档](https://wahao.github.io/Bark-MP-helper ) |
 | `QQ_SKEY`               |   酷推(Cool Push)推送   | 非必须 | 推送所需的Skey,登录后获取Skey [参考文档](https://cp.xuthus.cc/) |
 | `QQ_MODE`               |   酷推(Cool Push)推送   | 非必须 | 推送方式(send或group或者wx，默认send) [参考文档](https://cp.xuthus.cc/) |
+| `PUSH_PLUS_TOKEN`       |   pushplus推送  | 非必须 | pushplus微信推送，支持一对一，一对多推送 [官方网站](http://pushplus.hxtrip.com/)                     |
+| `PUSH_PLUS_USER`        |   pushplus推送  | 非必须 | pushplus微信推送，一对多推送所需的群组 (需订阅者扫描二维码)，只填TOKEN默认为一对一推送                    |
 | `PET_NOTIFY_CONTROL`    | 东东萌宠推送开关  | 非必须 | 控制京东萌宠是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)              |
 | `FRUIT_NOTIFY_CONTROL`  | 东东农场推送开关  | 非必须 | 控制京东农场是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)              |
 | `JD_JOY_REWARD_NOTIFY`  | 宠汪汪兑换京豆推送开关  | 非必须 | 控制jd_joy_reward.js脚本是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) 

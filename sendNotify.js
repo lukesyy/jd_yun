@@ -48,6 +48,11 @@ let DD_BOT_SECRET = '';
 //注：此处设置github action用户填写到Settings-Secrets里面（Name输入IGOT_PUSH_KEY）
 let IGOT_PUSH_KEY = '';
 
+// =======================================push+设置区域=======================================
+//PUSH_PLUS_USER 填一对多推送的订阅组, 官网叫做(topic)
+let PUSH_PLUS_TOKEN = '';
+let PUSH_PLUS_USER = '';
+
 if (process.env.PUSH_KEY) {
   SCKEY = process.env.PUSH_KEY;
 }
@@ -96,6 +101,13 @@ if (process.env.IGOT_PUSH_KEY) {
   IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY
 }
 
+if (process.env.PUSH_PLUS_TOKEN) {
+  PUSH_PLUS_TOKEN = process.env.PUSH_PLUS_TOKEN;
+}
+if (process.env.PUSH_PLUS_USER) {
+  PUSH_PLUS_USER = process.env.PUSH_PLUS_USER;
+}
+
 async function sendNotify(text, desp, params = {}) {
   //提供六种通知
   await serverNotify(text, desp);
@@ -105,6 +117,7 @@ async function sendNotify(text, desp, params = {}) {
   await ddBotNotify(text, desp);
   await iGotNotify(text, desp, params);
   await CoolPush(text, desp);
+  await pushPlusNotify(text, desp);
 }
 
 function serverNotify(text, desp, timeout = 2100) {
@@ -375,6 +388,43 @@ function iGotNotify(text, desp, params={}){
       })
     } else {
       console.log('您未提供iGot的推送IGOT_PUSH_KEY，取消iGot推送消息通知\n');
+      resolve()
+    }
+  })
+}
+
+function pushPlusNotify(text, desp) {
+  return new Promise(resolve => {
+    if (PUSH_PLUS_TOKEN) {
+      desp = desp.replace(/[\n\r]/g, '<br>'); // 默认为html, 不支持plaintext
+      const options = {
+        url: `http://pushplus.hxtrip.com/send`,
+        body: `token=${PUSH_PLUS_TOKEN}&title=${text}&content=${desp}&topic=${PUSH_PLUS_USER}`,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+      $.post(options, (err, resp, data) => {
+        try {
+          if (err) {
+            console.log('\npush+发送通知消息失败！！\n')
+            console.log(err);
+          } else {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              console.log('\npush+发送通知消息完成。\n')
+            } else {
+              console.log('\npush+发送通知消息失败！！\n')
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve(data);
+        }
+      })
+    } else {
+      console.log('\n您未提供push+推送所需的PUSH_PLUS_TOKEN，取消push+推送消息通知\n');
       resolve()
     }
   })
