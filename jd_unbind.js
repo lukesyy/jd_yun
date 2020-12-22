@@ -128,7 +128,7 @@ function getCards() {
       try {
         data = JSON.parse(data);
         $.cardsTotalNum = data.result.cardList ? data.result.cardList.length : 0;
-        $.cardList = data.result.cardList
+        $.cardList = data.result.cardList || []
       } catch (e) {
         $.logErr(e, resp);
       } finally {
