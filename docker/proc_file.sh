@@ -12,7 +12,7 @@ plantBean="${logdDir}/jd_plantBean.log"
 jdfruit="${logdDir}/jd_fruit.log"
 jdpet="${logdDir}/jd_pet.log"
 
-echo -e >>$sharecodeFile
+echo -e >$sharecodeFile
 
 sed -n '/京东赚赚好友互助码】.*/'p $jdzzFile | awk '{print $1}' | sort | uniq >>$sharecodeFile
 echo "提取京东赚赚助力码完成"
