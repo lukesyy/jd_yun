@@ -28,7 +28,7 @@ cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scri
 #京东摇钱树
 cron "15 */5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js,timeout=130, wake-system=1, tag=京东摇钱树
 #摇京豆
-cron "5 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js, timeout=50, wake-system=1, tag=摇京豆
+cron "5 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js, timeout=1150, wake-system=1, tag=摇京豆
 #京小超
 cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js,timeout=530, wake-system=1, tag=京小超
 京小超兑换奖品
@@ -63,13 +63,19 @@ cron "30 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scri
 cron "20 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_kd.js, timeout=750, wake-system=1, tag=京东快递签到
 #京东直播(活动结束时间未知)
 cron "20 12 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js, timeout=750, wake-system=1, tag=京东直播
+#京东看一看
+cron "40 9,10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_watch.js, timeout=7750, wake-system=1, tag=京东看一看
+#京东健康
+cron "20 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdh.js, timeout=750, wake-system=1, tag=京东健康
+#京东赚赚
+cron "20 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdzz.js, timeout=750, wake-system=1, tag=京东赚赚
 #以下为短期活动
 #金融打卡领年终奖
 cron "30 7 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jr_sign.js, timeout=750, wake-system=1, tag=金融打卡领年终奖
 #健康抽奖机
 cron "30 2 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, timeout=750, wake-system=1, tag=健康抽奖机
 #直播红包雨(2020-12-31活动结束)
-cron "0 0,20,9-23/2 15-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, timeout=750, wake-system=1, tag=直播红包雨
+cron "1 0,20,9-23/2 15-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, timeout=750, wake-system=1, tag=直播红包雨
 #秒杀红包雨(2020-12-31活动结束)
 cron "20 9 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, timeout=750, wake-system=1, tag=秒杀红包雨
 

@@ -38,6 +38,10 @@ jobs:
           if [ $DD_BOT_TOKEN ]; then sed -i "/variables/a\      DD_BOT_TOKEN: $DD_BOT_TOKEN" serverless.yml; fi;
           if [ $DD_BOT_SECRET ]; then sed -i "/variables/a\      DD_BOT_SECRET: $DD_BOT_SECRET" serverless.yml; fi;
           if [ $IGOT_PUSH_KEY ]; then sed -i "/variables/a\      IGOT_PUSH_KEY: $IGOT_PUSH_KEY" serverless.yml; fi;
+          if [ $QQ_SKEY ]; then sed -i "/variables/a\      QQ_SKEY: $QQ_SKEY" serverless.yml; fi;
+          if [ $QQ_MODE ]; then sed -i "/variables/a\      QQ_MODE: $QQ_MODE" serverless.yml; fi;
+          if [ $PUSH_PLUS_TOKEN ]; then sed -i "/variables/a\      PUSH_PLUS_TOKEN: $PUSH_PLUS_TOKEN" serverless.yml; fi;
+          if [ $PUSH_PLUS_USER ]; then sed -i "/variables/a\      PUSH_PLUS_USER: $PUSH_PLUS_USER" serverless.yml; fi;
           if [ $PET_NOTIFY_CONTROL ]; then sed -i "/variables/a\      PET_NOTIFY_CONTROL: $PET_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $FRUIT_NOTIFY_CONTROL ]; then sed -i "/variables/a\      FRUIT_NOTIFY_CONTROL: $FRUIT_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $JD_JOY_REWARD_NOTIFY ]; then sed -i "/variables/a\      JD_JOY_REWARD_NOTIFY: $JD_JOY_REWARD_NOTIFY" serverless.yml; fi;
@@ -60,6 +64,7 @@ jobs:
           if [ $SUPERMARKET_SHARECODES ]; then sed -i "/variables/a\      SUPERMARKET_SHARECODES: $SUPERMARKET_SHARECODES" serverless.yml; fi;
           if [ $DDFACTORY_SHARECODES ]; then sed -i "/variables/a\      DDFACTORY_SHARECODES: $DDFACTORY_SHARECODES" serverless.yml; fi;
           if [ $DREAM_FACTORY_SHARE_CODES ]; then sed -i "/variables/a\      DREAM_FACTORY_SHARE_CODES: $DREAM_FACTORY_SHARE_CODES" serverless.yml; fi;
+          if [ $JDZZ_SHARECODES ]; then sed -i "/variables/a\      JDZZ_SHARECODES: $JDZZ_SHARECODES" serverless.yml; fi;
           if [ $TG_PROXY_HOST ]; then sed -i "/variables/a\      TG_PROXY_HOST: $TG_PROXY_HOST" serverless.yml; fi;
           if [ $TG_PROXY_PORT ]; then sed -i "/variables/a\      TG_PROXY_PORT: $TG_PROXY_PORT" serverless.yml; fi;
           if [ $MONEY_TREE_SELL_FRUIT ]; then sed -i "/variables/a\      MONEY_TREE_SELL_FRUIT: $MONEY_TREE_SELL_FRUIT" serverless.yml; fi;
@@ -80,6 +85,10 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN}}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET}}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY}}
+          QQ_SKEY: ${{ secrets.QQ_SKEY}}
+          QQ_MODE: ${{ secrets.QQ_MODE}}
+          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN}}
+          PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER}}
           PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL}}
           FRUIT_NOTIFY_CONTROL: ${{ secrets.FRUIT_NOTIFY_CONTROL}}
           JD_JOY_REWARD_NOTIFY: ${{ secrets.JD_JOY_REWARD_NOTIFY}}
@@ -102,6 +111,7 @@ jobs:
           SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES}}
           DDFACTORY_SHARECODES: ${{ secrets.DDFACTORY_SHARECODES}}
           DREAM_FACTORY_SHARE_CODES: ${{ secrets.DREAM_FACTORY_SHARE_CODES}}
+          JDZZ_SHARECODES: ${{ secrets.JDZZ_SHARECODES}}
           TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}
           TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}
           MONEY_TREE_SELL_FRUIT: ${{ secrets.MONEY_TREE_SELL_FRUIT}}

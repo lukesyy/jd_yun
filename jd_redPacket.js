@@ -2,10 +2,10 @@
  * @Author: lxk0301 
  * @Date: 2020-11-03 18:12:38
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-23 12:27:18
+ * @Last Modified time: 2020-12-20 12:27:18
 */
 /*
-京东全民开红包（京东app->主页->领券->抢红包(在底部)）
+京东全民开红包（京东app->首页->领券->锦鲤红包）
 已完成功能：
 ①浏览活动
 ②关注频道
@@ -103,7 +103,7 @@ async function redPacket() {
           await receiveTaskRedpacket(item.taskType);
         } else if (item.innerStatus !== 4) {
           await startTask(item.taskType);
-          if (item.taskType !== 0) {
+          if (item.taskType !== 0 &&  item.taskType !== 1) {
             console.log(`开始做浏览任务\n`);
             await active(item.taskType);
             await receiveTaskRedpacket(item.taskType);
