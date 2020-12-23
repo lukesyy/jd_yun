@@ -1,6 +1,6 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
-更新时间：2020-11-20
+更新时间：2020-12-23
 兑换规则：一个账号一天只能兑换一次京豆。
 兑换奖品成功后才会有系统弹窗通知
 每日京豆库存会在0:00、8:00、16:00更新，经测试发现中午12:00也会有补发京豆。
@@ -181,10 +181,9 @@ function getExchangeRewards() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if (data) {
+          $.getExchangeRewardsRes = {};
+          if (safeGet(data)) {
             $.getExchangeRewardsRes = JSON.parse(data);
-          } else {
-            console.log(`${$.name}api返回数据为空，请检查自身原因`)
           }
         }
       } catch (e) {
@@ -221,10 +220,10 @@ function exchange(saleInfoId, orderSource) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if (data) {
+          console.log(`兑换结果:${data}`);
+          $.exchangeRes = {};
+          if (safeGet(data)) {
             $.exchangeRes = JSON.parse(data);
-          } else {
-            console.log(`${$.name}api返回数据为空，请检查自身原因`)
           }
         }
       } catch (e) {
@@ -284,6 +283,17 @@ function jsonParse(str) {
       $.msg($.name, '', '请勿随意在BoxJs输入框修改内容\n建议通过脚本去获取cookie')
       return [];
     }
+  }
+}
+function safeGet(data) {
+  try {
+    if (typeof JSON.parse(data) == "object") {
+      return true;
+    }
+  } catch (e) {
+    console.log(e);
+    console.log(`京东服务器访问数据为空，请检查自身设备网络情况`);
+    return false;
   }
 }
 // prettier-ignore

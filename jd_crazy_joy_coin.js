@@ -336,6 +336,7 @@ function buyJoy(joyId) {
           data = JSON.parse(data);
           if (data.success) {
             if (data.data.eventInfo) {
+              await openBox(data.data.eventInfo.eventType, data.data.eventInfo.eventRecordId)
               $.canBuy = false
               return
             }
@@ -433,8 +434,9 @@ function getCoin() {
   })
 }
 
-function openBox(boxId) {
-  let body = {"eventType": "LUCKY_BOX_DROP", "eventRecordId": boxId}
+function openBox(eventType = 'LUCKY_BOX_DROP', boxId) {
+  console.log(`openBox:${eventType}`)
+  let body = { eventType, "eventRecordId": boxId}
   return new Promise(async resolve => {
     $.get(taskUrl('crazyJoy_event_getVideoAdvert', JSON.stringify(body)), async (err, resp, data) => {
       try {
@@ -445,9 +447,11 @@ function openBox(boxId) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['success']) {
-              $.log(`点击幸运盒子成功，剩余观看视频次数：${data.data.advertViewTimes}，等待30秒`)
-              await $.wait(30000)
-              await rewardBox(boxId)
+              $.log(`点击幸运盒子成功，剩余观看视频次数：${data.data.advertViewTimes}, ${data.data.advertViewTimes > 0 ? '等待30秒' : '跳出'}`)
+              if (data.data.advertViewTimes > 0) {
+                await $.wait(30000)
+                await rewardBox(eventType, boxId);
+              }
             }
           }
         }
@@ -460,8 +464,8 @@ function openBox(boxId) {
   })
 }
 
-function rewardBox(boxId) {
-  let body = {"eventType": "LUCKY_BOX_DROP", "eventRecordId": boxId}
+function rewardBox(eventType, boxId) {
+  let body = { eventType, "eventRecordId": boxId}
   return new Promise(async resolve => {
     $.get(taskUrl('crazyJoy_event_obtainAward', JSON.stringify(body)), async (err, resp, data) => {
       try {

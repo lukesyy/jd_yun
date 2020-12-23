@@ -43,6 +43,11 @@ let DD_BOT_TOKEN = '';
 //密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的字符串
 let DD_BOT_SECRET = '';
 
+// =======================================企业微信机器人通知设置区域===========================================
+//此处填你企业微信机器人的 webhook(详见文档 https://work.weixin.qq.com/api/doc/90000/90136/91770)，例如：693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa
+//注：此处设置github action用户填写到Settings-Secrets里面(Name输入QYWX_KEY)
+let QYWX_KEY = '';
+
 // =======================================iGot聚合推送通知设置区域===========================================
 //此处填您iGot的信息(推送key，例如：https://push.hellyw.com/XXXXXXXX)
 //注：此处设置github action用户填写到Settings-Secrets里面（Name输入IGOT_PUSH_KEY）
@@ -99,6 +104,10 @@ if (process.env.DD_BOT_TOKEN) {
   }
 }
 
+if (process.env.QYWX_KEY) {
+  QYWX_KEY = process.env.QYWX_KEY;
+}
+
 if (process.env.IGOT_PUSH_KEY) {
   IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY
 }
@@ -121,6 +130,7 @@ async function sendNotify(text, desp, params = {}) {
   await BarkNotify(text, desp, params);//iOS Bark APP
   await tgBotNotify(text, desp);//telegram 机器人
   await ddBotNotify(text, desp);//钉钉机器人
+  await qywxBotNotify(text, desp); //企业微信机器人
   await iGotNotify(text, desp, params);//iGot
   await CoolPush(text, desp);//QQ酷推
 }
@@ -353,6 +363,47 @@ function ddBotNotify(text, desp) {
       resolve()
     }
   })
+}
+
+function qywxBotNotify(text, desp) {
+  return new Promise(resolve => {
+    const options = {
+      url: `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${QYWX_KEY}`,
+      json: {
+        msgtype: 'text',
+        text: {
+          content: ` ${text}\n\n${desp}`,
+        },
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    if (QYWX_KEY) {
+      $.post(options, (err, resp, data) => {
+        try {
+          if (err) {
+            console.log('企业微信发送通知消息失败！！\n');
+            console.log(err);
+          } else {
+            data = JSON.parse(data);
+            if (data.errcode === 0) {
+              console.log('企业微信发送通知消息完成。\n');
+            } else {
+              console.log(`${data.errmsg}\n`);
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve(data);
+        }
+      });
+    } else {
+      console.log('您未提供企业微信机器人推送所需的QYWX_KEY，取消企业微信推送消息通知\n');
+      resolve();
+    }
+  });
 }
 
 function iGotNotify(text, desp, params={}){

@@ -1,4 +1,5 @@
 /*
+TODO 能力补给站(2人赛跑可加5KM，50人赛跑可加25KM)，抽空添加
 jd宠汪汪 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_joy.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号

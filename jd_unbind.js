@@ -1,16 +1,19 @@
 /*
 注销京东会员卡
-
+是注销京东已开的店铺会员,不是京东plus会员
+查看已开店铺会员入口:我的=>我的钱包=>卡包
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
-// Quantumult X
+==========Quantumult X==========
 [task_local]
 #注销京东会员卡
 55 23 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js, tag=注销京东会员卡, enabled=true
-// Loon
+=======Loon========
 [Script]
 cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js,tag=注销京东会员卡
-// Surge
-注销京东会员卡 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js
+========Surge==========
+注销京东会员卡 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js
+=======小火箭=====
+注销京东会员卡 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js, cronexpr="10 23 * * *", timeout=200, enable=true
  */
 const $ = new Env('注销京东会员卡');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -80,8 +83,8 @@ async function jdUnbind() {
 async function unsubscribeCards() {
   let count = 0
   for (let item of $.cardList) {
-    if (count === cardPageSize){
-      console.log(`已达到设定数量`)
+    if (count === cardPageSize * 1){
+      console.log(`已达到设定数量:${cardPageSize * 1}`)
       break
     }
     if (stopCards && (item.brandName && stopCards.includes(item.brandName))) {
@@ -91,8 +94,10 @@ async function unsubscribeCards() {
     console.log(`去注销会员卡【${item.brandName}】`)
     let res = await unsubscribeCard(item.brandId);
     if (res['success']) {
-      count++;
-      $.unsubscribeCount ++
+      if (res['busiCode'] === '200') {
+        count++;
+        $.unsubscribeCount ++
+      }
     }
     await $.wait(1000)
   }
@@ -121,9 +126,16 @@ function getCards() {
     }
     $.post(option, (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        $.cardsTotalNum = data.result.cardList.length;
-        $.cardList = data.result.cardList
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            $.cardsTotalNum = data.result.cardList ? data.result.cardList.length : 0;
+            $.cardList = data.result.cardList || []
+          }
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -150,8 +162,15 @@ function unsubscribeCard(vendorId) {
     }
     $.post(option, (err, resp, data) => {
       try {
-        data = JSON.parse(data)
-        console.log(data.message)
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data)
+            console.log(data.message)
+          }
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -202,13 +221,14 @@ function TotalBean() {
 }
 function requireConfig() {
   return new Promise(resolve => {
+    process.env.UN_BIND_STOP_CARD = `123&457&34324`
     if ($.isNode() && process.env.UN_BIND_CARD_NUM) {
       $.UN_BIND_NUM = process.env.UN_BIND_CARD_NUM
     }
     if ($.isNode() && process.env.UN_BIND_STOP_CARD) {
       if (process.env.UN_BIND_STOP_CARD.indexOf('&') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('&');
-      } if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
+      } else if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('@');
       } else if (process.env.UN_BIND_STOP_CARD.indexOf('\n') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('\n');
@@ -232,6 +252,17 @@ function jsonParse(str) {
       $.msg($.name, '', '请勿随意在BoxJs输入框修改内容\n建议通过脚本去获取cookie')
       return [];
     }
+  }
+}
+function safeGet(data) {
+  try {
+    if (typeof JSON.parse(data) == "object") {
+      return true;
+    }
+  } catch (e) {
+    console.log(e);
+    console.log(`京东服务器访问数据为空，请检查自身设备网络情况`);
+    return false;
   }
 }
 // prettier-ignore
