@@ -113,6 +113,8 @@
 | `UN_SUBSCRIBES`         |  jd_unsubscribe.js  | 非必须 | 共四个参数,换行隔开. 四个参数分别表示`取关商品数量`,`取关店铺数量`,`遇到此商品不再进行取关`, `遇到此店铺不再进行取关`，[具体使用往下看](#取关店铺secret的说明)|
 | `UN_BIND_CARD_NUM`      |  jd_unbind.js     |  非必须  | 注销京东已开的店铺会员，不是注销京东plus会员，个别店铺无法注销。此参数控制每次运行脚本时注销多少个店铺会员，默认200。|
 |  `UN_BIND_STOP_CARD`    |  jd_unbind.js     |  非必须  | 注销京东已开的店铺会员，不是注销京东plus会员，个别店铺无法注销。遇到此参数设定的会员卡则跳过不注销，多个会员卡之间以`&`分隔，默认值"京东PLUS会员"。 |
+| `JDJOY_HELPSELF`      |  疯狂的joy     |  非必须  | 疯狂的joy循环助力，`true`表示循环助力,`false`表示不循环助力，默认不开启循环助力。|
+| `JDJOY_APPLYJDBEAN`      |  疯狂的joy     |  非必须  | 疯狂的joy京豆兑换，目前最小值为500/1000京豆，默认不开启京豆兑换。|
 | `FRUITSHARECODES`       |  东东农场互助码  | 非必须 | 填写规则请看 [jdFruitShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdFruitShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `PETSHARECODES`         |  东东萌宠互助码  | 非必须 | 填写规则请看 [jdPetShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdPetShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `PLANT_BEAN_SHARECODES` |  种豆得豆互助码  | 非必须 | 填写规则请看 [jdPlantBeanShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdPlantBeanShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
