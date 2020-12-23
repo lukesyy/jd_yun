@@ -44,7 +44,7 @@ let DD_BOT_TOKEN = '';
 let DD_BOT_SECRET = '';
 
 // =======================================企业微信机器人通知设置区域===========================================
-//此处填你企业微信机器人的 webhook，例如：693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa
+//此处填你企业微信机器人的 webhook(详见文档 https://work.weixin.qq.com/api/doc/90000/90136/91770)，例如：693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入QYWX_KEY)
 let QYWX_KEY = '';
 
