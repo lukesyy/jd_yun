@@ -61,6 +61,8 @@ jobs:
           if [ $UN_SUBSCRIBES ]; then sed -i "/variables/a\      UN_SUBSCRIBES: $UN_SUBSCRIBES" serverless.yml; fi;
           if [ $UN_BIND_CARD_NUM ]; then sed -i "/variables/a\      UN_BIND_CARD_NUM: $UN_BIND_CARD_NUM" serverless.yml; fi;
           if [ $UN_BIND_STOP_CARD ]; then sed -i "/variables/a\      UN_BIND_STOP_CARD: $UN_BIND_STOP_CARD" serverless.yml; fi;
+          if [ $JDJOY_HELPSELF ]; then sed -i "/variables/a\      JDJOY_HELPSELF: $JDJOY_HELPSELF" serverless.yml; fi;
+          if [ $JDJOY_APPLYJDBEAN ]; then sed -i "/variables/a\      JDJOY_APPLYJDBEAN: $JDJOY_APPLYJDBEAN" serverless.yml; fi;
           if [ $FRUITSHARECODES ]; then sed -i "/variables/a\      FRUITSHARECODES: $FRUITSHARECODES" serverless.yml; fi;
           if [ $PETSHARECODES ]; then sed -i "/variables/a\      PETSHARECODES: $PETSHARECODES" serverless.yml; fi;
           if [ $PLANT_BEAN_SHARECODES ]; then sed -i "/variables/a\      PLANT_BEAN_SHARECODES: $PLANT_BEAN_SHARECODES" serverless.yml; fi;
@@ -113,6 +115,8 @@ jobs:
           UN_SUBSCRIBES: ${{ secrets.UN_SUBSCRIBES}}
           UN_BIND_CARD_NUM: ${{ secrets.UN_BIND_CARD_NUM}}
           UN_BIND_STOP_CARD: ${{ secrets.UN_BIND_STOP_CARD}}
+          JDJOY_HELPSELF: ${{ secrets.JDJOY_HELPSELF}}
+          JDJOY_APPLYJDBEAN: ${{ secrets.JDJOY_APPLYJDBEAN}}
           FRUITSHARECODES: ${{ secrets.FRUITSHARECODES}}
           PETSHARECODES: ${{ secrets.PETSHARECODES}}
           PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES}}
