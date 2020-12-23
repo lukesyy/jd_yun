@@ -165,7 +165,7 @@ if ($.isNode()) {
     return;
   }
   let count = 0
-  while(true) {
+  while (true) {
     count++
     console.log(`============开始第${count}次挂机=============`)
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -203,6 +203,41 @@ if ($.isNode()) {
 async function jdJxStory() {
   $.coin = 0
   $.bean = 0
+
+  $.canBuy = true
+  await getJoyList()
+  await $.wait(1000)
+  await getJoyShop()
+  await $.wait(1000)
+  for (let i = 0; i < $.joyIds.length; ++i) {
+    if (!$.canBuy) {
+      $.log(`金币不足，跳过购买`)
+      break
+    }
+    if ($.joyIds[i] === 0) {
+      await buyJoy($.buyJoyLevel)
+      await $.wait(1000)
+    }
+  }
+  await getJoyList()
+  let obj = {};
+  $.joyIds.map((vo, idx) => {
+    if (vo !== 0) {
+      if (obj[vo]) {
+        obj[vo].push(idx)
+      } else {
+        obj[vo] = [idx]
+      }
+    }
+  })
+  for (let idx in obj) {
+    const vo = obj[idx]
+    if (idx < 34 && vo.length >= 2) {
+      await mergeJoy(vo[0], vo[1])
+      await $.wait(3000)
+    }
+  }
+
   await hourBenefit()
   await $.wait(1000)
   await getCoin()
@@ -211,8 +246,116 @@ async function jdJxStory() {
   await $.wait(2000)
   console.log(`当前信息：${$.bean} 京豆，${$.coin} 金币`)
 }
+
+function getJoyList() {
+  $.joyIds = []
+  return new Promise(async resolve => {
+    $.get(taskUrl('crazyJoy_user_gameState'), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.success && data.data.joyIds) {
+              $.joyIds = data.data.joyIds
+            } else
+              console.log(`joy信息获取信息失败`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+function getJoyShop() {
+  const body = {"paramData": {"entry": "SHOP"}}
+  return new Promise((resolve) => {
+    $.get(taskUrl('crazyJoy_joy_allowBoughtList', JSON.stringify(body)), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.success && data.data && data.data.shop) {
+            const shop = data.data.shop.filter(vo => vo.status === 1) || []
+            $.buyJoyLevel = shop.length ? shop[shop.length - 1]['joyId'] : 1
+            $.cost = shop.length ? shop[shop.length - 1]['coins'] : Infinity
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+function mergeJoy(x, y) {
+  let body = {"operateType": "MERGE", "fromBoxIndex": x, "targetBoxIndex": y}
+  return new Promise(async resolve => {
+    $.get(taskUrl('crazyJoy_joy_moveOrMerge', JSON.stringify(body)), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.success && data.data.newJoyId) {
+              console.log(`合并成功，获得${data.data.newJoyId}级Joy`)
+            } else
+              console.log(`合并失败，错误`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+function buyJoy(joyId) {
+  const body = {"action": "BUY", "joyId": joyId, "boxId": ""}
+  return new Promise((resolve) => {
+    $.get(taskUrl('crazyJoy_joy_trade', JSON.stringify(body)), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.success) {
+            if (data.data.eventInfo) {
+              $.canBuy = false
+              return
+            }
+            $.log(`购买${joyId}级joy成功，剩余金币【${data.data.totalCoins}】`)
+            $.coin = data.data.totalCoins
+          } else {
+            console.log(data.message)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
 function hourBenefit() {
-  let body = {"eventType":"HOUR_BENEFIT"}
+  let body = {"eventType": "HOUR_BENEFIT"}
   return new Promise(async resolve => {
     $.get(taskUrl('crazyJoy_event_obtainAward', JSON.stringify(body)), async (err, resp, data) => {
       try {
@@ -222,7 +365,7 @@ function hourBenefit() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if(data.success)
+            if (data.success)
               console.log(`金币补给领取成功，获得${data.data.coins}金币`)
           }
         }
@@ -234,6 +377,7 @@ function hourBenefit() {
     })
   })
 }
+
 function getUserBean() {
   return new Promise(async resolve => {
     $.get(taskUrl('crazyJoy_user_getJdBeanInfo'), async (err, resp, data) => {
@@ -258,6 +402,7 @@ function getUserBean() {
     })
   })
 }
+
 function getCoin() {
   return new Promise(async resolve => {
     $.get(taskUrl('crazyJoy_joy_produce'), async (err, resp, data) => {
@@ -268,13 +413,15 @@ function getCoin() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
+            if (data.data && data.data.tryMoneyJoyBeans) {
+              console.log(`分红狗生效中，预计获得 ${data.data.tryMoneyJoyBeans} 京豆奖励`)
+            }
             if (data.data && data.data.totalCoinAmount)
               $.coin = data.data.totalCoinAmount
             if (data.data && data.data.luckyBoxRecordId) {
               await openBox(data.data.luckyBoxRecordId)
-            }
-            else
-              $.log(`产出金币信息获取信息失败`)
+            } else
+              $.log(`产出金币信息获取失败`)
           }
         }
       } catch (e) {
@@ -326,7 +473,7 @@ function rewardBox(boxId) {
             data = JSON.parse(data);
             if (data['success']) {
               $.log(`幸运盒子奖励领取成功，获得：${data.data.beans}京豆，${data.data.coins}金币`)
-            }else {
+            } else {
               $.log(`幸运盒子奖励领取失败，错误信息：${data.message || JSON.stringify(data)}`)
             }
           }
@@ -340,6 +487,36 @@ function rewardBox(boxId) {
   })
 }
 
+function getGrowState() {
+  let body = {"paramData":{"eventType":"GROWTH_REWARD"}}
+  return new Promise(async resolve => {
+    $.get(taskUrl('crazyJoy_event_getGrowthAndSceneState', JSON.stringify(body)), async (err, resp, data) => {
+      try {
+        if (err) {
+          $.log(`${JSON.stringify(err)}`)
+          $.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['success'] && data.data) {
+              for(let vo of data.data){
+                if(vo['status']){
+                  console.log(`${vo['joyId']}升级奖励可以领取`)
+                }
+              }
+            } else {
+              $.log(`幸运盒子奖励领取失败，错误信息：${data.message || JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function taskUrl(functionId, body = '') {
   let t = Date.now().toString().substr(0, 10)
   let e = body || ""
@@ -372,6 +549,7 @@ function safeGet(data) {
     return false;
   }
 }
+
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
@@ -412,6 +590,7 @@ function TotalBean() {
     })
   })
 }
+
 function jsonParse(str) {
   if (typeof str == "string") {
     try {
