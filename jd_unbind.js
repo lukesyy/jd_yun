@@ -221,13 +221,14 @@ function TotalBean() {
 }
 function requireConfig() {
   return new Promise(resolve => {
+    process.env.UN_BIND_STOP_CARD = `123&457&34324`
     if ($.isNode() && process.env.UN_BIND_CARD_NUM) {
       $.UN_BIND_NUM = process.env.UN_BIND_CARD_NUM
     }
     if ($.isNode() && process.env.UN_BIND_STOP_CARD) {
       if (process.env.UN_BIND_STOP_CARD.indexOf('&') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('&');
-      } if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
+      } else if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('@');
       } else if (process.env.UN_BIND_STOP_CARD.indexOf('\n') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('\n');

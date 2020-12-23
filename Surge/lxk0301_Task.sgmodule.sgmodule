@@ -69,6 +69,8 @@ cron "40 9,10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_sc
 cron "20 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdh.js, timeout=750, wake-system=1, tag=京东健康
 #京东赚赚
 cron "20 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdzz.js, timeout=750, wake-system=1, tag=京东赚赚
+#注销京东店铺会员卡
+cron "20 12 * * 6" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js, timeout=750, wake-system=1, tag=注销京东店铺会员卡
 #以下为短期活动
 #金融打卡领年终奖
 cron "30 7 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jr_sign.js, timeout=750, wake-system=1, tag=金融打卡领年终奖
