@@ -14,6 +14,8 @@
 10 6 1-31 12 * node /scripts/jr_sign.js >> /scripts/logs/jr_sign.log 2>&1
 # 京东健康APP集汪汪卡瓜分百万红包(2021.1.6活动过期)
 10 8 * * * node /scripts/jd_jdh.js >> /scripts/logs/jd_jdh.log 2>&1
+# crazyJoy自动每日任务
+10 7 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
 
 ##############长期活动##############
 # 签到
