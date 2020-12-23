@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 
 echo "整理各个日志文件里面的互助码相关信息。。。"
 echo "==========================================================================="
@@ -34,3 +33,8 @@ echo "提取东东萌宠助力码完成"
 
 echo "==========================================================================="
 echo "整理完成，具体结果请查看${sharecodeFile}文件"
+
+echo "杀掉jd_crazy_joy_coin任务，并重启"
+eval $(ps -ef | grep "jd_crazy" | awk '{print "kill "$1}')
+node /scripts/jd_crazy_joy_coin.js >> /scripts/logs/jd_crazy_joy_coin.log 2>&1  &
+echo "jd_crazy_joy_coin重启完成"
