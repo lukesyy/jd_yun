@@ -248,6 +248,7 @@ async function jdJxStory() {
 }
 
 function getJoyList() {
+  $.joyIds = []
   return new Promise(async resolve => {
     $.get(taskUrl('crazyJoy_user_gameState'), async (err, resp, data) => {
       try {
