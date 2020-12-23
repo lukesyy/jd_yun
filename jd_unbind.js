@@ -221,7 +221,6 @@ function TotalBean() {
 }
 function requireConfig() {
   return new Promise(resolve => {
-    process.env.UN_BIND_STOP_CARD = `123&457&34324`
     if ($.isNode() && process.env.UN_BIND_CARD_NUM) {
       $.UN_BIND_NUM = process.env.UN_BIND_CARD_NUM
     }
