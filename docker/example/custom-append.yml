@@ -28,6 +28,8 @@ jd_scripts:
     #钉钉机器人通知
     - DD_BOT_TOKEN=
     - DD_BOT_SECRET=
+    #企业微信机器人通知
+    - QYWX_KEY=
     #京东种豆得豆
     - PLANT_BEAN_SHARECODES=
     #京东农场
