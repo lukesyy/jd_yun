@@ -208,7 +208,6 @@ async function jdCrazyJoy() {
   await getUserInfo()
   await doSign()
   await helpFriends()
-  await hourBenefit()
   await getTaskInfo()
   for (let j = 0; j < $.taskList.length; ++j) {
     let task = $.taskList[j]
