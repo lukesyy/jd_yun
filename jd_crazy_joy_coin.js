@@ -243,7 +243,7 @@ async function jdJxStory() {
   await getCoin()
   await $.wait(1000)
   await getUserBean()
-  await $.wait(2000)
+  await $.wait(5000)
   console.log(`当前信息：${$.bean} 京豆，${$.coin} 金币`)
 }
 
