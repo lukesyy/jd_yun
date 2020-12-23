@@ -64,12 +64,12 @@ inputs:
           cronExpression: "0 15 * * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: # 京豆变动通知 # 京东排行榜 # 领京豆额外奖励 # 京东汽车 #京东健康APP
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #京东汽车 #京东健康APP
         parameters:
-          name: bean_change_rankingList_bean_home_car_jdh
+          name: bean_change_crazy_joy_rankingList_bean_home_car_jdh
           cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_rankingList&jd_bean_home&jd_car&jd_jdh
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_car&jd_jdh
     - timer: #金融养猪 #十元街 #京东快递 #发现-看一看 #京东赚赚 #金融打卡领年终奖
         parameters:
           name: pigPet_syj_kd_watch_jdzz_jr_sign
