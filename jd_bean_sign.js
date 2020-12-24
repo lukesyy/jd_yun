@@ -65,7 +65,7 @@ async function execSign() {
     const notifyContent = await fs.readFileSync(resultPath, "utf8");
     console.log(`👇👇👇👇👇👇👇👇👇👇👇LOG记录👇👇👇👇👇👇👇👇👇👇👇\n${notifyContent}\n👆👆👆👆👆👆👆👆👆LOG记录👆👆👆👆👆👆👆👆👆👆👆`);
     // await exec("node JD_DailyBonus.js", { stdio: "inherit" });
-    // console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
+    // console.log('执行完毕', new Date(new Date().getTime() + 8 * 3600000).toLocaleDateString())
     //发送通知
     if ($.isNode()) {
       let notifyContent = "";
@@ -88,7 +88,7 @@ async function execSign() {
         }
       }
       //不管哪个时区,这里得到的都是北京时间的时间戳;
-      const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
+      const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60000 + 28800000;
       $.beanSignTime = timeFormat(UTC8);
       console.log(`脚本执行完毕时间：${$.beanSignTime}`)
       if (BarkContent) {
