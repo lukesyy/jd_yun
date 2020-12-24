@@ -44,6 +44,7 @@
 | `DDFACTORY_SHARECODES`  |  东东工厂互助码  | 非必须 | 填写规则请看 [jdFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdFactoryShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `DREAM_FACTORY_SHARE_CODES`|  京喜工厂互助码  | 非必须 | 填写规则请看 [jdDreamFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `JDZZ_SHARECODES`       |  京东赚赚(jd_jdzz.js)脚本互助码  | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
+| `JDJOY_SHARECODES`       |  疯狂的joy(jd_crazy_joy.js)脚本互助码  | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 
 ##### 控制脚本功能环境变量
 
