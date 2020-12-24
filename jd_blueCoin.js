@@ -1,7 +1,7 @@
 /*
 京小超兑换奖品 脚本地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js
 感谢@yangtingxiao提供PR
-更新时间：2020-12-15
+更新时间：2020-12-24
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ======================quantumultx===============
@@ -93,7 +93,7 @@ async function PrizeIndex() {
   // const prizeList = [...$.queryPrizeData, ...$.materialPrizeIndex];
   const prizeList = [...$.queryPrizeData];
   if (`${coinToBeans}` === '1000') {
-    if (prizeList[1].beanType === 'BeanPackage') {
+    if (prizeList[1] && prizeList[1].beanType === 'BeanPackage') {
       console.log(`查询换${prizeList[1].title}ID成功，ID:${prizeList[1].prizeId}`)
       $.title = prizeList[1].title;
       $.blueCost = prizeList[1].blueCost;
@@ -102,11 +102,11 @@ async function PrizeIndex() {
       $.beanerr = `东哥今天不给换`;
       return ;
     }
-    if (prizeList[1].inStock === 506) {
+    if (prizeList[1] && prizeList[1].inStock === 506) {
       $.beanerr = `失败，1000京豆领光了，请明天再来`;
       return ;
     }
-    if (prizeList[1].targetNum === prizeList[1].finishNum) {
+    if (prizeList[1] && prizeList[1].targetNum === prizeList[1] && prizeList[1].finishNum) {
       $.beanerr = `${prizeList[1].subTitle}`;
       return ;
     }
@@ -118,7 +118,7 @@ async function PrizeIndex() {
       $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
     }
   } else if (`${coinToBeans}` === '20') {
-    if (prizeList[0].beanType === 'Bean') {
+    if (prizeList[0] && prizeList[0].beanType === 'Bean') {
       console.log(`查询换${prizeList[0].title}ID成功，ID:${prizeList[0].prizeId}`)
       $.title = prizeList[0].title;
       $.blueCost = prizeList[0].blueCost;
@@ -127,12 +127,12 @@ async function PrizeIndex() {
       $.beanerr = `东哥今天不给换`;
       return ;
     }
-    if (prizeList[0].inStock === 506) {
+    if (prizeList[0] && prizeList[0].inStock === 506) {
       console.log(`失败，万能的京豆领光了，请明天再来`);
       $.beanerr = `失败，万能的京豆领光了，请明天再来`;
       return ;
     }
-    if (prizeList[0].targetNum === prizeList[0].finishNum) {
+    if ((prizeList[0] && prizeList[0].targetNum) === (prizeList[0] && prizeList[0].finishNum)) {
       $.beanerr = `${prizeList[0].subTitle}`;
       return ;
     }
