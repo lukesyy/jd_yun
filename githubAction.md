@@ -1,79 +1,5 @@
 ## 环境变量说明
 
-    
-#### 京东Cookie
-
-  - Secret新增`JD_COOKIE`，填入cookie信息，多账号的cookie， 使用`&`或者换行隔开(两种方法)
-  
-  - 方式已一：`&`号隔开示例(注:后面的英文引号`;`不可缺失)
-    如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
-    ```
-    pt_key=xxx1;pt_pin=xxx1;&pt_key=xxx2;pt_pin=xxx2;&pt_key=xxx3;pt_pin=xxx3;
-    ```
-  - 方式二：按`Enter`键换行隔开示例(这里给下三个账号的示例)
-    ```
-    pt_key=bbbbbbbbbbbbbb;pt_pin=aaaaaaa;
-    pt_key=cccccccc;pt_pin=dddddddd;
-    pt_key=eeeeeeeee;pt_pin=ffffffff;
-    ```
-  - 京东cookie获取看这里
-    - [浏览器获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie2.md)
-    - IOS代理软件(Surge, Quantumult X, Loon)等用户有使用过BoxJs的,可在BoxJs里面提取京东cookie(打开BoxJs -> 底部中间的 `应用` -> NobyDa脚本订阅 -> 京东(多合一签到) -> 点击会话右上方的三个点点 -> 修改会话 -> 全选复制即可)，再不会看此[图文教程](icon/jd8.png)
-    
-     
-
-
-
-#### 自动同步Fork后的代码
-
-  > 此部分内容由tg@wukongdada和tg@goukey提供
-
-  - 方案A - 强制远程分支覆盖自己的分支(**新手推荐使用**)
-  
-      1. 参考tg@wukongdada这篇教程 [保持自己github的forks自动和上游仓库同步的教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/gitSync.md) ， 安装[pull插件](https://github.com/apps/pull) 并确认此项目已在pull插件的作用下（参考@twukongdada这篇教程文中1-d）
-      
-      2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
-      
-      3. 确保pull.yml里面是`mergeMethod: hardreset`(默认就是`hardreset`)。
-      
-      4. ENJOY!上游更改三小时左右就会自动发起同步。
-    ```
-    # 方案A可参考这里
-    version: "1"
-    rules:                      # Array of rules
-      - base: master            # Required. Target branch
-        upstream: lxk0301:master    # Required. Must be in the same fork network.
-        mergeMethod: hardreset  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
-        mergeUnstable: true    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
-    ```
-  - 方案B - 保留自己仓库已修改过的文件(**需修改脚本或者提PR的使用**)
-    
-    > 上游变动后pull插件会自动发起pr，但如果有冲突需要自行**手动**确认。
-    > 如果上游更新涉及workflow里的文件内容改动，需要自行**手动**确认。
-    
-    1. 参考tg@wukongdada这篇教程 [保持自己github的forks自动和上游仓库同步的教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/gitSync.md) ， 安装[pull插件](https://github.com/apps/pull) 并确认此项目已在pull插件的作用下（参考@twukongdada这篇教程文中1-d）
-    2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
-    3. 将pull.yml里面的`mergeMethod: hardreset`修改为`mergeMethod: merge`保存。
-    4. ENJOY!上游更改三小时左右就会自动发起同步。
-    ```
-    # 方案B可参考这里
-    version: "1"
-    rules:                      # Array of rules
-      - base: master            # Required. Target branch
-        upstream: lxk0301:master    # Required. Must be in the same fork network.
-        mergeMethod: merge  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
-        mergeUnstable: true    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
-    ```
-  - 方案C - 利用github-action定时cron更新同步(**新手推荐使用**)
-  
-    > 效果和方案A一样（即：强制更新覆盖）
-    
-    新建secret，`Name`为`PAT`，填写的`Value`值需要去申请Personal access tokens，申请教程[看此处](https://www.jianshu.com/p/bb82b3ad1d11) 记得勾选`repo`权限就行
-
-
-
-#### 下方提供使用到的 **Secrets全集合**
-
 ##### 京东(必须)
 
 | Name                    |   归属   | 属性   | 说明                                                         |
@@ -204,11 +130,4 @@ jd_blueCoin.js是每次兑换到了奖品通知一次，
 jd_818.js是每次获取新的互助码会通知一次，以帮助您快速上车，
 其余的脚本平常运行都是不通知，只有在京东cookie失效后，才会推送通知    
   ```
-
-
-​    
-##### 参考文献
-[GitHub Actions 手动触发方式进化史](https://p3terx.com/archives/github-actions-manual-trigger.html)
-    
-[GitHub Actions 入门教程](https://p3terx.com/archives/github-actions-started-tutorial.html)
 
