@@ -415,7 +415,7 @@ function getCoin() {
             if (data.data && data.data.totalCoinAmount)
               $.coin = data.data.totalCoinAmount
             if (data.data && data.data.luckyBoxRecordId) {
-              await openBox(data.data.luckyBoxRecordId)
+              await openBox('LUCKY_BOX_DROP',data.data.luckyBoxRecordId)
             } else
               $.log(`产出金币信息获取失败`)
           }
