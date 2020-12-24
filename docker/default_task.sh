@@ -107,10 +107,16 @@ if [ $(grep -c "default_task.sh" $mergedListFile) -eq '0' ]; then
     echo "52 */1 * * * sh /scripts/docker/default_task.sh |ts >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
 fi
 
-if [ $RANDOM_DELAY_MAX -ge 1 ]; then
-    echo "已设置随机延迟为 $RANDOM_DELAY_MAX , 设置延迟任务中... "
-    sed -i "/\(jd_bean_sign.js\|jd_blueCoin.js\|jd_joy_reward.js\|jd_joy_steal.js\|jd_joy_feedPets.js\)/!s/node/sleep \$((RANDOM % \$RANDOM_DELAY_MAX)); node/g" $mergedListFile
+if [ $RANDOM_DELAY_MAX ];then
+    if [ $RANDOM_DELAY_MAX -ge 1 ]; then
+        echo "已设置随机延迟为 $RANDOM_DELAY_MAX , 设置延迟任务中... "
+        sed -i "/\(jd_bean_sign.js\|jd_blueCoin.js\|jd_joy_reward.js\|jd_joy_steal.js\|jd_joy_feedPets.js\)/!s/node/sleep \$((RANDOM % \$RANDOM_DELAY_MAX)); node/g" $mergedListFile
+    fi
+else
+    echo "未配置随即延迟对应的环境变量，故不设置延迟任务"
 fi
 
 echo "加载最新的定时任务文件..."
 crontab $mergedListFile
+
+sh -x /scripts/docker/proc_file.sh

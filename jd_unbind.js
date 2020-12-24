@@ -34,6 +34,7 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 const jdNotify = $.getdata('jdUnsubscribeNotify');//是否关闭通知，false打开通知推送，true关闭通知推送
 let cardPageSize = $.getdata('jdUnsubscribePageSize') || 200;// 运行一次取消多少个会员卡。数字0表示不注销任何会员卡
@@ -60,8 +61,6 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -83,8 +82,8 @@ async function jdUnbind() {
 async function unsubscribeCards() {
   let count = 0
   for (let item of $.cardList) {
-    if (count === cardPageSize){
-      console.log(`已达到设定数量`)
+    if (count === cardPageSize * 1){
+      console.log(`已达到设定数量:${cardPageSize * 1}`)
       break
     }
     if (stopCards && (item.brandName && stopCards.includes(item.brandName))) {
@@ -126,9 +125,16 @@ function getCards() {
     }
     $.post(option, (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        $.cardsTotalNum = data.result.cardList ? data.result.cardList.length : 0;
-        $.cardList = data.result.cardList || []
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            $.cardsTotalNum = data.result.cardList ? data.result.cardList.length : 0;
+            $.cardList = data.result.cardList || []
+          }
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -155,8 +161,15 @@ function unsubscribeCard(vendorId) {
     }
     $.post(option, (err, resp, data) => {
       try {
-        data = JSON.parse(data)
-        console.log(data.message)
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data)
+            console.log(data.message)
+          }
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -213,7 +226,7 @@ function requireConfig() {
     if ($.isNode() && process.env.UN_BIND_STOP_CARD) {
       if (process.env.UN_BIND_STOP_CARD.indexOf('&') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('&');
-      } if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
+      } else if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('@');
       } else if (process.env.UN_BIND_STOP_CARD.indexOf('\n') > -1) {
         $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('\n');
@@ -237,6 +250,17 @@ function jsonParse(str) {
       $.msg($.name, '', '请勿随意在BoxJs输入框修改内容\n建议通过脚本去获取cookie')
       return [];
     }
+  }
+}
+function safeGet(data) {
+  try {
+    if (typeof JSON.parse(data) == "object") {
+      return true;
+    }
+  } catch (e) {
+    console.log(e);
+    console.log(`京东服务器访问数据为空，请检查自身设备网络情况`);
+    return false;
   }
 }
 // prettier-ignore
