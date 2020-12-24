@@ -164,16 +164,15 @@ async function joinTwoPeopleRun() {
       if (petRaceResult === 'unreceive') {
         console.log('今日参赛的比赛已经结束，现在领取奖励');
         await getWinCoin();
-        let winCoin = 0, teamLimitCount = 2;
+        let winCoin = 0;
         if ($.getWinCoinRes && $.getWinCoinRes.success) {
           winCoin = $.getWinCoinRes.data.winCoin;
-          teamLimitCount = $.getWinCoinRes.data.teamLimitCount;
         }
         await receiveJoyRunAward();
         console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
         if ($.receiveJoyRunAwardRes.success) {
-          $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n太棒了,${teamLimitCount}人赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`);
-          if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n${teamLimitCount}人赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
+          $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`);
+          if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
         }
       }
       if (petRaceResult === 'participate') {
