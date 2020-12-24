@@ -33,8 +33,8 @@ let helpSelf = false // 循环助力
 let applyJdBean = 0
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = [
-  'EdLPh8A6X5G1iWXu-uPYfA==@0gUO7F7N-4HVDh9mdQC2hg==@fUJTgR9z26fXdQgTvt_bgqt9zd5YaBeE',
-  'EdLPh8A6X5G1iWXu-uPYfA==@0gUO7F7N-4HVDh9mdQC2hg==@fUJTgR9z26fXdQgTvt_bgqt9zd5YaBeE'
+  'uYKyR7MsVNPUX79JF37g4g==@QHOiEV8F8BnAS2IzwHxmnpCYRL5grvaz@_q1x06T2mig0oQCk7_NdL6t9zd5YaBeE@cT-ztJLHHjHtpmgbrPlaYA==@Vs5u22r2uot85Ey0Gs1gFqt9zd5YaBeE@70kDkHt1fvn4WUNi8xMEJat9zd5YaBeE',
+  'uYKyR7MsVNPUX79JF37g4g==@QHOiEV8F8BnAS2IzwHxmnpCYRL5grvaz@_q1x06T2mig0oQCk7_NdL6t9zd5YaBeE@cT-ztJLHHjHtpmgbrPlaYA==@Vs5u22r2uot85Ey0Gs1gFqt9zd5YaBeE@70kDkHt1fvn4WUNi8xMEJat9zd5YaBeE',
 ];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
