@@ -6,7 +6,7 @@ name: jd_goldenEgg
 on:
   workflow_dispatch:
   schedule:
-    - cron: 11 19 * * *'
+    - cron: '11 19 * * *'
   watch:
     types: started
   repository_dispatch:
