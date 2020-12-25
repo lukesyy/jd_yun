@@ -111,9 +111,51 @@ const JD_API_HOST = 'https://api.m.jd.com/';
   })
 
 async function jdBeanHome() {
+  $.doneState = false
+  for (let i = 0; i < 3; ++i) {
+    await doTask2()
+    await $.wait(1000)
+    if ($.doneState) break
+  }
+  await $.wait(1000)
+  await award("feeds")
+  await $.wait(1000)
   await getUserInfo()
+  await $.wait(1000)
   await getTaskList()
   await showMsg();
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+function doTask2() {
+    return new Promise(resolve => {
+      const body = {"awardFlag": false, "skuId": `${getRandomInt(10000000,20000000)}`, "source": "feeds", "type": '1'};
+      $.post(taskUrl('beanHomeTask', body), (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if(data.code === '0' && data.data){
+                console.log(`任务完成进度：${data.data.taskProgress} / ${data.data.taskThreshold}`)
+                if(data.data.taskProgress===data.data.taskThreshold)
+                  $.doneState = true
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve();
+        }
+      })
+    })
 }
 
 function getAuthorShareCode() {
@@ -164,18 +206,20 @@ function getUserInfo() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            $.actId = data.data.jklInfo.keyId
-            let {shareCode, groupCode} = data.data
-            if (!shareCode) {
-              console.log(`未获取到助力码，去开团`)
-              await hitGroup()
-            } else {
-              console.log(shareCode, groupCode)
-              // 去做逛会场任务
-              if (data.data.beanActivityVisitVenue.taskStatus === '0') {
-                await help(shareCode, groupCode, 1)
+            if(data.data.jklInfo) {
+              $.actId = data.data.jklInfo.keyId
+              let {shareCode, groupCode} = data.data
+              if (!shareCode) {
+                console.log(`未获取到助力码，去开团`)
+                await hitGroup()
+              } else {
+                console.log(shareCode, groupCode)
+                // 去做逛会场任务
+                if (data.data.beanActivityVisitVenue.taskStatus === '0') {
+                  await help(shareCode, groupCode, 1)
+                }
+                $.newShareCodes.push([shareCode, groupCode])
               }
-              $.newShareCodes.push([shareCode, groupCode])
             }
           }
         }
@@ -328,9 +372,9 @@ function receiveTask(itemId = "zddd", type = "3") {
 }
 
 
-function award() {
+function award(source="home") {
   return new Promise(resolve => {
-    const body = {"awardFlag": true, "source": "home"};
+    const body = {"awardFlag": true, "source": source};
     $.post(taskUrl('beanHomeTask', body), (err, resp, data) => {
       try {
         if (err) {
