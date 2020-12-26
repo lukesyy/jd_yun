@@ -85,7 +85,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   if (!($.st <= nowTs && nowTs < $.ed)) {
     $.log(`远程红包雨配置获取错误，从本地读取配置`)
     $.log(`\n`)
-    let hour = new Date().getUTCHours() + 8
+    let hour = (new Date().getUTCHours() + 8) %24
     if (ids[hour]){
       $.activityId = ids[hour]
       $.log(`本地红包雨配置获取成功`)
@@ -103,7 +103,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
-      message = `【${new Date($.st).getHours()}点${$.name}】`
+      message = `【${new Date().getUTCHours()+8}点${$.name}】`
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -185,6 +185,7 @@ function receiveRedRain() {
               message += `领取失败，已领过\n`;
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
+              message += `暂无红包雨\n`;
             }
           }
         }
