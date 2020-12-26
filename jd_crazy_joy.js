@@ -185,6 +185,7 @@ if ($.isNode()) {
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      $.GROWTH_REWARD_BEAN = 0;//解锁等级奖励的京豆
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
@@ -262,19 +263,23 @@ async function jdCrazyJoy() {
   // 助力好友
   await helpFriends()
   await doTasks()
+  await getGrowthReward();//领取解锁的等级奖励
   await getCoin()
   await getUserBean()
-  console.log(`当前信息：${$.bean} 京豆，${$.coin} 金币`)
   if ( applyJdBean!==0 && applyJdBean<=$.bean){
     await $.wait(1000)
     console.log(`检测您打开了自动兑换开关，去兑换京豆`)
     await doApplyJdBean(applyJdBean)
   }
+  await showMsg();
 }
 async function doTasks() {
   await getTaskInfo()
   for (let j = 0; j < $.taskList.length; ++j) {
-    let task = $.taskList[j]
+    let task = $.taskList[j];
+    if (task['taskTypeId'] === 102) {
+      message += `${task.taskTitle}：${task['doneTimes']}/${task.ext.count}\n`;
+    }
     if (task.status === 0 && task.taskTypeId === 103)
       for (let i = task.doneTimes; i < task.ext.count; ++i) {
         await doTask(task.taskId)
@@ -295,10 +300,12 @@ function doApplyJdBean(bean = 1000) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.success)
+            if (data.success) {
               console.log(`兑换${bean}京豆成功`)
-            else
+              message += `兑换京豆：${bean}京豆成功\n`;
+            } else {
               console.log(`兑换${bean}京豆失败，错误信息：${data.resultTips||data.message}`)
+            }
           }
         }
       } catch (e) {
@@ -324,6 +331,7 @@ function getUserInfo(code = "EdLPh8A6X5G1iWXu-uPYfA==") {
               console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.userInviteCode}`)
               $.selfCodes.push(data.data.userInviteCode)
               $.nextCode = data.data.userInviteCode
+              message += `${data.data['nickName']}：${data.data['userTopLevelJoyId']}级JOY\n`;
             }
             else
               console.log(`用户信息获取失败`)
@@ -360,7 +368,7 @@ function getTaskInfo() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.success && data.data && data.data.length) {
-              $.taskList = data.data
+              $.taskList = data.data;
             } else {
               console.log(`任务信息获取失败`)
             }
@@ -497,7 +505,7 @@ function helpFriend(code) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['resultCode'] ==='0') {
-              console.log(`助力信息:${JSON.stringify(data)}`);
+              console.log(`助力结果:${JSON.stringify(data)}`);
             } else if (data['resultCode'] === '2000402') {
               console.log(data.resultTips)
             } else {
@@ -549,8 +557,9 @@ function getCoin() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.data && data.data.totalCoinAmount)
-              $.coin = data.data.totalCoinAmount
+            if (data.data && data.data.totalCoinAmount) {
+              $.coin = data.data.totalCoinAmount;
+            }
           }
         }
       } catch (e) {
@@ -561,8 +570,71 @@ function getCoin() {
     })
   })
 }
-
-
+//领取解锁等级奖励（京豆）
+function getGrowthReward() {
+  return new Promise(async resolve => {
+    const body = { "paramData":{"eventType":"GROWTH_REWARD"} };
+    $.get(taskUrl('crazyJoy_event_getGrowthAndSceneState', JSON.stringify(body)), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['resultCode'] === '0') {
+              if (data.data) {
+                for (let item of data.data) {
+                  if (item.status === 1) {
+                    if (item.eventRecordId) await obtainAward(item.eventRecordId);
+                  }
+                }
+                if ($.GROWTH_REWARD_BEAN > 0) {
+                  message += `解锁等级奖励：获得${$.GROWTH_REWARD_BEAN}京豆\n`;
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function obtainAward(eventRecordId) {
+  return new Promise(async resolve => {
+    const body = {"eventType": "GROWTH_REWARD", eventRecordId};
+    $.get(taskUrl('crazyJoy_event_obtainAward', JSON.stringify(body)), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['resultCode'] === '0') {
+              $.GROWTH_REWARD_BEAN += data.data['beans'];
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function showMsg() {
+  return new Promise(async resolve => {
+    message += `当前信息：${$.bean}京豆，${$.coin}金币`
+    $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`)
+    resolve()
+  })
+}
 function taskUrl(functionId, body = '') {
   let t = Date.now().toString().substr(0, 10)
   let e = body || ""
