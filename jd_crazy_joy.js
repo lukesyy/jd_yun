@@ -185,6 +185,7 @@ if ($.isNode()) {
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      message = '';
       $.GROWTH_REWARD_BEAN = 0;//解锁等级奖励的京豆
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
