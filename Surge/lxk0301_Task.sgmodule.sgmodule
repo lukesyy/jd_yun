@@ -32,7 +32,7 @@ cron "5 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_script
 #京小超
 cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js,timeout=530, wake-system=1, tag=京小超
 京小超兑换奖品
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js,timeout=130, wake-system=1, tag=京小超兑换奖品
+cron "0,30 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js,timeout=130, wake-system=1, tag=京小超兑换奖品
 #取关京东店铺商品
 cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js,timeout=250, wake-system=1, tag=取关京东店铺商品
 #进店领豆
