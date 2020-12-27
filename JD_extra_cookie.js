@@ -7,7 +7,7 @@ Github: https://github.com/dompling
 
 ===================
 特别说明：
-1.获取多个京东cookie文件，不和野比大佬的文件冲突。暂不支持野比大佬脚本签到。
+1.获取多个京东cookie的脚本，不和NobyDa的京东cookie冲突。
 ===================
 ===================
 使用方式：在代理软件配置好下方配置后，复制 https://home.m.jd.com/myJd/newhome.action 到浏览器打开 ，在个人中心自动获取 cookie，
