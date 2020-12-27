@@ -19,15 +19,15 @@ inputs:
     - timer: # 签到
         parameters:
           name: jd_bean_sign
-          cronExpression: "0 0 0,7 * * * *"
-          enable: true
-          argument: jd_bean_sign
-    - timer: # 京小超兑换奖品# 摇京豆
-        parameters:
-          name: jd_blueCoin_jd_club_lottery
           cronExpression: "0 0 0 * * * *"
           enable: true
-          argument: jd_blueCoin&jd_club_lottery
+          argument: jd_bean_sign
+    - timer: #京小超兑换奖品 #摇京豆 #京东汽车
+        parameters:
+          name: jd_blueCoin_jd_club_lottery_car
+          cronExpression: "0 0 0 * * * *"
+          enable: true
+          argument: jd_blueCoin&jd_club_lottery&jd_car
     - timer: # 东东农场# 东东萌宠
         parameters:
           name: jd_fruit_jd_pet
@@ -64,9 +64,9 @@ inputs:
           cronExpression: "0 15 * * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #京东汽车 #京东健康APP
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #京东健康APP
         parameters:
-          name: bean_change_crazy_joy_rankingList_bean_home_car_jdh
+          name: bean_change_crazy_joy_rankingList_bean_home_jdh
           cronExpression: "0 30 7 * * * *"
           enable: true
           argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_car&jd_jdh
