@@ -105,26 +105,7 @@
 
 ### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon, 小火箭）
 
-#### 以下内容只针对iOS用户
-
-#### ios使用多个京东账号，需要使用BoxJs保存多会话进行切换 
-
-##### BoxJs简单说明可看作者[BoxJs仓库地址](https://github.com/chavyleung/scripts/)
-
-使用box可以实现远程订阅助力好友(需订阅此 [链接](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/lxk0301.boxjs.json))
-
-- [BoxJs使用教程](https://chavyleung.gitbook.io/boxjs/)
-
-- [BoxJs教程视频](https://youtu.be/eIpBrRxiy0w)
-
-
-【用box订阅的好处】
-
- 1、脚本也可以远程挂载。京东活动助力功能的分享码只需在box里面填写。以后只需远程更新就行。
-
- 2、所有脚本的cookie都可以备份，方便你迁移到其他支持box的软件。
-
- 3、box可以支持多账号
+#### [京东cookie获取脚本](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/JD_extra_cookie.js)
 
 ### 赞赏码(开发维护不易,请赏杯茶水费)
 <div align=center><img width="250" height="250" src="https://raw.githubusercontent.com/lxk0301/jd_scripts/master/icon/thanks.jpg"/></div>
