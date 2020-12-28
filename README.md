@@ -68,6 +68,8 @@
 **TODO**
 - [ ] 所有活动互助码在一个脚本打印
 
+## [邀请码互助入口](https://github.com/lxk0301/jd_scripts/discussions)
+
 ## 食用方法
 
 ### 方法一：本地安装Node.js，下载本库脚本
