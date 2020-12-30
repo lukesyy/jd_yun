@@ -49,7 +49,7 @@ let DD_BOT_SECRET = '';
 let QYWX_KEY = '';
 
 // =======================================企业微信应用消息通知设置区域===========================================
-//此处填你企业微信应用消息的 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,agentid的值，注意用,号隔开，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001
+//此处填你企业微信应用消息的 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,agentid的值，素材库图片id（见https://work.weixin.qq.com/api/doc/90000/90135/90253） 注意用,号隔开，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入QYWX_AM)
 let QYWX_AM = '';
 
@@ -438,12 +438,18 @@ function qywxamNotify(text, desp) {
 	      json: {
 	        touser:`${QYWX_AM_AY[2]}`,
 	        agentid:`${QYWX_AM_AY[3]}`,
-	        msgtype: 'textcard',
-	        textcard: {
+	        msgtype: 'mpnews',
+	        mpnews: {
+                  articles: [
+                  {
 	          title: `${text}`,
-	          description: `${desp}`,
-	          url: '127.0.0.1',
-	          btntxt: '更多'
+                  thumb_media_id: `${QYWX_AM_AY[4]}`,  
+                  author : `智能助手` ,
+                  content_source_url: ``,
+                  content : `${desp}`,  //暂时直接设置成了desp
+                  digest: `${desp}`
+                  }
+                  ]
 	        },
 	        safe:'0',
 	      },
