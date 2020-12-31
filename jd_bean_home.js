@@ -119,7 +119,7 @@ async function jdBeanHome() {
   // }
   do {
     await doTask2()
-    await $.wait(1000)
+    await $.wait(3000)
   } while (!$.doneState)
   await $.wait(1000)
   await award("feeds")
@@ -153,6 +153,7 @@ function doTask2() {
               } else if (data.code === '0' && data.errorCode === 'HT201') {
                 $.doneState = true
               } else {
+                //HT304风控用户
                 $.doneState = true
                 console.log(`做任务异常：${JSON.stringify(data)}`)
               }
