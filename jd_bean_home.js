@@ -153,6 +153,7 @@ function doTask2() {
               } else if (data.code === '0' && data.errorCode === 'HT201') {
                 $.doneState = true
               } else {
+                $.doneState = true
                 console.log(`做任务异常：${JSON.stringify(data)}`)
               }
             }
