@@ -75,7 +75,7 @@
 # 京东快递签到
 23 1 * * * node /scripts/jd_kd.js >> /scripts/logs/jd_kd.log 2>&1
 # 京东汽车(签到满500赛点可兑换500京豆)
-33 2 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
+0 0 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
 # 领京豆额外奖励(每日可获得3京豆)
 33 4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 京东直播(每日18豆)

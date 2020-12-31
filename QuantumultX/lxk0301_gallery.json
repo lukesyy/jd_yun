@@ -26,7 +26,7 @@
     "0 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js, tag=十元街, img-url=https://github.com/58xinian/icon/raw/master/jd_syj.png",
     "15 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, tag=秒杀红包雨, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "10 6 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_home.js, tag=领京豆额外奖励, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png",
-    "20 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car.js, tag=京东汽车, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_car.png",
+    "0 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car.js, tag=京东汽车, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_car.png",
     "10 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_kd.js, tag=京东快递签到, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_kd.png",
     "30 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ds.js, tag=京东代属, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_ds.png",
     "30 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, tag=健康抽奖机, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png",
