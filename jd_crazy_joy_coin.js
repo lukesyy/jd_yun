@@ -204,10 +204,12 @@ async function jdJxStory() {
   await $.wait(1000)
   await getJoyShop()
   await $.wait(1000)
-  $.log('当前JOY分布情况')
-  $.log(`\n${$.joyIds[0]} ${$.joyIds[1]} ${$.joyIds[2]} ${$.joyIds[3]}`)
-  $.log(`${$.joyIds[4]} ${$.joyIds[5]} ${$.joyIds[6]} ${$.joyIds[7]}`)
-  $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
+  if ($.joyIds && $.joyIds.length > 0) {
+    $.log('当前JOY分布情况')
+    $.log(`\n${$.joyIds[0]} ${$.joyIds[1]} ${$.joyIds[2]} ${$.joyIds[3]}`)
+    $.log(`${$.joyIds[4]} ${$.joyIds[5]} ${$.joyIds[6]} ${$.joyIds[7]}`)
+    $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
+  }
   for (let i = 0; i < $.joyIds.length; ++i) {
     if (!$.canBuy) {
       $.log(`金币不足，跳过购买`)
