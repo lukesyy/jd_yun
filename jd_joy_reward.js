@@ -60,7 +60,7 @@ const JD_API_HOST = 'https://jdjoy.jd.com';
         }
         continue
       }
-      console.log(`本地时间与京东服务器时间差：${await get_diff_time()}`);
+      console.log(`本地时间与京东服务器时间差(毫秒)：${await get_diff_time()}`);
       await joyReward();
       // $.msg($.name, '兑换脚本暂不能使用', `请停止使用，等待后期更新\n如果新版本兑换您有兑换机会，请抓包兑换\n再把抓包数据发送telegram用户@lxk0301`);
     }
