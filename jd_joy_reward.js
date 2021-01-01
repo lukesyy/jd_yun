@@ -60,6 +60,7 @@ const JD_API_HOST = 'https://jdjoy.jd.com';
         }
         continue
       }
+      console.log(`本地时间与京东服务器时间差：${await get_diff_time()}`);
       await joyReward();
       // $.msg($.name, '兑换脚本暂不能使用', `请停止使用，等待后期更新\n如果新版本兑换您有兑换机会，请抓包兑换\n再把抓包数据发送telegram用户@lxk0301`);
     }
@@ -272,6 +273,35 @@ function TotalBean() {
       }
     })
   })
+}
+function getJDServerTime() {
+  return new Promise(resolve => {
+    // console.log(Date.now())
+    $.get({url: "https://a.jd.com//ajax/queryServerData.html",headers:{
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} 获取京东服务器时间失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          $.jdTime = data['serverTime'];
+          // console.log(data['serverTime']);
+          // console.log(data['serverTime'] - Date.now())
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve($.jdTime);
+      }
+    })
+  })
+}
+async function get_diff_time() {
+  // console.log(await getJDServerTime())
+  let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
+  return nowTime - await getJDServerTime();
 }
 function jsonParse(str) {
   if (typeof str == "string") {
