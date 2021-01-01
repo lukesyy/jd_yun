@@ -180,7 +180,7 @@ async function joinTwoPeopleRun() {
 			}
 			else
 			{
-				console.log(''您设置的是赛跑成功不进行通知，不发送通知)
+				console.log('您设置的是赛跑成功不进行通知，不发送通知')
 			}		
 		}
       }
