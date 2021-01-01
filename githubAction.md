@@ -44,6 +44,7 @@
 | `DDFACTORY_SHARECODES`  |  东东工厂互助码  | 非必须 | 填写规则请看 [jdFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdFactoryShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `DREAM_FACTORY_SHARE_CODES`|  京喜工厂互助码  | 非必须 | 填写规则请看 [jdDreamFactoryShareCodes.js](https://github.com/lxk0301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
 | `JDZZ_SHARECODES`       |  京东赚赚(jd_jdzz.js)脚本互助码  | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
+| `JDJOY_SHARECODES`       |  疯狂的joy(jd_crazy_joy.js)脚本互助码  | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 
 ##### 控制脚本功能环境变量
 
@@ -117,9 +118,9 @@ Apple京东自营旗舰店
 100&100&iPhone12&Apple京东自营旗舰店
  ```
 
-#### 关于脚本推送通知(微信server酱推送通知，bark app推送通知，telegram机器人推送通知，钉钉机器人推送通知，iGot聚合推送)
+#### 关于脚本推送通知频率
 
-  > 如果你填写了上面五种推送通知方式中的某一个通知所需secret，那么脚本通知情况如下：
+  > 如果你填写了推送通知方式中的某一种通知所需环境变量，那么脚本通知情况如下：
 
   > 目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js,jd_818.js四个脚本每次运行后都通知
 

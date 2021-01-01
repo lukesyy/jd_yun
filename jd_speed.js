@@ -1,12 +1,11 @@
 /*
 京东天天加速链接：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js
-更新时间：2020-11-03
+更新时间：2020-12-25
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 每天4京豆，再小的苍蝇也是肉
 从 https://github.com/Zero-S1/JD_tools/blob/master/JD_speed.py 改写来的
 建议3小时运行一次，打卡时间间隔是6小时
-注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
 // quantumultx
 // [task_local]
@@ -67,6 +66,7 @@ const JD_API_HOST = 'https://api.m.jd.com/'
       message = '';
       subTitle = '';
       await jDSpeedUp();
+      await getMemBerList();
       await showMsg();
     }
   }
@@ -85,7 +85,7 @@ function showMsg() {
     $.log(`\n${message}\n`);
   }
 }
-function jDSpeedUp(sourceId, doubleKey) {
+function jDSpeedUp(sourceId) {
   return new Promise((resolve) => {
     let body = {"source": "game"};
     if (sourceId) {
@@ -109,6 +109,7 @@ function jDSpeedUp(sourceId, doubleKey) {
       try {
         if (err) {
           console.log('京东天天-加速: 签到接口请求失败 ‼️‼️');
+          console.log(`${JSON.stringify(err)}`)
         } else {
           if (data) {
             let res = JSON.parse(data);
@@ -184,6 +185,7 @@ function spaceEventList() {
       try {
         if (err) {
           console.log("\n京东天天-加速: 查询太空特殊事件请求失败 ‼️‼️")
+          console.log(`${JSON.stringify(err)}`)
         } else {
           if (data) {
             const cc = JSON.parse(data);
@@ -244,6 +246,7 @@ function spaceEventHandleEvent(spaceEventList) {
           try {
             if (err) {
               console.log("\n京东天天-加速: 处理太空特殊事件请求失败 ‼️‼️")
+              console.log(`${JSON.stringify(err)}`)
             } else {
               if (data) {
                 const cc = JSON.parse(data);
@@ -291,6 +294,7 @@ function energyPropList() {
       try {
         if (err) {
           console.log("\n京东天天-加速: 查询道具请求失败 ‼️‼️")
+          console.log(`${JSON.stringify(err)}`)
         } else {
           if (data) {
             const cc = JSON.parse(data)
@@ -346,6 +350,7 @@ function receiveEnergyProp(CID) {
           try {
             if (error) {
               console.log("\n天天加速-领取道具请求失败 ‼️‼️")
+              console.log(`${JSON.stringify(error)}`)
             } else {
               if (data) {
                 const cc = JSON.parse(data)
@@ -390,6 +395,7 @@ function energyPropUsaleList(EID) {
       try {
         if (error) {
           console.log("\n天天加速-查询道具ID请求失败 ‼️‼️")
+          console.log(`${JSON.stringify(error)}`)
         } else {
           if (data) {
             const cc = JSON.parse(data);
@@ -450,6 +456,7 @@ function useEnergy(PropID) {
           try {
             if (error) {
               console.log("\n天天加速-使用燃料请求失败 ‼️‼️")
+              console.log(`${JSON.stringify(error)}`)
             } else {
               if (data) {
                 const cc = JSON.parse(data);
@@ -474,6 +481,84 @@ function useEnergy(PropID) {
     } else {
       resolve(PropNumTask)
     }
+  })
+}
+function getMemBerList() {
+  return new Promise((resolve) => {
+    const body = { "source": "game", "status": 0};
+    const spaceEventUrl = {
+      url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=member_list&body=${escape(JSON.stringify(body))}&_t=${Date.now()}`,
+      headers: {
+        Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
+        Cookie: cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      }
+    }
+    $.get(spaceEventUrl, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data && data.success) {
+              $.getRewardBeans = 0;
+              console.log(`\n检查是否可领虫洞京豆奖励`)
+              $.memBerList = data.data.filter(item => item['taskStatus'] === 2);
+              if ($.memBerList && $.memBerList.length > 0) {
+                for (let uuids of $.memBerList) {
+                  await getReward(uuids['uuid']);
+                }
+                if ($.getRewardBeans > 0) {
+                  $.msg(`${$.name}`, '', `京东账号${$.index}  ${$.nickName}\n虫洞任务：获得${$.getRewardBeans}京豆`);
+                  if ($.isNode()) await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `京东账号${$.index}  ${$.nickName}\n虫洞任务：获得${$.getRewardBeans}京豆`)
+                }
+              } else {
+                console.log(`暂无可领取的虫洞京豆奖励`)
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.msg("天天加速-查询太空特殊事件" + e.name + "‼️", JSON.stringify(e), e.message)
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+function getReward(uuid) {
+  return new Promise((resolve) => {
+    const body = { "source": "game", uuid};
+    const options = {
+      url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=member_getReward&body=${escape(JSON.stringify(body))}&_t=${Date.now()}`,
+      headers: {
+        Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
+        Cookie: cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      }
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data && data.success) {
+              $.getRewardBeans += data.data.beans;
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
   })
 }
 function TotalBean() {
@@ -525,6 +610,17 @@ function jsonParse(str) {
       $.msg($.name, '', '请勿随意在BoxJs输入框修改内容\n建议通过脚本去获取cookie')
       return [];
     }
+  }
+}
+function safeGet(data) {
+  try {
+    if (typeof JSON.parse(data) == "object") {
+      return true;
+    }
+  } catch (e) {
+    console.log(e);
+    console.log(`京东服务器访问数据为空，请检查自身设备网络情况`);
+    return false;
   }
 }
 // prettier-ignore

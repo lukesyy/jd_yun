@@ -1,6 +1,6 @@
 /*
 种豆得豆 脚本更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_plantBean.js
-更新时间：2020-11-04
+更新时间：2020-12-31
 已支持IOS京东双账号,云端N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 注：会自动关注任务中的店铺跟商品，介意者勿使用。
@@ -161,14 +161,27 @@ async function stealFriendWater() {
       return
     }
     if ($.stealFriendList.data && $.stealFriendList.data.friendInfoList && $.stealFriendList.data.friendInfoList.length > 0) {
+      let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000);
       for (let item of $.stealFriendList.data.friendInfoList) {
-        if (item.nutrCount >= 3) {
-          // console.log(`可以偷的好友的信息::${JSON.stringify(item)}`);
-          console.log(`可以偷的好友的信息paradiseUuid::${JSON.stringify(item.paradiseUuid)}`);
-          await collectUserNutr(item.paradiseUuid);
-          console.log(`偷取好友营养液情况:${JSON.stringify($.stealFriendRes)}`)
-          if ($.stealFriendRes.code === '0') {
-            console.log(`偷取好友营养液成功`)
+        if (new Date(nowTimes).getHours() === 20) {
+          if (item.nutrCount >= 2) {
+            // console.log(`可以偷的好友的信息::${JSON.stringify(item)}`);
+            console.log(`可以偷的好友的信息paradiseUuid::${JSON.stringify(item.paradiseUuid)}`);
+            await collectUserNutr(item.paradiseUuid);
+            console.log(`偷取好友营养液情况:${JSON.stringify($.stealFriendRes)}`)
+            if ($.stealFriendRes.code === '0') {
+              console.log(`偷取好友营养液成功`)
+            }
+          }
+        } else {
+          if (item.nutrCount >= 3) {
+            // console.log(`可以偷的好友的信息::${JSON.stringify(item)}`);
+            console.log(`可以偷的好友的信息paradiseUuid::${JSON.stringify(item.paradiseUuid)}`);
+            await collectUserNutr(item.paradiseUuid);
+            console.log(`偷取好友营养液情况:${JSON.stringify($.stealFriendRes)}`)
+            if ($.stealFriendRes.code === '0') {
+              console.log(`偷取好友营养液成功`)
+            }
           }
         }
       }
@@ -701,21 +714,21 @@ function request(function_id, body = {}){
   })
 }
 function taskUrl(function_id, body) {
-  body["version"] = "9.0.0.1";
+  body["version"] = "9.2.4.0";
   body["monitor_source"] = "plant_app_plant_index";
   body["monitor_refer"] = "";
   return {
     url: JD_API_HOST,
-    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&area=5_274_49707_49973&build=167283&clientVersion=9.1.0`,
+    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&area=19_1601_50258_51885&build=167490&clientVersion=9.3.2`,
     headers: {
-      'Cookie': cookie,
-      'Host': 'api.m.jd.com',
-      'Accept': '*/*',
-      'Connection': 'keep-alive',
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
-      'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Content-Type': "application/x-www-form-urlencoded"
+      "Cookie": cookie,
+      "Host": "api.m.jd.com",
+      "Accept": "*/*",
+      "Connection": "keep-alive",
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "Accept-Language": "zh-Hans-CN;q=1,en-CN;q=0.9",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Content-Type": "application/x-www-form-urlencoded"
     }
   }
 }

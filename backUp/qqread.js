@@ -235,7 +235,7 @@ async function QQ_READ() {
 function showmsg() {
   return new Promise(async resolve => {
     let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000);
-    if (nowTimes.getHours() === 22 && (nowTimes.getMinutes() >= 0 && nowTimes.getMinutes() <= 20)) {
+    if (nowTimes.getHours() === 22 && (nowTimes.getMinutes() >= 0 && nowTimes.getMinutes() <= 15)) {
       await notify.sendNotify(jsname, tz);
     }
     $.msg(jsname, "", tz);

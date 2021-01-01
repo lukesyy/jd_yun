@@ -665,6 +665,44 @@
       ]
     },
     {
+      "id": "jd_unbind",
+      "name": "注销京东会员卡",
+      "keys": [
+        "UN_BIND_CARD_NUM",
+        "UN_BIND_STOP_CARD"
+      ],
+      "settings": [
+        {
+          "id": "jdUnbindCardNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "UN_BIND_CARD_NUM",
+          "name": "注销京东店铺会员卡的数量",
+          "val": 200,
+          "type": "number",
+          "desc": "运行一次脚本注销多少个店铺会员卡（默认200个,输入0表示不注销会员卡）"
+        },
+        {
+          "id": "UN_BIND_STOP_CARD",
+          "name": "注销京东店铺会员卡(白名单)",
+          "val": "",
+          "type": "text",
+          "desc": "不想注销的店铺会员卡名称"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_unbind_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_unbind.png"
+      ]
+    },
+    {
       "id": "jd_SuperMarket",
       "name": "京小超",
       "keys": [],
