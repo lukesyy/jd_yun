@@ -204,6 +204,10 @@ async function jdJxStory() {
   await $.wait(1000)
   await getJoyShop()
   await $.wait(1000)
+  $.log('当前JOY分布情况')
+  $.log(`\n${$.joyIds[0]} ${$.joyIds[1]} ${$.joyIds[2]} ${$.joyIds[3]}`)
+  $.log(`${$.joyIds[4]} ${$.joyIds[5]} ${$.joyIds[6]} ${$.joyIds[7]}`)
+  $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
   for (let i = 0; i < $.joyIds.length; ++i) {
     if (!$.canBuy) {
       $.log(`金币不足，跳过购买`)
@@ -280,8 +284,14 @@ function getJoyShop() {
           data = JSON.parse(data);
           if (data.success && data.data && data.data.shop) {
             const shop = data.data.shop.filter(vo => vo.status === 1) || []
-            $.buyJoyLevel = shop.length ? shop[shop.length - 1]['joyId'] : 1
-            $.cost = shop.length ? shop[shop.length - 1]['coins'] : Infinity
+            $.buyJoyLevel = shop.length ? shop[shop.length - 1]['joyId'] : 1;//可购买的最大等级
+            if ($.isNode() && process.env.BUY_JPY_LEVEL) {
+              $.log(`当前可购买的最高JOY等级为${$.buyJoyLevel}级\n`)
+              $.buyJoyLevel = (process.env.BUY_JPY_LEVEL * 1) > $.buyJoyLevel ? $.buyJoyLevel : process.env.BUY_JPY_LEVEL * 1;
+              $.cost = shop[$.buyJoyLevel - 1]['coins']
+            } else {
+              $.cost = shop.length ? shop[shop.length - 1]['coins'] : Infinity
+            }
           }
         }
       } catch (e) {
