@@ -112,11 +112,15 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 
 async function jdBeanHome() {
   $.doneState = false
-  for (let i = 0; i < 3; ++i) {
+  // for (let i = 0; i < 3; ++i) {
+  //   await doTask2()
+  //   await $.wait(1000)
+  //   if ($.doneState) break
+  // }
+  do {
     await doTask2()
-    await $.wait(1000)
-    if ($.doneState) break
-  }
+    await $.wait(3000)
+  } while (!$.doneState)
   await $.wait(1000)
   await award("feeds")
   await $.wait(1000)
@@ -142,10 +146,16 @@ function doTask2() {
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
-              if(data.code === '0' && data.data){
+              if (data.code === '0' && data.data){
                 console.log(`任务完成进度：${data.data.taskProgress} / ${data.data.taskThreshold}`)
-                if(data.data.taskProgress===data.data.taskThreshold)
+                if(data.data.taskProgress === data.data.taskThreshold)
                   $.doneState = true
+              } else if (data.code === '0' && data.errorCode === 'HT201') {
+                $.doneState = true
+              } else {
+                //HT304风控用户
+                $.doneState = true
+                console.log(`做任务异常：${JSON.stringify(data)}`)
               }
             }
           }
