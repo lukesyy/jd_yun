@@ -4,18 +4,6 @@
 50 23 */3 * * rm -rf /scripts/logs/*.log
 
 ##############短期活动##############
-# 秒杀红包雨(2020.12.31活动过期)
-40 8 1-31 12 * node /scripts/jd_ms_redrain.js >> /scripts/logs/jd_ms_redrain.log 2>&1
-# 健康抽奖机(2020.12.31活动过期)
-10 0 1-31 12 * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
-# 直播红包雨(2020.12.31活动过期)
-1 0,20,9-23/2 15-31 12 * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
-# 京东金融打卡领年终奖(2020.12.31活动过期)
-10 6 1-31 12 * node /scripts/jr_sign.js >> /scripts/logs/jr_sign.log 2>&1
-# 京东健康APP集汪汪卡瓜分百万红包(2021.1.6活动过期)
-10 8 * * * node /scripts/jd_jdh.js >> /scripts/logs/jd_jdh.log 2>&1
-# crazyJoy自动每日任务
-10 7 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
 
 ##############长期活动##############
 # 签到
@@ -84,7 +72,7 @@
 10 11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
 # 宠汪汪邀请助力
 10 10,11 * * * node /scripts/jd_joy_run.js >> /scripts/logs/jd_joy_run.log 2>&1
-# 京东发现-看一看，看40个视频领80京豆（非常耗时）
-13 11,14 * * * node /scripts/jd_watch.js >> /scripts/logs/jd_watch.log 2>&1
 # 注销京东已开的店铺会员，不是注销京东plus会员，个别店铺无法注销
 44 4 * * 6 node /scripts/jd_unbind.js >> /scripts/logs/jd_unbind.log 2>&1
+# crazyJoy自动每日任务
+10 7 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
