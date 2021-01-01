@@ -29,6 +29,7 @@ const $ = new Env('京东全民开红包');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+let   rDNotify = true;//是否开启静默运行，默认true开启
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -169,12 +170,20 @@ async function active(taskType) {
           // console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
         }
       }
-    } else {
+    } else 
+	{
       console.log(`任务列表为空,手动进入app内检查 是否存在[从京豆首页进领券中心逛30秒]的任务,如存在,请手动完成再运行脚本`)
       $.msg(`${$.name}`, '', '手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本');
-      if ($.isNode()) await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `执行脚本出现异常\n请手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本`)
+      if ($.isNode()) 
+	  {
+		  if(`${rDNotify}` === 'false')
+			  await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `执行脚本出现异常\n请手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本`)
+		  else
+			  console.log(`您设置的是不通知手动做任务，需要手动完成的任务不在通知`)
+	  }
     }
-  } else {
+  } else 
+  {
     console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
   }
 }

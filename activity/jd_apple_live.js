@@ -26,7 +26,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = $.isNode() ? 20 : 5;
+const randomCount = $.isNode() ? 0 : 0;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
@@ -44,7 +44,7 @@ if ($.isNode()) {
   cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-const inviteCodes = [`P04z54XCjVUm4aW5nJcXCCyoR8C6s-kRmWs@P04z54XCjVUm4aW5m9cZ2bx3y5Ow@P04z54XCjVUm4aW5u2ak7ZCdan1BeYMuZ9HwF34gJjW@P04z54XCjVUm4aW5m9cZ2T6jChKkkjZEdhiKUY`, `P04z54XCjVUm4aW5nJcXCCyoR8C6s-kRmWs@P04z54XCjVUm4aW5m9cZ2bx3y5Ow`];
+const inviteCodes = [`P04z54XCjVUm4aW5mFZViepgysJzbDW5xotFA@P04z54XCjVUm4aW5j0LCGfx3H9IlQvTaODQKkty5Ew@P04z54XCjVUm4aW5m9cZx6ftCI5w1Ee8tmYDw@P04z54XCjVUm4aW5m9cZ2X7iCgZwNgSS081yB0@P04z54XCjVUm4aW5m9cZ2b523UfwzcupURRKQ4@P04z54XCjVUm4aW5m9cZ2b-23tCwTZIoUDbHBo@P04z54XCjVUm4aW5mZZVzqhjDQTy50@P04z54XCjVUm4aW5nJLVCigmCU@P04z54XCjVUm4aW5m9cZyKtqwM3_wmcsltB5g@P04z54XCjVUm4aW5m9cZ2Wt2CpOlS-pengCIE4`];
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
