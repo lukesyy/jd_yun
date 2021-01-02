@@ -45,7 +45,7 @@ let teamLevel = `2`;//参加多少人的赛跑比赛，默认是双人赛跑，�
 // 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
 let joyRunFlag = true;
 let jdNotify = true;//是否开启静默运行，默认true开启
-let jdRunSucNotify=true;//赛跑成功是否开启静默运行，默认true开启
+let jdRunSucNotify=false;//赛跑成功是否开启通知，默认true开启
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 !(async () => {
