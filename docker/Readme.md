@@ -1,4 +1,24 @@
 ### Usage
+```diff
++ 2021-01-03更新 增加 CUSTOM_SHELL_FILE 参数配置执行自定义shell脚本
++ 例1:配置远程shell脚本, 我自己写了一个shell脚本https://raw.githubusercontent.com/iouAkira/someDockerfile/master/jd_scripts/shell_script_mod.sh 内容很简单下载惊喜农场并添加定时任务
++ CUSTOM_SHELL_FILE=https://raw.githubusercontent.com/iouAkira/someDockerfile/master/jd_scripts/shell_script_mod.sh
++
++ 例2:配置docker挂载本地自定义shell脚本,/scripts/docker/shell_script_mod.sh 为你在docker-compose.yml里面挂载到容器里面绝对路径
++ CUSTOM_SHELL_FILE=/scripts/docker/shell_script_mod.sh
++
++ tip：如果使用远程自定义，请保证网络畅通或者选择合适的国内仓库，例如有部分人的容器里面就下载不到github的raw文件，那就可以把自己的自定义shell写在gitee上，或者换本地挂载
++      如果是 docker 挂载本地，请保重文件挂载进去了，并且配置的是绝对路径。
++      自定义 shell 脚本里面如果要加 crontab 任务请使用 echo 追加到 /scripts/docker/merged_list_file.sh 里面否者不生效
++ 注⚠️ 建议无shell能力的不要轻易使用，当然你可以找别人写好适配了这个docker镜像的脚本直接远程配置
++     上面写了这么多如果还看不懂，不建议使用该变量功能。
+_____
+! ⚠️⚠️⚠️2020-12-11更新镜像启动方式，虽然兼容旧版的运行启动方式，但是强烈建议更新镜像和配置后使用
+! 更新后`command:`指令配置不再需要
+! 更新后可以使用自定义任务文件追加在默任务文件之后，比以前的完全覆盖多一个选择
+! - 新的自定两个环境变量为 `CUSTOM_LIST_MERGE_TYPE`:自定文件的生效方式可选值为`append`，`overwrite`默认为`append` ; `CUSTOM_LIST_FILE`: 自定义文件的名字
+! 更新镜像增减镜像更新通知，以后镜像如果更新之后，会通知用户更新
+```
 > 推荐使用`docker-compose`所以这里只介绍`docker-compose`使用方式
 
 - `docker-compose` 安装（群晖nas docker自带安装了docker-compose）
@@ -20,12 +40,6 @@ pip install docker-compose
 国外一键安装 `sudo curl -sSL get.docker.com | sh`
 
 ### 如果需要使用 docker 多个账户独立并发执行定时任务，[参考这里](https://github.com/iouAkira/scripts/blob/patch-1/docker/docker%E5%A4%9A%E8%B4%A6%E6%88%B7%E4%BD%BF%E7%94%A8%E7%8B%AC%E7%AB%8B%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md#%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%96%B9%E5%BC%8F%E8%AF%B7%E5%85%88%E7%90%86%E8%A7%A3%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8docker%E5%8A%9E%E6%B3%95%E4%B8%80%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F)  
-
-⚠️⚠️⚠️2020-12-11更新镜像启动方式，虽然兼容旧版的运行启动方式，但是强烈建议更新镜像和配置后使用
-- 更新后`command:`指令配置不再需要
-- 更新后可以使用自定义任务文件追加在默任务文件之后，比以前的完全覆盖多一个选择
-- - 新的自定两个环境变量为 `CUSTOM_LIST_MERGE_TYPE`:自定文件的生效方式可选值为`append`，`overwrite`默认为`append` ; `CUSTOM_LIST_FILE`: 自定义文件的名字
-- 更新镜像增减镜像更新通知，以后镜像如果更新之后，会通知用户更新
 
 > 注⚠️：前提先理解学会使用这下面的教程
 ### 创建一个目录`jd_scripts`用于存放备份配置等数据，迁移重装的时候只需要备份整个jd_scripts目录即可
