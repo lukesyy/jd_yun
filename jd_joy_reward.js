@@ -299,7 +299,9 @@ function getJDServerTime() {
   })
 }
 async function get_diff_time() {
-  // console.log(await getJDServerTime())
+  console.log(`本机时间戳 ${Date.now()}`)
+  console.log(`京东服务器时间戳 ${await getJDServerTime()}`)
+  console.log(Date.now() - await getJDServerTime())
   let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
   return nowTime - await getJDServerTime();
 }
