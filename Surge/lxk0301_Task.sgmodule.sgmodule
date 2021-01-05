@@ -53,18 +53,14 @@ cron "40 * * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scrip
 cron "10 7 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js, timeout=650, wake-system=1, tag=东东小窝
 #十元街
 cron "40 8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js, timeout=650, wake-system=1, tag=十元街
-#京东代属(仅京东学生认证用户可用)
-cron "30 8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ds.js, timeout=650, wake-system=1, tag=京东代属
 #领京豆额外奖励
 cron "30 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_home.js, timeout=750, wake-system=1, tag=领京豆额外奖励
 #京东汽车
-cron "30 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car.js, timeout=750, wake-system=1, tag=京东汽车
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car.js, timeout=750, wake-system=1, tag=京东汽车
 #京东快递签到
 cron "20 11 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_kd.js, timeout=750, wake-system=1, tag=京东快递签到
 #京东直播(活动结束时间未知)
 cron "20 12 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live.js, timeout=750, wake-system=1, tag=京东直播
-#京东看一看
-cron "40 9,10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_watch.js, timeout=7750, wake-system=1, tag=京东看一看
 #京东健康
 cron "20 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdh.js, timeout=750, wake-system=1, tag=京东健康
 #京东赚赚
@@ -74,12 +70,6 @@ cron "20 12 * * 6" script-path=https://raw.githubusercontent.com/lxk0301/jd_scri
 #疯狂的joy日常任务
 cron "30 8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy.js, timeout=1750, wake-system=1, tag=疯狂的joy日常任务
 #以下为短期活动
-#金融打卡领年终奖
-cron "30 7 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jr_sign.js, timeout=750, wake-system=1, tag=金融打卡领年终奖
 #健康抽奖机
-cron "30 2 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, timeout=750, wake-system=1, tag=健康抽奖机
-#直播红包雨(2020-12-31活动结束)
-cron "1 0,20,9-23/2 15-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_live_redrain.js, timeout=750, wake-system=1, tag=直播红包雨
-#秒杀红包雨(2020-12-31活动结束)
-cron "20 9 1-31 12 *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_ms_redrain.js, timeout=750, wake-system=1, tag=秒杀红包雨
+cron "30 2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, timeout=750, wake-system=1, tag=健康抽奖机
 

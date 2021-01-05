@@ -68,8 +68,10 @@
 **TODO**
 - [ ] 所有活动互助码在一个脚本打印
 
-## [邀请码互助入口](https://github.com/lxk0301/jd_scripts/discussions)
-
+## 邀请码互助
+  - [邀请码互助入口](https://github.com/lxk0301/jd_scripts/discussions)
+  - [获取各类活动互助码脚本 jd_get_share_code.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js)
+  - [邀请码使用规范](githubAction.md#互助码类环境变量)(仅限云端)
 ## 食用方法
 
 ### 方法一：本地安装Node.js，下载本库脚本
@@ -85,9 +87,9 @@
 ### 方法二：云服务器、腾讯云函数等等
 
   - 需自行有云服务器，云函数等
-  - 腾讯云云函数 [快速部署教程](tencentscf.md)（免费）
-  - 腾讯云云函数控制台使用 [教程说明](iCloud.md)
-  - 腾讯云云函数 [GitHub Action部署教程](tencentscf.md#github-action-部署)
+  - 腾讯云云函数 [快速部署教程](./backUp/tencentscf.md)（免费）
+  - 腾讯云云函数控制台使用 [教程说明](./backUp/iCloud.md)
+  - 腾讯云云函数 [GitHub Action部署教程](./backUp/tencentscf.md#github-action-部署)
        
  
 ### 方法三：Docker（NAS或VPS用户）
@@ -107,7 +109,7 @@
 
 ### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon, 小火箭）
 
-#### [京东cookie获取脚本](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/JD_extra_cookie.js)
+  - [京东cookie获取脚本 JD_extra_cookie.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/JD_extra_cookie.js)
 
 ### 赞赏码(开发维护不易,请赏杯茶水费)
 <div align=center><img width="250" height="250" src="https://raw.githubusercontent.com/lxk0301/jd_scripts/master/icon/thanks.jpg"/></div>

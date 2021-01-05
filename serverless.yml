@@ -46,12 +46,12 @@ inputs:
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_live
-    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机 #东东小窝 #秒杀红包雨 #健康抽奖机
+    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机 #东东小窝 #健康抽奖机
         parameters:
-          name: redPacket_shop_unsubscribe_unbind_lotteryMachine_small_home_ms_redrain_health
+          name: redPacket_shop_unsubscribe_unbind_lotteryMachine_small_home_health
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_small_home&jd_ms_redrain&jd_health
+          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_small_home&jd_health
     - timer: # 京东天天加速# 天天提鹅
         parameters:
           name: jd_speed_jd_daily_egg
@@ -64,18 +64,18 @@ inputs:
           cronExpression: "0 15 * * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #京东健康APP
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励
         parameters:
-          name: bean_change_crazy_joy_rankingList_bean_home_jdh
+          name: bean_change_crazy_joy_rankingList_bean_home
           cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_car&jd_jdh
-    - timer: #金融养猪 #十元街 #京东快递 #发现-看一看 #京东赚赚 #金融打卡领年终奖
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_car
+    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚
         parameters:
-          name: pigPet_syj_kd_watch_jdzz_jr_sign
+          name: pigPet_syj_kd_jdzz
           cronExpression: "0 3 1 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj&jd_kd&jd_watch&jd_jdzz&jr_sign
+          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的

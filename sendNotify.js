@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-19 16:12:40 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-12-21 13:52:54
+ * @Last Modified time: 2021-1-5 17:52:54
  */
 const querystring = require("querystring");
 const $ = new Env();
@@ -49,7 +49,7 @@ let DD_BOT_SECRET = '';
 let QYWX_KEY = '';
 
 // =======================================企业微信应用消息通知设置区域===========================================
-//此处填你企业微信应用消息的 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,agentid的值，注意用,号隔开，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001
+//此处填你企业微信应用消息的 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,agentid的值，素材库图片id（见https://github.com/lxk0301/jd_scripts/issues/519) 注意用,号隔开，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入QYWX_AM)
 let QYWX_AM = '';
 
@@ -132,17 +132,21 @@ if (process.env.PUSH_PLUS_USER) {
 
 async function sendNotify(text, desp, params = {}) {
   //提供7种通知
-  await serverNotify(text, desp);//微信server酱
-  await pushPlusNotify(text, desp);//pushplus(推送加)
+  await Promise.all([
+    serverNotify(text, desp),//微信server酱
+    pushPlusNotify(text, desp)//pushplus(推送加)
+  ])
   //由于上述两种微信通知需点击进去才能查看到详情，故text(标题内容)携带了账号序号以及昵称信息，方便不点击也可知道是哪个京东哪个活动
   text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
-  await BarkNotify(text, desp, params);//iOS Bark APP
-  await tgBotNotify(text, desp);//telegram 机器人
-  await ddBotNotify(text, desp);//钉钉机器人
-  await qywxBotNotify(text, desp); //企业微信机器人
-  await qywxamNotify(text, desp); //企业微信应用消息推送
-  await iGotNotify(text, desp, params);//iGot
-  await CoolPush(text, desp);//QQ酷推
+  await Promise.all([
+    BarkNotify(text, desp, params),//iOS Bark APP
+    tgBotNotify(text, desp),//telegram 机器人
+    ddBotNotify(text, desp),//钉钉机器人
+    qywxBotNotify(text, desp), //企业微信机器人
+    qywxamNotify(text, desp), //企业微信应用消息推送
+    iGotNotify(text, desp, params),//iGot
+    CoolPush(text, desp)//QQ酷推
+  ])
 }
 
 function serverNotify(text, desp, timeout = 2100) {
@@ -430,7 +434,8 @@ function qywxamNotify(text, desp) {
 	        'Content-Type': 'application/json',
 	      },
 	    };
-	  $.post(options_accesstoken, (err, resp, data) => {  
+	  $.post(options_accesstoken, (err, resp, data) => {
+      html=desp.replace(/\n/g,"<br/>")	  
       var json = JSON.parse(data);
       accesstoken = json.access_token;
 		const options = {
@@ -438,12 +443,18 @@ function qywxamNotify(text, desp) {
 	      json: {
 	        touser:`${QYWX_AM_AY[2]}`,
 	        agentid:`${QYWX_AM_AY[3]}`,
-	        msgtype: 'textcard',
-	        textcard: {
+	        msgtype: 'mpnews',
+	        mpnews: {
+                  articles: [
+                  {
 	          title: `${text}`,
-	          description: `${desp}`,
-	          url: '127.0.0.1',
-	          btntxt: '更多'
+                  thumb_media_id: `${QYWX_AM_AY[4]}`,  
+                  author : `智能助手` ,
+                  content_source_url: ``,
+                  content : `${html}`, 
+                  digest: `${desp}`
+                  }
+                  ]
 	        },
 	        safe:'0',
 	      },
