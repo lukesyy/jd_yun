@@ -253,7 +253,7 @@ function receiveBlueCoin(timeout = 0) {
 //每日签到
 function smtgSign() {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_sign'), async (err, resp, data) => {
+    $.get(taskUrl('smtg_sign', {"shareId":"QcSH6BqSXysv48bMoRfTBz7VBqc5P6GodDUBAt54d8598XAUtNoGd4xWVuNtVVwNO1dSKcoaY3sX_13Z-b3BoSW1W7NnqD36nZiNuwrtyO-gXbjIlsOBFpgIPMhpiVYKVAaNiHmr2XOJptu14d8uW-UWJtefjG9fUGv0Io7NwAQ","channel":"4"}), async (err, resp, data) => {
       try {
         // console.log('ddd----ddd', data)
         if (err) {
