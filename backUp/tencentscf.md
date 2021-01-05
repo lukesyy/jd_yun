@@ -125,4 +125,4 @@ triggers:
 在左侧栏的日志查询中，可以查看到触发的日志，包括是否打卡成功等。
 
 ![测试函数](https://user-images.githubusercontent.com/6993269/99628053-5a9eea80-2a70-11eb-906f-f1d5ea2bfa3a.png)
-## 6. 设置触发器[看这里](./backUp/iCloud.md#5设置触发器) 或者看这里的[注释说明](https://github.com/iouAkira/jd_scripts/blob/patch-1/index.js#L4)
+## 6. 设置触发器[看这里](iCloud.md#5设置触发器) 或者看这里的[注释说明](https://github.com/iouAkira/jd_scripts/blob/patch-1/index.js#L4)
