@@ -449,6 +449,7 @@ function qywxamNotify(text, desp) {
             title: `${text}`,
             description: `${desp}`,
             url: '127.0.0.1',
+            btntxt: '更多'
           },
           safe:'0',
         },
