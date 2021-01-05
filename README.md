@@ -85,9 +85,9 @@
 ### 方法二：云服务器、腾讯云函数等等
 
   - 需自行有云服务器，云函数等
-  - 腾讯云云函数 [快速部署教程](../tencentscf.md)（免费）
+  - 腾讯云云函数 [快速部署教程](./backUp/tencentscf.md)（免费）
   - 腾讯云云函数控制台使用 [教程说明](iCloud.md)
-  - 腾讯云云函数 [GitHub Action部署教程](../tencentscf.md#github-action-部署)
+  - 腾讯云云函数 [GitHub Action部署教程](./backUp/tencentscf.md#github-action-部署)
        
  
 ### 方法三：Docker（NAS或VPS用户）
