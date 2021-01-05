@@ -144,11 +144,14 @@ if ($.isNode()) {
       $.isLogin = true;
       $.nickName = '';
       message = '';
+      await TotalBean();
+      if (!$.isLogin) {
+        continue
+      }
       console.log(`======账号${$.index}开始======`)
       await getShareCode()
-      console.log(`======账号${$.index}结束======`)
+      console.log(`======账号${$.index}结束======\n`)
     }
-
   }
 })()
   .catch((e) => {
@@ -174,7 +177,7 @@ function getJdFactory() {
                 $.taskVos.map((item) => {
                   if (item.taskType === 14) {
                     console.log(
-                      `【东东工厂】${item.assistTaskDetailVo.taskToken}`
+                      `【账号${$.index}（${$.nickName || $.UserName}）东东工厂】${item.assistTaskDetailVo.taskToken}`
                     );
                   }
                 });
@@ -238,7 +241,7 @@ function getJxFactory(){
                   $.commodityDimId = production.commodityDimId;
                   $.encryptPin = data.user.encryptPin;
                   // subTitle = data.user.pin;
-                  console.log(`【惊喜工厂】${data.user.encryptPin}`);
+                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）惊喜工厂】${data.user.encryptPin}`);
                 }
               } else {
                 $.unActive = false; //标记是否开启了京喜活动或者选购了商品进行生产
@@ -317,7 +320,7 @@ function getJdPet(){
             }
 
             console.log(
-              `【京东萌宠】${$.petInfo.shareCode}`
+              `【账号${$.index}（${$.nickName || $.UserName}）京东萌宠】${$.petInfo.shareCode}`
             );
 
           } else if (initPetTownRes.code === "0") {
@@ -348,7 +351,7 @@ async function getJdZZ() {
             if (safeGet(data)) {
               data = JSON.parse(data);
               if (data.data.shareTaskRes) {
-                console.log(`【京东赚赚】${data.data.shareTaskRes.itemId}`);
+                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】${data.data.shareTaskRes.itemId}`);
                               } else {
                 //console.log(`已满5人助力,暂时看不到您的京东赚赚好友助力码`)
               }
@@ -449,7 +452,7 @@ async function getPlantBean() {
     if ($.plantBeanIndexResult.code === "0") {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl;
       $.myPlantUuid = getParam(shareUrl, "plantUuid");
-      console.log(`【种豆得豆】${$.myPlantUuid}`);
+      console.log(`【账号${$.index}（${$.nickName || $.UserName}）种豆得豆】${$.myPlantUuid}`);
 
     } else {
       console.log(
@@ -513,11 +516,8 @@ async function getJDFruit() {
   async function jdFruit() {
     await initForFarm();
     if ($.farmInfo.farmUserPro) {
-      // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
-      subTitle = `【京东账号${$.index}】${$.nickName}`;
-      message = `【水果名称】${$.farmInfo.farmUserPro.name}`;
       console.log(
-        `【京东农场】${$.farmInfo.farmUserPro.shareCode}`
+        `【账号${$.index}（${$.nickName || $.UserName}）京东农场】${$.farmInfo.farmUserPro.shareCode}`
       );
 
     } else {
@@ -563,7 +563,7 @@ async function getJoy(){
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.success && data.data && data.data.userInviteCode) {
-              console.log(`【crazyJoy】${data.data.userInviteCode}`)
+              console.log(`【账号${$.index}（${$.nickName || $.UserName}）crazyJoy】${data.data.userInviteCode}`)
             }
           }
         }
@@ -596,7 +596,46 @@ function safeGet(data) {
     return false;
   }
 }
-
+function TotalBean() {
+  return new Promise(async resolve => {
+    const options = {
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === 13) {
+              $.isLogin = false; //cookie过期
+              return
+            }
+            $.nickName = data['base'].nickname;
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function taskPostUrl(function_id, body = {}, function_id2) {
   let url = `${JD_API_HOST}`;
   if (function_id2) {

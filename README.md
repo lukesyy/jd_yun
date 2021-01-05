@@ -68,8 +68,10 @@
 **TODO**
 - [ ] 所有活动互助码在一个脚本打印
 
-## [邀请码互助入口](https://github.com/lxk0301/jd_scripts/discussions)
-
+## 邀请码互助
+  - [邀请码互助入口](https://github.com/lxk0301/jd_scripts/discussions)
+  - [获取各类活动互助码脚本](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js)
+  - [邀请码使用规范](githubAction.md#互助码类环境变量)(仅限云端)
 ## 食用方法
 
 ### 方法一：本地安装Node.js，下载本库脚本
