@@ -569,7 +569,7 @@ function pushPlusNotify(text, desp) {
         }
       })
     } else {
-      console.log('\n您未提供push+推送所需的PUSH_PLUS_TOKEN，取消push+推送消息通知\n');
+      console.log('您未提供push+推送所需的PUSH_PLUS_TOKEN，取消push+推送消息通知\n');
       resolve()
     }
   })
