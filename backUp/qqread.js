@@ -159,7 +159,6 @@ function GetCookie() {
 async function QQ_READ() {
   for (let i = 0; i < QQ_READ_COOKIES.length; i++) {
     $.log(`\n*************开始QQ账号${i + 1}**************\n`);
-    tz = '';
     $.isLogin = true;
     if (!QQ_READ_COOKIES[i]["qqreadbodyVal"] || !QQ_READ_COOKIES[i]['qqreadtimeurlVal'] || !QQ_READ_COOKIES[i]['qqreadtimeheaderVal']) {
       $.log(`账号${i + 1}暂未提供脚本执行所需的cookie`);
