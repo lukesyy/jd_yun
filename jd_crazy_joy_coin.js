@@ -287,9 +287,9 @@ function getJoyShop() {
           if (data.success && data.data && data.data.shop) {
             const shop = data.data.shop.filter(vo => vo.status === 1) || []
             $.buyJoyLevel = shop.length ? shop[shop.length - 1]['joyId'] : 1;//可购买的最大等级
-            if ($.isNode() && process.env.BUY_JPY_LEVEL) {
+            if ($.isNode() && process.env.BUY_JOY_LEVEL) {
               $.log(`当前可购买的最高JOY等级为${$.buyJoyLevel}级\n`)
-              $.buyJoyLevel = (process.env.BUY_JPY_LEVEL * 1) > $.buyJoyLevel ? $.buyJoyLevel : process.env.BUY_JPY_LEVEL * 1;
+              $.buyJoyLevel = (process.env.BUY_JOY_LEVEL * 1) > $.buyJoyLevel ? $.buyJoyLevel : process.env.BUY_JOY_LEVEL * 1;
               $.cost = shop[$.buyJoyLevel - 1]['coins']
             } else {
               $.cost = shop.length ? shop[shop.length - 1]['coins'] : Infinity

@@ -24,5 +24,5 @@ console.log(`\n====================共有${CookieJDs.length}个京东账号Cooki
 console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
 for (let i = 0; i < CookieJDs.length; i++) {
   const index = (i + 1 === 1) ? '' : (i + 1);
-  exports['CookieJD' + index] = CookieJDs[i];
+  exports['CookieJD' + index] = CookieJDs[i].trim();
 }
