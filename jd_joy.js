@@ -475,16 +475,16 @@ function followShop(shopId) {
 }
 function enterRoom() {
   return new Promise(resolve => {
-    const url = `${weAppUrl}/enterRoom?reqSource=weapp`;
+    const url = `${weAppUrl}/enterRoom/h5?reqSource=weapp&invitePin=&openId=`;
     const host = `draw.jdfcloud.com`;
     const reqSource = 'weapp';
-    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
+    $.post({...taskUrl(url, host, reqSource),body:'{}'}, (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
           // console.log('JSON.parse(data)', JSON.parse(data))
-         
+
           $.roomData = JSON.parse(data);
 
           console.log(`现有狗粮: ${$.roomData.data.petFood}\n`)
