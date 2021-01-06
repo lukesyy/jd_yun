@@ -246,12 +246,7 @@ async function invite(invite_pins) {
     console.log(`\n账号${$.index} [${UserName}] 开始给好友 [${item}] 进行邀请助力`)
     const data = await enterRoom(item);
     if (data) {
-      if (!data.success && data.errorCode === 'B0001') {
-        console.log('京东Cookie失效');
-        $.msg($.name, `【提示】京东cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.jdLogin = false;
-        break
-      } else {
+      if (data.success) {
         const { helpStatus } = data.data;
         console.log(`helpStatus ${helpStatus}`)
         if (helpStatus=== 'help_full') {
@@ -277,6 +272,13 @@ async function invite(invite_pins) {
           }
         }
         $.jdLogin = true;
+      } else {
+        if (data.errorCode === 'B0001') {
+          console.log('京东Cookie失效');
+          $.msg($.name, `【提示】京东cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+          $.jdLogin = false;
+          break
+        }
       }
     }
   }
@@ -289,10 +291,11 @@ function enterRoom(invitePin) {
     headers.Cookie = cookie;
     headers.LKYLToken = $.LKYLToken;
     const options = {
-      url: `${JD_BASE_API}/enterRoom?reqSource=weapp&invitePin=${encodeURI(invitePin)}`,
+      url: `${JD_BASE_API}/enterRoom/h5?reqSource=weapp&invitePin=${encodeURI(invitePin)}&inviteSource=task_invite&shareSource=weapp&inviteTimeStamp=${Date.now()}`,
+      body: '{}',
       headers
     }
-    $.get(options, (err, resp, data) => {
+    $.post(options, (err, resp, data) => {
       try {
         if (err) {
           $.log(`${$.name} API请求失败`)
