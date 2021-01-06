@@ -66,7 +66,8 @@
 **脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), 小火箭, JSBox, Node.js**
 
 **TODO**
-- [ ] 所有活动互助码在一个脚本打印
+- [x] 所有活动互助码在一个脚本打印
+- [ ] 京喜工厂添加预测N天后可兑换功能
 
 ## 邀请码互助
   - [邀请码互助入口](https://github.com/lxk0301/jd_scripts/discussions)
