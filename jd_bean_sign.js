@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2021-1-4
+更新时间：2021-1-7
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -76,7 +76,7 @@ async function execSign() {
         const barkContentStart = notifyContent.indexOf('【签到概览】')
         const barkContentEnd = notifyContent.length;
         if (process.env.JD_BEAN_SIGN_STOP_NOTIFY === 'true') return
-        if (notify.BARK_PUSH) process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE = 'true';
+        if (process.env.BARK_PUSH || notify.BARK_PUSH) process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE = 'true';
         if (process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE === 'true') {
           if (barkContentStart > -1 && barkContentEnd > -1) {
             BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
