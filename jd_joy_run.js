@@ -1,6 +1,6 @@
 /**
 宠汪汪邀请助力与赛跑助力脚本，感谢github@Zero-S1提供帮助
-更新时间：2020-12-16（宠汪汪助力更新Token的配置正则表达式已改）
+更新时间：2021-1-7（宠汪汪助力更新Token的配置正则表达式已改）
 
 token时效很短，几个小时就失效了,闲麻烦的放弃就行
 每天拿到token后，可一次性运行完毕即可。
@@ -42,8 +42,12 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 let invite_pins = ["danwangshimoluo","danwangshimoluo","830791320_125224661","830791320_125224661","jd_NWYnCfHMIqUI","jd_53edce0d99c30","jd_NWYnCfHMIqUI"];
 
 //下面给出好友赛跑助力的示例填写规则
+<<<<<<< HEAD
 let run_pins = ["danwangshimoluo","danwangshimoluo","830791320_125224661","830791320_125224661","jd_NWYnCfHMIqUI","jd_53edce0d99c30","jd_NWYnCfHMIqUI"];
 
+=======
+let run_pins = ["被折叠的记忆33,jd_6cd93e613b0e5,jd_45a6b5953b15b,jd_66f5cecc1efcd,jd_sIhNpDXJehOr,jd_704a2e5e28a66,zooooo58"];
+>>>>>>> e8cb66e3cccaed35375ee707dafd78afa9eea362
 // $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
 // $.LKYLToken = $.getdata('jdJoyRunToken');
 const friendsArr = ["danwangshimoluo", "830791320_125224661", "jd_NWYnCfHMIqUI", "jd_53edce0d99c30", "jd_6169ef6a14e73", "jd_66678de45d93d"]
@@ -247,37 +251,41 @@ async function invite(invite_pins) {
   for (let item of invite_pins.map(item => item.trim())) {
     console.log(`\n账号${$.index} [${UserName}] 开始给好友 [${item}] 进行邀请助力`)
     const data = await enterRoom(item);
-    if (!data.success && data.errorCode === 'B0001') {
-      console.log('京东Cookie失效');
-      $.msg($.name, `【提示】京东cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-      $.jdLogin = false;
-      break
-    } else {
-      const { helpStatus } = data.data;
-      console.log(`helpStatus ${helpStatus}`)
-      if (helpStatus=== 'help_full') {
-        console.log(`您的邀请助力机会已耗尽\n`)
-        break;
-      } else if (helpStatus=== 'cannot_help') {
-        console.log(`已给该好友 ${item} 助力过或者此friendPin是你自己\n`)
-        continue;
-      } else if (helpStatus=== 'invite_full') {
-        console.log(`助力失败，该好友 ${item} 已经满3人给他助力了,无需您再次助力\n`)
-        continue;
-      } else if (helpStatus=== 'can_help') {
-        console.log(`开始给好友 ${item} 助力\n`)
-        const LKYL_DATA = await helpInviteFriend(item);
-        if (LKYL_DATA.errorCode === 'L0001' && !LKYL_DATA.success) {
-          console.log('来客有礼宠汪汪token失效');
-          $.setdata('', 'jdJoyRunToken');
-          $.msg($.name, '【提示】来客有礼token失效，请重新获取', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token")
-          $.LKYLLogin = false;
+    if (data) {
+      if (data.success) {
+        const { helpStatus } = data.data;
+        console.log(`helpStatus ${helpStatus}`)
+        if (helpStatus=== 'help_full') {
+          console.log(`您的邀请助力机会已耗尽\n`)
+          break;
+        } else if (helpStatus=== 'cannot_help') {
+          console.log(`已给该好友 ${item} 助力过或者此friendPin是你自己\n`)
+          continue;
+        } else if (helpStatus=== 'invite_full') {
+          console.log(`助力失败，该好友 ${item} 已经满3人给他助力了,无需您再次助力\n`)
+          continue;
+        } else if (helpStatus=== 'can_help') {
+          console.log(`开始给好友 ${item} 助力\n`)
+          const LKYL_DATA = await helpInviteFriend(item);
+          if (LKYL_DATA.errorCode === 'L0001' && !LKYL_DATA.success) {
+            console.log('来客有礼宠汪汪token失效');
+            $.setdata('', 'jdJoyRunToken');
+            $.msg($.name, '【提示】来客有礼token失效，请重新获取', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token")
+            $.LKYLLogin = false;
+            break
+          } else {
+            $.LKYLLogin = true;
+          }
+        }
+        $.jdLogin = true;
+      } else {
+        if (data.errorCode === 'B0001') {
+          console.log('京东Cookie失效');
+          $.msg($.name, `【提示】京东cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+          $.jdLogin = false;
           break
-        } else {
-          $.LKYLLogin = true;
         }
       }
-      $.jdLogin = true;
     }
   }
   // if ($.inviteReward > 0) {
@@ -288,18 +296,20 @@ function enterRoom(invitePin) {
   return new Promise(resolve => {
     headers.Cookie = cookie;
     headers.LKYLToken = $.LKYLToken;
+    headers['Content-Type'] = "application/json";
     const options = {
-      url: `${JD_BASE_API}/enterRoom?reqSource=weapp&invitePin=${encodeURI(invitePin)}`,
+      url: `${JD_BASE_API}/enterRoom/h5?reqSource=weapp&invitePin=${encodeURI(invitePin)}&inviteSource=task_invite&shareSource=weapp&inviteTimeStamp=${Date.now()}`,
+      body: '{}',
       headers
     }
-    $.get(options, (err, resp, data) => {
+    $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          $.log('API请求失败')
-          $.logErr(JSON.stringify(err));
+          $.log(`${$.name} API请求失败`)
+          $.log(JSON.stringify(err))
         } else {
-          data = JSON.parse(data);
           // console.log('进入房间', data)
+          data = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp)

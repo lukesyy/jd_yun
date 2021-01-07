@@ -1,6 +1,6 @@
 /*
 东东萌宠 更新地址： https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js
-更新时间：2020-12-26
+更新时间：2021-01-06
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
@@ -231,8 +231,10 @@ async function masterHelpInit() {
       if(!res.result.addedBonusFlag) {
         console.log("开始领取额外奖励");
         let getHelpAddedBonusResult = await request('getHelpAddedBonus');
+        if (getHelpAddedBonusResult.resultCode === '0') {
+          message += `【额外奖励${getHelpAddedBonusResult.result.reward}领取】${getHelpAddedBonusResult.message}\n`;
+        }
         console.log(`领取30g额外奖励结果：【${getHelpAddedBonusResult.message}】`);
-        message += `【额外奖励${getHelpAddedBonusResult.result.reward}领取】${getHelpAddedBonusResult.message}\n`;
       } else {
         console.log("已经领取过5好友助力额外奖励");
         message += `【额外奖励】已领取\n`;
@@ -261,6 +263,8 @@ async function masterHelpInit() {
  * 运行脚本时你自己的shareCode会在控制台输出, 可以将其分享给他人
  */
 async function slaveHelp() {
+  $.log(`\n因1.6日好友助力功能下线。故暂时屏蔽\n`)
+  return
   let helpPeoples = '';
   for (let code of newShareCodes) {
     console.log(`开始助力京东账号${$.index} - ${$.nickName}的好友: ${code}`);
@@ -281,7 +285,7 @@ async function slaveHelp() {
         console.log(`助力其他情况：${JSON.stringify(response)}`);
       }
     } else {
-      console.log(`助理好友结果: ${response.message}`);
+      console.log(`助力好友结果: ${response.message}`);
     }
   }
   if (helpPeoples && helpPeoples.length > 0) {
@@ -442,7 +446,7 @@ function readShareCode() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
+            console.log(`随机取个${randomCount}码放到您固定的互助码后面(不影响已有固定互助)`)
             data = JSON.parse(data);
           }
         }
@@ -467,7 +471,9 @@ function shareCodesFormat() {
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
-    const readShareCodeRes = await readShareCode();
+    //因好友助力功能下线。故暂时屏蔽
+    // const readShareCodeRes = await readShareCode();
+    const readShareCodeRes = null;
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
     }
