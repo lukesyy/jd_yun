@@ -55,8 +55,8 @@ const JD_API_HOST = 'https://car-member.jd.com/api/';
       if (cookiesArr[i]) {
         cookie = cookiesArr[i];
         $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-        console.log(`京东账号${i}`)
         $.index = i + 1;
+        console.log(`京东账号${$.index} ${$.UserName}`)
         $.isLogin = true;
         $.nickName = '';
         message = '';
