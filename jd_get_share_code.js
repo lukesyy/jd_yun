@@ -1,5 +1,5 @@
 /*
-一键获取我仓库所以脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
+一键获取我仓库所有需要互助类脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
 没必要设置(cron)定时执行，需要的时候，自己手动执行一次即可
 
 更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js
@@ -152,6 +152,7 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 !(async () => {
   if (!cookiesArr[0]) {
@@ -170,9 +171,7 @@ if ($.isNode()) {
       if (!$.isLogin) {
         continue
       }
-      console.log(`======账号${$.index}开始======`)
       await getShareCode()
-      console.log(`======账号${$.index}结束======\n`)
     }
   }
 })()
@@ -598,6 +597,7 @@ async function getJoy(){
   })
 }
 async function getShareCode() {
+  console.log(`======账号${$.index}开始======`)
   await getJdFactory()
   await getJxFactory()
   await getJdPet()
@@ -605,6 +605,7 @@ async function getShareCode() {
   await getJDFruit()
   await getJdZZ()
   await getJoy()
+  console.log(`======账号${$.index}结束======\n`)
 }
 
 function safeGet(data) {
