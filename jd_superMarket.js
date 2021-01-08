@@ -87,8 +87,8 @@ async function jdSuperMarket() {
   await businessCircleActivity();//商圈活动
   await receiveBlueCoin();//收蓝币（小费）
   await receiveLimitProductBlueCoin();//收限时商品的蓝币
-  await smtgSign();//每日签到
-  await smtgBeanSign()//
+  await daySign();//每日签到
+  await BeanSign()//
   await doDailyTask();//做日常任务，分享，关注店铺，
   await help();//商圈助力
   //await smtgQueryPkTask();//做商品PK任务
@@ -258,49 +258,35 @@ function receiveBlueCoin(timeout = 0) {
     },timeout)
   })
 }
-
+async function daySign() {
+  const signDataRes = await smtgSign({"shareId":"QcSH6BqSXysv48bMoRfTBz7VBqc5P6GodDUBAt54d8598XAUtNoGd4xWVuNtVVwNO1dSKcoaY3sX_13Z-b3BoSW1W7NnqD36nZiNuwrtyO-gXbjIlsOBFpgIPMhpiVYKVAaNiHmr2XOJptu14d8uW-UWJtefjG9fUGv0Io7NwAQ","channel":"4"});
+  await smtgSign({"shareId":"TBj0jH-x7iMvCMGsHfc839Tfnco6UarNx1r3wZVIzTZiLdWMRrmoocTbXrUOFn0J6UIir16A2PPxF50_Eoo7PW_NQVOiM-3R16jjlT20TNPHpbHnmqZKUDaRajnseEjVb-SYi6DQqlSOioRc27919zXTEB6_llab2CW2aDok36g","channel":"4"});
+  if (signDataRes && signDataRes.code === 0) {
+    const signList = await smtgSignList();
+    if (signList.data.bizCode === 0) {
+      $.todayDay = signList.data.result.todayDay;
+    }
+    if (signDataRes.code === 0 && signDataRes.data.success) {
+      message += `【第${$.todayDay}日签到】成功，奖励${signDataRes.data.result.rewardBlue}蓝币\n`
+    } else {
+      message += `【第${$.todayDay}日签到】${signDataRes.data.bizMsg}\n`
+    }
+  }
+}
+async function BeanSign() {
+  const beanSignRes = await smtgSign({"channel": "1"});
+  console.log(`每日签到得京豆结果:${JSON.stringify(beanSignRes)}`)
+}
 //每日签到
-function smtgSign() {
+function smtgSign(body) {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_sign', {"shareId":"QcSH6BqSXysv48bMoRfTBz7VBqc5P6GodDUBAt54d8598XAUtNoGd4xWVuNtVVwNO1dSKcoaY3sX_13Z-b3BoSW1W7NnqD36nZiNuwrtyO-gXbjIlsOBFpgIPMhpiVYKVAaNiHmr2XOJptu14d8uW-UWJtefjG9fUGv0Io7NwAQ","channel":"4"}), async (err, resp, data) => {
+    $.get(taskUrl('smtg_sign', body), async (err, resp, data) => {
       try {
-        // console.log('ddd----ddd', data)
         if (err) {
           console.log('\n京小超: API查询请求失败 ‼️‼️')
           console.log(JSON.stringify(err));
         } else {
           data = JSON.parse(data);
-          // console.log('ddd----ddd', data)
-          const signList = await smtgSignList();
-          if (signList.data.bizCode === 0) {
-            $.todayDay = signList.data.result.todayDay;
-          }
-          if (data.code === 0 && data.data.success) {
-            message += `【第${$.todayDay}日签到】成功，奖励${data.data.result.rewardBlue}蓝币\n`
-          } else {
-            message += `【第${$.todayDay}日签到】${data.data.bizMsg}\n`
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-function smtgBeanSign() {
-  return new Promise((resolve) => {
-    $.get(taskUrl('smtg_sign',{"channel": "1"}), async (err, resp, data) => {
-      try {
-        // console.log('ddd----ddd', data)
-        if (err) {
-          console.log('\n京小超: API查询请求失败 ‼️‼️')
-          console.log(JSON.stringify(err));
-        } else {
-          //data = JSON.parse(data);
-          console.log(data)
         }
       } catch (e) {
         $.logErr(e, resp);
