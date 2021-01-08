@@ -98,6 +98,7 @@ async function jdSuperMarket() {
   await manageProduct();
   await limitTimeProduct();
   await smtgHome();
+  await receiveUserUpgradeBlue()
 }
 function showMsg() {
   $.log(`\n${message}\n`);
@@ -203,7 +204,7 @@ async function doDailyTask() {
 }
 
 async function receiveGoldCoin() {
-  $.goldCoinData = await smtgReceiveCoin(0);
+  $.goldCoinData = await smtgReceiveCoin({ "type": 0 });
   if ($.goldCoinData.data.bizCode === 0) {
     console.log(`领取金币成功${$.goldCoinData.data.result.receivedGold}`)
     message += `【领取金币】${$.goldCoinData.data.result.receivedGold}个\n`;
@@ -214,7 +215,7 @@ async function receiveGoldCoin() {
 
 //领限时商品的蓝币
 async function receiveLimitProductBlueCoin() {
-  const res = await smtgReceiveCoin(1);
+  const res = await smtgReceiveCoin({ "type": 1 });
   console.log(`\n限时商品领蓝币结果：[${res.data.bizMsg}]\n`);
   if (res.data.bizCode === 0) {
     message += `【限时商品】获得${res.data.result.receivedBlue}个蓝币\n`;
@@ -224,7 +225,7 @@ async function receiveLimitProductBlueCoin() {
 function receiveBlueCoin(timeout = 0) {
   return new Promise((resolve) => {
     setTimeout( ()=>{
-      $.get(taskUrl('smtg_receiveCoin', { type: 2 }), async (err, resp, data) => {
+      $.get(taskUrl('smtg_receiveCoin', {"type": 2, "channel": "18"}), async (err, resp, data) => {
         try {
           if (err) {
             console.log('\n京小超: API查询请求失败 ‼️‼️')
@@ -275,7 +276,9 @@ async function daySign() {
 }
 async function BeanSign() {
   const beanSignRes = await smtgSign({"channel": "1"});
-  console.log(`每日签到得京豆结果:${JSON.stringify(beanSignRes)}`)
+  if (beanSignRes && beanSignRes.data['bizCode'] === 0) {
+    console.log(`每天从指定入口进入游戏,可获得额外奖励:${JSON.stringify(beanSignRes)}`)
+  }
 }
 //每日签到
 function smtgSign(body) {
@@ -696,7 +699,19 @@ async function limitTimeProduct() {
     }
   }
 }
-
+//领取店铺升级的蓝币奖励
+async function receiveUserUpgradeBlue() {
+  if ($.userUpgradeBlueVos && $.userUpgradeBlueVos.length > 0) {
+    for (let item of $.userUpgradeBlueVos) {
+      await smtgReceiveCoin({ "id": item.id, "type": 5 })
+    }
+  }
+  const res = await smtgReceiveCoin({"type": 4, "channel": "18"})
+  $.log(`${JSON.stringify(res)}\n`)
+  if (res && res.data['bizCode'] === 0) {
+    console.log(`成功领取${res.data.result['receivedTurnover']}蓝币\n`);
+  }
+}
 //=============================================脚本使用到的京东API=====================================
 function updatePkActivityId(url = 'https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateTeam.json') {
   return new Promise(resolve => {
@@ -809,7 +824,7 @@ function smtgQueryShopTask() {
 }
 function smtgSignList() {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_signList'), (err, resp, data) => {
+    $.get(taskUrl('smtg_signList', { "channel": "18" }), (err, resp, data) => {
       try {
         // console.log('ddd----ddd', data)
         if (err) {
@@ -828,7 +843,7 @@ function smtgSignList() {
 }
 function smtgHome() {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_home'), (err, resp, data) => {
+    $.get(taskUrl('smtg_newHome', { "channel": "18" }), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京小超: API查询请求失败 ‼️‼️')
@@ -837,10 +852,9 @@ function smtgHome() {
           data = JSON.parse(data);
           if (data.code === 0 && data.data.success) {
             const { result } = data.data;
-            const { shopName, totalGold, totalBlue } = result;
-            $.circleStatus = result.circleStatus;
+            const { shopName, totalBlue, userUpgradeBlueVos } = result;
+            $.userUpgradeBlueVos = userUpgradeBlueVos;
             subTitle = shopName;
-            message += `【总金币】${totalGold}个\n`;
             message += `【总蓝币】${totalBlue}个\n`;
           }
         }
@@ -915,11 +929,8 @@ function smtgDoAssistPkTask(code) {
     })
   })
 }
-function smtgReceiveCoin(type) {
+function smtgReceiveCoin(body) {
   return new Promise((resolve) => {
-    const body = {
-      "type": type
-    }
     $.get(taskUrl('smtg_receiveCoin', body), (err, resp, data) => {
       try {
         if (err) {
