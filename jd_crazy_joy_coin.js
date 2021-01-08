@@ -213,10 +213,10 @@ async function jdJxStory() {
 
   // 如果格子全部被占有且没有可以合并的JOY，只能回收低级的JOY
   if(checkHasFullOccupied() && !checkCanMerge()) {
-    const minYoyId = Math.min(...$.joyIds);
-    const boxId = $.joyIds.indexOf(minYoyId);
-    console.log(`格子全部被占有且没有可以合并的JOY，回收${boxId + 1}号位等级为${minYoyId}的JOY`)
-    await sellJoy(minYoyId, boxId);
+    const minJoyId = Math.min(...$.joyIds);
+    const boxId = $.joyIds.indexOf(minJoyId);
+    console.log(`格子全部被占有且没有可以合并的JOY，回收${boxId + 1}号位等级为${minJoyId}的JOY`)
+    await sellJoy(minJoyId, boxId);
     await getJoyList();
   }
 
