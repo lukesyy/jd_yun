@@ -22,12 +22,12 @@ inputs:
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_bean_sign
-    - timer: #京小超兑换奖品 #摇京豆 #京东汽车
+    - timer: #京小超兑换奖品 #摇京豆 #京东汽车 #京东汽车兑换
         parameters:
-          name: jd_blueCoin_jd_club_lottery_car
+          name: jd_blueCoin_jd_club_lottery_car_car_exchange
           cronExpression: "0 0 0 * * * *"
           enable: true
-          argument: jd_blueCoin&jd_club_lottery&jd_car
+          argument: jd_blueCoin&jd_club_lottery&jd_car&jd_car_exchange
     - timer: # 东东农场# 东东萌宠
         parameters:
           name: jd_fruit_jd_pet
@@ -46,12 +46,12 @@ inputs:
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_live
-    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机 #东东小窝 #健康抽奖机
+    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机 #东东小窝
         parameters:
-          name: redPacket_shop_unsubscribe_unbind_lotteryMachine_small_home_health
+          name: redPacket_shop_unsubscribe_unbind_lotteryMachine_small_home
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_small_home&jd_health
+          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_small_home
     - timer: # 京东天天加速# 天天提鹅
         parameters:
           name: jd_speed_jd_daily_egg

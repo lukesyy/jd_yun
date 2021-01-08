@@ -1,3 +1,25 @@
+/*
+一键获取我仓库所有需要互助类脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
+没必要设置(cron)定时执行，需要的时候，自己手动执行一次即可
+
+更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js
+已支持IOS双京东账号, Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#获取互助码
+20 13 * * 6 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码, enabled=true
+
+================Loon==============
+[Script]
+cron "20 13 * * 6" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码
+
+===============Surge=================
+获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js
+
+============小火箭=========
+获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=200, enable=true
+ */
 const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";
 let cookiesArr = [], cookie = '', message;
@@ -130,6 +152,7 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 !(async () => {
   if (!cookiesArr[0]) {
@@ -148,9 +171,7 @@ if ($.isNode()) {
       if (!$.isLogin) {
         continue
       }
-      console.log(`======账号${$.index}开始======`)
       await getShareCode()
-      console.log(`======账号${$.index}结束======\n`)
     }
   }
 })()
@@ -576,6 +597,7 @@ async function getJoy(){
   })
 }
 async function getShareCode() {
+  console.log(`======账号${$.index}开始======`)
   await getJdFactory()
   await getJxFactory()
   await getJdPet()
@@ -583,6 +605,7 @@ async function getShareCode() {
   await getJDFruit()
   await getJdZZ()
   await getJoy()
+  console.log(`======账号${$.index}结束======\n`)
 }
 
 function safeGet(data) {
