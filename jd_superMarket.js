@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2021-1-17 18:22:37
+ * @Last Modified time: 2021-1-8 18:22:37
  */
 /*
 东东超市(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
@@ -97,6 +97,7 @@ async function jdSuperMarket() {
   await upgrade();//升级货架和商品
   await manageProduct();
   await limitTimeProduct();
+  await smtg_shopIndex();
   await smtgHome();
   await receiveUserUpgradeBlue()
 }
@@ -701,10 +702,16 @@ async function limitTimeProduct() {
 }
 //领取店铺升级的蓝币奖励
 async function receiveUserUpgradeBlue() {
+  $.receiveUserUpgradeBlue = 0;
   if ($.userUpgradeBlueVos && $.userUpgradeBlueVos.length > 0) {
     for (let item of $.userUpgradeBlueVos) {
-      await smtgReceiveCoin({ "id": item.id, "type": 5 })
+      const receiveCoin = await smtgReceiveCoin({ "id": item.id, "type": 5 })
+      $.log(`\n${JSON.stringify(receiveCoin)}`)
+      if (receiveCoin && receiveCoin.data['bizCode'] === 0) {
+        $.receiveUserUpgradeBlue += receiveCoin.data.result['receivedBlue']
+      }
     }
+    $.log(`店铺升级奖励获取:${$.receiveUserUpgradeBlue}蓝币\n`)
   }
   const res = await smtgReceiveCoin({"type": 4, "channel": "18"})
   $.log(`${JSON.stringify(res)}\n`)
@@ -713,6 +720,85 @@ async function receiveUserUpgradeBlue() {
   }
 }
 //=============================================脚本使用到的京东API=====================================
+
+//===新版本
+
+//查询有哪些货架
+function smtg_shopIndex() {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_shopIndex', { "channel": 1 }), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+          if (data && data.data['bizCode'] === 0) {
+            const { shopId, shelfList } = data.data['result'];
+            if (shelfList && shelfList.length > 0) {
+              for (let item of shelfList) {
+                //status: 2可解锁,1可升级,-1不可解锁
+                if (item['status'] === 2) {
+                  $.log(`${item['name']}可解锁\n`)
+                  await smtg_shelfUnlock({ shopId, "shelfId": item['id'], "channel": 1 })
+                } else if (item['status'] === 1) {
+                  $.log(`${item['name']}可升级\n`)
+                  await smtg_shelfUpgrade({ shopId, "shelfId": item['id'], "channel": 1, "targetLevel": item['level'] + 1 });
+                } else if (item['status'] === -1) {
+                  $.log(`[${item['name']}] 未解锁`)
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+//解锁店铺
+function smtg_shelfUnlock(body) {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_shelfUnlock', body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          $.log(`解锁店铺结果:${data}\n`)
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function smtg_shelfUpgrade(body) {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_shelfUpgrade', body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          $.log(`店铺升级结果:${data}\n`)
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+//新版东东超市
 function updatePkActivityId(url = 'https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateTeam.json') {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json
@@ -852,8 +938,9 @@ function smtgHome() {
           data = JSON.parse(data);
           if (data.code === 0 && data.data.success) {
             const { result } = data.data;
-            const { shopName, totalBlue, userUpgradeBlueVos } = result;
+            const { shopName, totalBlue, userUpgradeBlueVos, turnoverProgress } = result;
             $.userUpgradeBlueVos = userUpgradeBlueVos;
+            $.turnoverProgress = turnoverProgress;//是否可解锁
             subTitle = shopName;
             message += `【总蓝币】${totalBlue}个\n`;
           }
