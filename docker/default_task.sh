@@ -107,13 +107,34 @@ if [ $(grep -c "default_task.sh" $mergedListFile) -eq '0' ]; then
     echo "52 */1 * * * sh /scripts/docker/default_task.sh |ts >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
 fi
 
-if [ $RANDOM_DELAY_MAX ];then
+if [ $RANDOM_DELAY_MAX ]; then
     if [ $RANDOM_DELAY_MAX -ge 1 ]; then
         echo "已设置随机延迟为 $RANDOM_DELAY_MAX , 设置延迟任务中... "
         sed -i "/\(jd_bean_sign.js\|jd_blueCoin.js\|jd_joy_reward.js\|jd_joy_steal.js\|jd_joy_feedPets.js\)/!s/node/sleep \$((RANDOM % \$RANDOM_DELAY_MAX)); node/g" $mergedListFile
     fi
 else
     echo "未配置随即延迟对应的环境变量，故不设置延迟任务"
+fi
+
+##增加自定义shell脚本
+if [ 0"$CUSTOM_SHELL_FILE" = "0" ]; then
+    echo "未配置自定shell脚本文件，跳过执行。"
+else
+    if expr "$CUSTOM_SHELL_FILE" : 'http.*' &>/dev/null; then
+        echo "自定义shell脚本为远程脚本，开始下在自定义远程脚本。"
+        wget -O /scripts/docker/shell_script_mod.sh $CUSTOM_SHELL_FILE
+        echo "下载完成，开始执行..."
+        sh -x /scripts/docker/shell_script_mod.sh
+        echo "自定义远程shell脚本下载并执行结束。"
+    else
+        if [ !$CUSTOM_SHELL_FILE ]; then
+            echo "自定义shell脚本为docker挂载脚本文件，但是指定挂载文件不存在，跳过执行。"
+        else
+            echo "docker挂载的自定shell脚本，开始执行..."
+            sh -x $CUSTOM_SHELL_FILE
+            echo "docker挂载的自定shell脚本，执行结束。"
+        fi
+    fi
 fi
 
 echo "加载最新的定时任务文件..."
