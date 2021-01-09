@@ -25,7 +25,7 @@ let UserName = '';
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   console.log(`\n小功能::仅仅是收集一下京东双十一全名营业每秒产生的金币,建议一个小时跑一次脚本\n`)

@@ -66,7 +66,7 @@ function* step() {
   let subTitle = '', UserName = '';
   let option = {};
   if (!cookie) {
-    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     $.done();
     return
   }
@@ -741,7 +741,7 @@ function* step() {
     console.log('全部任务结束');
   } else {
     if (farmInfo.code === '3') {
-      $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+      $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
       $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
       $.done();
       return

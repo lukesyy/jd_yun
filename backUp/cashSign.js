@@ -7,7 +7,7 @@ const cookie = Key ? Key : $.getdata('CookieJD');
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   if (!cookie) {
-    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   await cash_sign();
