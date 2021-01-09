@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2020-12-27
+更新时间：2021-1-9
 活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
 或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 
@@ -316,11 +316,11 @@ function QueryHireReward() {
     })
   })
 }
-// 收取招工电力
+// 收取招工/劳模电力
 function hireAward(date, type = 0) {
   return new Promise(async resolve => {
     // const url = `/dreamfactory/friend/HireAward?zone=dream_factory&date=${new Date().Format("yyyyMMdd")}&type=0&sceneval=2&g_login_type=1`
-    $.get(taskurl('friend/HireAward', `date=${date}&type=${type}`), async (err, resp, data) => {
+    $.get(taskurl('friend/HireAward', `date=${date}&type=${type}&_stk=_time,date,type,zone`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
