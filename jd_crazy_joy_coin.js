@@ -211,8 +211,8 @@ async function jdJxStory() {
     $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
   }
 
-  // 如果格子全部被占有且没有可以合并的JOY，只能回收低级的JOY
-  if(checkHasFullOccupied() && !checkCanMerge()) {
+  // 如果格子全部被占有且没有可以合并的JOY，只能回收低级的JOY (没有34级JOY时才会执行)
+  if(checkHasFullOccupied() && !checkCanMerge() && !checkHas34Level()) {
     const minJoyId = Math.min(...$.joyIds);
     const boxId = $.joyIds.indexOf(minJoyId);
     console.log(`格子全部被占有且没有可以合并的JOY，回收${boxId + 1}号位等级为${minJoyId}的JOY`)
@@ -260,6 +260,11 @@ async function jdJxStory() {
 
 function checkHasFullOccupied() {
   return !$.joyIds.includes(0);
+}
+
+// 查询是否有34级JOY
+function checkHas34Level() {
+  return $.joyIds.includes(34);
 }
 
 function checkCanMerge() {
