@@ -266,7 +266,7 @@ function checkCanMerge() {
   let obj = {};
   let canMerge = false;
   $.joyIds.forEach((vo, idx) => {
-    if (vo !== 0) {
+    if (vo !== 0 && vo !== 34) {
       if (obj[vo]) {
         obj[vo].push(idx)
         canMerge = true;
