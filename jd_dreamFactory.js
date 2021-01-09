@@ -742,7 +742,7 @@ function GetUserComponent(pin = $.encryptPin) {
 
 function PickUpComponent(index, encryptPin) {
   return new Promise(resolve => {
-    $.get(taskurl('usermaterial/PickUpComponent', `placeId=${index}&pin=${encryptPin}`), (err, resp, data) => {
+    $.get(taskurl('usermaterial/PickUpComponent', `placeId=${index}&pin=${encryptPin}&_stk=_time,pin,placeId,zone`), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
