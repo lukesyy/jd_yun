@@ -676,7 +676,7 @@ function DrawProductionStagePrize() {
 }
 async function PickUp(encryptPin = $.encryptPin, help = false) {
   $.pickUpMyselfComponent = true;
-  const GetUserComponentRes = await GetUserComponent(encryptPin);
+  const GetUserComponentRes = await GetUserComponent(encryptPin, 500);
   if (GetUserComponentRes && GetUserComponentRes['ret'] === 0) {
     const { componentList } = GetUserComponentRes['data'];
     if (componentList && componentList.length <= 0) {
@@ -713,29 +713,31 @@ async function PickUp(encryptPin = $.encryptPin, help = false) {
     }
   }
 }
-function GetUserComponent(pin = $.encryptPin) {
+function GetUserComponent(pin = $.encryptPin, timeout = 0) {
   return new Promise(resolve => {
-    $.get(taskurl('usermaterial/GetUserComponent', `pin=${pin}`), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data['ret'] === 0) {
+    setTimeout(() => {
+      $.get(taskurl('usermaterial/GetUserComponent', `pin=${pin}`), (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data['ret'] === 0) {
 
-            } else {
-              console.log(`GetUserComponent失败：${JSON.stringify(data)}`)
+              } else {
+                console.log(`GetUserComponent失败：${JSON.stringify(data)}`)
+              }
             }
           }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
         }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
+      })
+    }, timeout)
   })
 }
 //收取地下随机零件电力API
