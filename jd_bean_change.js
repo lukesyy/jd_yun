@@ -84,7 +84,7 @@ async function showMsg()
   if ($.errorMsg) return
   if ($.isNode()) 
   {
-	if(((${$.message})!='') && (`${DND}` === 'false'))
+	if(($.message!='') && (`${DND}` === 'false'))
     await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
     else
 	{
