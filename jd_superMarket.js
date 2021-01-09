@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2021-1-8 18:22:37
+ * @Last Modified time: 2021-1-9 18:22:37
  */
 /*
 东东超市(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
@@ -83,26 +83,26 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
       $.done();
     })
 async function jdSuperMarket() {
-  await receiveGoldCoin();//收金币
+  // await receiveGoldCoin();//收金币
   await businessCircleActivity();//商圈活动
   await receiveBlueCoin();//收蓝币（小费）
-  await receiveLimitProductBlueCoin();//收限时商品的蓝币
+  // await receiveLimitProductBlueCoin();//收限时商品的蓝币
   await daySign();//每日签到
   await BeanSign()//
   await doDailyTask();//做日常任务，分享，关注店铺，
   await help();//商圈助力
   //await smtgQueryPkTask();//做商品PK任务
-  await myProductList();//货架
-  await drawLottery();
-  await upgrade();//升级货架和商品
-  await manageProduct();
-  await limitTimeProduct();
+  await drawLottery();//抽奖功能(招财进宝)
+  // await myProductList();//货架
+  // await upgrade();//升级货架和商品
+  // await manageProduct();
+  // await limitTimeProduct();
   await smtg_shopIndex();
   await smtgHome();
   await receiveUserUpgradeBlue()
 }
 function showMsg() {
-  $.log(`\n${message}\n`);
+  $.log(`【京东账号${$.index}】${$.nickName}\n${message}`);
   jdNotify = $.getdata('jdSuperMarketNotify') ? $.getdata('jdSuperMarketNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle ,`【京东账号${$.index}】${$.nickName}\n${message}`);
@@ -129,7 +129,7 @@ async function drawLottery() {
       }
     }
   } else {
-    console.log(`设置的为不抽奖`)
+    console.log(`设置的为不抽奖\n`)
   }
 }
 async function help() {
@@ -714,9 +714,9 @@ async function receiveUserUpgradeBlue() {
     $.log(`店铺升级奖励获取:${$.receiveUserUpgradeBlue}蓝币\n`)
   }
   const res = await smtgReceiveCoin({"type": 4, "channel": "18"})
-  $.log(`${JSON.stringify(res)}\n`)
+  // $.log(`${JSON.stringify(res)}\n`)
   if (res && res.data['bizCode'] === 0) {
-    console.log(`成功领取${res.data.result['receivedTurnover']}蓝币\n`);
+    console.log(`\n收取营业额：获得 ${res.data.result['receivedTurnover']}蓝币\n`);
   }
 }
 //=============================================脚本使用到的京东API=====================================
@@ -746,6 +746,10 @@ function smtg_shopIndex() {
                   await smtg_shelfUpgrade({ shopId, "shelfId": item['id'], "channel": 1, "targetLevel": item['level'] + 1 });
                 } else if (item['status'] === -1) {
                   $.log(`[${item['name']}] 未解锁`)
+                } else if (item['status'] === 0) {
+                  $.log(`[${item['name']}] 已解锁，当前等级：${item['level']}级`)
+                } else {
+                  $.log(`未知店铺状态(status)：${item['status']}\n`)
                 }
               }
             }
@@ -1474,11 +1478,11 @@ function requireConfig() {
       cookiesArr = cookiesData.map(item => item.cookie);
       cookiesArr.reverse();
       cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+      cookiesArr.reverse();
+      cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
     }
     console.log(`共${cookiesArr.length}个京东账号\n`);
-    console.log(`京小超已改版,目前暂不用助力, 故无助力码`)
+    // console.log(`京小超已改版,目前暂不用助力, 故无助力码`)
     // console.log(`\n京小超商圈助力码::${JSON.stringify(jdSuperMarketShareArr)}`);
     // console.log(`您提供了${jdSuperMarketShareArr.length}个账号的助力码\n`);
     resolve()
