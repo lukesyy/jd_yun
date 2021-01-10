@@ -10,10 +10,10 @@
 
 ================Loon==============
 [Script]
-cron "1 8,12,18* * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js,tag=口袋书店
+cron "1 8,12,18 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js,tag=口袋书店
 
 ===============Surge=================
-口袋书店 = type=cron,cronexp="1 8,12,18* * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js
+口袋书店 = type=cron,cronexp="1 8,12,18 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js
 
 ============小火箭=========
 口袋书店 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js, cronexpr="1 8,12,18* * *", timeout=200, enable=true
@@ -27,8 +27,8 @@ let cookiesArr = [], cookie = '', message;
 const ACT_ID = 'dz2010100034444201', shareUuid = '28a699ac78d74aa3b31f7103597f8927'
 
 let inviteCodes = [
-  '28a699ac78d74aa3b31f7103597f8927@f14ee9c92954cf79829320dd482bf49@fdf827db272543d88dbb51a505c2e869',
-  '28a699ac78d74aa3b31f7103597f8927@f14ee9c92954cf79829320dd482bf49@fdf827db272543d88dbb51a505c2e869'
+  '28a699ac78d74aa3b31f7103597f8927@2f14ee9c92954cf79829320dd482bf49@fdf827db272543d88dbb51a505c2e869',
+  '28a699ac78d74aa3b31f7103597f8927@2f14ee9c92954cf79829320dd482bf49@fdf827db272543d88dbb51a505c2e869'
 ]
 
 if ($.isNode()) {
@@ -107,6 +107,7 @@ async function jdBeauty() {
       $.gold -= 800
     }
   }
+  if($.userInfo.storeGold) await chargeGold()
   await helpFriends()
   await showMsg();
 }
@@ -116,6 +117,7 @@ async function helpFriends() {
     if (!code) continue
     console.log(`去助力好友${code}`)
     await getActContent(true, code)
+    await $.wait(500)
   }
 }
 
@@ -303,12 +305,21 @@ function getActContent(info = false, shareUuid = '') {
                       console.log(`去做${task.title}任务`)
                       await doTask(task.settings[0].type, task.settings[0].value)
                     }
-                  } else if (['逛会场', '浏览店铺', '浏览商品', //'每日签到'
-                  ].includes(task.title)) {
+                  } else if (['逛会场', '浏览店铺', '浏览商品'].includes(task.title)) {
                     if (task.okNum < task.dayMaxNum) {
                       console.log(`去做${task.title}任务`)
                       for (let set of task.settings.filter(vo => vo.status === 0)) {
                         await doTask(set.type, set.value)
+                        await $.wait(500)
+                      }
+                    }
+                  } else if(task.title === '每日签到'){
+                    const hour = new Date().getUTCHours() + 8
+                    if (8 <= hour && hour < 10 || 12 <= hour && hour < 14 || 18 <= hour && hour < 20) {
+                      console.log(`去做${task.title}任务`)
+                      for (let set of task.settings.filter(vo => vo.status === 0)) {
+                        let res = await doTask(set.type, set.value)
+                        if (res.result) break
                         await $.wait(500)
                       }
                     }
@@ -482,9 +493,9 @@ function getMyBook() {
             data = JSON.parse(data);
             if (data.result && data.data) {
               for (let book of data.data.myBookList) {
-                if (book.isPutOn === 2) {
+                if (book.isPutOn !== 1 && book.inventory > 0) {
                   console.log(`去上架【${book.bookName}】`)
-                  await upBook(book.uuid)
+                  await upBook(book.bookUuid)
                 }
               }
             }
@@ -514,6 +525,33 @@ function upBook(bookUuid) {
               console.log(`上架成功`)
             } else {
               console.log(data)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+function chargeGold() {
+  let body = `activityId=${ACT_ID}&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.token)}`
+  return new Promise(resolve => {
+    $.post(taskPostUrl('dingzhi/book/develop/chargeGold', body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${err},${jsonParse(resp.body)['message']}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.result && data.data) {
+              console.log(`金币收获成功，获得${data.data.chargeGold}`)
+            } else {
+              console.log(data.errorMessage)
             }
           }
         }
