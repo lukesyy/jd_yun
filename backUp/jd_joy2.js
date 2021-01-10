@@ -228,7 +228,7 @@ function* step() {
       console.log(`任务信息${JSON.stringify(petTaskConfig)}`)
       if (petTaskConfig.errorCode === 'B0001') {
         $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-        $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+        $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
         if ($.isNode() && notify.SCKEY) {
           notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
         }
@@ -239,7 +239,7 @@ function* step() {
       }
     }
   } else {
-    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     $.done();
     return
   }
