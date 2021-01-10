@@ -4,7 +4,7 @@
 感谢 @whyour 大佬
 
 京喜农场:脚本更新地址 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jxnc.js
-更新时间：2021-01-09 20:46:10
+更新时间：2021-01-10 22:47:51
 东东农场活动链接：https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2
 已支持IOS双京东账号,Node.js支持N个京东账号
 理论上脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -127,8 +127,8 @@ function requireConfig() {
 
         if ($.isNode()) {
             Object.keys(jdJxncShareCodeNode).forEach((item) => {
-                if (jxncShareCodeArr[item]) {
-                    jxncShareCodeArr.push(jxncShareCodeArr[item])
+                if (jdJxncShareCodeNode[item]) {
+                    jxncShareCodeArr.push(jdJxncShareCodeNode[item])
                 }
             })
         }
@@ -249,7 +249,7 @@ function getTaskList() {
             try {
                 const res = data.match(/try\{whyour\(([\s\S]*)\)\;\}catch\(e\)\{\}/)[1];
                 const {detail, msg, task = [], retmsg, ...other} = JSON.parse(res);
-                $.helpTask = task.filter(x => x.tasktype === 2)[0];
+                $.helpTask = task.filter(x => x.tasktype === 2)[0] || { eachtimeget: 0, limit: 0 };
                 $.allTask = task.filter(x => x.tasktype !== 3 && x.tasktype !== 2 && parseInt(x.left) > 0);
                 $.info = other;
                 $.log(`获取任务列表 ${retmsg} 总共${$.allTask.length}个任务！`);
@@ -351,6 +351,11 @@ function getMessage(endInfo) {
     const need = endInfo.target - endInfo.score;
     const get = $.drip;
     message += `【水滴】获得水滴${get} 还需水滴${need}\n`;
+    if (get > 0) {
+        const max = parseInt(need / get);
+        const min = parseInt(need / (get + $.helpTask.limit * $.helpTask.eachtimeget));
+        message += `【预测】还需 ${min} ~ ${max} 天\n`;
+    }
 }
 
 // 提交助力码
