@@ -210,6 +210,16 @@ async function jdJxStory() {
     $.log(`${$.joyIds[4]} ${$.joyIds[5]} ${$.joyIds[6]} ${$.joyIds[7]}`)
     $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
   }
+
+  // 如果格子全部被占有且没有可以合并的JOY，只能回收低级的JOY (没有34级JOY时才会执行)
+  if(checkHasFullOccupied() && !checkCanMerge() && !checkHas34Level()) {
+    const minJoyId = Math.min(...$.joyIds);
+    const boxId = $.joyIds.indexOf(minJoyId);
+    console.log(`格子全部被占有且没有可以合并的JOY，回收${boxId + 1}号位等级为${minJoyId}的JOY`)
+    await sellJoy(minJoyId, boxId);
+    await getJoyList();
+  }
+
   for (let i = 0; i < $.joyIds.length; ++i) {
     if (!$.canBuy) {
       $.log(`金币不足，跳过购买`)
@@ -246,6 +256,31 @@ async function jdJxStory() {
   await getUserBean()
   await $.wait(5000)
   console.log(`当前信息：${$.bean} 京豆，${$.coin} 金币`)
+}
+
+function checkHasFullOccupied() {
+  return !$.joyIds.includes(0);
+}
+
+// 查询是否有34级JOY
+function checkHas34Level() {
+  return $.joyIds.includes(34);
+}
+
+function checkCanMerge() {
+  let obj = {};
+  let canMerge = false;
+  $.joyIds.forEach((vo, idx) => {
+    if (vo !== 0 && vo !== 34) {
+      if (obj[vo]) {
+        obj[vo].push(idx)
+        canMerge = true;
+      } else {
+        obj[vo] = [idx]
+      }
+    }
+  });
+  return canMerge;
 }
 
 function getJoyList() {
@@ -348,6 +383,38 @@ function buyJoy(joyId) {
               return
             }
             $.log(`购买${joyId}级joy成功，剩余金币【${data.data.totalCoins}】`)
+            $.coin = data.data.totalCoins
+          } else {
+            console.log(data.message)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+// 出售（回收）joy
+function sellJoy(joyId, boxId) {
+  const body = {"action": "SELL", "joyId": joyId, "boxId": boxId}
+  return new Promise((resolve) => {
+    $.get(taskUrl('crazyJoy_joy_trade', JSON.stringify(body)), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.success) {
+            if (data.data.eventInfo) {
+              await openBox(data.data.eventInfo.eventType, data.data.eventInfo.eventRecordId)
+              $.canBuy = false
+              return
+            }
+            $.log(`回收${joyId}级joy成功，剩余金币【${data.data.totalCoins}】`)
             $.coin = data.data.totalCoins
           } else {
             console.log(data.message)
