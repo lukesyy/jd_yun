@@ -321,8 +321,13 @@ function getJxNc(){
             if (safeGet(data)) {
               data = JSON.parse(data);
               if (data["ret"] === 0) {
-                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场助力码】${data["smp"]}`);
-                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场active】 ${$.info.active}`);
+                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场助力码】${data.smp}`);
+
+                if (data.active) {
+                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场active】 ${data.active}`);
+                } else {
+                  console.log( `【账号${$.index}（${$.nickName || $.UserName}）京喜农场未选择种子，请先去京喜农场选择种子`);
+                }
               }
             } else {
               console.log(`京喜农场返回值解析异常：${JSON.stringify(data)}`);
@@ -422,7 +427,7 @@ async function getJdZZ() {
               data = JSON.parse(data);
               if (data.data.shareTaskRes) {
                 console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】${data.data.shareTaskRes.itemId}`);
-                              } else {
+              } else {
                 //console.log(`已满5人助力,暂时看不到您的京东赚赚好友助力码`)
               }
             }
