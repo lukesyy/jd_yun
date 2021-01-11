@@ -456,6 +456,7 @@ function helpShareCode(code) {
             $.log('助力码与当前账号相同，跳过助力。准备进行下一个助力');
             resolve(true);
         }
+        $.log(`即将助力 share code：${code}`);
         $.get(
             taskUrl('help', `active=${$.info.active}&joinnum=${$.info.joinnum}&smp=${code}`),
             async (err, resp, data) => {
