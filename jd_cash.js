@@ -146,6 +146,7 @@ async function helpFriends() {
       console.log(`去帮助好友${helpInfo['inviteCode']}`)
       await helpFriend(helpInfo)
       if(!$.canHelp) break
+      await $.wait(1000)
     }
   }
 }
@@ -162,7 +163,7 @@ function helpFriend(helpInfo) {
             if( data.code === 0 && data.data.bizCode === 0){
               console.log(`助力成功，获得${data.data.result.cashStr}`)
               // console.log(data.data.result.taskInfos)
-            } else if (data.bizCode===207){
+            } else if (data.data.bizCode===207){
               $.canHelp = false
             } else{
               console.log(data.data.bizMsg)
