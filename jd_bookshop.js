@@ -690,6 +690,14 @@ function requireConfig() {
     console.log(`共${cookiesArr.length}个京东账号\n`);
     $.shareCodesArr = [];
     if ($.isNode()) {
+      //自定义助力码
+      if (process.env.BOOKSHOP_SHARECODES) {
+        if (process.env.BOOKSHOP_SHARECODES.indexOf('\n') > -1) {
+          shareCodes = process.env.BOOKSHOP_SHARECODES.split('\n');
+        } else {
+          shareCodes = process.env.BOOKSHOP_SHARECODES.split('&');
+        }
+      }
       Object.keys(shareCodes).forEach((item) => {
         if (shareCodes[item]) {
           $.shareCodesArr.push(shareCodes[item])
