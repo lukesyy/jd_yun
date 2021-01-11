@@ -324,9 +324,9 @@ function getJxNc(){
                 console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场助力码】${data.smp}`);
 
                 if (data.active) {
-                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场active】 ${data.active}`);
+                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场active】${data.active}`);
                 } else {
-                  console.log( `【账号${$.index}（${$.nickName || $.UserName}）京喜农场未选择种子，请先去京喜农场选择种子`);
+                  console.log( `【账号${$.index}（${$.nickName || $.UserName}）京喜农场】未选择种子，请先去京喜农场选择种子`);
                 }
               }
             } else {
