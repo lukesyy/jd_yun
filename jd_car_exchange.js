@@ -7,22 +7,23 @@
 活动网页地址：https://h5.m.jd.com/babelDiy/Zeus/44bjzCpzH9GpspWeBzYSqBA7jEtP/index.html#/journey
 
 更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange
-已支持IOS双京东账号, Node.js支持N个京东账号
+已支持IOS, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
+
 ============Quantumultx===============
 [task_local]
 #京东汽车兑换
-0 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange, tag=京东汽车兑换, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
+0 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange.js, tag=京东汽车兑换, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange, tag=京东汽车兑换
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange.js, tag=京东汽车兑换
 
 ===============Surge=================
-京东汽车兑换 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange
+京东汽车兑换 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=2000,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange.js
 
 ============小火箭=========
-京东汽车兑换 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange, cronexpr="0 0 * * *", timeout=200, enable=true
+京东汽车兑换 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange.js, cronexpr="0 0 * * *", timeout=2000, enable=true
  */
 const $ = new Env('京东汽车兑换');
 
