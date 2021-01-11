@@ -46,6 +46,7 @@ const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "ju
 let subTitle = '', message = '', option = {'open-url': openUrl}; // 消息副标题，消息正文，消息扩展参数
 const JXNC_API_HOST = 'https://wq.jd.com/';
 
+$.detail = []; // 今日明细列表
 $.helpTask = null;
 $.allTask = []; // 任务列表
 $.info = {}; // 用户信息
@@ -265,6 +266,7 @@ function getTaskList() {
             try {
                 const res = data.match(/try\{whyour\(([\s\S]*)\)\;\}catch\(e\)\{\}/)[1];
                 const {detail, msg, task = [], retmsg, ...other} = JSON.parse(res);
+                $.detail = detail;
                 $.helpTask = task.filter(x => x.tasktype === 2)[0] || {eachtimeget: 0, limit: 0};
                 $.allTask = task.filter(x => x.tasktype !== 3 && x.tasktype !== 2 && parseInt(x.left) > 0);
                 $.info = other;
@@ -362,11 +364,22 @@ function getMessage(endInfo, startInfo) {
     const need = endInfo.target - endInfo.score;
     const get = endInfo.modifyscore; // 本地变更获得水滴
     const leaveGet = startInfo.modifyscore; // 离开时获得水滴
-    message += `【水滴】本次水滴${get} 离线获得${leaveGet} 还需水滴${need}\n`;
-    if (get > 0 || leaveGet > 0) {
-        notifyBool = notifyBool && notifyLevel >= 1;
-        const day = parseInt(need / (get + leaveGet));
+    let dayGet = 0; // 今日共获取水滴数
+    if ($.detail) {
+        let dayTime = new Date(new Date().toLocaleDateString()).getTime() / 1000; // 今日 0 点时间戳（10位数）
+        $.detail.forEach(function (item, index) {
+            if (item.time >= dayTime && item.score) {
+                dayGet += item.score;
+            }
+        });
+    }
+    message += `【水滴】本次获得${get} 离线获得${leaveGet} 今日获得${dayGet} 还需水滴${need}\n`;
+    if (get > 0 || leaveGet > 0 || dayGet > 0) {
+        const day = parseInt(need / (dayGet > 0 ? dayGet : (get + leaveGet)));
         message += `【预测】还需 ${day} 天\n`;
+    }
+    if (get > 0 || leaveGet > 0) { // 本次 或 离线 有水滴
+        notifyBool = notifyBool && notifyLevel >= 1;
     } else {
         notifyBool = notifyBool && notifyLevel >= 2;
     }
