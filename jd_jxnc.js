@@ -211,10 +211,7 @@ function shareCodesFormat() {
         // console.log(`第${$.index}个京东账号的助力码:::${jdFruitShareArr[$.index - 1]}`)
         if (jxncShareCodeArr[$.index - 1]) {
             currentShareCode = jxncShareCodeArr[$.index - 1].split('@');
-            let length = currentShareCode.length;
-            if (length < 3) {
-                currentShareCode.push(...(shareCode.split('@').splice(0, 3 - length)));
-            }
+            currentShareCode.push(...(shareCode.split('@')));
         } else {
             $.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码`)
             currentShareCode = shareCode.split('@');
@@ -242,10 +239,10 @@ async function jdJXNC() {
             await $.wait(500);
             const endInfo = await getTaskList();
             getMessage(endInfo, startInfo);
+            await submitInviteId($.UserName);
+            await $.wait(500);
             let next = await helpFriends();
             if (next) {
-                await submitInviteId($.UserName);
-                await $.wait(500);
                 while (true) {
                     assistUserShareCode = await getAssistUser();
                     if (assistUserShareCode) {
