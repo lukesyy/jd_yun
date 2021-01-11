@@ -27,7 +27,7 @@ const JD_API_HOST = 'https://blindbox.jd.com';
 let shareId = '';
 !(async () => {
   if (!cookie) {
-    $.msg('【京东账号一】热8超级盲盒', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg('【京东账号一】热8超级盲盒', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
   } else {
     UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
     // await shareUrl();

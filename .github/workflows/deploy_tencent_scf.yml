@@ -71,12 +71,15 @@ jobs:
           if [ $DREAM_FACTORY_SHARE_CODES ]; then sed -i "/variables/a\      DREAM_FACTORY_SHARE_CODES: $DREAM_FACTORY_SHARE_CODES" serverless.yml; fi;
           if [ $JDZZ_SHARECODES ]; then sed -i "/variables/a\      JDZZ_SHARECODES: $JDZZ_SHARECODES" serverless.yml; fi;
           if [ $JDJOY_SHARECODES ]; then sed -i "/variables/a\      JDJOY_SHARECODES: $JDJOY_SHARECODES" serverless.yml; fi;
+          if [ $BOOKSHOP_SHARECODES ]; then sed -i "/variables/a\      BOOKSHOP_SHARECODES: $BOOKSHOP_SHARECODES" serverless.yml; fi;
+          if [ $JXNC_SHARECODES ]; then sed -i "/variables/a\      JXNC_SHARECODES: $JXNC_SHARECODES" serverless.yml; fi;
           if [ $TG_PROXY_HOST ]; then sed -i "/variables/a\      TG_PROXY_HOST: $TG_PROXY_HOST" serverless.yml; fi;
           if [ $TG_PROXY_PORT ]; then sed -i "/variables/a\      TG_PROXY_PORT: $TG_PROXY_PORT" serverless.yml; fi;
           if [ $MONEY_TREE_SELL_FRUIT ]; then sed -i "/variables/a\      MONEY_TREE_SELL_FRUIT: $MONEY_TREE_SELL_FRUIT" serverless.yml; fi;
           if [ $FACTORAY_WANTPRODUCT_NAME ]; then sed -i "/variables/a\      FACTORAY_WANTPRODUCT_NAME: $FACTORAY_WANTPRODUCT_NAME" serverless.yml; fi;
           if [ $WATCH_ACCEPTBODY ]; then sed -i "/variables/a\      WATCH_ACCEPTBODY: $WATCH_ACCEPTBODY" serverless.yml; fi;
           if [ $WATCH_DOBODY ]; then sed -i "/variables/a\      WATCH_DOBODY: $WATCH_DOBODY" serverless.yml; fi;
+          if [ $JXNCTOKENS ]; then sed -i "/variables/a\      JXNCTOKENS: $JXNCTOKENS" serverless.yml; fi;
           cat serverless.yml
           env
         env: #因为直接读取secrets里面的值很多字符不会自动转译，导致写入serverless.yml异常，所以设置到环境变量，在读取环境变量转译过的值
@@ -126,12 +129,15 @@ jobs:
           DREAM_FACTORY_SHARE_CODES: ${{ secrets.DREAM_FACTORY_SHARE_CODES}}
           JDZZ_SHARECODES: ${{ secrets.JDZZ_SHARECODES}}
           JDJOY_SHARECODES: ${{ secrets.JDJOY_SHARECODES}}
+          BOOKSHOP_SHARECODES: ${{ secrets.BOOKSHOP_SHARECODES}}
+          JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES}}
           TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}
           TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}
           MONEY_TREE_SELL_FRUIT: ${{ secrets.MONEY_TREE_SELL_FRUIT}}
           FACTORAY_WANTPRODUCT_NAME: ${{ secrets.FACTORAY_WANTPRODUCT_NAME}}
           WATCH_ACCEPTBODY: ${{ secrets.WATCH_ACCEPTBODY}}
           WATCH_DOBODY: ${{ secrets.WATCH_DOBODY}}
+          JXNCTOKENS: ${{ secrets.JXNCTOKENS}}
 
       - name: "部署到腾讯云函数"
         run: serverless deploy

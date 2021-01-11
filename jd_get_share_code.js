@@ -1,3 +1,25 @@
+/*
+一键获取我仓库所有需要互助类脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
+没必要设置(cron)定时执行，需要的时候，自己手动执行一次即可
+
+更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js
+已支持IOS双京东账号, Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#获取互助码
+20 13 * * 6 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码, enabled=true
+
+================Loon==============
+[Script]
+cron "20 13 * * 6" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码
+
+===============Surge=================
+获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js
+
+============小火箭=========
+获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=200, enable=true
+ */
 const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";
 let cookiesArr = [], cookie = '', message;
@@ -130,10 +152,11 @@ if ($.isNode()) {
   cookiesArr.reverse();
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -148,9 +171,7 @@ if ($.isNode()) {
       if (!$.isLogin) {
         continue
       }
-      console.log(`======账号${$.index}开始======`)
       await getShareCode()
-      console.log(`======账号${$.index}结束======\n`)
     }
   }
 })()
@@ -223,7 +244,7 @@ function getJxFactory(){
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`);
-            console.log(`惊喜工厂 API请求失败，请检查网路重试`);
+            console.log(`京喜工厂 API请求失败，请检查网路重试`);
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -241,7 +262,7 @@ function getJxFactory(){
                   $.commodityDimId = production.commodityDimId;
                   $.encryptPin = data.user.encryptPin;
                   // subTitle = data.user.pin;
-                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）惊喜工厂】${data.user.encryptPin}`);
+                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜工厂】${data.user.encryptPin}`);
                 }
               } else {
                 $.unActive = false; //标记是否开启了京喜活动或者选购了商品进行生产
@@ -268,6 +289,60 @@ function getJxFactory(){
     );
   })
 }
+
+function getJxNc(){
+  const JXNC_API_HOST = "https://wq.jd.com/";
+
+  function JXNC_taskurl(function_path, body) {
+    return {
+      url: `${JXNC_API_HOST}cubeactive/farm/${function_path}?${body}&farm_jstoken=&phoneid=&timestamp=&sceneval=2&g_login_type=1&_=${Date.now()}&g_ty=ls`,
+      headers: {
+        Cookie: cookie,
+        Accept: `*/*`,
+        Connection: `keep-alive`,
+        Referer: `https://st.jingxi.com/pingou/dream_factory/index.html`,
+        'Accept-Encoding': `gzip, deflate, br`,
+        Host: `wq.jd.com`,
+        'Accept-Language': `zh-cn`,
+      },
+    };
+  }
+
+  return new Promise(resolve => {
+    $.get(
+      JXNC_taskurl('query', `type=1`),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`);
+            console.log(`京喜农场 API请求失败，请检查网路重试`);
+          } else {
+            data = data.match(/try\{Query\(([\s\S]*)\)\;\}catch\(e\)\{\}/)[1];
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data["ret"] === 0) {
+                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场助力码】${data.smp}`);
+
+                if (data.active) {
+                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场active】${data.active}`);
+                } else {
+                  console.log( `【账号${$.index}（${$.nickName || $.UserName}）京喜农场】未选择种子，请先去京喜农场选择种子`);
+                }
+              }
+            } else {
+              console.log(`京喜农场返回值解析异常：${JSON.stringify(data)}`);
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve()
+        }
+      }
+    );
+  })
+}
+
 function getJdPet(){
   const JDPet_API_HOST = "https://api.m.jd.com/client.action";
 
@@ -352,7 +427,7 @@ async function getJdZZ() {
               data = JSON.parse(data);
               if (data.data.shareTaskRes) {
                 console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】${data.data.shareTaskRes.itemId}`);
-                              } else {
+              } else {
                 //console.log(`已满5人助力,暂时看不到您的京东赚赚好友助力码`)
               }
             }
@@ -576,13 +651,16 @@ async function getJoy(){
   })
 }
 async function getShareCode() {
+  console.log(`======账号${$.index}开始======`)
   await getJdFactory()
   await getJxFactory()
+  await getJxNc()
   await getJdPet()
   await getPlantBean()
   await getJDFruit()
   await getJdZZ()
   await getJoy()
+  console.log(`======账号${$.index}结束======\n`)
 }
 
 function safeGet(data) {
