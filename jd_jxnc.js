@@ -32,6 +32,8 @@ cron "0 9,12,18 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_
 
 const $ = new Env('京喜农场');
 let notify = ''; // nodejs 发送通知脚本
+let notifyLevel = process.env.JXNC_NOTIFY_LEVEL || 3; // 通知级别 0=不通知;1=本次获得水滴>0;2=任务执行;3=任务执行+未种植种子;
+let notifyBool = true; // 代码内部使用，控制是否通知
 let cookieArr = []; // 用户 cookie 数组
 let currentCookie = ''; // 当前用户 cookie
 let tokenNull = {'farm_jstoken': '', 'phoneid': '', 'timestamp': ''}; // 内置一份空的 token
@@ -49,14 +51,15 @@ $.allTask = []; // 任务列表
 $.info = {}; // 用户信息
 $.answer = 0;
 $.drip = 0;
-$.maxHelpNum = shareCode.split('@').length; // 助力 ret 1011 错误最大计数
+$.maxHelpNum = $.isNode() ? 8 : 3; // 助力 ret 1011 错误最大计数
 $.helpNum = 0; // 当前账号 助力 ret 1011 次数
+let assistUserShareCode = 0; // 随机助力用户 share code
 
 !(async () => {
     await requireConfig();
     if (!cookieArr[0]) {
-      $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
-      return;
+        $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        return;
     }
 
     for (let i = 0; i < cookieArr.length; i++) {
@@ -99,6 +102,7 @@ function requireConfig() {
     return new Promise(resolve => {
         $.log('开始获取配置文件\n')
         notify = $.isNode() ? require('./sendNotify') : '';
+        notifyBool = notifyLevel > 0; // 初始化是否推送
         //Node.js用户请在jdCookie.js处填写京东ck;
         const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
         const jdTokenNode = $.isNode() ? require('./jdJxncTokens.js') : '';
@@ -218,27 +222,38 @@ async function jdJXNC() {
     subTitle = `【京东账号${$.index}】${$.nickName}`;
     $.log(`获取用户信息 & 任务列表`);
     const startInfo = await getTaskList();
-    if (!startInfo) { // 未选择种子时，当前账号流程结束
-        return false;
+    if (startInfo.prizename) {
+        message += `【水果名称】${startInfo.prizename}\n`;
     }
-    message += `【水果名称】${startInfo.prizename}\n`;
-    $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】 ${$.info.smp}`);
-    $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}种子active】 ${$.info.active}`);
-    await $.wait(500);
-    const isOk = await browserTask();
-    if (!isOk) {
-        return false;
-    }
-    await $.wait(500);
-    await answerTask();
-    await $.wait(500);
-    const endInfo = await getTaskList();
-    getMessage(endInfo, startInfo);
-    const next = await helpFriends();
-    if (next) {
-        await submitInviteId($.UserName);
+    if (startInfo) {
+        $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】 ${$.info.smp}`);
+        $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}种子active】 ${$.info.active}`);
         await $.wait(500);
-        await createAssistUser();
+        const isOk = await browserTask();
+        if (isOk) {
+            await $.wait(500);
+            await answerTask();
+            await $.wait(500);
+            const endInfo = await getTaskList();
+            getMessage(endInfo, startInfo);
+            let next = await helpFriends();
+            if (next) {
+                await submitInviteId($.UserName);
+                await $.wait(500);
+                while (true) {
+                    assistUserShareCode = await getAssistUser();
+                    if (assistUserShareCode) {
+                        await $.wait(300);
+                        next = await helpShareCode(assistUserShareCode);
+                        if (next) {
+                            await $.wait(200);
+                            continue;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
     }
     await showMsg()
 }
@@ -250,16 +265,14 @@ function getTaskList() {
             try {
                 const res = data.match(/try\{whyour\(([\s\S]*)\)\;\}catch\(e\)\{\}/)[1];
                 const {detail, msg, task = [], retmsg, ...other} = JSON.parse(res);
-                $.helpTask = task.filter(x => x.tasktype === 2)[0] || { eachtimeget: 0, limit: 0 };
+                $.helpTask = task.filter(x => x.tasktype === 2)[0] || {eachtimeget: 0, limit: 0};
                 $.allTask = task.filter(x => x.tasktype !== 3 && x.tasktype !== 2 && parseInt(x.left) > 0);
                 $.info = other;
                 $.log(`获取任务列表 ${retmsg} 总共${$.allTask.length}个任务！`);
                 if (!$.info.active) {
-                    $.log('账号未选择种子，请先去京喜农场选择种子，选择 APP 专属种子时，必须提供 token');
-                    $.msg($.name, subTitle, '请先去京喜农场选择种子！\n选择app专属种子时，请参考脚本头部说明获取token，点击通知跳转', option);
-                    if ($.isNode()) {
-                        await notify.sendNotify(`${$.name}`, `京东账号${$.index}[${$.nickName || $.UserName}]请先去京喜农场选择种子！\n选择app专属种子时，请参考脚本头部说明获取token`);
-                    }
+                    $.log('账号未选择种子，请先去京喜农场选择种子。\n如果选择 APP 专属种子，必须提供 token。');
+                    message += '账号未选择种子，请先去京喜农场选择种子。\n如果选择 APP 专属种子，必须提供 token。\n';
+                    notifyBool = notifyBool && notifyLevel >= 3;
                     resolve(false);
                 }
                 resolve(other);
@@ -292,10 +305,7 @@ function browserTask() {
             }
             if (status[0] === 1032) {
                 $.log('任务执行失败，种植的 APP 专属种子，请提供 token 或种植非 APP 种子');
-                $.msg($.name, '请参考脚本头部说明获取token', '或者改中非app专属种子，点击通知跳转', option);
-                if ($.isNode()) {
-                    await notify.sendNotify(`${$.name}`, `京东账号${$.index}[${$.nickName || $.UserName}]请参考脚本头部说明获取token\n或者改中非app专属种子`);
-                }
+                message += '任务执行失败，种植的 APP 专属种子，请提供 token 或种植非 APP 种子\n';
                 resolve(false);
                 return;
             }
@@ -348,14 +358,17 @@ function answerTask() {
     });
 }
 
-function getMessage(endInfo) {
+function getMessage(endInfo, startInfo) {
     const need = endInfo.target - endInfo.score;
-    const get = $.drip;
-    message += `【水滴】获得水滴${get} 还需水滴${need}\n`;
-    if (get > 0) {
-        const max = parseInt(need / get);
-        const min = parseInt(need / (get + $.helpTask.limit * $.helpTask.eachtimeget));
-        message += `【预测】还需 ${min} ~ ${max} 天\n`;
+    const get = endInfo.modifyscore; // 本地变更获得水滴
+    const leaveGet = startInfo.modifyscore; // 离开时获得水滴
+    message += `【水滴】本次水滴${get} 离线获得${leaveGet} 还需水滴${need}\n`;
+    if (get > 0 || leaveGet > 0) {
+        notifyBool = notifyBool && notifyLevel >= 1;
+        const day = parseInt(need / (get + leaveGet));
+        message += `【预测】还需 ${day} 天\n`;
+    } else {
+        notifyBool = notifyBool && notifyLevel >= 2;
     }
 }
 
@@ -387,26 +400,21 @@ function submitInviteId(userName) {
     });
 }
 
-// 获取随机助力码并助力
-function createAssistUser() {
+function getAssistUser() {
     return new Promise(resolve => {
         $.get({url: `https://api.ninesix.cc/api/jx-nc?active=${$.info.active}`}, async (err, resp, _data) => {
             try {
                 const {code, data = {}} = JSON.parse(_data);
-                $.log(`获取随机助力码 ${code}`);
-                if (!data.value) {
-                    $.log('随机助力码不存在，跳过助力');
-                    resolve();
-                    return;
-                }
-                const next = await helpShareCode(data.value);
-                if (next) {
-                    await createAssistUser();
+                if (data.value) {
+                    $.log(`获取随机助力码成功 ${code} ${data.value}`);
+                    resolve(data.value);
                 } else {
-                    resolve();
+                    $.log(`获取随机助力码失败 ${code}`);
                 }
             } catch (e) {
                 $.logErr(e, resp);
+            } finally {
+                resolve(false);
             }
         });
     });
@@ -433,14 +441,13 @@ function helpShareCode(code) {
             $.log('助力码与当前账号相同，跳过助力。准备进行下一个助力');
             resolve(true);
         }
-        $.wait(300);
         $.get(
             taskUrl('help', `active=${$.info.active}&joinnum=${$.info.joinnum}&smp=${code}`),
             async (err, resp, data) => {
                 try {
                     const res = data.match(/try\{whyour\(([\s\S]*)\)\;\}catch\(e\)\{\}/)[1];
                     const {ret, retmsg = ''} = JSON.parse(res);
-                    $.log(`助力结果：ret=${ret} retmsg="${retmsg ? retmsg : '助力成功'}"`);
+                    $.log(`助力结果：ret=${ret} retmsg="${retmsg ? retmsg : 'OK'}"`);
                     if (ret === 0 || ret === 1021) { // 0 助力成功 1021 不能助力自己
                         resolve(true);
                     }
@@ -509,9 +516,11 @@ function taskUrl(function_path, body) {
 }
 
 async function showMsg() {
-    $.msg($.name, subTitle, message, option);
-    if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
+    if (notifyBool) {
+        $.msg($.name, subTitle, message, option);
+        if ($.isNode()) {
+            await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
+        }
     }
 }
 
