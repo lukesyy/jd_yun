@@ -108,21 +108,21 @@ function index(info=false) {
               for(let task of data.data.result.taskInfos){
                 if (task.type === 4) {
                   for (let i = task.doTimes; i < task.times; ++i) {
-                    console.log(`去做${task.name}任务 ${task.doTimes}/${task.times}`)
+                    console.log(`去做${task.name}任务 ${i}/${task.times}`)
                     await doTask(task.type, task.jump.params.skuId)
                     await $.wait(1000)
                   }
                 }
                 else if (task.type === 2) {
                   for (let i = task.doTimes; i < task.times; ++i) {
-                    console.log(`去做${task.name}任务 ${task.doTimes}/${task.times}`)
+                    console.log(`去做${task.name}任务 ${i}/${task.times}`)
                     await doTask(task.type, task.jump.params.shopId)
                     await $.wait(1000)
                   }
                 }
-                else if (task.type === 16 || task.type===3) {
+                else if (task.type === 16 || task.type===3 || task.type===5) {
                   for (let i = task.doTimes; i < task.times; ++i) {
-                    console.log(`去做${task.name}任务 ${task.doTimes}/${task.times}`)
+                    console.log(`去做${task.name}任务 ${i}/${task.times}`)
                     await doTask(task.type, task.jump.params.url)
                     await $.wait(1000)
                   }
