@@ -10,6 +10,8 @@
 理论上脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 助力码shareCode请先手动运行脚本查看打印可看到
 
+hostname = wq.jd.com
+
 ==========================Quantumultx=========================
 [task_local]
 0 9,12,18 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jxnc.js, tag=京喜农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxnc.png, enabled=true
