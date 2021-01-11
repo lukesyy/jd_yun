@@ -55,8 +55,8 @@ $.helpNum = 0; // 当前账号 助力 ret 1011 次数
 !(async () => {
     await requireConfig();
     if (!cookieArr[0]) {
-        $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-        return;
+      $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+      return;
     }
 
     for (let i = 0; i < cookieArr.length; i++) {
