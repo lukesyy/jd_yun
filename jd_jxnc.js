@@ -119,7 +119,7 @@ function requireConfig() {
 
         if ($.isNode()) {
             Object.keys(jdTokenNode).forEach((item) => {
-                tokenArr.push(tokenArr[item] ? JSON.parse(jxncShareCodeArr[item]) : tokenNull)
+                tokenArr.push(jdTokenNode[item] ? JSON.parse(jdTokenNode[item]) : tokenNull)
             })
         } else {
             tokenArr.push(...[$.getdata('jxnc_token1') || tokenNull, $.getdata('jxnc_token2') || tokenNull]);
@@ -428,6 +428,11 @@ async function helpFriends() {
 // 执行助力 return true 继续助力  false 助力结束
 function helpShareCode(code) {
     return new Promise(async resolve => {
+        if (code === $.info.smp) { // 自己的助力码，跳过，继续执行
+            $.log('助力码与当前账号相同，跳过助力。准备进行下一个助力');
+            resolve(true);
+        }
+        $.wait(300);
         $.get(
             taskUrl('help', `active=${$.info.active}&joinnum=${$.info.joinnum}&smp=${code}`),
             async (err, resp, data) => {
