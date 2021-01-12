@@ -5,8 +5,7 @@
 
 ##############短期活动##############
 #年货节(活动时间：2021年1月9日-2021年2月9日)
-10 8 * * * cd /scripts && node jd_nh.js >> /scripts/logs/jd_nh.log 2>&1
-
+10 8 * * * node /scripts/jd_nh.js >> /scripts/logs/jd_nh.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
