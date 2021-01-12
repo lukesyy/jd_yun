@@ -96,7 +96,7 @@ function sign() {
             if(data.retCode ===0){
               if(data.data.signStatus===0){
                 console.log(`签到成功，获得${data.data.pingoujin}金币，已签到${data.data.signDays}天`)
-                $.coins += parseInt(data.data.pingouji)
+                $.coins += parseInt(data.data.pingoujin)
               }else{
                 console.log(`今日已签到`)
               }
