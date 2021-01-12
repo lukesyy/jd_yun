@@ -72,6 +72,7 @@ jobs:
           if [ $JDZZ_SHARECODES ]; then sed -i "/variables/a\      JDZZ_SHARECODES: $JDZZ_SHARECODES" serverless.yml; fi;
           if [ $JDJOY_SHARECODES ]; then sed -i "/variables/a\      JDJOY_SHARECODES: $JDJOY_SHARECODES" serverless.yml; fi;
           if [ $BOOKSHOP_SHARECODES ]; then sed -i "/variables/a\      BOOKSHOP_SHARECODES: $BOOKSHOP_SHARECODES" serverless.yml; fi;
+          if [ $JD_CASH_SHARECODES ]; then sed -i "/variables/a\      JD_CASH_SHARECODES: $JD_CASH_SHARECODES" serverless.yml; fi;
           if [ $JXNC_SHARECODES ]; then sed -i "/variables/a\      JXNC_SHARECODES: $JXNC_SHARECODES" serverless.yml; fi;
           if [ $TG_PROXY_HOST ]; then sed -i "/variables/a\      TG_PROXY_HOST: $TG_PROXY_HOST" serverless.yml; fi;
           if [ $TG_PROXY_PORT ]; then sed -i "/variables/a\      TG_PROXY_PORT: $TG_PROXY_PORT" serverless.yml; fi;
@@ -130,6 +131,7 @@ jobs:
           JDZZ_SHARECODES: ${{ secrets.JDZZ_SHARECODES}}
           JDJOY_SHARECODES: ${{ secrets.JDJOY_SHARECODES}}
           BOOKSHOP_SHARECODES: ${{ secrets.BOOKSHOP_SHARECODES}}
+          JD_CASH_SHARECODES: ${{ secrets.JD_CASH_SHARECODES}}
           JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES}}
           TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST}}
           TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT}}
