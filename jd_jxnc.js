@@ -380,7 +380,7 @@ function getMessage(endInfo, startInfo) {
     }
     message += `【水滴】本次获得${get} 离线获得${leaveGet} 今日获得${dayGet} 还需水滴${need}\n`;
     if (get > 0 || leaveGet > 0 || dayGet > 0) {
-        const day = parseInt(need / (dayGet > 0 ? dayGet : (get + leaveGet)));
+        const day = Math.ceil(need / (dayGet > 0 ? dayGet : (get + leaveGet)));
         message += `【预测】还需 ${day} 天\n`;
     }
     if (get > 0 || leaveGet > 0) { // 本次 或 离线 有水滴
@@ -397,44 +397,54 @@ function submitInviteId(userName) {
             resolve();
             return;
         }
-        $.post(
-            {
-                url: `https://api.ninesix.cc/api/jx-nc/${$.info.smp}/${encodeURIComponent(userName)}?active=${$.info.active}`,
-            },
-            (err, resp, _data) => {
-                try {
-                    const {code, data = {}} = JSON.parse(_data);
-                    $.log(`邀请码提交：${code}`);
-                    if (data.value) {
-                        message += '【邀请码】提交成功！\n';
+        try {
+            $.post(
+                {
+                    url: `https://api.ninesix.cc/api/jx-nc/${$.info.smp}/${encodeURIComponent(userName)}?active=${$.info.active}`,
+                },
+                (err, resp, _data) => {
+                    try {
+                        const {code, data = {}} = JSON.parse(_data);
+                        $.log(`邀请码提交：${code}`);
+                        if (data.value) {
+                            message += '【邀请码】提交成功！\n';
+                        }
+                    } catch (e) {
+                        $.logErr(e, resp);
+                    } finally {
+                        resolve();
                     }
-                } catch (e) {
-                    $.logErr(e, resp);
-                } finally {
-                    resolve();
-                }
-            },
-        );
+                },
+            );
+        } catch (e) {
+            $.logErr(e, resp);
+            resolve();
+        }
     });
 }
 
 function getAssistUser() {
     return new Promise(resolve => {
-        $.get({url: `https://api.ninesix.cc/api/jx-nc?active=${$.info.active}`}, async (err, resp, _data) => {
-            try {
-                const {code, data = {}} = JSON.parse(_data);
-                if (data.value) {
-                    $.log(`获取随机助力码成功 ${code} ${data.value}`);
-                    resolve(data.value);
-                } else {
-                    $.log(`获取随机助力码失败 ${code}`);
+        try {
+            $.get({url: `https://api.ninesix.cc/api/jx-nc?active=${$.info.active}`}, async (err, resp, _data) => {
+                try {
+                    const {code, data = {}} = JSON.parse(_data);
+                    if (data.value) {
+                        $.log(`获取随机助力码成功 ${code} ${data.value}`);
+                        resolve(data.value);
+                    } else {
+                        $.log(`获取随机助力码失败 ${code}`);
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve(false);
                 }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve(false);
-            }
-        });
+            });
+        } catch (e) {
+            $.logErr(e, resp);
+            resolve(false);
+        }
     });
 }
 
