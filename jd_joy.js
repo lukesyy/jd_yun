@@ -45,6 +45,7 @@ let teamLevel = `2`;//参加多少人的赛跑比赛，默认是双人赛跑，�
 // 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
 let joyRunFlag = true;
 let jdNotify = true;//是否开启静默运行，默认true开启
+let jdRunSucNotify=false;//赛跑成功是否开启通知，默认true开启
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 !(async () => {
@@ -170,10 +171,18 @@ async function joinTwoPeopleRun() {
         }
         await receiveJoyRunAward();
         console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
-        if ($.receiveJoyRunAwardRes.success) {
-          $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`);
-          if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
-        }
+        if ($.receiveJoyRunAwardRes.success) 
+		{
+			if(`${jdRunSucNotify}` === 'true')
+			{
+			  $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`);
+			  if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
+			}
+			else
+			{
+				console.log('您设置的是赛跑成功不进行通知，不发送通知')
+			}		
+		}
       }
       if (petRaceResult === 'participate') {
         // if ($.getWinCoinRes.data['supplyOrder']) await energySupplyStation($.getWinCoinRes.data['supplyOrder']);
