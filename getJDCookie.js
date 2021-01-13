@@ -134,7 +134,7 @@ function formatCookie(headers) {
     const cookie1 = "pt_key=" + pt_key + ";pt_pin=" + pt_pin + ";";
 
     $.UserName = decodeURIComponent(cookie1.match(/pt_pin=(.+?);/) && cookie1.match(/pt_pin=(.+?);/)[1])
-    $.log(`京东用户名：${$.UserName} 登录成功，cookie如下：`);
+    $.log(`京东用户名：${$.UserName} 登录成功，此cookie(有效期为90天)如下：`);
     $.log(`\n${cookie1}\n`);
     resolve()
   })
