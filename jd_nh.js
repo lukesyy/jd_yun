@@ -95,6 +95,11 @@ async function jdNh() {
   await getMyPing()
   await getUserInfo()
   await getActContent(false,shareUuid)
+  await getActContent(true)
+  if($.userInfo.score>=5000){
+    console.log(`大于5000金币，去抽奖`)
+    await draw()
+  }
   await showMsg();
 }
 
@@ -376,7 +381,7 @@ function getTaskInfo(taskType, value) {
   })
 
 }
-// 做任务
+// 完成任务
 function doTask(taskType, value) {
   let body = `activityId=${ACT_ID}&pin=${encodeURIComponent($.pin)}&actorUuid=${$.actorUuid}&taskType=${taskType}&taskValue=${value}`
   return new Promise(resolve => {
@@ -411,6 +416,35 @@ function showMsg() {
     $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
+}
+//抽奖
+function draw() {
+  let body = `activityId=${ACT_ID}&uuid=${$.actorUuid}&pin=${encodeURIComponent($.pin)}&drawValue=18`
+  return new Promise(resolve => {
+    $.post(taskPostUrl('dingzhi/vm/template/start', body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${err}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.result && data.data) {
+              console.log(`抽奖成功，获得 ${data.data.drawInfo || '空气'}`)
+              message += `抽奖成功，获得 ${data.data.drawInfo || '空气'}`
+            } else {
+              console.log(`任务完成失败，错误信息：${data.errorMessage}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+
 }
 function taskUrl(function_id, body) {
   return {
