@@ -33,7 +33,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //const WebSocket = $.isNode() ? require('websocket').w3cwebsocket: SockJS;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message,helpInfo;
-const shareUuid = 'b3a52fbb01964aa3afb7ff0c57e6b37f'
+let shareUuid = '83c6d4a80e3447b78572124e1fc3aa7c'
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -87,6 +87,7 @@ const ACT_ID = 'dzvm210168869301'
   })
 async function jdNh() {
   $.score = 0
+  await getShareCode()
   await getIsvToken()
   await getIsvToken2()
   await getActCk()
@@ -94,7 +95,36 @@ async function jdNh() {
   await getMyPing()
   await getUserInfo()
   await getActContent(false,shareUuid)
+  await getActContent(true)
+  if($.userInfo.score>=5000){
+    console.log(`大于5000金币，去抽奖`)
+    await draw()
+  }
   await showMsg();
+}
+
+function getShareCode() {
+  return new Promise(resolve => {
+    $.get({url:'https://gitee.com/shylocks/updateTeam/raw/main/jd_nh.json',headers:{
+        'user-agent': 'JD4iPhone/167490 (iPhone; iOS 14.2; Scale/3.00)'
+      }},(err,resp,data)=>{
+      try {
+        if (err) {
+          console.log(`${err}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            shareUuid = data['shareUuid']
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 function getIsvToken() {
   let config = {
@@ -284,8 +314,10 @@ function getActContent(info=false, shareUuid = '') {
             if (data.data) {
               $.userInfo = data.data
               $.actorUuid = $.userInfo.actorUuid
-              if(!info) console.log(`您的好友助力码为${$.actorUuid}`)
+
               if (!info) {
+                console.log(`您的好友助力码为${$.actorUuid}`)
+                console.log(`当前金币${$.userInfo.score}`)
                 for(let i of ['sign','mainActive','visitSku','allFollowShop','allAddSku','memberCard']){
                   let task = data.data[i]
                   if(task.taskName==='浏览会场' || task.taskName==='浏览商品'
@@ -298,7 +330,8 @@ function getActContent(info=false, shareUuid = '') {
                         await $.wait(500)
                       }
                     }
-                  }else if(task.taskName ==='一键关注店铺' || task.taskName ==='一键加购' || task.taskName ==='一键开卡'){
+                  } else if(task.taskName ==='一键关注店铺' || task.taskName ==='一键开卡' // || task.taskName ==='一键加购'
+                  ){
                     if (task.count < task.taskMax){
                       console.log(`去做${task.taskName}任务`)
                       let res = await getTaskInfo(task.taskType)
@@ -348,7 +381,7 @@ function getTaskInfo(taskType, value) {
   })
 
 }
-// 做任务
+// 完成任务
 function doTask(taskType, value) {
   let body = `activityId=${ACT_ID}&pin=${encodeURIComponent($.pin)}&actorUuid=${$.actorUuid}&taskType=${taskType}&taskValue=${value}`
   return new Promise(resolve => {
@@ -383,6 +416,35 @@ function showMsg() {
     $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
+}
+//抽奖
+function draw() {
+  let body = `activityId=${ACT_ID}&uuid=${$.actorUuid}&pin=${encodeURIComponent($.pin)}&drawValue=18`
+  return new Promise(resolve => {
+    $.post(taskPostUrl('dingzhi/vm/template/start', body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${err}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.result && data.data) {
+              console.log(`抽奖成功，获得 ${data.data.drawInfo || '空气'}`)
+              message += `抽奖成功，获得 ${data.data.drawInfo || '空气'}`
+            } else {
+              console.log(`任务完成失败，错误信息：${data.errorMessage}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+
 }
 function taskUrl(function_id, body) {
   return {
