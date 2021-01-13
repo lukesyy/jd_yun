@@ -13,18 +13,19 @@
 ============Quantumultx===============
 [task_local]
 #京东家庭号
-1 0,8,12,16 * * * https://raw.githubusercontent.com/shylocks/Loon/main/jd_family.js, tag=京东家庭号, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_family.png, enabled=true
+1 */1 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_family.js, tag=京东家庭号, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_family.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "1 0,8,12,16 * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_family.js,tag=京东家庭号
+cron "1 */1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_family.js,tag=京东家庭号
 
 ===============Surge=================
-京东家庭号 = type=cron,cronexp="1 0,8,12,16 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_family.js
+京东家庭号 = type=cron,cronexp="1 */1 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_family.js
 
 ============小火箭=========
-京东家庭号 = type=cron,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_family.js, cronexpr="1 8,12,18* * *", timeout=200, enable=true
+京东家庭号 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_family.js, cronexpr="1 */1 * * *", timeout=200, enable=true
  */
+
 const $ = new Env('京东家庭号');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
