@@ -87,3 +87,5 @@
 27 7 * * * node /scripts/jd_cash.js >> /scripts/logs/jd_cash.log 2>&1
 # 京喜app签到
 39 7 * * * node /scripts/jx_sign.js >> /scripts/logs/jx_sign.log 2>&1
+#京东家庭号(暂不知最佳cron)
+*/20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
