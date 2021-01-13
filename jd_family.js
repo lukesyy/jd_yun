@@ -73,11 +73,7 @@ if ($.isNode()) {
         }
         continue
       }
-      // await jdFamily()
-      while (true) {
-        await $.wait(31000)
-        await jdFamily()
-      }
+      await jdFamily()
     }
   }
 })()
