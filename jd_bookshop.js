@@ -102,7 +102,6 @@ async function jdBeauty() {
   await doHelpList()
   await getAllBook()
   await getMyBook()
-  await chargeGold()
   await getActContent(true)
   if ($.gold > 800) {
     console.log(`金币大于800，去抽奖`)
@@ -112,7 +111,8 @@ async function jdBeauty() {
       $.gold -= 800
     }
   }
-  //await helpFriends()
+  if($.userInfo.storeGold) await chargeGold()
+  await helpFriends()
   await showMsg();
 }
 
