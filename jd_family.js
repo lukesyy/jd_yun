@@ -13,7 +13,7 @@
 ============Quantumultx===============
 [task_local]
 #京东家庭号
-1 0,8,12,16 * * * https://raw.githubusercontent.com/shylocks/Loon/main/jd_family.js, tag=京东家庭号, enabled=true
+1 0,8,12,16 * * * https://raw.githubusercontent.com/shylocks/Loon/main/jd_family.js, tag=京东家庭号, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_family.png, enabled=true
 
 ================Loon==============
 [Script]
