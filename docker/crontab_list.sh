@@ -88,4 +88,4 @@
 # 京喜app签到
 39 7 * * * node /scripts/jx_sign.js >> /scripts/logs/jx_sign.log 2>&1
 #京东家庭号(暂不知最佳cron)
-39 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
+*/20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
