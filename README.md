@@ -32,6 +32,7 @@
 | 长期   | 东东超市兑换奖品          | [jd_blueCoin.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js)             |
 | 长期   | 口袋书店                      | [jd_bookshop.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js)             |
 | 长期   | 京东汽车赛点兑换京豆    | [jd_car_exchange.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car_exchange.js)     |
+| 长期   | 签到领现金    | [jd_cash.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_cash.js)     |
 | 长期   | 京东汽车签到                | [jd_car.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_car.js)                       |
 | 长期   | 摇京豆                         | [jd_club_lottery.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js)     |
 | 长期   | 疯狂的JOY挂机                | [jd_crazy_joy_coin.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy_coin.js) |
@@ -68,6 +69,7 @@
 | 长期   | 十元街                         | [jd_syj.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js)                       |
 | 长期   | 注销京东会员卡             | [jd_unbind.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js)                 |
 | 长期   | 取关京东店铺和商品       | [jd_unsubscribe.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js)       |
+| 长期   | 京喜签到       | [jx_sign.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jx_sign.js)       |
 
 搬运脚本
 1.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东抽奖机([jd_lotteryMachine.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_lotteryMachine.js))
