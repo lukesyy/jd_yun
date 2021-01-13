@@ -78,7 +78,6 @@ if ($.isNode()) {
       }
       await shareCodesFormat()
       await jdBeauty()
-      return
     }
   }
 })()
