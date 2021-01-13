@@ -118,6 +118,8 @@
    
   - 获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie.md) , [插件获取京东cookie教程](https://github.com/lxk0301/jd_scripts/blob/master/backUp/GetJdCookie2.md)
 
+  - 京东APP扫码获取cookie(此种方式获取的cookie有效期为90天)(执行`node getJDCookie.js`即可)
+    
   - 方法三Docker安装Cookie请见各自的说明。
 
 ### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon, 小火箭）
