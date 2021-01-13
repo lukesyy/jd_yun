@@ -54,6 +54,8 @@ function generateQrcode() {
           $.stepsHeaders = resp.headers;
           data = JSON.parse(data);
           token = data['token'];
+          // $.log('token', token)
+
           const setCookie = resp.headers['set-cookie'][0];
           okl_token = setCookie.substring(setCookie.indexOf("=") + 1, setCookie.indexOf(";"))
           const url = 'https://plogin.m.jd.com/cgi-bin/m/tmauth?appid=300&client_type=m&token=' + token;
@@ -134,7 +136,7 @@ function formatCookie(headers) {
     const cookie1 = "pt_key=" + pt_key + ";pt_pin=" + pt_pin + ";";
 
     $.UserName = decodeURIComponent(cookie1.match(/pt_pin=(.+?);/) && cookie1.match(/pt_pin=(.+?);/)[1])
-    $.log(`京东用户名：${$.UserName} 登录成功，此cookie(有效期为90天)如下：`);
+    $.log(`京东用户：${$.UserName} Cookie获取成功(有效期：${headers['strict-transport-security'].substring("max-age=7776000".indexOf('=') + 1, "max-age=7776000".length)}秒)，cookie如下：`);
     $.log(`\n${cookie1}\n`);
     resolve()
   })
