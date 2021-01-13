@@ -696,7 +696,7 @@
       ],
       "author": "@lxk0301",
       "repo": "https://github.com/lxk0301/jd_scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js",
+      "script": "https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jd_unbind_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jd_unbind.png"

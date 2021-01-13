@@ -64,18 +64,18 @@ inputs:
           cronExpression: "0 15 * * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #京东年货节
         parameters:
-          name: bean_change_crazy_joy_rankingList_bean_home
+          name: bean_change_crazy_joy_rankingList_bean_home_nh
           cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_car
-    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_car&jd_nh
+    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #签到领现金 #京喜签到
         parameters:
-          name: pigPet_syj_kd_jdzz
+          name: pigPet_syj_kd_jdzz_cash_sign
           cronExpression: "0 3 1 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz
+          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jd_cash&jx_sign
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
