@@ -77,7 +77,7 @@ let assistUserShareCode = 0; // 随机助力用户 share code
             $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';
-            $.log(`检查【京东账号${$.index}】${$.UserName} cookie 是否有效`);
+            $.log(`\n************* 检查【京东账号${$.index}】${$.UserName} cookie 是否有效 *************`);
             await TotalBean();
             $.log(`开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
             if (!$.isLogin) {
@@ -426,14 +426,15 @@ function submitInviteId(userName) {
                             message += '【邀请码】提交成功！\n';
                         }
                     } catch (e) {
-                        $.logErr(e, resp);
+                        // $.logErr(e, resp);
+                        $.log('邀请码提交失败 API 返回异常');
                     } finally {
                         resolve();
                     }
                 },
             );
         } catch (e) {
-            $.logErr(e, resp);
+            // $.logErr(e, resp);
             resolve();
         }
     });
@@ -452,13 +453,14 @@ function getAssistUser() {
                         $.log(`获取随机助力码失败 ${code}`);
                     }
                 } catch (e) {
-                    $.logErr(e, resp);
+                    // $.logErr(e, resp);
+                    $.log('获取随机助力码失败 API 返回异常');
                 } finally {
                     resolve(false);
                 }
             });
         } catch (e) {
-            $.logErr(e, resp);
+            // $.logErr(e, resp);
             resolve(false);
         }
     });
@@ -573,6 +575,8 @@ async function showMsg() {
         if ($.isNode()) {
             await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
         }
+    } else {
+        $.log(`${$.name} - notify 通知已关闭\n账号${$.index} - ${$.nickName}\n${subTitle}\n${message}`);
     }
 }
 
