@@ -167,18 +167,13 @@ if ($.isNode()) {
   }
   let count = 0
 
-  if (cookiesArr.length) {
+  if (cookiesArr.length && $.isNode()) {
     console.log(`\n挂机开始，自动8s收一次金币`);
     //兼容iOS
-    while (true) {
-      await $.wait(8000);
+    setInterval(async () => {
       const promiseArr = cookiesArr.map(ck => getCoinForInterval(ck));
       await Promise.all(promiseArr);
-    }
-    // setInterval(async () => {
-    //   const promiseArr = cookiesArr.map(ck => getCoinForInterval(ck));
-    //   await Promise.all(promiseArr);
-    // }, 8000);
+    }, 8000);
   }
 
   while (true) {
