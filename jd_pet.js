@@ -1,6 +1,6 @@
 /*
 东东萌宠 更新地址： https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js
-更新时间：2021-01-10
+更新时间：2021-01-16
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
@@ -79,58 +79,62 @@ let randomCount = $.isNode() ? 20 : 5;
       $.done();
     })
 async function jdPet() {
-  //查询jd宠物信息
-  const initPetTownRes = await request('initPetTown');
-  message = `【京东账号${$.index}】${$.nickName}\n`;
-  if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
-    $.petInfo = initPetTownRes.result;
-    if ($.petInfo.userStatus === 0) {
-      $.msg($.name, '', `【提示】京东账号${$.index}${$.nickName}\n萌宠活动未开启\n请手动去京东APP开启活动\n入口：我的->游戏与互动->查看更多开启`, { "open-url": "openapp.jdmoble://" });
-      return
-    }
-    if (!$.petInfo.goodsInfo) {
-      $.msg($.name, '', `【提示】京东账号${$.index}${$.nickName}\n暂未选购新的商品`, { "open-url": "openapp.jdmoble://" });
-      if ($.isNode()) await notify.sendNotify(`${$.name} - ${$.index} - ${$.nickName}`, `【提示】京东账号${$.index}${$.nickName}\n暂未选购新的商品`);
-      return
-    }
-    goodsUrl = $.petInfo.goodsInfo && $.petInfo.goodsInfo.goodsUrl;
-    // option['media-url'] = goodsUrl;
-    // console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
-    if ($.petInfo.petStatus === 5) {
-      await slaveHelp();//可以兑换而没有去兑换,也能继续助力好友
-      option['open-url'] = "openApp.jdMobile://";
-      $.msg($.name, `【提醒⏰】${$.petInfo.goodsInfo.goodsName}已可领取`, '请去京东APP或微信小程序查看', option);
-      if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}奖品已可领取`, `京东账号${$.index} ${$.nickName}\n${$.petInfo.goodsInfo.goodsName}已可领取`);
+  try {
+    //查询jd宠物信息
+    const initPetTownRes = await request('initPetTown');
+    message = `【京东账号${$.index}】${$.nickName}\n`;
+    if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
+      $.petInfo = initPetTownRes.result;
+      if ($.petInfo.userStatus === 0) {
+        $.msg($.name, '', `【提示】京东账号${$.index}${$.nickName}\n萌宠活动未开启\n请手动去京东APP开启活动\n入口：我的->游戏与互动->查看更多开启`, { "open-url": "openapp.jdmoble://" });
+        return
       }
-      return
-    } else if ($.petInfo.petStatus === 6) {
-      await slaveHelp();//已领取红包,但未领养新的,也能继续助力好友
-      option['open-url'] = "openApp.jdMobile://";
-      $.msg($.name, `【提醒⏰】已领取红包,但未继续领养新的物品`, '请去京东APP或微信小程序继续领养', option);
-      if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}奖品已可领取`, `京东账号${$.index} ${$.nickName}\n已领取红包,但未继续领养新的物品`);
+      if (!$.petInfo.goodsInfo) {
+        $.msg($.name, '', `【提示】京东账号${$.index}${$.nickName}\n暂未选购新的商品`, { "open-url": "openapp.jdmoble://" });
+        if ($.isNode()) await notify.sendNotify(`${$.name} - ${$.index} - ${$.nickName}`, `【提示】京东账号${$.index}${$.nickName}\n暂未选购新的商品`);
+        return
       }
-      return
-    }
-    console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.petInfo.shareCode}\n`);
-    await taskInit();
-    if ($.taskInit.resultCode === '9999' || !$.taskInit.result) {
-      console.log('初始化任务异常, 请稍后再试');
-      return
-    }
-    $.taskInfo = $.taskInit.result;
+      goodsUrl = $.petInfo.goodsInfo && $.petInfo.goodsInfo.goodsUrl;
+      // option['media-url'] = goodsUrl;
+      // console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
+      if ($.petInfo.petStatus === 5) {
+        await slaveHelp();//可以兑换而没有去兑换,也能继续助力好友
+        option['open-url'] = "openApp.jdMobile://";
+        $.msg($.name, `【提醒⏰】${$.petInfo.goodsInfo.goodsName}已可领取`, '请去京东APP或微信小程序查看', option);
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}奖品已可领取`, `京东账号${$.index} ${$.nickName}\n${$.petInfo.goodsInfo.goodsName}已可领取`);
+        }
+        return
+      } else if ($.petInfo.petStatus === 6) {
+        await slaveHelp();//已领取红包,但未领养新的,也能继续助力好友
+        option['open-url'] = "openApp.jdMobile://";
+        $.msg($.name, `【提醒⏰】已领取红包,但未继续领养新的物品`, '请去京东APP或微信小程序继续领养', option);
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}奖品已可领取`, `京东账号${$.index} ${$.nickName}\n已领取红包,但未继续领养新的物品`);
+        }
+        return
+      }
+      console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.petInfo.shareCode}\n`);
+      await taskInit();
+      if ($.taskInit.resultCode === '9999' || !$.taskInit.result) {
+        console.log('初始化任务异常, 请稍后再试');
+        return
+      }
+      $.taskInfo = $.taskInit.result;
 
-    await petSport();//遛弯
-    await slaveHelp();//助力好友
-    await masterHelpInit();//获取助力的信息
-    await doTask();//做日常任务
-    await feedPetsAgain();//再次投食
-    await energyCollect();//收集好感度
-    await showMsg();
-    console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
-  } else if (initPetTownRes.code === '0'){
-    console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
+      await petSport();//遛弯
+      await slaveHelp();//助力好友
+      await masterHelpInit();//获取助力的信息
+      await doTask();//做日常任务
+      await feedPetsAgain();//再次投食
+      await energyCollect();//收集好感度
+      await showMsg();
+      console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
+    } else if (initPetTownRes.code === '0'){
+      console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
+    }
+  } catch (e) {
+    $.logErr(e)
   }
 }
 // 收取所有好感度
