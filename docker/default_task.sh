@@ -89,4 +89,4 @@ echo "第9步加载最新的定时任务文件..."
 crontab $mergedListFile
 
 echo "第10步将仓库的docker_entrypoint.sh脚本更新至系统/usr/local/bin/docker_entrypoint.sh内..."
-cat /scripts/docker_entrypoint.sh >/usr/local/bin/docker_entrypoint.sh
+cat /scripts/docker/docker_entrypoint.sh >/usr/local/bin/docker_entrypoint.sh
