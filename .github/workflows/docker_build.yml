@@ -1,5 +1,4 @@
 name: 构建JD Scripts镜像
-
 on:
   #防止fork乱用action设置只能手动触发构建
   workflow_dispatch:
