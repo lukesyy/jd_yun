@@ -10,7 +10,7 @@
 version: "3"
 services:
   jd_scripts1: #默认
-    image: akyakya/jd_scripts
+    image: lxk0301/jd_scripts
     # 配置服务器资源约束。此例子中服务被限制为使用内存不超过200M以及cpu不超过 0.2（单核的20%）
     # 经过实际测试，建议不低于200M
     # deploy:
@@ -32,7 +32,7 @@ services:
       # - PLANT_BEAN_SHARECODES=
       
   jd_scripts2: #默认
-    image: akyakya/jd_scripts
+    image: lxk0301/jd_scripts
     restart: always
     container_name: jd_scripts2
     tty: true
@@ -43,7 +43,7 @@ services:
       - TG_BOT_TOKEN=130xxxx280:AAExxxxxxWP10zNf91WQ
       - TG_USER_ID=12xxxx206
   jd_scripts4: #自定义追加默认之后
-    image: akyakya/jd_scripts
+    image: lxk0301/jd_scripts
     restart: always
     container_name: jd_scripts4
     tty: true
@@ -56,7 +56,7 @@ services:
       - TG_USER_ID=12xxxx206
       - CUSTOM_LIST_FILE=my_crontab_list.sh
   jd_scripts5: #自定义覆盖默认
-    image: akyakya/jd_scripts
+    image: lxk0301/jd_scripts
     restart: always
     container_name: jd_scripts5
     tty: true
