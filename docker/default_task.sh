@@ -83,7 +83,7 @@ echo "第7步增加 |ts 任务日志输出时间戳..."
 sed -i "/\( ts\| |ts\|| ts\)/!s/>>/\|ts >>/g" $mergedListFile
 
 echo "第8步执行proc_file.sh脚本任务..."
-sh -x /scripts/docker/shell_script_mod.sh
+sh -x /scripts/docker/proc_file.sh
 
 echo "第9步加载最新的定时任务文件..."
 crontab $mergedListFile
