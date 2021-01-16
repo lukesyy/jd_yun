@@ -29,7 +29,7 @@
 | 活动时长 | 名称                            | 脚本                                                                                                   |
 | -------- | --------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | 长期   | 京豆变动通知                | [jd_bean_change.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js)       |
-| 长期   | 领京豆额外奖励&抢京豆   | [jd_bean_home.js](https://raw.githubusercontent.com/lxk0302/jd_scripts/master/jd_bean_home.js)           |
+| 长期   | 领京豆额外奖励&抢京豆   | [jd_bean_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_home.js)           |
 | 长期   | 京东多合一签到             | [jd_bean_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_sign.js)           |
 | 长期   | 东东超市兑换奖品          | [jd_blueCoin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_blueCoin.js)             |
 | 长期   | 口袋书店                      | [jd_bookshop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js)             |
