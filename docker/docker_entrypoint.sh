@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+#获取配置的自定义参数
+if [ $1 ]; then
+    run_cmd=$1
+fi
+
 echo "设定远程仓库地址..."
 cd /scripts
 git remote set-url origin $REPO_URL
@@ -14,7 +19,7 @@ echo "------------------------------------------------执行定时任务任务sh
 sh -x /scripts/docker/default_task.sh
 echo "--------------------------------------------------默认定时任务执行完成---------------------------------------------------"
 
-if [ $run_cmd == 'crond' ]; then
+if [ $run_cmd ]; then
     echo "Start crontab task main process..."
     echo "启动crondtab定时任务主进程..."
     crond -f
