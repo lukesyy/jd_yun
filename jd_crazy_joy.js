@@ -9,17 +9,17 @@ crazyJoy任务
 ============Quantumultx===============
 [task_local]
 #crazyJoy任务
-10 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy.js, tag=crazyJoy任务, enabled=true
+10 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js, tag=crazyJoy任务, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 7 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy.js,tag=crazyJoy任务
+cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js,tag=crazyJoy任务
 
 ===============Surge=================
-crazyJoy任务 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy.js
+crazyJoy任务 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js
 
 ============小火箭=========
-crazyJoy任务 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy.js, cronexpr="10 7 * * *", timeout=200, enable=true
+crazyJoy任务 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js, cronexpr="10 7 * * *", timeout=200, enable=true
 
  */
 

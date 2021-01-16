@@ -1,5 +1,5 @@
 /*
-京东天天加速链接：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js
+京东天天加速链接：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js
 更新时间：2020-12-25
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -10,12 +10,12 @@
 // quantumultx
 // [task_local]
 // #天天加速
-// 8 */3 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
+// 8 */3 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
 // Loon
 // [Script]
-// cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js,tag=京东天天加速
+// cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js,tag=京东天天加速
 // Surge
-//天天加速 = type=cron,cronexp="8 */3 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js
+//天天加速 = type=cron,cronexp="8 */3 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js
 const $ = new Env('✈️天天加速');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

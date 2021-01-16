@@ -1,29 +1,29 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
+ * @Author: LXK9301 https://github.com/LXK9301
  * @Date: 2020-11-27 09:19:21
- * @Last Modified by: lxk0301
+ * @Last Modified by: LXK9301
  * @Last Modified time: 2021-1-1 16:58:02
  */
 /*
 十元街脚本，一周签到下来可获得30京豆，一天任意时刻运行一次即可
-更新地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js
+更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js
 参考github@jidesheng6修改而来
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #十元街
-10 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js, tag=十元街, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+10 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js, tag=十元街, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 7 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js, tag=十元街
+cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js, tag=十元街
 
 ===============Surge=================
-十元街 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js
+十元街 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js
 
 ============小火箭=========
-十元街 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js, cronexpr="10 7 * * *", timeout=200, enable=true
+十元街 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js, cronexpr="10 7 * * *", timeout=200, enable=true
  */
 const $ = new Env('十元街');
 

@@ -1,5 +1,5 @@
 # File: .github/workflows/repo-sync.yml
-name: sync-lxk0301-scripts
+name: sync-LXK9301-scripts
 on:
   schedule:
     - cron: '1 0,15 * * *'
@@ -9,7 +9,7 @@ on:
   push:
     branches: [ master ]
   repository_dispatch:
-    types: sync-lxk0301-scripts
+    types: sync-LXK9301-scripts
 jobs:
   repo-sync:
     env:
@@ -22,11 +22,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync lxk0301-scripts
+      - name: sync LXK9301-scripts
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/lxk0301/jd_scripts.git"
+          source_repo: "https://github.com/LXK9301/jd_scripts.git"
           source_branch: "master"
           destination_branch: "master"
           github_token: ${{ secrets.PAT }}
@@ -35,7 +35,7 @@ jobs:
         uses: Yikun/hub-mirror-action@master
         if: env.dst_key
         with:
-          src: github/lxk0301
+          src: github/LXK9301
           dst: gitee/lxk0301
           static_list: "jd_scripts"
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}

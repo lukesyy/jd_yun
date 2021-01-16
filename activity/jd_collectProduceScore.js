@@ -3,7 +3,7 @@
 仅仅是收集一下京东双十一全名营业每秒产生的金币
 
 每小时的第20分运行一次
-20 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_collectProduceScore.js
+20 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_collectProduceScore.js
  */
 const $ = new Env('京东全民营业领金币');
 //Node.js用户请在jdCookie.js处填写京东ck;

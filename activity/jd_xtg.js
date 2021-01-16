@@ -1,11 +1,11 @@
 /*
- * @Author: lxk0301 
+ * @Author: LXK9301
  * @Date: 2020-10-21 17:04:04 
- * @Last Modified by: lxk0301
+ * @Last Modified by: LXK9301
  * @Last Modified time: 2020-11-05 00:35:04
  */
 /**
- 星推官脚本 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js
+ 星推官脚本 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_xtg.js
  星推官活动地址：https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html
  活动时间：2020年10月21日 00:00:00-2020年11月11日 23:59:59
  京豆先到先得！！！！！！！！！！！
@@ -17,12 +17,12 @@
  // quantumultx
  [task_local]
  #京东星推官
- 2 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js, tag=京东星推官, enabled=true
+ 2 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_xtg.js, tag=京东星推官, enabled=true
  // Loon
  [Script]
- cron "2 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js,tag=京东星推官
+ cron "2 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_xtg.js,tag=京东星推官
  // Surge
- 京东星推官 = type=cron,cronexp=2 0 * * *,wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js
+ 京东星推官 = type=cron,cronexp=2 0 * * *,wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_xtg.js
  */
 const $ = new Env('京东星推官');
 const activeEndTime = '2020/11/11 23:59:59+08:00';//活动结束时间
@@ -153,8 +153,8 @@ async function showMsg() {
   console.log(`活动活动京豆数量:${$.jdNum - $.beanCount}`);
   let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
   if (nowTime > new Date(activeEndTime).getTime()) {
-    $.msg($.name, '活动已结束', `请删除或禁用此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/lxk0301/jd_scripts`, {"open-url": "https://github.com/lxk0301/jd_scripts"});
-    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/lxk0301/jd_scripts`)
+    $.msg($.name, '活动已结束', `请删除或禁用此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/LXK9301/jd_scripts`, {"open-url": "https://github.com/LXK9301/jd_scripts"});
+    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/LXK9301/jd_scripts`)
   } else {
     $.msg($.name, `账号${$.index} ${$.nickName || $.UserName}`, `做任务之前京豆总计:${$.beanCount}\n做完任务后京豆总计:${$.jdNum}\n${($.jdNum - $.beanCount) > 0 ? `获得京豆：${$.jdNum - $.beanCount}京豆 🐶(仅供参考)\n` : ''}京豆先到先得\n活动地址点击弹窗跳转后即可查看\n注：如未获得京豆就是已被分完`, {"open-url": "https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html"})
     if ($.isNode()) await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}`, `账号${$.index} ${$.nickName || $.UserName}\n做任务之前京豆总计:${$.beanCount}\n做完任务后京豆总计:${$.jdNum}\n${($.jdNum - $.beanCount) > 0 ? `获得京豆：${$.jdNum - $.beanCount}京豆 🐶(仅供参考)\n` : ''}京豆先到先得\n注：如未获得京豆就是已被分完\n活动结束时间：2020年11月12日 23:59:59\n活动地址：https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html`)

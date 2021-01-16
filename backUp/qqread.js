@@ -1,10 +1,10 @@
 /*
 ******************************************************************************
- 改用，nodejs云端专用。可N个账号。by；lxk0301
+ 改用，nodejs云端专用。可N个账号。by；LXK9301
  一个账号需三个环境变量/secret
  分别为 QQ_READ_HEADER_VAL   QQ_READ_TIME_URL_VAL   QQ_READ_TIME_HEADER_VAL
  多个账号  对应三个环境变量/secret 使用@符号或者换行隔开
- iOS可使用BoxJs可使用此订阅修改复制所需的环境变量 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/mySelf.boxjs.json
+ iOS可使用BoxJs可使用此订阅修改复制所需的环境变量 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/mySelf.boxjs.json
  环境变量与BoxJs里面对应关系
  QQ_READ_HEADER_VAL  ------》   qqreadbodyVal
  QQ_READ_TIME_URL_VAL  ------》   qqreadtimeurl
@@ -19,19 +19,19 @@ ziye
 hostname=mqqapi.reader.qq.com
 ############## 圈x
 #企鹅读书获取更新body
-https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track url script-request-body https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/qqread.js
+https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track url script-request-body https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/qqread.js
 #企鹅读书获取时长cookie
-https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? url script-request-header https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/qqread.js
+https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? url script-request-header https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/qqread.js
 ############## loon
 #企鹅读书获取更新body
-http-request https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/qqread.js,requires-body=true, tag=企鹅读书获取更新body
+http-request https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/qqread.js,requires-body=true, tag=企鹅读书获取更新body
 #企鹅读书获取时长cookie
-http-request https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/qqread.js, requires-header=true, tag=企鹅读书获取时长cookie
+http-request https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/qqread.js, requires-header=true, tag=企鹅读书获取时长cookie
 ############## surge
 #企鹅读书获取更新body
-企鹅读书获取更新body = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/qqread.js, script-update-interval=0
+企鹅读书获取更新body = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/qqread.js, script-update-interval=0
 #企鹅读书获取时长cookie
-企鹅读书获取时长cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/qqread.js
+企鹅读书获取时长cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/qqread.js
 
 
 

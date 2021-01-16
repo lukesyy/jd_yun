@@ -1,7 +1,7 @@
 FROM alpine
 LABEL AUTHOR="Akira <e.akimoto.akira@gmail.com>" \
         VERSION=0.1.2 \
-        UPDATE_CONTENT="更新内容较多，重新阅读仓库[Readme](https://github.com/lxk0301/jd_scripts/tree/master/docker)，更新镜像并更新配置后使用。"
+        UPDATE_CONTENT="更新内容较多，重新阅读仓库[Readme](https://github.com/LXK9301/jd_scripts/tree/master/docker)，更新镜像并更新配置后使用。"
 
 RUN set -ex \
         && apk update && apk upgrade\

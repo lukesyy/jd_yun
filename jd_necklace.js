@@ -1,7 +1,7 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301 
+ * @Author: LXK9301 https://github.com/LXK9301
  * @Date: 2020-11-20 11:42:03 
- * @Last Modified by: lxk0301
+ * @Last Modified by: LXK9301
  * @Last Modified time: 2020-12-12 12:27:14
  */
 /*
@@ -13,17 +13,17 @@ APP活动入口：“最新版本京东APP >领券中心/券后9.9>领点点券�
 ===============Quantumultx===============
 [task_local]
 #点点券
-10 0,20 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_necklace.js, tag=点点券, enabled=true
+10 0,20 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js, tag=点点券, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 0,20 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_necklace.js,tag=点点券
+cron "10 0,20 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js,tag=点点券
 
 ===============Surge=================
-点点券 = type=cron,cronexp="10 0,20 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_necklace.js
+点点券 = type=cron,cronexp="10 0,20 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js
 
 ============小火箭=========
-点点券 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_necklace.js, cronexpr="10 0,20 * * *", timeout=200, enable=true
+点点券 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js, cronexpr="10 0,20 * * *", timeout=200, enable=true
  */
 const $ = new Env('点点券');
 
