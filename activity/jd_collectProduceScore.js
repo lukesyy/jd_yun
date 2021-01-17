@@ -76,9 +76,9 @@ function stall_collectProduceScore(body) {
           if (data) {
             data = JSON.parse(data);
             if (data && data.data.bizCode === 0) {
-              console.log(`京东账号${$.index} ${$.UserName}成功收集金币:${data.data.result.produceScore}个`)
+              console.log(`京东账号${$.index} ${$.UserName}成功收集爆竹🧨:${data.data.result.produceScore}个`)
             } else {
-              console.log(`京东账号${$.index} ${$.UserName}成功收集金币失败:${data.data.bizMsg}`)
+              console.log(`京东账号${$.index} ${$.UserName}成功收集爆竹🧨失败:${data.data.bizMsg}`)
             }
           } else {
             console.log(`请检查自身设备原因`);
