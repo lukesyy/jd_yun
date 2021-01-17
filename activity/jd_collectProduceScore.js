@@ -1,11 +1,11 @@
 /*
 京东炸年兽领爆竹🧨
-仅仅是收集一下京东炸年兽领金币每秒产生的爆竹🧨
+仅仅是收集一下京东炸年兽领爆竹活动每秒产生的爆竹🧨
 
 每小时的第20分运行一次
 20 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_collectProduceScore.js
  */
-const $ = new Env('京东炸年兽领金币');
+const $ = new Env('京东炸年兽领爆竹🧨');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
