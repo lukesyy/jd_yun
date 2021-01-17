@@ -7,17 +7,17 @@
 ============Quantumultx===============
 [task_local]
 #健康抽奖机
-10 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, tag=健康抽奖机, enabled=true
+10 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js, tag=健康抽奖机, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js,tag=健康抽奖机
+cron "10 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js,tag=健康抽奖机
 
 ===============Surge=================
-健康抽奖机 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js
+健康抽奖机 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js
 
 ============小火箭=========
-健康抽奖机 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_health.js, cronexpr="10 0 * * *", timeout=200, enable=true
+健康抽奖机 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js, cronexpr="10 0 * * *", timeout=200, enable=true
  */
 const $ = new Env('健康抽奖机');
 

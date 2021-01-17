@@ -1,5 +1,5 @@
 // 半自动提醒心愿单50京豆。
-// 15 */4 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/jd_Goods.js
+// 15 */4 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/jd_Goods.js
 
 const $ = new Env('心愿单50京豆');
 

@@ -86,8 +86,8 @@ function* entrance() {
     }
   }
   for (let item of taskInfoKey) {
-    console.log(`新任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`);
-    $.msg($.name, subTitle, `新的任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`, {"open-url": "https://t.me/JD_fruit_pet"})
+    console.log(`新任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@LXK9301\n`);
+    $.msg($.name, subTitle, `新的任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@LXK9301\n`, {"open-url": "https://t.me/JD_fruit_pet"})
   }
   yield feedPetsAgain();//所有任务做完后，检测剩余狗粮是否大于110g,大于就继续投食
   yield energyCollect();

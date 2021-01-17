@@ -1,5 +1,5 @@
 jd_scripts:
-  image: akyakya/jd_scripts
+  image: lxk0301/jd_scripts
   # 配置服务器资源约束。此例子中服务被限制为使用内存不超过200M以及cpu不超过0.2（单核的20%）
   # 经过实际测试，建议不低于200M
   # deploy:
@@ -13,7 +13,14 @@ jd_scripts:
     - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
     - ./logs:/scripts/logs
   tty: true
+  # 因为更换仓库地址可能git pull的dns解析不到，可以在配置追加hosts
+  extra_hosts:
+    - "gitee.com:180.97.125.228"
+    - "github.com:13.229.188.59"
+    - "raw.githubusercontent.com:151.101.228.133"
   environment:
+    #脚本更新仓库地址，配置了会切换到对应的地址
+    - REPO_URL=https://gitee.com/lxk0301/jd_scripts.git
     # 注意环境变量填写值的时候一律不需要引号（""或者''）下面这些只是事例，根据自己的需求增加删除
     #jd cookies
     # 例: JD_COOKIE=pt_key=XXX;pt_pin=XXX

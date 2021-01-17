@@ -8,12 +8,12 @@
 // quantumultx
 [task_local]
 #热8超级盲盒
-1 0,1-23/3 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_mohe.js, tag=热8超级盲盒, enabled=true
+1 0,1-23/3 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_mohe.js, tag=热8超级盲盒, enabled=true
 // Loon
 [Script]
-cron "1 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_mohe.js,tag=热8超级盲盒
+cron "1 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_mohe.js,tag=热8超级盲盒
 // Surge
-热8超级盲盒 = type=cron,cronexp=1 0,1-23/3 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_mohe.js
+热8超级盲盒 = type=cron,cronexp=1 0,1-23/3 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_mohe.js
  */
 const $ = new Env('热8超级盲盒');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -40,7 +40,7 @@ let shareId = '';
     await taskList();
     await getAward();//抽奖
     if ($.time('yyyy-MM-dd') === '2020-08-19') {
-      $.msg($.name, '活动已结束', `请禁用或删除脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/lxk0301/jd_scripts\n`, {"open-url": "https://github.com/lxk0301/jd_scripts"});
+      $.msg($.name, '活动已结束', `请禁用或删除脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/LXK9301/jd_scripts\n`, {"open-url": "https://github.com/LXK9301/jd_scripts"});
     } else {
       $.msg($.name, '', `【京东账号一】${UserName}\n任务已做完.\n 抽奖详情查看 https://blindbox.jd.com\n`, {"open-url": "https://blindbox.jd.com"});
     }
