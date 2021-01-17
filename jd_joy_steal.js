@@ -20,7 +20,7 @@ const $ = new Env('宠汪汪偷好友积分与狗粮');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-
+let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000);
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 if ($.isNode()) {
@@ -42,7 +42,6 @@ let message = '', subTitle = '';
 let jdNotify = false;//是否开启静默运行，false关闭静默运行(即通知)，true打开静默运行(即不通知)
 let jdJoyHelpFeed = false;//是否给好友喂食，false为不给喂食，true为给好友喂食，默认不给好友喂食
 let jdJoyStealCoin = true;//是否偷好友积分与狗粮，false为否，true为是，默认是偷
-const weAppUrl = 'https://draw.jdfcloud.com//pet';
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 !(async () => {
   if (!cookiesArr[0]) {
@@ -80,40 +79,46 @@ const JD_API_HOST = 'https://jdjoy.jd.com/pet'
       $.done();
     })
 async function jdJoySteal() {
-  await getFriends();
-  if ($.getFriendsData && $.getFriendsData.success) {
-    message += `【京东账号${$.index}】${$.nickName}\n`;
-    await getCoinChanges();
-    if ($.getFriendsData && $.getFriendsData.datas && $.getFriendsData.datas.length  > 0) {
-      const { lastPage } = $.getFriendsData.page;
-      console.log('lastPage', lastPage)
-      $.allFriends = [];
-      for (let i = 1; i <= new Array(lastPage).fill('').length; i++) {
-        console.log(`开始查询第${i}页好友\n`);
-        await getFriends(i);
-        $.allFriends = $.allFriends.concat($.getFriendsData.datas);
-      }
-      for (let index = 0; index < $.allFriends.length; index ++) {
-        //剔除自己
-        if (!$.allFriends[index].stealStatus) {
-          $.allFriends.splice(index, 1);
+  try {
+    $.helpFood = 0;
+    $.stealFriendCoin = 0;
+    $.stealFood = 0;
+    await getFriends();
+    // $.log('data', JSON.stringify($.getFriendsData.datas))
+    if ($.getFriendsData && $.getFriendsData.success) {
+      message += `【京东账号${$.index}】${$.nickName}\n`;
+      await getCoinChanges();//查询喂食好友和偷好友积分是否已达上限
+      if ($.getFriendsData && $.getFriendsData.datas && $.getFriendsData.datas.length  > 0) {
+        const { lastPage } = $.getFriendsData.page;
+        console.log('lastPage', lastPage)
+        $.allFriends = [];
+        for (let i = 1; i <= new Array(lastPage).fill('').length; i++) {
+          console.log(`开始查询第${i}页好友\n`);
+          await getFriends(i);
+          $.allFriends = $.allFriends.concat($.getFriendsData.datas);
         }
+        for (let index = 0; index < $.allFriends.length; index ++) {
+          //剔除自己
+          if (!$.allFriends[index].stealStatus) {
+            $.allFriends.splice(index, 1);
+          }
+        }
+        console.log(`共${$.allFriends.length}个好友`);
+        await Promise.all([
+          stealFriendCoinFun(),//偷积分
+          stealFriendsFood(),//偷好友狗粮
+          helpFriendsFeed()//给好友喂食
+        ])
       }
-      console.log(`共${$.allFriends.length}个好友`);
-      $.helpFood = 0;
-      $.stealFriendCoin = 0;
-      $.stealFood = 0;
-      await Promise.all([
-        stealFriendCoinFun(),//偷积分
-        stealFriendsFood(),//偷好友狗粮
-        helpFriendsFeed()//给好友喂食
-      ])
+    } else {
+      message += `${$.getFriendsData && $.getFriendsData.errorMessage}\n`;
     }
-  } else {
-    message += `${$.getFriendsData && $.getFriendsData.errorMessage}\n`;
+  } catch (e) {
+    $.logErr(e)
   }
 }
 async function stealFriendsFood() {
+  if (nowTimes.getHours() < 6) return
   let jdJoyStealCoinTemp;
   if ($.isNode() && process.env.jdJoyStealCoin) {
     jdJoyStealCoinTemp = `${process.env.jdJoyStealCoin}` === 'true';
