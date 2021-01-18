@@ -11,6 +11,7 @@ on:
     types: started
   repository_dispatch:
     types: nian
+jobs:
   build:
 
     runs-on: ubuntu-latest
@@ -34,8 +35,8 @@ on:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京豆炸年兽】'
-        run: |
+      - name: '运行 【京炸年兽】'
+        run: 
           node jd_nian.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
