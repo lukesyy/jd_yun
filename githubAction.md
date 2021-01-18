@@ -8,10 +8,10 @@
 
 ##### 京东隐私安全 环境变量
 
-| Name                    |   归属   | 属性   | 说明                                                         |
-| :---------------------: | :----------: | --------- | ------------------------------------------------------------ |
-| `JD_DEBUG`              |   脚本打印log   | 非必须   | 运行脚本时，是否显示log,默认显示。改成false表示不显示，注重隐私的人可以在设置secret -> `Name:JD_DEBUG,Value:false` |
-| `JD_USER_AGENT`         |   京东   | 非必须   | 自定义此库里京东系列脚本的UserAgent，不懂不知不会UserAgent的请不要随意填写内容。如需使用此功能建议填写京东APP的UA |
+| Name                    |   归属   | 属性   | 默认值 | 说明                                                         |
+| :---------------------: | :----------: | --------- | ------ | ------------------------------------------------------------ |
+| `JD_DEBUG`              |   脚本打印log   | 非必须   | true | 运行脚本时，是否显示log,默认显示。改成false表示不显示，注重隐私的人可以在设置secret -> `Name:JD_DEBUG,Value:false` |
+| `JD_USER_AGENT`         |   京东   | 非必须   |  | 自定义此库里京东系列脚本的UserAgent，不懂不知不会UserAgent的请不要随意填写内容。如需使用此功能建议填写京东APP的UA |
 
 ##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`、`QQ酷推`等通知方式)
 
@@ -35,22 +35,23 @@
 
 ##### 互助码类环境变量
 
-| Name                        | 归属             | 属性 | 说明                                                                                                                                                                |
-| --------------------------- | ------------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FRUITSHARECODES`           | 东东农场互助码 | 非必须 | 填写规则请看[jdFruitShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFruitShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `PETSHARECODES`             | 东东萌宠互助码 | 非必须 | 填写规则请看[jdPetShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPetShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `PLANT_BEAN_SHARECODES`     | 种豆得豆互助码 | 非必须 | 填写规则请看[jdPlantBeanShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPlantBeanShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `SUPERMARKET_SHARECODES`    | 东东超市商圈互助码 | 非必须 | 填写规则请看[jdSuperMarketShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdSuperMarketShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `DDFACTORY_SHARECODES`      | 东东工厂互助码 | 非必须 | 填写规则请看[jdFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `DREAM_FACTORY_SHARE_CODES` | 京喜工厂互助码 | 非必须 | 填写规则请看[jdDreamFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `JDZZ_SHARECODES`           | 京东赚赚互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `JDJOY_SHARECODES`          | 疯狂的JOY互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `BOOKSHOP_SHARECODES`       | 京东书店互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `JD_CASH_SHARECODES`        | 签到领现金互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `JXNC_SHARECODES`           | 京喜农场互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
-| `JDNIAN_SHARECODES`         | 炸年兽互助码 | 非必须 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
+| Name                        | 归属             | 属性 | 需要助力次数/提供助力次数 | 说明                                                                                                                                                                |
+| --------------------------- | ------------------ | ------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FRUITSHARECODES`           | 东东农场互助码 | 非必须 | 5/4 | 填写规则请看[jdFruitShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFruitShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+| `PETSHARECODES`             | 东东萌宠互助码 | 非必须 | 5/5 | 填写规则请看[jdPetShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPetShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+| `PLANT_BEAN_SHARECODES`     | 种豆得豆互助码 | 非必须 | 9/3 | 填写规则请看[jdPlantBeanShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPlantBeanShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+| `SUPERMARKET_SHARECODES`    | 东东超市商圈互助码 | 非必须 | / | 填写规则请看[jdSuperMarketShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdSuperMarketShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+| `DDFACTORY_SHARECODES`      | 东东工厂互助码 | 非必须 | 5/3 | 填写规则请看[jdFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+| `DREAM_FACTORY_SHARE_CODES` | 京喜工厂互助码 | 非必须 | 不固定/3 | 填写规则请看[jdDreamFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+| `JDZZ_SHARECODES`           | 京东赚赚互助码 | 非必须 | 5/2 | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
+| `JDJOY_SHARECODES`          | 疯狂的JOY互助码 | 非必须 | 6/ | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
+| `BOOKSHOP_SHARECODES`       | 京东书店互助码 | 非必须 | 10/ | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
+| `JD_CASH_SHARECODES`        | 签到领现金互助码 | 非必须 | 10/ | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
+| `JXNC_SHARECODES`           | 京喜农场互助码 | 非必须 | / | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
+| `JDNIAN_SHARECODES`         | 炸年兽互助码 | 非必须 | 10/ | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则)                                                                       |
 
 ##### 控制脚本功能环境变量
+
 
 | Name                         | 归属                      | 属性 | 说明                                                                                                                                                                                                                                                   |
 | ---------------------------- | --------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -80,7 +81,8 @@
 | `BUY_JOY_LEVEL`              | 疯狂的JOY                   | 非必须 | 疯狂的JOY自动购买什么等级的JOY                                                                                                                                                                                                               |
 | `MONEY_TREE_SELL_FRUIT`      | 摇钱树是否卖出金果           | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认`false`                                                                                                                                           |
 | `FACTORAY_WANTPRODUCT_NAME`  | 东东工厂心仪商品             | 非必须 | 提供心仪商品名称(请尽量填写完整和别的商品有区分度)，达到条件后兑换，如不提供则会兑换当前所选商品                                                                                                          |
-| `JXNCTOKENS`                 | 京喜农场TOKEN               | 非必须 | 每个账号 token 是一个 json，json 需要用单引号包裹，否则设置环境变量时会出错，示例：'{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760","timestamp":"1610165423873","phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}'，多账单间使用`&`或换行分开。                                    |
+| `JXNCTOKENS`                 | 京喜农场TOKEN               | 非必须 | 每个账号 token 是一个 json，json 需要用单引号包裹，否则设置环境变量时会出错，示例：'{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760","timestamp":"1610165423873","phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}'，多账单间使用`&`或换行分开。|                                   |
+
 
 ##### 互助码的填写规则
 
