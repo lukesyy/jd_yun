@@ -253,7 +253,7 @@ async function helpFriendsFeed() {
 function getFriends(currentPage = '1') {
   return new Promise(resolve => {
     const options = {
-      url: `${JD_API_HOST}/getFriends?itemsPerPage=20&currentPage=${currentPage}`,
+      url: `${JD_API_HOST}/getFriends?itemsPerPage=20&currentPage=${currentPage * 1}&reqSource=h5`,
       headers: {
         'Cookie': cookie,
         'reqSource': 'h5',
@@ -264,7 +264,8 @@ function getFriends(currentPage = '1') {
         'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
-      }
+      },
+      timeout: 10000
     }
     $.get(options, (err, resp, data) => {
       try {

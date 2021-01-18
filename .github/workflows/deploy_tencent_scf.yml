@@ -54,6 +54,7 @@ jobs:
           if [ $BOOKSHOP_SHARECODES ]; then sed -i "/variables/a\      BOOKSHOP_SHARECODES: $BOOKSHOP_SHARECODES" serverless.yml; fi;
           if [ $JD_CASH_SHARECODES ]; then sed -i "/variables/a\      JD_CASH_SHARECODES: $JD_CASH_SHARECODES" serverless.yml; fi;
           if [ $JXNC_SHARECODES ]; then sed -i "/variables/a\      JXNC_SHARECODES: $JXNC_SHARECODES" serverless.yml; fi;
+          if [ $JDNIAN_SHARECODES ]; then sed -i "/variables/a\      JDNIAN_SHARECODES: $JDNIAN_SHARECODES" serverless.yml; fi;
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_STOP_NOTIFY ]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: $JD_BEAN_SIGN_STOP_NOTIFY" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_NOTIFY_SIMPLE ]; then sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: $JD_BEAN_SIGN_NOTIFY_SIMPLE" serverless.yml; fi;
@@ -113,6 +114,7 @@ jobs:
           BOOKSHOP_SHARECODES: ${{ secrets.BOOKSHOP_SHARECODES}}
           JD_CASH_SHARECODES: ${{ secrets.JD_CASH_SHARECODES}}
           JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES}}
+          JDNIAN_SHARECODES: ${{ secrets.JDNIAN_SHARECODES}}
           JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
           JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}
           JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}

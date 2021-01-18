@@ -1,3 +1,4 @@
+![Docker Pulls](https://img.shields.io/docker/pulls/lxk0301/jd_scripts?style=for-the-badge)
 ### Usage
 ```diff
 + 2021-01-03更新 增加 CUSTOM_SHELL_FILE 参数配置执行自定义shell脚本
