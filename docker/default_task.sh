@@ -11,7 +11,7 @@ fi
 mergedListFile="/scripts/docker/merged_list_file.sh"
 echo "合并后定时任务文件路径为 ${mergedListFile}"
 
-echo "第3步将默认定时任务列表添加到并后定时任务文件..."
+echo "第1步将默认定时任务列表添加到并后定时任务文件..."
 cat $defaultListFile >$mergedListFile
 
 echo "第2步判断是否存在自定义任务任务列表并追加..."
@@ -35,18 +35,19 @@ else
     echo "当前只使用了默认定时任务文件 $DEFAULT_LIST_FILE ..."
 fi
 
+##可能存在旧版crontab里面有default_task.sh任务有就直接删除，否则可能会任务重复
+sed -i "/default_task.sh/d" $mergedListFile
+
 echo "第3步判断是否配置了默认脚本更新任务..."
-if [ $(grep -c "default_task.sh" $mergedListFile) -eq '0' ]; then
+if [ $(grep -c "docker_entrypoint.sh" $mergedListFile) -eq '0' ]; then
     echo "合并后的定时任务文件，未包含必须的默认定时任务，增加默认定时任务..."
     echo -e >>$mergedListFile
     echo "52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
 else
-    sed -i "/default_task.sh/d" $mergedListFile
-    echo "#脚本追加默认定时任务" >>$mergedListFile
-    echo "52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
+    echo "已配置默认脚本更新任务。"
 fi
 
-echo "第5步判断是否配置了随即延迟参数..."
+echo "第4步判断是否配置了随即延迟参数..."
 if [ $RANDOM_DELAY_MAX ]; then
     if [ $RANDOM_DELAY_MAX -ge 1 ]; then
         echo "已设置随机延迟为 $RANDOM_DELAY_MAX , 设置延迟任务中..."
@@ -56,7 +57,7 @@ else
     echo "未配置随即延迟对应的环境变量，故不设置延迟任务..."
 fi
 
-echo "第6步判断是否配置自定义shell执行脚本..."
+echo "第5步判断是否配置自定义shell执行脚本..."
 if [ 0"$CUSTOM_SHELL_FILE" = "0" ]; then
     echo "未配置自定shell脚本文件，跳过执行。"
 else
@@ -79,14 +80,14 @@ else
     fi
 fi
 
-echo "第7步增加 |ts 任务日志输出时间戳..."
+echo "第6步增加 |ts 任务日志输出时间戳..."
 sed -i "/\( ts\| |ts\|| ts\)/!s/>>/\|ts >>/g" $mergedListFile
 
-echo "第8步执行proc_file.sh脚本任务..."
+echo "第7步执行proc_file.sh脚本任务..."
 sh -x /scripts/docker/proc_file.sh
 
-echo "第9步加载最新的定时任务文件..."
+echo "第8步加载最新的定时任务文件..."
 crontab $mergedListFile
 
-echo "第10步将仓库的docker_entrypoint.sh脚本更新至系统/usr/local/bin/docker_entrypoint.sh内..."
+echo "第9步将仓库的docker_entrypoint.sh脚本更新至系统/usr/local/bin/docker_entrypoint.sh内..."
 cat /scripts/docker/docker_entrypoint.sh >/usr/local/bin/docker_entrypoint.sh
