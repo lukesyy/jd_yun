@@ -36,14 +36,16 @@ else
 fi
 
 echo "第3步判断是否配置了默认脚本更新任务..."
-if [ $(grep -c "default_task.sh" $mergedListFile) -eq '0' ]; then
+if [ $(grep -c "docker_entrypoint.sh" $mergedListFile) -eq '0' ]; then
     echo "合并后的定时任务文件，未包含必须的默认定时任务，增加默认定时任务..."
     echo -e >>$mergedListFile
     echo "52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
-else
+elif [ $(grep -c "default_task.sh" $mergedListFile) -eq '0'  ]
     sed -i "/default_task.sh/d" $mergedListFile
     echo "#脚本追加默认定时任务" >>$mergedListFile
     echo "52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
+else
+    echo "已配置默认脚本更新任务。"
 fi
 
 echo "第5步判断是否配置了随即延迟参数..."
