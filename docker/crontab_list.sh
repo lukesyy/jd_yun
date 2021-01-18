@@ -7,9 +7,9 @@
 #年货节(活动时间：2021年1月9日-2021年2月9日)
 10 8 * * * node /scripts/jd_nh.js >> /scripts/logs/jd_nh.log 2>&1
 #京东炸年兽集爆竹(活动时间:2021-1-18至2021-2-11)怕有遗漏故多运行几次
-0 8,9,10 * * * node /scripts/jd_nian.js >> /scripts/logs/jd_nian.log 2>&1
+0 * * * * node /scripts/jd_nian.js >> /scripts/logs/jd_nian.log 2>&1
 #专门收集每秒产生的爆竹(1小时运行一次)
-0 * * * * node /scripts/jd_nianCollect.js >> /scripts/logs/jd_nianCollect.log 2>&1
+30 * * * * node /scripts/jd_nianCollect.js >> /scripts/logs/jd_nianCollect.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
