@@ -531,7 +531,7 @@ function requireConfig() {
     //Node.js用户请在jdCookie.js处填写京东ck;
     let shareCodes = []
     console.log(`共${cookiesArr.length}个京东账号\n`);
-    if (process.env.JDNIAN_SHARECODES) {
+    if ($.isNode() && process.env.JDNIAN_SHARECODES) {
       if (process.env.JDNIAN_SHARECODES.indexOf('\n') > -1) {
         shareCodes = process.env.JDNIAN_SHARECODES.split('\n');
       } else {
