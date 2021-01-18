@@ -1,7 +1,7 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301 
+ * @Author: LXK9301 https://github.com/LXK9301
  * @Date: 2020-12-06 18:19:21
- * @Last Modified by: lxk0301
+ * @Last Modified by: LXK9301
  * @Last Modified time: 2020-12-26 22:58:02
  */
 /*
@@ -16,17 +16,17 @@
 ============Quantumultx===============
 [task_local]
 #京东工厂
-10 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js, tag=东东工厂, enabled=true
+10 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js, tag=东东工厂, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 * * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js,tag=东东工厂
+cron "10 * * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js,tag=东东工厂
 
 ===============Surge=================
-东东工厂 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js
+东东工厂 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js
 
 ============小火箭=========
-东东工厂 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdfactory.js, cronexpr="10 * * * *", timeout=200, enable=true
+东东工厂 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js, cronexpr="10 * * * *", timeout=200, enable=true
  */
 const $ = new Env('东东工厂');
 
@@ -501,7 +501,7 @@ function queryVkComponent() {
         "Content-Type": `application/x-www-form-urlencoded`,
         "Accept-Encoding": `gzip, deflate, br`,
         "Host": `api.m.jd.com`,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "jdapp;iPhone;9.3.4;14.3;88732f840b77821b345bf07fd71f609e6ff12f43;network/4g;ADID/1C141FDD-C62F-425B-8033-9AAB7E4AE6A3;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone11,8;addressid/2005183373;supportBestPay/0;appBuild/167502;jdSupportDarkMode/0;pv/414.19;apprpd/Babel_Native;ref/TTTChannelViewContoller;psq/5;ads/;psn/88732f840b77821b345bf07fd71f609e6ff12f43|1701;jdv/0|iosapp|t_335139774|appshare|CopyURL|1610885480412|1610885486;adk/;app_device/IOS;pap/JA2015_311210|9.3.4|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
         "Accept-Language": `zh-Hans-CN;q=1, en-CN;q=0.9`,
       },
       "timeout": 10000,
@@ -622,7 +622,7 @@ function jdfactory_getHomeData() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/ddfactory/read/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
+    $.get({url: `http://jd.turinglabs.net/api/v2/jd/ddfactory/read/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -689,13 +689,18 @@ function taskPostUrl(function_id, body = {}, function_id2) {
   }
   return {
     url,
-    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=9.1.0`,
+    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.1.0`,
     headers: {
+      "Accept": "application/json, text/plain, */*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Accept-Language": "zh-cn",
+      "Connection": "keep-alive",
+      "Content-Type": "application/x-www-form-urlencoded",
       "Cookie": cookie,
-      "origin": "https://h5.m.jd.com",
-      "referer": "https://h5.m.jd.com/",
-      'Content-Type': 'application/x-www-form-urlencoded',
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "Host": "api.m.jd.com",
+      "Origin": "https://h5.m.jd.com",
+      "Referer": "https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html",
+      "User-Agent": "jdapp;iPhone;9.3.4;14.3;88732f840b77821b345bf07fd71f609e6ff12f43;network/4g;ADID/1C141FDD-C62F-425B-8033-9AAB7E4AE6A3;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone11,8;addressid/2005183373;supportBestPay/0;appBuild/167502;jdSupportDarkMode/0;pv/414.19;apprpd/Babel_Native;ref/TTTChannelViewContoller;psq/5;ads/;psn/88732f840b77821b345bf07fd71f609e6ff12f43|1701;jdv/0|iosapp|t_335139774|appshare|CopyURL|1610885480412|1610885486;adk/;app_device/IOS;pap/JA2015_311210|9.3.4|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
     },
     timeout: 10000,
   }

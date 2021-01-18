@@ -6,17 +6,17 @@
 ============Quantumultx===============
 [task_local]
 #口袋书店
-1 8,12,18 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js, tag=口袋书店, enabled=true
+1 8,12,18 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js, tag=口袋书店, enabled=true
 
 ================Loon==============
 [Script]
-cron "1 8,12,18 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js,tag=口袋书店
+cron "1 8,12,18 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js,tag=口袋书店
 
 ===============Surge=================
-口袋书店 = type=cron,cronexp="1 8,12,18 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js
+口袋书店 = type=cron,cronexp="1 8,12,18 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js
 
 ============小火箭=========
-口袋书店 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bookshop.js, cronexpr="1 8,12,18* * *", timeout=200, enable=true
+口袋书店 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js, cronexpr="1 8,12,18* * *", timeout=200, enable=true
  */
 const $ = new Env('口袋书店');
 const notify = $.isNode() ? require('./sendNotify') : '';

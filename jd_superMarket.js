@@ -1,24 +1,24 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301 
+ * @Author: LXK9301 https://github.com/LXK9301
  * @Date: 2020-08-16 18:54:16
- * @Last Modified by: lxk0301
+ * @Last Modified by: LXK9301
  * @Last Modified time: 2021-1-9 21:22:37
  */
 /*
 东东超市(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
 Some Functions Modified From https://github.com/Zero-S1/JD_tools/blob/master/JD_superMarket.py
 支持京东双账号
-京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js
+京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_blueCoin.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // QuantumultX
 [task_local]
 #东东超市
-11 1-23/5 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js, tag=东东超市, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
+11 1-23/5 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js, tag=东东超市, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
 // Loon
 [Script]
-cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js,tag=东东超市
+cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js,tag=东东超市
 // Surge
-东东超市 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_superMarket.js
+东东超市 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js
  */
 const $ = new Env('东东超市');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -311,10 +311,10 @@ async function businessCircleActivity() {
     console.log(`\njoinStatus:${joinStatus}`);
     console.log(`pkStatus:${pkStatus}\n`);
     if (joinStatus === 0) {
-      console.log(`\n注：PK会在每天的七点自动随机加入lxk0301创建的队伍\n`)
+      console.log(`\n注：PK会在每天的七点自动随机加入LXK9301创建的队伍\n`)
       await updatePkActivityId();
       if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN('https://gitee.com/lxk0301/updateTeam/raw/master/jd_updateTeam.json');
-      if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN('https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json');
+      if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN('https://cdn.jsdelivr.net/gh/LXK9301/updateTeam@master/jd_updateTeam.json');
       console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes.pkActivityId}`);
       console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
       if ($.updatePkActivityIdRes && ($.updatePkActivityIdRes.pkActivityId === pkActivityId)) {
@@ -453,11 +453,11 @@ async function businessCircleActivity() {
       }
     }
   } else if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 206) {
-    console.log(`您暂未加入商圈,现在给您加入lxk0301的商圈`);
+    console.log(`您暂未加入商圈,现在给您加入LXK9301的商圈`);
     const joinBusinessCircleRes = await smtg_joinBusinessCircle(myCircleId);
     console.log(`参加商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
     if (joinBusinessCircleRes.data.bizCode !== 0) {
-      console.log(`您加入lxk0301的商圈失败，现在给您随机加入一个商圈`);
+      console.log(`您加入LXK9301的商圈失败，现在给您随机加入一个商圈`);
       const BusinessCircleList = await smtg_getBusinessCircleList();
       if (BusinessCircleList.data.bizCode === 0) {
         const { businessCircleVOList } = BusinessCircleList.data.result;
@@ -844,10 +844,8 @@ function smtg_sellMerchandise(body) {
   })
 }
 //新版东东超市
-function updatePkActivityId(url = 'https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateTeam.json') {
+function updatePkActivityId(url = 'https://raw.githubusercontent.com/LXK9301/updateTeam/master/jd_updateTeam.json') {
   return new Promise(resolve => {
-    //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json
-    //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateTeam.json
     $.get({url}, async (err, resp, data) => {
       try {
         if (err) {
@@ -864,10 +862,8 @@ function updatePkActivityId(url = 'https://raw.githubusercontent.com/lxk0301/upd
     })
   })
 }
-function updatePkActivityIdCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_updateTeam.json') {
+function updatePkActivityIdCDN(url) {
   return new Promise(async resolve => {
-    //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_updateTeam.json
-    //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateTeam.json
     const headers = {
       "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
     }

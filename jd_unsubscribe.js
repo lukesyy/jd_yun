@@ -9,12 +9,12 @@
 // Quantumult X
 [task_local]
 #取关京东店铺商品
-55 23 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js, tag=取关京东店铺商品, enabled=true
+55 23 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js, tag=取关京东店铺商品, enabled=true
 // Loon
 [Script]
-cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js,tag=取关京东店铺商品
+cron "55 23 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js,tag=取关京东店铺商品
 // Surge
-取关京东店铺商品 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unsubscribe.js
+取关京东店铺商品 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js
  */
 const $ = new Env('取关京东店铺和商品');
 //Node.js用户请在jdCookie.js处填写京东ck;

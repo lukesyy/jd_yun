@@ -8,17 +8,17 @@ crazy joy
 ============Quantumultx===============
 [task_local]
 #crazyJoy挂机
-10 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy_coin.js, tag=crazyJoy挂机, enabled=true
+10 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js, tag=crazyJoy挂机, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 7 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy_coin.js,tag=crazyJoy挂机
+cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js,tag=crazyJoy挂机
 
 ===============Surge=================
-crazyJoy挂机 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy_coin.js
+crazyJoy挂机 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js
 
 ============小火箭=========
-crazyJoy挂机 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_crazy_joy_coin.js, cronexpr="10 * * * *", timeout=200, enable=true
+crazyJoy挂机 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js, cronexpr="10 * * * *", timeout=200, enable=true
 
  */
 
@@ -166,6 +166,16 @@ if ($.isNode()) {
     return;
   }
   let count = 0
+
+  if (cookiesArr.length && $.isNode()) {
+    console.log(`\n挂机开始，自动8s收一次金币`);
+    //兼容iOS
+    setInterval(async () => {
+      const promiseArr = cookiesArr.map(ck => getCoinForInterval(ck));
+      await Promise.all(promiseArr);
+    }, 8000);
+  }
+
   while (true) {
     count++
     console.log(`============开始第${count}次挂机=============`)
@@ -182,7 +192,7 @@ if ($.isNode()) {
          $.log(`\n京东账号${$.index} ${$.nickName || $.UserName}\ncookie已过期,请重新登录获取\n`)
           continue
         }
-        await jdJxStory()
+        await jdCrazyJoy()
       }
     }
     $.log(`\n\n`)
@@ -195,7 +205,7 @@ if ($.isNode()) {
     $.done();
   })
 
-async function jdJxStory() {
+async function jdCrazyJoy() {
   $.coin = 0
   $.bean = 0
 
@@ -513,6 +523,35 @@ function getCoin() {
   })
 }
 
+// 需传入cookie，不能使用全局的cookie
+function getCoinForInterval(taskCookie) {
+  return new Promise(async resolve => {
+    $.get(taskUrl('crazyJoy_joy_produce', '', taskCookie), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            // const userName = decodeURIComponent(taskCookie.match(/pt_pin=(.+?);/) && taskCookie.match(/pt_pin=(.+?);/)[1])
+            // data = JSON.parse(data);
+            // if (data.data && data.data.tryMoneyJoyBeans) {
+            //   console.log(`【京东账号 ${userName}】分红狗生效中，预计获得 ${data.data.tryMoneyJoyBeans} 京豆奖励`)
+            // }
+            // if (data.data) {
+            //   $.log(`【京东账号 ${userName}】此次在线收益：获得 ${data.data['coins']} 金币`)
+            // }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
 function openBox(eventType = 'LUCKY_BOX_DROP', boxId) {
   let body = { eventType, "eventRecordId": boxId}
   return new Promise(async resolve => {
@@ -525,9 +564,9 @@ function openBox(eventType = 'LUCKY_BOX_DROP', boxId) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['success']) {
-              $.log(`点击幸运盒子成功，剩余观看视频次数：${data.data.advertViewTimes}, ${data.data.advertViewTimes > 0 ? '等待30秒' : '跳出'}`)
+              $.log(`点击幸运盒子成功，剩余观看视频次数：${data.data.advertViewTimes}, ${data.data.advertViewTimes > 0 ? '等待32秒' : '跳出'}`)
               if (data.data.advertViewTimes > 0) {
-                await $.wait(30000)
+                await $.wait(32000)
                 await rewardBox(eventType, boxId);
               }
             }
@@ -599,7 +638,7 @@ function getGrowState() {
     })
   })
 }
-function taskUrl(functionId, body = '') {
+function taskUrl(functionId, body = '', taskCookie = cookie) {
   let t = Date.now().toString().substr(0, 10)
   let e = body || ""
   e = $.md5("aDvScBv$gGQvrXfva8dG!ZC@DA70Y%lX" + e + t)
@@ -607,7 +646,7 @@ function taskUrl(functionId, body = '') {
   return {
     url: `${JD_API_HOST}?uts=${e}&appid=crazy_joy&functionId=${functionId}&body=${escape(body)}&t=${t}`,
     headers: {
-      'Cookie': cookie,
+      'Cookie': taskCookie,
       'Host': 'api.m.jd.com',
       'Accept': '*/*',
       'Connection': 'keep-alive',

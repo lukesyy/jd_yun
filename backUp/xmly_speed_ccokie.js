@@ -5,14 +5,14 @@
  [MITM]
  hostname = m.ximalaya.com
  Surge
- 喜马拉雅极速版Cookie = type=http-request,pattern=https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/xmly_speed_ccokie.js
+ 喜马拉雅极速版Cookie = type=http-request,pattern=https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmly_speed_ccokie.js
  Loon:
- http-request https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/xmly_speed_ccokie.js
+ http-request https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmly_speed_ccokie.js
  , requires-body=true, timeout=10, tag=喜马拉雅极速版Cookie
  QX:
  [rewrite_local]
  # 喜马拉雅极速版Cookie
- https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin url script-request-header https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/xmly_speed_ccokie.js
+ https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin url script-request-header https://raw.githubusercontent.com/LXK9301/jd_scripts/master/backUp/xmly_speed_ccokie.js
  */
 
 const $ = new Env('喜马拉雅极速版获取cookie')

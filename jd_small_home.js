@@ -1,11 +1,11 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301 
+ * @Author: LXK9301 https://github.com/LXK9301
  * @Date: 2020-11-12 11:42:12 
- * @Last Modified by: lxk0301
+ * @Last Modified by: LXK9301
  * @Last Modified time: 2021-1-4 14:27:20
  */
 /*
-东东小窝 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js
+东东小窝 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js
 现有功能：
 做日常任务任务，每日抽奖（有机会活动京豆，使用的是免费机会，不消耗WO币）
 自动使用WO币购买装饰品可以获得京豆，分别可获得5,20，50,100,200,400,700，1200京豆）
@@ -25,17 +25,17 @@ https://h5.m.jd.com/babelDiy/Zeus/2HFSytEAN99VPmMGZ6V4EYWus1x/index.html
 ===============Quantumultx===============
 [task_local]
 #东东小窝
-16 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js, tag=东东小窝, img-url=https://raw.githubusercontent.com/58xinian/icon/master/ddxw.png  enabled=true
+16 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝, img-url=https://raw.githubusercontent.com/58xinian/icon/master/ddxw.png  enabled=true
 
 ================Loon==============
 [Script]
-cron "16 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js, tag=东东小窝
+cron "16 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝
 
 ===============Surge=================
-东东小窝 = type=cron,cronexp="16 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js
+东东小窝 = type=cron,cronexp="16 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js
 
 ============小火箭=========
-东东小窝 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js, cronexpr="16 0 * * *", timeout=200, enable=true
+东东小窝 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, cronexpr="16 0 * * *", timeout=200, enable=true
  */
 const $ = new Env('东东小窝');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -100,7 +100,7 @@ const JD_API_HOST = 'https://lkyl.dianpusoft.cn/api';
         console.log(`\n${$.UserName} 去给自己的下一账号 ${decodeURIComponent($.newShareCodes[(i + 1) % $.newShareCodes.length]['cookie'].match(/pt_pin=(.+?);/) && $.newShareCodes[(i + 1) % $.newShareCodes.length]['cookie'].match(/pt_pin=(.+?);/)[1])}助力，助力码为 ${code}\n`)
         await createAssistUser(code, $.createAssistUserID);
       }
-      console.log(`\n去帮助作者:lxk0301\n`)
+      console.log(`\n去帮助作者:LXK9301\n`)
       await helpFriends();
     }
   }
@@ -786,7 +786,7 @@ function login(userName) {
     })
   })
 }
-function updateInviteCode(url = 'https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_updateSmallHomeInviteCode.json') {
+function updateInviteCode(url = 'https://raw.githubusercontent.com/LXK9301/updateTeam/master/jd_updateSmallHomeInviteCode.json') {
   return new Promise(resolve => {
     $.get({url}, async (err, resp, data) => {
       try {
@@ -803,7 +803,7 @@ function updateInviteCode(url = 'https://raw.githubusercontent.com/lxk0301/updat
     })
   })
 }
-function updateInviteCodeCDN(url = 'https://raw.fastgit.org/lxk0301/updateTeam/master/jd_updateSmallHomeInviteCode.json') {
+function updateInviteCodeCDN(url) {
   return new Promise(async resolve => {
     $.get({url}, async (err, resp, data) => {
       try {

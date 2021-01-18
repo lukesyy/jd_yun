@@ -8,17 +8,17 @@
 ============Quantumultx===============
 [task_local]
 # 京东赚赚
-0 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdzz.js, tag=京东赚赚, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzz.png, enabled=true
+0 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js, tag=京东赚赚, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzz.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdzz.js,tag=京东赚赚
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js,tag=京东赚赚
 
 ===============Surge=================
-京东赚赚 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdzz.js
+京东赚赚 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js
 
 ============小火箭=========
-京东赚赚 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jdzz.js, cronexpr="0 0 * * *", timeout=200, enable=true
+京东赚赚 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js, cronexpr="0 0 * * *", timeout=200, enable=true
  */
 const $ = new Env('京东赚赚');
 const notify = $.isNode() ? require('./sendNotify') : '';
