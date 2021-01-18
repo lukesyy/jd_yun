@@ -44,7 +44,7 @@ let currentCookie = ''; // 当前用户 cookie
 let tokenNull = {'farm_jstoken': '', 'phoneid': '', 'timestamp': ''}; // 内置一份空的 token
 let tokenArr = []; // 用户 token 数组
 let currentToken = {}; // 当前用户 token
-const shareCode = '22bd6fbbabbaa770a45ab2607e7a1e8a@197c6094e965fdf3d33621b47719e0b1'; // 内置助力码
+const shareCode = '60804228819a20ec89c4e1709de4c236@22bd6fbbabbaa770a45ab2607e7a1e8a@197c6094e965fdf3d33621b47719e0b1'; // 内置助力码
 let jxncShareCodeArr = []; // 用户 助力码 数组
 let currentShareCode = []; // 当前用户 要助力的助力码
 const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "jump", "des": "m", "url": "https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2"}',)}`; // 打开京喜农场
@@ -55,7 +55,7 @@ $.detail = []; // 今日明细列表
 $.helpTask = null;
 $.allTask = []; // 任务列表
 $.info = {}; // 用户信息
-$.answer = 0;
+$.answer = 3;
 $.drip = 0;
 $.maxHelpNum = $.isNode() ? 8 : 3; // 助力 ret 1011 错误最大计数
 $.helpNum = 0; // 当前账号 助力 ret 1011 次数
@@ -90,7 +90,7 @@ let assistUserShareCode = 0; // 随机助力用户 share code
             subTitle = '';
             message = '';
             option = {};
-            $.answer = 0;
+            $.answer = 3;
             $.helpNum = 0;
             $.helpSelfNum = 0;
             notifyBool = notifyLevel > 0; // 初始化是否推送
@@ -319,6 +319,7 @@ function browserTask() {
             if (status[0] === 1032) {
                 $.log('任务执行失败，种植的 APP 专属种子，请提供 token 或种植非 APP 种子');
                 message += '任务执行失败，种植的 APP 专属种子，请提供 token 或种植非 APP 种子\n';
+                notifyBool = notifyBool && notifyLevel >= 2;
                 resolve(false);
                 return;
             }
@@ -360,8 +361,8 @@ function answerTask() {
                         resolve();
                         return;
                     }
-                    if (((ret !== 0 && ret !== 1029) || retmsg === 'ans err') && $.answer < 4) {
-                        $.answer++;
+                    if (((ret !== 0 && ret !== 1029) || retmsg === 'ans err') && $.answer > 0) {
+                        $.answer--;
                         await $.wait(1000);
                         await answerTask();
                     }
