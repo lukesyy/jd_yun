@@ -80,7 +80,7 @@
 | `BUY_JOY_LEVEL`              | 疯狂的JOY                   | 非必须 | 疯狂的JOY自动购买什么等级的JOY                                                                                                                                                                                                               |
 | `MONEY_TREE_SELL_FRUIT`      | 摇钱树是否卖出金果           | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认`false`                                                                                                                                           |
 | `FACTORAY_WANTPRODUCT_NAME`  | 东东工厂心仪商品             | 非必须 | 提供心仪商品名称(请尽量填写完整和别的商品有区分度)，达到条件后兑换，如不提供则会兑换当前所选商品                                                                                                          |
-| `JXNCTOKENS`                 | 京喜农场TOKEN               | 非必须 | 每个账号 token 是一个 json，示例：{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760","timestamp":"1610165423873","phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}，多账单间使用`&`或换行分开。                                    |
+| `JXNCTOKENS`                 | 京喜农场TOKEN               | 非必须 | 每个账号 token 是一个 json，json 需要用单引号包裹，否则设置环境变量时会出错，示例：'{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760","timestamp":"1610165423873","phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}'，多账单间使用`&`或换行分开。                                    |
 
 ##### 互助码的填写规则
 
