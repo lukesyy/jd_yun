@@ -114,6 +114,7 @@ function getRnd() {
 function showMsg() {
   return new Promise(resolve => {
     console.log('任务已做完！\n如有未完成的任务，请多执行几次。注：目前入会任务不会做')
+    console.log('如出现taskVos错误的，请更新USER_AGENTS.js或使用自定义UA功能')
     if (!jdNotify) {
       $.msg($.name, '', `${message}`);
     } else {
