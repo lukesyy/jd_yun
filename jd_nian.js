@@ -85,16 +85,20 @@ const inviteCodes = [
       $.done();
     })
 async function jdNian() {
-  await getHomeData()
-  if(!$.secretp) return
-  await map()
-  await queryMaterials()
-  await getTaskList()
-  await $.wait(1000)
-  await doTask()
-  await helpFriends()
-  await getHomeData(true)
-  await showMsg()
+  try {
+    await getHomeData()
+    if(!$.secretp) return
+    await map()
+    await queryMaterials()
+    await getTaskList()
+    await $.wait(1000)
+    await doTask()
+    await helpFriends()
+    await getHomeData(true)
+    await showMsg()
+  } catch (e) {
+    $.logErr(e)
+  }
 }
 function encode(data, aa, extraData) {
   const temp = {
@@ -110,6 +114,7 @@ function getRnd() {
 function showMsg() {
   return new Promise(resolve => {
     console.log('任务已做完！\n如有未完成的任务，请多执行几次。注：目前入会任务不会做')
+    console.log('如出现taskVos错误的，请更新USER_AGENTS.js或使用自定义UA功能')
     if (!jdNotify) {
       $.msg($.name, '', `${message}`);
     } else {
@@ -349,22 +354,24 @@ function collectScore(taskId,itemId,actionType=null,inviteId=null,shopSign=null)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.data.bizCode === 0) {
-              if(data.data.result.score)
-                console.log(`任务完成，获得${data.data.result.score}爆竹🧨`)
-              else if(data.data.result.maxAssistTimes) {
-                console.log(`助力好友成功`)
-              } else{
-                console.log(`任务上报成功`)
-                await $.wait(10*1000)
-                if(data.data.result.taskToken){
-                  await doTask2(data.data.result.taskToken)
+            if (data.code === 0) {
+              if (data.data && data.data.bizCode === 0) {
+                if(data.data.result.score)
+                  console.log(`任务完成，获得${data.data.result.score}爆竹🧨`)
+                else if(data.data.result.maxAssistTimes) {
+                  console.log(`助力好友成功`)
+                } else{
+                  console.log(`任务上报成功`)
+                  await $.wait(10*1000)
+                  if(data.data.result.taskToken){
+                    await doTask2(data.data.result.taskToken)
+                  }
                 }
+                // $.userInfo = data.data.result.userInfo;
               }
-              // $.userInfo = data.data.result.userInfo;
-            }
-            else{
-              console.log(data.data.bizMsg)
+              else{
+                console.log(data.data.bizMsg)
+              }
             }
           }
         }
@@ -478,7 +485,7 @@ function getFriendData(inviteId) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          if (data && data.data['bizCode'] === 0) {
+          if (data.data && data.data['bizCode'] === 0) {
             $.itemId = data.data.result.homeMainInfo.guestInfo.itemId
             await collectScore('2',$.itemId,null,inviteId)
           }
