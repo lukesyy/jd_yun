@@ -370,12 +370,9 @@ async function businessCircleActivity() {
     }
     if (pkStatus === 1) {
       console.log(`商圈PK进行中\n`)
-    } else if (pkStatus === 2) {
-      console.log(`商圈PK结束了`)
-      if (prizeInfo.pkPrizeStatus === 2) {
-        console.log(`开始领取商圈PK奖励`);
+      if (!teamId) {
         const receivedPkTeamPrize = await smtg_receivedPkTeamPrize();
-        console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}`)
+        console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}\n`)
         if (receivedPkTeamPrize.data.bizCode === 0) {
           if (receivedPkTeamPrize.data.result.pkResult === 1) {
             const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
@@ -389,6 +386,26 @@ async function businessCircleActivity() {
             }
           }
         }
+      }
+    } else if (pkStatus === 2) {
+      console.log(`商圈PK结束了`)
+      if (prizeInfo.pkPrizeStatus === 2) {
+        console.log(`开始领取商圈PK奖励`);
+        // const receivedPkTeamPrize = await smtg_receivedPkTeamPrize();
+        // console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}`)
+        // if (receivedPkTeamPrize.data.bizCode === 0) {
+        //   if (receivedPkTeamPrize.data.result.pkResult === 1) {
+        //     const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
+        //     message += `【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
+        //     if ($.isNode()) {
+        //       await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈队伍】PK获胜\n【奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+        //     }
+        //   } else if (receivedPkTeamPrize.data.result.pkResult === 2) {
+        //     if ($.isNode()) {
+        //       await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈队伍】PK失败`)
+        //     }
+        //   }
+        // }
       } else if (prizeInfo.pkPrizeStatus === 1) {
         console.log(`商圈PK奖励已经领取\n`)
       }
