@@ -1,4 +1,4 @@
-name: sync-lxk0301-scripts
+name: sync-danwangshi-scripts
 on:
   schedule:
     - cron: '1 0,15 * * *'
@@ -21,7 +21,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync lxk0301-scripts
+      - name: sync danwangshi-scripts
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
