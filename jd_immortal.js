@@ -30,7 +30,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = $.isNode() ? 20 : 5;
+const randomCount = 0 ;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
@@ -49,8 +49,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-  `39xIs4YwE5Z7CPQQ0baz9jNWO6PSZHsNWqfOwWyqScbJBGhg4v7HbuBg63TJ4@27xIs4YwE5Z7FGzJqrMmavC_vWKtbEaJxbz0Vahw@43xIs4YwE5Z7DsWOzDSP_N6WTDnbA0wBjjof6cA9FzcbHMcZB9wE1R3ToSluCgxAzEXQ@43xIs4YwE5Z7DsWOzDSEuRWEOROpnDjMx_VvSs5ikYQ8XgcZB9whEHjDmPKQoL16TZ8w@50xIs4YwE5Z7FTId9W-KibDgxxx6AEa7189V1zSxSf2HP6681IXPQ81aJEP77WoHXLcK7QzlxGqsGqfU@43xIs4YwE5Z7DsWOzDSPKFWdkRe2Ae6h0jAdlhuSmuwcfUcZB9wBcHhj0_zyZDNK4Rhg`,
-  `39xIs4YwE5Z7CPQQ0baz9jNWO6PSZHsNWqfOwWyqScbJBGhg4v7HbuBg63TJ4@27xIs4YwE5Z7FGzJqrMmavC_vWKtbEaJxbz0Vahw@43xIs4YwE5Z7DsWOzDSP_N6WTDnbA0wBjjof6cA9FzcbHMcZB9wE1R3ToSluCgxAzEXQ@43xIs4YwE5Z7DsWOzDSEuRWEOROpnDjMx_VvSs5ikYQ8XgcZB9whEHjDmPKQoL16TZ8w@43xIs4YwE5Z7DsWOzDSFehRRs_UaNcqkiU7BrrzDTKHScMcZB9wkYC2z6K-QOsQy1S3A@43xIs4YwE5Z7DsWOzDSFcl8RjNxfrQquzeGQQtkQOUbyqscZB9wkxX2jw2HhM7TczeqA`
+  `40xIs4YwE5Z7DgbLgwaf2SsKRYVCm51V8iSD3Wd0fnNf5VMgRUN2H2Lv2BmcUfo@48xIs4YwE5Z7HpFzLK_xb-MzR5aw2HF4dzMSvorUzYsLm65fB8_I8cSwU1SjDzlCJ7UF5Sc01avZw@43xIs4YwE5Z7DsWOzDSBaFVRmVmaB7T2ia508G0qCBP7IwcZB9w0cG223OfEDXt_h3hQ@40xIs4YwE5Z7DsWOzDQOfxvWMvgdONuotwnSaI8IR4BcZB9uCM60U1wcm9FDAQG@43xIs4YwE5Z7DsWOzDSP6h-dn12IWMtc0TyqT0HpVd-zR4cZB9wEVVhmuG21imWrSt3Q@43xIs4YwE5Z7DsWOzDSP_d-Efh1wnCtQcfsh1Xbavnqmj0cZB9wEJViDaiFlquOfKX4w@27xIs4YwE5Z7CPTHF7YzNDCRkyHZW4bIdOjhwW1g@43xIs4YwE5Z7DsWOzDSEvdJWRS41buxwwarmHgoGT0L8I8cZB9whJa3jo66CWwrx2RUw`,
+  `40xIs4YwE5Z7DgbLgwaf2SsKRYVCm51V8iSD3Wd0fnNf5VMgRUN2H2Lv2BmcUfo@48xIs4YwE5Z7HpFzLK_xb-MzR5aw2HF4dzMSvorUzYsLm65fB8_I8cSwU1SjDzlCJ7UF5Sc01avZw@43xIs4YwE5Z7DsWOzDSBaFVRmVmaB7T2ia508G0qCBP7IwcZB9w0cG223OfEDXt_h3hQ@40xIs4YwE5Z7DsWOzDQOfxvWMvgdONuotwnSaI8IR4BcZB9uCM60U1wcm9FDAQG@43xIs4YwE5Z7DsWOzDSP6h-dn12IWMtc0TyqT0HpVd-zR4cZB9wEVVhmuG21imWrSt3Q@43xIs4YwE5Z7DsWOzDSP_d-Efh1wnCtQcfsh1Xbavnqmj0cZB9wEJViDaiFlquOfKX4w@27xIs4YwE5Z7CPTHF7YzNDCRkyHZW4bIdOjhwW1g@43xIs4YwE5Z7DsWOzDSEvdJWRS41buxwwarmHgoGT0L8I8cZB9whJa3jo66CWwrx2RUw`,
 ];
 !(async () => {
   await requireConfig();
