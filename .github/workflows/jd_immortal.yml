@@ -6,7 +6,7 @@ name: jd_immortal
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 8 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -49,4 +49,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          JD_818_SHAREID_NOTIFY: ${{ secrets.JD_818_SHAREID_NOTIFY }}
+          JDSXSY_SHARECODES: ${{ secrets.JDSXSY_SHARECODES }}

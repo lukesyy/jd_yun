@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京炸年兽】'
+      - name: '运行 【京东炸年兽】'
         run: 
           node jd_nian.js
         env:
@@ -49,4 +49,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          JD_818_SHAREID_NOTIFY: ${{ secrets.JD_818_SHAREID_NOTIFY }}
+          JDNIAN_SHARECODES: ${{ secrets.JDNIAN_SHARECODES }}
