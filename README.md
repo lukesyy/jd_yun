@@ -1,4 +1,5 @@
-# 不要fork! 不要fork!不要fork! 再fork就直接删库，大家都玩不了！！！再fork就直接删库，大家都玩不了！！！请直接下载整个仓库然后再本地上传到你自己新建的仓库，具体见[仓库同步](https://github.com/danwangshimoluo/JdScripts/issues/2#issuecomment-762612160) [获取GitHub Personal Access Token](https://www.jianshu.com/p/bb82b3ad1d11) 滥用github资源会封我仓库以及账号
+[获取GitHub Personal Access Token](https://www.jianshu.com/p/bb82b3ad1d11) 
+
 ## 特别声明: 
 
 * 本仓库发布的Script项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断.
@@ -112,17 +113,7 @@
 
 教程请见：[EvineDeng/jd-base](https://github.com/EvineDeng/jd-base)
 
-### 3. 系统直装
-
-教程请见：[EvineDeng/jd-base](https://github.com/EvineDeng/jd-base)，适用于以下系统：
-
-  1. Armbian/OpenWrt/Debian/Ubuntu/CentOS/Fedora/RedHat等Linux系统
-
-  2. Android
-
-  3. MacOS
-
-### 4. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
+### 3. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
 - [京东cookie获取脚本 JD_extra_cookie.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js)
 
