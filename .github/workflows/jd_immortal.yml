@@ -50,3 +50,4 @@ jobs:
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
           JDSXSY_SHARECODES: ${{ secrets.JDSXSY_SHARECODES }}
+          JD_IMMORTAL_LATLON: ${{ secrets.JD_IMMORTAL_LATLON }}
