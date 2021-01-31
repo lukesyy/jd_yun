@@ -1,16 +1,16 @@
 ﻿# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_xg
+name: jd_xgyl
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '5 23 * * *'
+    - cron: '10 23 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: xg
+    types: xgyl
 jobs:
   build:
 
@@ -35,9 +35,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东小鸽】'
+      - name: '运行 【京东小鸽2】'
         run: 
-          node jd_xg.js
+          node jd_xgyl.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
