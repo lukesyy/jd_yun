@@ -6,7 +6,7 @@ name: jd_5g
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0,30 4,10 * * *'
+    - cron: '30 0-23/8 * * *'
   watch:
     types: started
   repository_dispatch:
