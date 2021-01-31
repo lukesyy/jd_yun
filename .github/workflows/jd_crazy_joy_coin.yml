@@ -1,12 +1,12 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_crazy_joy_coin(每6小时执行一次,每次执行6小时,Action超时结束后自动接着执行下一次)
+name: jd_crazy_joy_coin
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 */6 * * *'
+    - cron: '10 */12 * * *'
   watch:
     types: started
   repository_dispatch:
