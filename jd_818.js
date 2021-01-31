@@ -55,7 +55,7 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
-const activeEndTime = '2021/2/5 23:59:59+08:00';
+const activeEndTime = '2021/2/4 23:59:59+08:00';
 const addUrl = 'http://jd.turinglabs.net/helpcode/create/';
 const printUrl = `http://jd.turinglabs.net/api/v2/jd/5g/read/30/`;
 let helpCode = []
@@ -595,7 +595,7 @@ async function doHelp() {
   //当天大于9:00才从API里面取收集的助力码
   //if (nowTime > new Date(nowTime).setHours(9, 0, 0, 0)) body = await printAPI();//访问收集的互助码
   body = await printAPI();//访问收集的互助码
-   if (body && body['data']) {
+  if (body && body['data']) {
     // console.log(`printAPI返回助力码数量:${body.replace(/"/g, '').split(',').length}`)
     // tempCode = tempCode.concat(body.replace(/"/g, '').split(','))
     tempCode = [...tempCode, ...body['data']]
@@ -861,7 +861,6 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/LXK9301/updat
 function updateShareCodesCDN(url = 'https://gitee.com/lxk0301/updateTeam/raw/master/jd_shareCodes.json') {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/LXK9301/updateTeam@master/jd_shareCodes.json
-    //https://raw.githubusercontent.com/LXK9301/updateTeam/master/jd_shareCodes.json
     $.get({url}, async (err, resp, data) => {
       try {
         if (err) {
@@ -921,10 +920,10 @@ function TotalBean() {
 async function showMsg() {
   let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
   if (nowTime > new Date(activeEndTime).getTime()) {
-    $.msg($.name, '活动已结束', `该活动累计获得京豆：${$.jbeanCount}个\niOS用户请删除此脚本\ngithub action用户请删除.github/workflows/jd_818.yml文件\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/LXK9301/jd_scripts`, {"open-url": "https://github.com/LXK9301/jd_scripts"});
-    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\ngithub action用户请删除.github/workflows/jd_818.yml文件\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/LXK9301/jd_scripts`)
+    $.msg($.name, '活动已结束', `该活动累计获得京豆：${$.jbeanCount}个\n请删除此脚本\n咱江湖再见`);
+    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`)
   } else {
-    $.msg($.name, `京东账号${$.index} ${$.nickName || $.UserName}`, `${$.jbeanCount ? `${$.integer ? `当前获得积分：${$.integer}个\n` : ''}${$.num ? `当前排名：${$.num}\n` : ''}当前参数人数：${$.lasNum}人\n累计获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.jbeanCount ? `累计获得积分：${$.integralCount}个\n` : ''}${$.jbeanNum ? `${$.date}日奖品：${$.jbeanNum}\n` : ''}具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+    $.msg($.name, `京东账号${$.index} ${$.nickName || $.UserName}`, `${$.jbeanCount ? `${$.integer ? `当前获得积分：${$.integer}个\n` : ''}${$.num ? `当前排名：${$.num}\n` : ''}当前参赛人数：${$.lasNum}人\n累计获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.jbeanCount ? `累计获得积分：${$.integralCount}个\n` : ''}${$.jbeanNum ? `${$.date}日奖品：${$.jbeanNum}\n` : ''}具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   }
 }
 function jsonParse(str) {
