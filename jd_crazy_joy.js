@@ -36,7 +36,7 @@ const inviteCodes = [
   'RB2TGQv-YYrXD1_sWVNMKKt9zd5YaBeE@cKja3NFTxrmgD_t9vtIOZKt9zd5YaBeE@RB2TGQv-YYrXD1_sWVNMKKt9zd5YaBeE@qjrufhlydn9sR3EMFhYh9Kt9zd5YaBeE@K3rD96AaJSYDPU2HKSneAw==',
   'RB2TGQv-YYrXD1_sWVNMKKt9zd5YaBeE@cKja3NFTxrmgD_t9vtIOZKt9zd5YaBeE@RB2TGQv-YYrXD1_sWVNMKKt9zd5YaBeE@qjrufhlydn9sR3EMFhYh9Kt9zd5YaBeE@K3rD96AaJSYDPU2HKSneAw=='
 ];
-const randomCount = $.isNode() ? 10 : 5;
+const randomCount = 0;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
