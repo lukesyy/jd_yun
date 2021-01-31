@@ -1,6 +1,7 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
 更新时间：2021-1-20
+活动入口：京东APP我的-更多工具-宠汪汪
 兑换规则：一个账号一天只能兑换一次京豆。
 兑换奖品成功后才会有系统弹窗通知
 每日京豆库存会在0:00、8:00、16:00更新，经测试发现中午12:00也会有补发京豆。
@@ -9,24 +10,24 @@
 ==============Quantumult X==============
 [task_local]
 #宠汪汪积分兑换奖品
-0 0-16/8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js, tag=宠汪汪积分兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
+0 0-16/8 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_joy_reward.js, tag=宠汪汪积分兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
 
 ==============Loon==============
 [Script]
-cron "0 0-16/8 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js,tag=宠汪汪积分兑换奖品
+cron "0 0-16/8 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_joy_reward.js,tag=宠汪汪积分兑换奖品
 
 ================Surge===============
-宠汪汪积分兑换奖品 = type=cron,cronexp="0 0-16/8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js
+宠汪汪积分兑换奖品 = type=cron,cronexp="0 0-16/8 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_joy_reward.js
 
 ===============小火箭==========
-宠汪汪积分兑换奖品 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js, cronexpr="0 0-16/8 * * *", timeout=3600, enable=true
+宠汪汪积分兑换奖品 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_joy_reward.js, cronexpr="0 0-16/8 * * *", timeout=3600, enable=true
  */
 const $ = new Env('宠汪汪积分兑换奖品');
 let joyRewardName = 20;//是否兑换京豆，默认开启兑换功能，其中20为兑换20京豆,500为兑换500京豆，0为不兑换京豆.数量有限先到先得
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
-let jdNotify = true;//是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
+let jdNotify = false;//是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 if ($.isNode()) {
