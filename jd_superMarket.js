@@ -87,7 +87,7 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
       $.done();
     })
 async function jdSuperMarket() {
-  // await receiveGoldCoin();//收金币
+  await receiveGoldCoin();//收金币
   await businessCircleActivity();//商圈活动
   await receiveBlueCoin();//收蓝币（小费）
   // await receiveLimitProductBlueCoin();//收限时商品的蓝币
