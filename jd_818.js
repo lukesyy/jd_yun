@@ -861,7 +861,7 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/LXK9301/updat
 function updateShareCodesCDN(url = 'https://gitee.com/lxk0301/updateTeam/raw/master/jd_shareCodes.json') {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/LXK9301/updateTeam@master/jd_shareCodes.json
-    $.get({url}, async (err, resp, data) => {
+    $.get({url , headers:{"User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;android;9.3.6;9;8363532363230343238303836333-43D2468336563316936636265356;network/wifi;model/MI 8;addressid/2688971613;aid/07aa8a790ce0988b;oaid/451bb37844a58e7f;osVer/28;appBuild/86560;partner/xiaomi001;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 9; MI 8 Build/PKQ1-wesley_iui-19.09.05; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/045131 Mobile Safari/537.36")}}, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
