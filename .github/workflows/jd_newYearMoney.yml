@@ -6,7 +6,7 @@ name: jd_newYearMoney
 on:
   workflow_dispatch:
   schedule:
-    - cron: '3 */6 * * *'
+    - cron: '12 0,4,12 * * *'
   watch:
     types: started
   repository_dispatch:
