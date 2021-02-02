@@ -6,7 +6,7 @@ name: jd_newYearMoney_lottery
 on:
   workflow_dispatch:
   schedule:
-    - cron: '54 0,3,7,11 * * *'
+    - cron: '57 0,3,7,11 * * *'
   watch:
     types: started
   repository_dispatch:
