@@ -46,8 +46,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-  `ATGEC3-fsrn13aiaEqiM`,
-  `ATGEC3-fsrn13aiaEqiM`
+  `S5KkcRUxL9FKDJh7ylvMLcA@S5KkcRx0Q_AaCdRr1xf8DIQ@S5KkcRksZpgDSIBj3xvADdQ@Sv_52Qxge81HeJB2b1A@S5KkcPFd_vD2uSkCi3YhX@S5KkcGGhOkCWwQHqo0p5M@S5KkcRBYQoFSFdByik6JbfQ`,
+  `S5KkcRUxL9FKDJh7ylvMLcA@S5KkcRx0Q_AaCdRr1xf8DIQ@S5KkcRksZpgDSIBj3xvADdQ@Sv_52Qxge81HeJB2b1A@S5KkcPFd_vD2uSkCi3YhX@S5KkcGGhOkCWwQHqo0p5M@S5KkcRBYQoFSFdByik6JbfQ`
 ]
 !(async () => {
   $.tuanList = []
