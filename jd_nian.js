@@ -49,7 +49,7 @@ const inviteCodes = [
   `cgxZdTXtI7nT41ycXQWovsTLKCd4wr6MJ2hqeAJsvtX47jq07fM3Aw2k4Oc@cgxZdTXtIu_auVrMCAeqvbVwAAt2PiQJkkANi6hi18HV97AvIRkjeVyAtT0@cgxZLmKHJ7zd7AvADALGr-AZ8XhDfOFv-Nqlc5f-JZ1IqqsYbQ@cgxZdTXtWPO8o2ewYl__puI3LsPm_uwyyH-JtWFD0E9EEkbInxsrsfs`,
   `cgxZdTXtI7nT41ycXQWovsTLKCd4wr6MJ2hqeAJsvtX47jq07fM3Aw2k4Oc@cgxZdTXtIu_auVrMCAeqvbVwAAt2PiQJkkANi6hi18HV97AvIRkjeVyAtT0@cgxZLmKHJ7zd7AvADALGr-AZ8XhDfOFv-Nqlc5f-JZ1IqqsYbQ@cgxZdTXtWPO8o2ewYl__puI3LsPm_uwyyH-JtWFD0E9EEkbInxsrsfs`,
 ];
-const pkInviteCodes = []
+const pkInviteCodes = [``]
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
