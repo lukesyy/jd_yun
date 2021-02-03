@@ -6,7 +6,7 @@ name: jd_rankingList
 on:
   workflow_dispatch:
   schedule:
-    - cron: '11 18 * * *'
+    - cron: '19 16 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -49,4 +49,3 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}}
-
