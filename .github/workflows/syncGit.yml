@@ -1,7 +1,7 @@
 name: sync-zero205-scripts
 on:
   schedule:
-    - cron: '1 0,15 * * *'
+    - cron: '10 6,12,15 * * *'
   workflow_dispatch:
   watch:
     types: started
