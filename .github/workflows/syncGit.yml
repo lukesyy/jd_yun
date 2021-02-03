@@ -1,7 +1,7 @@
-name: sync-zero205-scripts
+name: 同步zero205-JD脚本
 on:
   schedule:
-    - cron: '10 6,12,15 * * *'
+    - cron: '10 0-16/3 * * *'
   workflow_dispatch:
   watch:
     types: started
