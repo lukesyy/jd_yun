@@ -1167,7 +1167,8 @@ function getSpecialGiftInfo() {
         } else {
           data = JSON.parse(data);
           if (data && data.data['bizCode'] === 0) {
-            console.log(`领奖成功，获得${data.data.result.score}爆竹🧨`)
+            await collectSpecialFinalScore()
+            // console.log(`领奖成功，获得${data.data.result.score}爆竹🧨`)
           }else{
             console.log(data.data.bizMsg)
           }
@@ -1240,6 +1241,53 @@ function collectSpecialScore(taskId, itemId, actionType = null, inviteId = null,
   })
 }
 
+function collectSpecialFinalScore() {
+  let temp = {
+    "ic": 1,
+    "rnd": getRnd(),
+    "inviteId": "-1",
+    "stealId": "-1"
+  }
+  const extraData = {
+    "jj": 6,
+    "buttonid": "jmdd-react-smash_0",
+    "sceneid": "homePageh5",
+    "appid": '50073'
+  }
+  let body = {
+    ...encode(temp, $.secretp, extraData),
+    "ic" : 1,
+  }
+  return new Promise(resolve => {
+    $.post(taskPostUrl("nian_collectSpecialGift", body, "nian_collectSpecialGift"), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.code === 0) {
+              if (data.data && data.data.bizCode === 0) {
+                if (data.data.result && data.data.result.collectInfo && data.data.result.collectInfo.score)
+                  console.log(`任务完成，获得${data.data.result.collectInfo.score}爆竹🧨`)
+                else
+                  console.log(JSON.stringify(data))
+                // $.userInfo = data.data.result.userInfo;
+              } else {
+                console.log(data.data.bizMsg)
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
