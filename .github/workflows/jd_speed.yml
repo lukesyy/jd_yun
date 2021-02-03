@@ -6,7 +6,7 @@ name: jd_speed
 on:
   workflow_dispatch:
   schedule:
-    - cron: '33 */3 * * *'
+    - cron: '45 0-16/3 * * *'
   watch:
     types: started
   repository_dispatch:
