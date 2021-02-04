@@ -129,21 +129,22 @@ async function jdNian() {
     $.full = false
     await getHomeData()
     if (!$.secretp) return
-    let hour = new Date().getUTCHours()
-    if (1 <= hour && hour < 12) {
-      // 北京时间9点-20点
-      $.hasGroup = false
-      await pkTaskDetail()
-      if ($.hasGroup) await pkInfo()
-      await helpFriendsPK()
-    }
-    if (12 <= hour && hour < 14) {
-      // 北京时间20点-22点
-      $.hasGroup = false
-      await pkTaskStealDetail()
-      if ($.hasGroup) await pkInfo()
-      await helpFriendsPK()
-    }
+    // 注释PK互助代码
+    // let hour = new Date().getUTCHours()
+    // if (1 <= hour && hour < 12) {
+    //   // 北京时间9点-20点
+    //   $.hasGroup = false
+    //   await pkTaskDetail()
+    //   if ($.hasGroup) await pkInfo()
+    //   await helpFriendsPK()
+    // }
+    // if (12 <= hour && hour < 14) {
+    //   // 北京时间20点-22点
+    //   $.hasGroup = false
+    //   await pkTaskStealDetail()
+    //   if ($.hasGroup) await pkInfo()
+    //   await helpFriendsPK()
+    // }
     if($.full) return
     await $.wait(2000)
     await killCouponList()
