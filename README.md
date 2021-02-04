@@ -1,11 +1,11 @@
 # 注意！注意！！注意！！！
-## 本仓库提供两种方式同步脚本，请各位务必认真阅读
+## 本仓库提供两种方式同步脚本，请务必认真阅读
 
 ### 第一种方式
-* 直接fork本仓库，然后[按照这个教程进行 fork后的脚本同步](backup/gitSync.md)
+* 直接fork本仓库，然后[按照这个教程进行 fork后的脚本同步](backUp/gitSync.md)
 
 ### 第二种方式
-* 直接fork本仓库，然后[按照这个教程进行 reposync](backup/reposync.md)
+* 直接fork本仓库，然后[按照这个教程进行 reposync](backUp/reposync.md)
 
 
 ### 说明
