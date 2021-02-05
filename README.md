@@ -5,7 +5,7 @@
 * 直接fork本仓库，然后[按照这个教程进行 reposync](backUp/reposync.md)
 
 ### 第二种方式
-* 直接fork本仓库，然后[按照这个教程进行 reposync](backUp/reposync.md)
+* 直接fork本仓库，然后[按照这个教程进行 pull](backUp/gitSync.md)
 
 
 
