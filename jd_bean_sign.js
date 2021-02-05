@@ -214,7 +214,7 @@ function TotalBean() {
 function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js') {
   return new Promise(resolve => {
     const options = { url };
-    if (process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
       const tunnel = require("tunnel");
       const agent = {
         https: tunnel.httpsOverHttp({
