@@ -174,6 +174,8 @@ function isJDCoupon(title) {
     return false
   else if (title.indexOf('生鲜') > -1)
     return true
+  else if (title.indexOf('1元爆品') > -1)
+    return true
   else
     return false
 }
