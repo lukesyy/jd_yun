@@ -641,10 +641,6 @@ function getSpecialJoy() {
                   }
                 } else {
                   message += `暂无`;
-                    }
-                  }
-                } else {
-                  message += `暂无`;
                 }
                 if (data['data'].length >= 5) {
                   $.msg($.name, '', `京东账号 ${$.index}${$.nickName}\n恭喜你,已集成五福汪可合成分红JOY了`)
