@@ -145,8 +145,20 @@ async function jdJoySteal() {
             }
             break
           }
-          if (nowTimes.getHours() < 6) {
-            $.log('偷好友狗粮 未到6点时间')
+          if (nowTimes.getHours() < 6 && nowTimes.getHours() > 0) {
+            $.log('未到早餐时间, 暂不能偷好友狗粮\n')
+            break
+          }
+          if (nowTimes.getHours() === 10 ? (nowTimes.getMinutes() > 30) : (nowTimes.getHours() === 11 && nowTimes.getMinutes() < 30)) {
+            $.log('未到中餐时间, 暂不能偷好友狗粮\n')
+            break
+          }
+          if ((nowTimes.getHours() >= 15 && nowTimes.getMinutes() > 0) && (nowTimes.getHours() < 17 && nowTimes.getMinutes() <= 59)) {
+            $.log('未到晚餐时间, 暂不能偷好友狗粮\n')
+            break
+          }
+          if (nowTimes.getHours() >= 21 && nowTimes.getMinutes() > 0 && nowTimes.getHours() <= 23 && nowTimes.getMinutes() <= 59) {
+            $.log('已过晚餐时间, 暂不能偷好友狗粮\n')
             break
           }
           console.log(`偷好友狗粮 开始查询第${i}页好友\n`);
