@@ -6,7 +6,7 @@ name: jd_delCoupon
 on:
   workflow_dispatch:
   schedule:
-    - cron: '5 10 * * *'
+    - cron: '30 4,12 * * *'
   watch:
     types: started
   repository_dispatch:
