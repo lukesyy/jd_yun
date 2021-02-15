@@ -6,7 +6,7 @@ name: jd_rankingList
 on:
   workflow_dispatch:
   schedule:
-    - cron: '19 16 * * *'
+    - cron: '9 16 * * *'
   watch:
     types: started
   repository_dispatch:
