@@ -6,7 +6,7 @@ name: jd_bookshop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '1 8,12,18 * * *'
+    - cron: '16 0,4,10 * * *'
   watch:
     types: started
   repository_dispatch:
