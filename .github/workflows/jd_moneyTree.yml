@@ -48,5 +48,5 @@ jobs:
           BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}}
+          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
           MONEY_TREE_SELL_FRUIT: ${{ secrets.MONEY_TREE_SELL_FRUIT }}
