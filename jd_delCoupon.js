@@ -162,9 +162,15 @@ function isJDCoupon(title) {
     return true
   else if (title.indexOf('京贴') > -1)
     return true
+  else if (title.indexOf('国际') > -1)
+    return false
   else if (title.indexOf('旗舰店') > -1)
     return false
   else if (title.indexOf('生鲜') > -1)
+    return true
+  else if (title.indexOf('9.9减9') > -1)
+    return true
+  else if (title.indexOf('食品饮料') > -1)
     return true
   else
     return false
