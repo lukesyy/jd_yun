@@ -47,8 +47,13 @@ let DD_BOT_SECRET = '';
 let QYWX_KEY = '';
 
 // =======================================企业微信应用消息通知设置区域===========================================
-//此处填你企业微信应用消息的 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,agentid的值，素材库图片id（见https://github.com/LXK9301/jd_scripts/issues/519) 注意用,号隔开，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
-//增加一个选择推送消息类型，用图文消息直接填写素材库图片id的值，用卡片消息就填写0(就是数字零)
+//此处填你企业微信应用消息的值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)
+//依次填入 corpid,corpsecret,touser,agentid,消息类型
+//注意用,号隔开(英文输入法的逗号)，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
+//可选推送消息类型:
+// - 卡片消息: 0 (数字零)
+// - 文字消息: 1 (数字一)
+// - 图文消息: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)
 //(环境变量名 QYWX_AM)
 let QYWX_AM = '';
 
@@ -129,7 +134,7 @@ if (process.env.PUSH_PLUS_USER) {
 
 
 async function sendNotify(text, desp, params = {}) {
-  //提供7种通知
+  //提供6种通知
   desp += `\n本脚本开源免费使用 By：https://github.com/LXK9301/jd_scripts`;
   await Promise.all([
     serverNotify(text, desp),//微信server酱
@@ -144,7 +149,7 @@ async function sendNotify(text, desp, params = {}) {
     qywxBotNotify(text, desp), //企业微信机器人
     qywxamNotify(text, desp), //企业微信应用消息推送
     iGotNotify(text, desp, params),//iGot
-    CoolPush(text, desp)//QQ酷推
+    //CoolPush(text, desp)//QQ酷推
   ])
 }
 
@@ -153,8 +158,15 @@ function serverNotify(text, desp, timeout = 2100) {
     if (SCKEY) {
       //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
       desp = desp.replace(/[\n\r]/g, '\n\n');
+      let serverurl="";
+      let SCedition = SCKEY.indexOf("SCU");
+      if(SCedition == 0){
+            serverurl=`https://sc.ftqq.com/${SCKEY}.send`
+        }else if(SCedition == -1){
+            serverurl=`https://sctapi.ftqq.com/${SCKEY}.send`
+        }
       const options = {
-        url: `https://sc.ftqq.com/${SCKEY}.send`,
+        url: serverurl,
         body: `text=${text}&desp=${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -168,7 +180,8 @@ function serverNotify(text, desp, timeout = 2100) {
               console.log(err);
             } else {
               data = JSON.parse(data);
-              if (data.errno === 0) {
+              //server酱和Server酱·Turbo版的返回json格式不太一样
+              if (data.errno === 0 || data.data.errno === 0 ) {
                 console.log('server酱发送通知消息成功\n')
               } else if (data.errno === 1024) {
                 // 一分钟内发送相同的内容会触发
@@ -200,6 +213,12 @@ function CoolPush(text, desp) {
           'Content-Type': 'application/json'
         }
       }
+
+      // 已知敏感词
+      text = text.replace(/京豆/g, "豆豆");
+      desp = desp.replace(/京豆/g, "");
+      desp = desp.replace(/🐶/g, "");
+      desp = desp.replace(/红包/g, "H包");
 
       switch (QQ_MODE) {
         case "email":
@@ -240,8 +259,10 @@ function CoolPush(text, desp) {
               console.log(`酷推发送${pushMode(QQ_MODE)}通知消息成功\n`)
             } else if (data.code === 400) {
               console.log(`QQ酷推(Cool Push)发送${pushMode(QQ_MODE)}推送失败：${data.msg}\n`)
+            } else if (data.code === 503) {
+              console.log(`QQ酷推出错，${data.message}：${data.data}\n`)
             }else{
-              console.log(`酷推推送异常: ${data.msg}`);
+              console.log(`酷推推送异常: ${JSON.stringify(data)}`);
             }
           }
         } catch (e) {
@@ -467,49 +488,62 @@ function qywxamNotify(text, desp) {
       html=desp.replace(/\n/g,"<br/>")    
       var json = JSON.parse(data);
       accesstoken = json.access_token;
-      const options_textcard = {
-        url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
-        json: {
-          touser:`${QYWX_AM_AY[2]}`,
-          agentid:`${QYWX_AM_AY[3]}`,
-          msgtype: 'textcard',
-          textcard: {
-            title: `${text}`,
-            description: `${desp}`,
-            url: '127.0.0.1',
-            btntxt: '更多'
-          },
-          safe:'0',
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const options_mpnews = {
-        url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
-        json: {
-          touser:`${QYWX_AM_AY[2]}`,
-          agentid:`${QYWX_AM_AY[3]}`,
-          msgtype: 'mpnews',
-          mpnews: {
-                  articles: [
-                  {
-            title: `${text}`,
+      let options;
+
+      switch (QYWX_AM_AY[4]) {
+        case '0':
+          options = {
+            msgtype: 'textcard',
+            textcard: {
+              title: `${text}`,
+              description: `${desp}`,
+              url: '127.0.0.1',
+              btntxt: '更多'
+            }
+          }
+          break;
+
+        case '1':
+          options = {
+            msgtype: 'text',
+            text: {
+              content: `${text}\n\n${desp}`
+            }
+          }
+          break;
+
+        default:
+          options = {
+            msgtype: 'mpnews',
+            mpnews: {
+              articles: [
+                {
+                  title: `${text}`,
                   thumb_media_id: `${QYWX_AM_AY[4]}`,  
                   author : `智能助手` ,
                   content_source_url: ``,
                   content : `${html}`, 
                   digest: `${desp}`
-                  }
-                  ]
-          },
+                }
+              ]
+            }
+          }
+      };
+
+      options = {
+        url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
+        json: {
+          touser:`${QYWX_AM_AY[2]}`,
+          agentid:`${QYWX_AM_AY[3]}`,
           safe:'0',
+          ...options
         },
         headers: {
           'Content-Type': 'application/json',
         },
-      };
-      $.post((QYWX_AM_AY[4]==0)?options_textcard:options_mpnews, (err, resp, data) => {
+      }
+      
+      $.post(options, (err, resp, data) => {
         try {
           if (err) {
             console.log('企业微信应用消息发送通知消息失败！！\n');
