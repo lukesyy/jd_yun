@@ -158,15 +158,8 @@ function serverNotify(text, desp, timeout = 2100) {
     if (SCKEY) {
       //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
       desp = desp.replace(/[\n\r]/g, '\n\n');
-      let serverurl="";
-      let SCedition = SCKEY.indexOf("SCU");
-      if(SCedition == 0){
-            serverurl=`https://sc.ftqq.com/${SCKEY}.send`
-        }else if(SCedition == -1){
-            serverurl=`https://sctapi.ftqq.com/${SCKEY}.send`
-        }
       const options = {
-        url: serverurl,
+        url: SCKEY.includes('SCT') ? `https://sctapi.ftqq.com/${SCKEY}.send` : `https://sc.ftqq.com/${SCKEY}.send`,
         body: `text=${text}&desp=${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
