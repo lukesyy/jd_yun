@@ -463,98 +463,118 @@ function qywxBotNotify(text, desp) {
   });
 }
 
+function ChangeUserId(desp) {
+  const QYWX_AM_AY = QYWX_AM.split(',');
+  if (QYWX_AM_AY[2]) {
+    const userIdTmp = QYWX_AM_AY[2].split("|");
+    let userId = "";
+    for (let i = 0; i < userIdTmp.length; i++) {
+      const count = "账号" + (i + 1);
+      const count2 = "签到号 " + (i + 1);
+      if (desp.match(count) || desp.match(count2)) {
+        userId = userIdTmp[i];
+      }
+    }
+    if (!userId) userId = QYWX_AM_AY[2];
+    return userId;
+  } else {
+    return "@all";
+  }
+}
+
 function qywxamNotify(text, desp) {
   return new Promise(resolve => {
     if (QYWX_AM) {
-      var QYWX_AM_AY = QYWX_AM.split(',');
+      const QYWX_AM_AY = QYWX_AM.split(',');
       const options_accesstoken = {
         url: `https://qyapi.weixin.qq.com/cgi-bin/gettoken`,
         json: {
-          corpid:`${QYWX_AM_AY[0]}`,
-          corpsecret:`${QYWX_AM_AY[1]}`,
+          corpid: `${QYWX_AM_AY[0]}`,
+          corpsecret: `${QYWX_AM_AY[1]}`,
         },
         headers: {
           'Content-Type': 'application/json',
         },
       };
-    $.post(options_accesstoken, (err, resp, data) => {
-      html=desp.replace(/\n/g,"<br/>")    
-      var json = JSON.parse(data);
-      accesstoken = json.access_token;
-      let options;
+      $.post(options_accesstoken, (err, resp, data) => {
+        html = desp.replace(/\n/g, "<br/>")
+        var json = JSON.parse(data);
+        accesstoken = json.access_token;
+        let options;
 
-      switch (QYWX_AM_AY[4]) {
-        case '0':
-          options = {
-            msgtype: 'textcard',
-            textcard: {
-              title: `${text}`,
-              description: `${desp}`,
-              url: '127.0.0.1',
-              btntxt: '更多'
+        switch (QYWX_AM_AY[4]) {
+          case '0':
+            options = {
+              msgtype: 'textcard',
+              textcard: {
+                title: `${text}`,
+                description: `${desp}`,
+                url: '127.0.0.1',
+                btntxt: '更多'
+              }
             }
-          }
-          break;
+            break;
 
-        case '1':
-          options = {
-            msgtype: 'text',
-            text: {
-              content: `${text}\n\n${desp}`
+          case '1':
+            options = {
+              msgtype: 'text',
+              text: {
+                content: `${text}\n\n${desp}`
+              }
             }
-          }
-          break;
+            break;
 
-        default:
-          options = {
-            msgtype: 'mpnews',
-            mpnews: {
-              articles: [
-                {
-                  title: `${text}`,
-                  thumb_media_id: `${QYWX_AM_AY[4]}`,  
-                  author : `智能助手` ,
-                  content_source_url: ``,
-                  content : `${html}`, 
-                  digest: `${desp}`
-                }
-              ]
+          default:
+            options = {
+              msgtype: 'mpnews',
+              mpnews: {
+                articles: [
+                  {
+                    title: `${text}`,
+                    thumb_media_id: `${QYWX_AM_AY[4]}`,
+                    author: `智能助手`,
+                    content_source_url: ``,
+                    content: `${html}`,
+                    digest: `${desp}`
+                  }
+                ]
+              }
             }
-          }
-      };
-
-      options = {
-        url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
-        json: {
-          touser:`${QYWX_AM_AY[2]}`,
-          agentid:`${QYWX_AM_AY[3]}`,
-          safe:'0',
-          ...options
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-      
-      $.post(options, (err, resp, data) => {
-        try {
-          if (err) {
-            console.log('企业微信应用消息发送通知消息失败！！\n');
-            console.log(err);
-          } else {
-            data = JSON.parse(data);
-            if (data.errcode === 0) {
-              console.log('企业微信应用消息发送通知消息完成。\n');
-            } else {
-              console.log(`${data.errmsg}\n`);
-            }
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
         }
-      });
+        ;
+
+        options = {
+          url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
+          json: {
+            touser: `${ChangeUserId(desp)}`,
+            agentid: `${QYWX_AM_AY[3]}`,
+            safe: '0',
+            ...options
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+
+        $.post(options, (err, resp, data) => {
+          try {
+            if (err) {
+              console.log('成员ID:' + ChangeUserId(desp) + '企业微信应用消息发送通知消息失败！！\n');
+              console.log(err);
+            } else {
+              data = JSON.parse(data);
+              if (data.errcode === 0) {
+                console.log('成员ID:' + ChangeUserId(desp) + '企业微信应用消息发送通知消息完成。\n');
+              } else {
+                console.log(`${data.errmsg}\n`);
+              }
+            }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve(data);
+          }
+        });
       });
     } else {
       console.log('您未提供企业微信应用消息推送所需的QYWX_AM，取消企业微信应用消息推送消息通知\n');
