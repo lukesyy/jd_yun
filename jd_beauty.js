@@ -87,7 +87,7 @@ async function mr() {
   $.tokens = []
   $.pos = []
   $.helpInfo = []
-  const WebSocket = require('websocket').w3cwebsocket
+  const WebSocket = require('ws')
   let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`)
   client.onopen = async () => {
     console.log(`美容研究院服务器连接成功`);
