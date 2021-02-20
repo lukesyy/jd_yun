@@ -24,6 +24,6 @@
     "request": "^2.88.2",
     "tough-cookie": "^4.0.0",
     "tunnel": "0.0.6",
-    "websocket": "^1.0.33"
+    "ws": "^7.4.3"
   }
 }
