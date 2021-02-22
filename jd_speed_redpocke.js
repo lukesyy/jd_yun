@@ -108,7 +108,7 @@ async function redPacket() {
   };
 
   var options = {
-    url: `https://api.m.jd.com/?functionId=spring_reward_receive&body={%22inviter%22:%22AEIIwA6L3k8ePzU3fXDzg8sPlLyAUpJKplSENnlQTGA%22,%22linkId%22:%22FqktpB8R3nkJB8wVh8wC_g%22}&_t=${+新建 Date()}&appid=activities_platform`,
+    url: `https://api.m.jd.com/?functionId=spring_reward_receive&body={%22inviter%22:%22AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU%22,%22linkId%22:%22FqktpB8R3nkJB8wVh8wC_g%22}&_t=${+new Date()}&appid=activities_platform`,
     headers: headers
   }
   return new Promise(resolve => {
