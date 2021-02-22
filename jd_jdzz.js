@@ -52,6 +52,7 @@ const inviteCodes = [
 !(async () => {
   $.tuanList = []
   await requireConfig();
+  if (helpAuthor) await getAuthorShareCode('https://gitee.com/zero205/updateTeam/raw/master/shareCodes/jd_zz.json');
   if (helpAuthor) await getAuthorShareCode('https://gitee.com/shylocks/updateTeam/raw/main/jd_zz.json');
   if (helpAuthor) await getAuthorShareCode('https://gitee.com/lxk0301/updateTeam/raw/master/jd_zz.json');
   if (!cookiesArr[0]) {
