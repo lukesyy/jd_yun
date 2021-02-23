@@ -47,17 +47,11 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 let message = '', subTitle = '';
 
-let jdNotify = false;//是否开启静默运行，false关闭静默运行(即通知)，true打开静默运行(即不通知)
+let jdNotify = true;//是否开启静默运行，false关闭静默运行(即通知)，true打开静默运行(即不通知)
 let jdJoyHelpFeed = true;//是否给好友喂食，false为不给喂食，true为给好友喂食，默认不给好友喂食
 let jdJoyStealCoin = true;//是否偷好友积分与狗粮，false为否，true为是，默认是偷
 const JD_API_HOST = 'https://jdjoy.jd.com/pet';
@@ -145,7 +139,7 @@ async function jdJoySteal() {
           console.log(`偷好友积分 开始查询第${i}页好友\n`);
           await getFriends(i);
           $.allFriends = $.getFriendsData.datas;
-          await stealFriendCoinFun();
+          if ($.allFriends) await stealFriendCoinFun();
         }
         for (let i = 1; i <= new Array(lastPage).fill('').length; i++) {
           if ($.stealStatus === 'chance_full') {
@@ -155,7 +149,7 @@ async function jdJoySteal() {
             }
             break
           }
-          if (nowTimes.getHours() < 6 && nowTimes.getHours() > 0) {
+          if (nowTimes.getHours() < 6 && nowTimes.getHours() >= 0) {
             $.log('未到早餐时间, 暂不能偷好友狗粮\n')
             break
           }
@@ -174,7 +168,7 @@ async function jdJoySteal() {
           console.log(`偷好友狗粮 开始查询第${i}页好友\n`);
           await getFriends(i);
           $.allFriends = $.getFriendsData.datas;
-          await stealFriendsFood();
+          if ($.allFriends) await stealFriendsFood();
         }
         for (let i = 1; i <= new Array(lastPage).fill('').length; i++) {
           if ($.help_feed >= 200 || ($.helpFeedStatus && $.helpFeedStatus === 'chance_full')) {
@@ -194,7 +188,7 @@ async function jdJoySteal() {
           console.log(`帮好友喂食 开始查询第${i}页好友\n`);
           await getFriends(i);
           $.allFriends = $.getFriendsData.datas;
-          await helpFriendsFeed();
+          if ($.allFriends) await helpFriendsFeed();
         }
       }
     } else {
