@@ -1,7 +1,7 @@
 /*
 小鸽有礼2
 每天抽奖25豆
-活动入口：https://jingcai-h5.jd.com/#/dialTemplate?activityCode=1354740864131276800
+活动入口：https://jingcai-h5.jd.com/#/dialTemplate?activityCode=1354648125121241088
 活动时间：2021年1月28日～2021年2月28日
 更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xgyl.js
 
@@ -250,7 +250,7 @@ function draw() {
 function taskUrl(function_id, body) {
   return {
     url: `https://lop-proxy.jd.com/${function_id}`,
-    body: JSON.stringify([{"userNo": "$cooMrdGatewayUid$", "activityCode": "1354740864131276800", ...body}]),
+    body: JSON.stringify([{"userNo": "$cooMrdGatewayUid$", "activityCode": "1354648125121241088", ...body}]),
     headers: {
       'Host': 'lop-proxy.jd.com',
       'lop-dn': 'jingcai.jd.com',
