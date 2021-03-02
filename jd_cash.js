@@ -27,10 +27,10 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = true;
-const randomCount = $.isNode() ? 0 : 0;
+const randomCount = $.isNode() ? 0 : 5;
 const inviteCodes = [
-  `eU9Yab7gZ_py92rTyXcS0g@eU9Ya--7b65zpG7Umnsagw@eU9YarmyNagj8WzWmXQa1w@Ihgyb-q1YPkv9Wm6iw@eU9YEKXUL5VfmzSDggxO`,
-  `eU9Yab7gZ_py92rTyXcS0g@eU9Ya--7b65zpG7Umnsagw@eU9YarmyNagj8WzWmXQa1w@Ihgyb-q1YPkv9Wm6iw@eU9YEKXUL5VfmzSDggxO`
+  `eU9Yab7gZ_py92rTyXcS0g@eU9Ya--7b65zpG7Umnsagw@eU9YarmyNagj8WzWmXQa1w@Ihgyb-q1YPkv9Wm6iw@eU9YEKXUL5VfmzSDggxO@eU9YaO2xZqhyo2jTwiYb3w`,
+  `eU9Yab7gZ_py92rTyXcS0g@eU9Ya--7b65zpG7Umnsagw@eU9YarmyNagj8WzWmXQa1w@Ihgyb-q1YPkv9Wm6iw@eU9YEKXUL5VfmzSDggxO@eU9YaO2xZqhyo2jTwiYb3w`
 ]
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -363,25 +363,26 @@ function taskUrl(functionId, body = {}) {
   }
 }
 
-function getAuthorShareCode() {
-  return new Promise(resolve => {
-    $.get({url: "https://gitee.com/shylocks/updateTeam/raw/main/jd_cash.json",headers:{
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }}, async (err, resp, data) => {
-      $.authorCode = [];
-      try {
-        if (err) {
-        } else {
-          $.authorCode = JSON.parse(data)
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
+// function getAuthorShareCode() {
+//  return new Promise(resolve => {
+//    $.get({url: "https://gitee.com/shylocks/updateTeam/raw/main/jd_cash.json",headers:{
+//        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+//      }}, async (err, resp, data) => {
+//      $.authorCode = [];
+//      try {
+//        if (err) {
+//        } else {
+//          $.authorCode = JSON.parse(data)
+//        }
+//      } catch (e) {
+//       $.logErr(e, resp)
+//      } finally {
+//        resolve();
+//      }
+//    })
+//  })
+// }
+
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
