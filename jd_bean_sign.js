@@ -6,10 +6,10 @@
 活动入口：各处的签到汇总
 Node.JS专用
 IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
-更新时间：2021-1-19
+更新时间：2021-2-27
 Modified From github https://github.com/ruicky/jd_sign_bot
  */
-const $ = new Env('京豆签到');
+const $ = new Env('京东多合一签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -20,7 +20,7 @@ let resultPath = "./result.txt";
 let JD_DailyBonusPath = "./JD_DailyBonus.js";
 let outPutUrl = './';
 let NodeSet = 'CookieSet.json';
-let cookiesArr = [], cookie = '';
+let cookiesArr = [], cookie = '', allMessage = '';
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -49,6 +49,9 @@ if ($.isNode()) {
       await changeFile(content);
       await execSign();
     }
+  }
+  if ($.isNode() && allMessage && process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE === 'true') {
+    await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
 })()
     .catch((e) => $.logErr(e))
@@ -95,7 +98,10 @@ async function execSign() {
       $.beanSignTime = timeFormat(UTC8);
       console.log(`脚本执行完毕时间：${$.beanSignTime}`)
       if (BarkContent) {
-        await notify.sendNotify(`京豆签到 - 账号${$.index} - ${$.nickName || $.UserName}`, `【签到号 ${$.index}】: ${$.nickName || $.UserName}\n【签到时间】:  ${$.beanSignTime}\n${BarkContent}`);
+        allMessage += `【京东号 ${$.index}】: ${$.nickName || $.UserName}\n【签到时间】:  ${$.beanSignTime}\n${BarkContent}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+        if (!process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE || (process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE && process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE !== 'true')) {
+          await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}`, `【签到号 ${$.index}】: ${$.nickName || $.UserName}\n【签到时间】:  ${$.beanSignTime}\n${BarkContent}`);
+        }
       }
     }
     //运行完成后，删除下载的文件
@@ -198,7 +204,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = data['base'].nickname;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }
