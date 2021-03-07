@@ -6,11 +6,12 @@ name: jd_beauty
 on:
   workflow_dispatch:
   schedule:
-    - cron: '3 23,4,11 * * *'
+    - cron: '6 23,4,11 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: beauty
+    types: jd_beauty
+jobs:
   build:
 
     runs-on: ubuntu-latest
