@@ -10,7 +10,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: jd_beauty
+    types: beauty
   build:
 
     runs-on: ubuntu-latest
