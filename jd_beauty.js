@@ -10,7 +10,7 @@ const $ = new Env('美丽研究院');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const WebSocket = $.isNode() ? require('websocket').w3cwebsocket: SockJS;
+//const WebSocket = $.isNode() ? require('websocket').w3cwebsocket: SockJS;
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 0 : 5;
 const bean = 500
