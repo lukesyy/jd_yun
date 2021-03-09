@@ -1,24 +1,24 @@
 /*
 女装盲盒
-活动时间：2021-2-26至2021-3-8
-活动地址：https://anmp.jd.com/babelDiy/Zeus/3DSHPs2xC66RgcCEB8YVLsudqfh5/index.html
+活动时间：2021-3-8至2021-3-20
+活动地址：https://anmp.jd.com/babelDiy/Zeus/4J7phaGgkAAq7jwnhnodtqfit6M8/index.html
 活动入口：京东app-女装馆-赢京豆
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #女装盲盒
-0 7 19-25 2 * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, tag=女装盲盒, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+0 8 9-20/1 3 * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, tag=女装盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 7 19-25 2 *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js,tag=女装盲盒
+cron "0 8 9-20/1 3 * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js,tag=女装盲盒
 
 ===============Surge=================
-女装盲盒 = type=cron,cronexp="0 7 19-25 2 *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js
+女装盲盒 = type=cron,cronexp="0 8 9-20/1 3 * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js
 
 ============小火箭=========
-女装盲盒 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, cronexpr="0 7 19-25 2 *", timeout=3600, enable=true
+女装盲盒 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, cronexpr="0 8 9-20/1 3 * *", timeout=3600, enable=true
  */
 
 const $ = new Env('女装盲盒抽京豆');
@@ -35,13 +35,7 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
 !(async () => {
@@ -69,7 +63,14 @@ if ($.isNode()) {
         }
         continue
       }
-      await jdMh()
+      try {
+        await jdMh('https://anmp.jd.com/babelDiy/Zeus/4J7phaGgkAAq7jwnhnodtqfit6M8/index.html')
+        // await jdMh('https://anmp.jd.com/babelDiy/Zeus/gY7ymUmC8ZM74Zw3woiDDQU1naT/index.html?wxAppName=jd')
+        // await jdMh('https://anmp.jd.com/babelDiy/Zeus/3UGPT8RMBu4kL2YAYN98MgkcDhRq/index.html?wxAppName=jd')
+        // await jdMh('https://anmp.jd.com/babelDiy/Zeus/yiNQjMxQvs3R3SdS4nwa2MFk1FE/index.html?wxAppName=jd')
+      } catch (e) {
+        $.logErr(e)
+      }
     }
   }
 })()
@@ -80,16 +81,20 @@ if ($.isNode()) {
     $.done();
   })
 
-async function jdMh() {
-  await getInfo()
-  await getUserInfo()
-  await draw()
-  while ($.userInfo.bless >= $.userInfo.cost_bless_one_time) {
-    await draw()
+async function jdMh(url) {
+  try {
+    await getInfo(url)
     await getUserInfo()
-    await $.wait(500)
+    await draw()
+    while ($.userInfo.bless >= $.userInfo.cost_bless_one_time) {
+      await draw()
+      await getUserInfo()
+      await $.wait(500)
+    }
+    await showMsg();
+  } catch (e) {
+    $.logErr(e)
   }
-  await showMsg();
 }
 
 function showMsg() {
@@ -100,10 +105,11 @@ function showMsg() {
   })
 }
 
-function getInfo() {
+function getInfo(url = 'https://anmp.jd.com/babelDiy/Zeus/3DSHPs2xC66RgcCEB8YVLsudqfh5/index.html?wxAppName=jd') {
+  console.log(`url:${url}`)
   return new Promise(resolve => {
     $.get({
-      url: 'https://anmp.jd.com/babelDiy/Zeus/3DSHPs2xC66RgcCEB8YVLsudqfh5/index.html?wxAppName=jd',
+      url,
       headers: {
         Cookie: cookie
       }
@@ -240,7 +246,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }
