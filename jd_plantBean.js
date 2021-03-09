@@ -39,11 +39,12 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
   'mlrdw3aw26j3xc6xycqtc74umufg2kphl3yfaxy@4npkonnsy7xi3ii7u6y52byc4urucexhl2wh2pq@olmijoxgmjutydymkyc56wollvia4yorekjt5ky@q7knrx5fitalyburqkflsm4jjq3h7wlwy7o5jii@4npkonnsy7xi2dkkbvl643342m5of4rpapky3ha@u72q4vdn3zes3byfckc62jqcbkxq3wtymnzrz2i@e7lhibzb3zek3ziaj5fstdr2qbxofrnt63pxzpq@fn5sjpg5zdejmpxw4mttxyyppqmy3t6eveppesy',
 ]
+let allMessage = ``;
 let currentRoundId = null;//本期活动id
 let lastRoundId = null;//上期id
 let roundList = [];
 let awardState = '';//上期活动的京豆是否收取
-let randomCount = $.isNode() ? 0 : 0;
+let randomCount = $.isNode() ? 0 : 5;
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -74,6 +75,9 @@ let randomCount = $.isNode() ? 0 : 0;
       await jdPlantBean();
       await showMsg();
     }
+  }
+  if ($.isNode() && allMessage) {
+    await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
 })().catch((e) => {
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -127,9 +131,10 @@ async function doGetReward() {
       console.log('京豆领取成功');
       message += `【上期兑换京豆】${$.getReward.data.awardBean}个\n`;
       $.msg($.name, subTitle, message);
-      if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}`, `京东账号${$.index} ${$.nickName}\n${message}`);
-      }
+      allMessage += `京东账号${$.index} ${$.nickName}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`
+      // if ($.isNode()) {
+      //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}`, `京东账号${$.index} ${$.nickName}\n${message}`);
+      // }
     }
   } else if (awardState === '6') {
     //京豆已领取
