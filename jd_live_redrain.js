@@ -54,6 +54,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   }
   await getRedRain();
 
+/*
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
     $.log(`远程红包雨配置获取错误，从本地读取配置`)
@@ -68,6 +69,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   } else{
     $.log(`远程红包雨配置获取成功`)
   }
+*/
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
