@@ -73,6 +73,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 async function jdHealth() {
   $.bean = 0
   await getTaskList()
+  await sign()
   message += `领奖完成，共计获得 ${$.bean} 京豆\n`
   await showMsg();
 }
@@ -213,6 +214,33 @@ function awardTask(type="shareTask") {
     })
   })
 }
+function sign() {
+  return new Promise(resolve => {
+    $.get(taskUrl("getChannelTaskRewardToM", {"type":"signTask","itemId":"1"}), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.subCode === "0") {
+              $.bean += data.sum
+              console.log(`签到领奖成功，获得 ${data.sum} 京豆`);
+              message += `任务领奖成功，获得 ${data.sum} 京豆\n`
+            } else {
+              console.log(`任务领奖失败，${data.msg}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 function taskPostUrl(function_id, body = {}, url=null) {
   if(!url) url = `${JD_API_HOST}?functionId=${function_id}`
   return {
@@ -268,7 +296,7 @@ function TotalBean() {
               return
             }
             if (data['retcode'] === 0) {
-              $.nickName = data['base'].nickname;
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
             } else {
               $.nickName = $.UserName
             }
