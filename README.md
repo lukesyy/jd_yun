@@ -1,11 +1,14 @@
-## 本仓库提供两种方式同步脚本，请务必认真阅读
+## 使用教程
+* 1. 创建新仓库[点击创建自己的仓库](https://github.com/new)
+* 2.填入`Repository name`后点击最下方的`Create repository` 点下面Import a repository.
+* 3.然后在于Your old repository’s clone URL 填入 https://github.com/zero205/JD
+* 4.按提示完成复制后再在`Settings`-`Secrets`里面添加`JD_COOKIE`，多条 cookie 用`&`隔开，支持无数条 cookie
+> 具体如何取 cookie可以运行getcookie脚本，按build里面运行提示扫码登陆，脚本会获得cookie，然后将脚本获得的cookie 放在secrets即可,运行后一定要删除运行记录,防盗!!!!!!
+>  如何配置,可参考 > [获取京东Cookies教程](https://github.com/zero205/JD/blob/main/backUp/GetJdCookie2.md)
+* 5.最后点击一下右上角的 star（fork 左边那个），让 workflow 运行一次。
+#### 注意：该方法需要自行定期替换或更新脚本，不会自动同步，强烈建议再按下面教程进行自动同步仓库脚本。
 
-### 第一种方式【建议使用此方式同步】
-* 直接fork本仓库，然后[按照这个教程进行 reposync](backUp/reposync.md)
-
-### 第二种方式
-***~~直接fork本仓库，然后[按照这个教程进行 pull](backUp/gitSync.md)~~***
-  
+### 自动同步脚本教程：在完成上面步骤后，再[按照这个教程进行自动同步脚本](backup/reposync.md)
   
 
 ## 特别声明: 
