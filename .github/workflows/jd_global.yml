@@ -6,7 +6,7 @@ name: jd_global
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 1,4,12,13 * * *'
+    - cron: '10 1,4,12,13 8-31 3 *'
   watch:
     types: started
   repository_dispatch:
