@@ -6,7 +6,7 @@ name: jd_live_redrain
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30,33 12-15 * * *'
+    - cron: '29 12-15 * * *'
   watch:
     types: started
   repository_dispatch:
