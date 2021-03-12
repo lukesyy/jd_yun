@@ -1,32 +1,32 @@
 /*
-超级直播间红包雨
-30,31 20-23/1 9,12 3 * jd_live_redrain.js
+超级直播间红包雨 新增3.12日，3.16日
+
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
 [task_local]
 #超级直播间红包雨
-30,31 20-23/1 9,12 3 * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js, tag=超级直播间红包雨, enabled=true
+30,31 20-23/1 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js, tag=超级直播间红包雨, enabled=true
 
 ==============Loon==============
 [Script]
-cron "30,31 20-23/1 9,12 3 *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js,tag=超级直播间红包雨
+cron "30,31 20-23/1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js,tag=超级直播间红包雨
 
 ================Surge===============
-超级直播间红包雨 = type=cron,cronexp="30,31 20-23/1 9,12 3 *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js
+超级直播间红包雨 = type=cron,cronexp="30,31 20-23/1 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js
 
 ===============小火箭==========
-超级直播间红包雨 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js, cronexpr="30,31 20-23/1 9,12 3 *", timeout=3600, enable=true
+超级直播间红包雨 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js, cronexpr="30,31 20-23/1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('超级直播间红包雨');
 let allMessage = '';
 let bodyList = {
-  '9': {
-    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1615275374004&sign=cfa793e5439a37b0c18c0ff133a8a015&sv=121',
-    body: 'body=%7B%22liveId%22%3A%223623574%22%7D'
-  },
   '12': {
-    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1615275371017&sign=ba7c91c08f52ffb28bacce95cff9a053&sv=100',
+    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1615468728099&sign=4aa630a409b136aefa993c9980fd9a63&sv=101',
     body: 'body=%7B%22liveId%22%3A%223649497%22%7D'
+  },
+  '16': {
+    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1615468726059&sign=60005fa89f99116a2707cb31fb7debac&sv=120',
+    body: 'body=%7B%22liveId%22%3A%223665668%22%7D'
   }
 }
 let ids = {
@@ -63,13 +63,15 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.activityId = ids[hour]
       $.log(`本地红包雨配置获取成功`)
     } else{
-      $.log(`无法从本地读取配置，请检查运行时间`)
+      $.log(`无法从本地读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
+      $.log(`出现异常提示请忽略。红包雨期间会正常，此脚本提issue打死！！！！！！！！！！！)`)
       return
     }
   } else{
     $.log(`远程红包雨配置获取成功`)
   }
-*/
+  */
+  
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
