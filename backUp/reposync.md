@@ -3,9 +3,7 @@
 
 ### 申请PAT
 
-[点此快捷到达指定页面](https://github.com/settings/tokens/new) 来生成一个 token，把 `repo`和`workflow` 两部分勾上；
-
-点击最下面的创建按钮。
+[点此来生成一个 token](https://github.com/settings/tokens/new) ，把 `repo`和`workflow` 两部分勾上，然后点击最下面的创建按钮。
 
 ### 填写PAT到Secrets
 
