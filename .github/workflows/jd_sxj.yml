@@ -6,7 +6,7 @@ name: jd_sxj
 on:
   workflow_dispatch:
   schedule:
-    - cron: '2 11,16 * * *'
+    - cron: '59 15 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【手机上学季】'
+      - name: '运行 【手机尚学季】'
         run: |
           node jd_sxj.js
         env:
