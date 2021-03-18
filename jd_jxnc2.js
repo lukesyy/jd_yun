@@ -186,7 +186,7 @@ function requireConfig() {
 
         try {
             let options = {
-                "url": `https://gitee.com/guyuexuan/jd_share_code/raw/master/share_code/jxnc.json`,
+                "url": `https://gitee.com/zero205/updateTeam/raw/master/shareCodes/jxnc.json`,
                 "headers": {
                     "Accept": "application/json,text/plain, */*",
                     "Content-Type": "application/x-www-form-urlencoded",
