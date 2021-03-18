@@ -6,7 +6,7 @@ name: jd_cfd2
 on:
   workflow_dispatch:
   schedule:
-    - cron: '50 0,5,11,14 * * *'
+    - cron: '46 0,5,11,14 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -34,7 +34,7 @@ jobs:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }} # 使用 package-lock.json 的 Hash 作为缓存的 key。也可以使用 package.json 代替
       - name: npm install
         run: |
-          npm installhttps://github.com/zero205/JD/tree/main/.github/workflows
+          npm install
       - name: '运行 【京喜财富岛2】'
         run: |
           node jd_cfd.js
