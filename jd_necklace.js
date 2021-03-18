@@ -366,7 +366,10 @@ async function doAppTask(type = '3') {
     "taskId": "necklace_142",
     "lng": "",
   }
-  if (type === '4') body['taskId'] = 'necklace_143';
+  if (type === '4') {
+    await $.wait(15000);
+    body['taskId'] = 'necklace_143';
+  }
   await $.wait(15500);
   await getCcTaskList('reportCcTask', body, type);
 }
