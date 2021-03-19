@@ -4,7 +4,7 @@
 */
 const $ = new Env('店铺签到');
 
-const notify = $.isNode() ? require('./send') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
