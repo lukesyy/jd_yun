@@ -281,14 +281,14 @@ function taskUrl(token,venderId) {
     })
   })
 }
-
+/*
 async function showMsg() {
   if ($.isNode()) {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n${message}`);
   }
 }
-
+*/
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
