@@ -37,7 +37,7 @@ jobs:
           npm install
       - name: '运行 【京喜农场】'
         run: |
-          node jd_jxnc2.js
+          node jd_jxnc.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
