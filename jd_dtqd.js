@@ -4,7 +4,7 @@
 */
 const $ = new Env('店铺签到');
 
-const notify = $.isNode() ? require('./sendNotify') : '';
+//const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -281,14 +281,14 @@ function taskUrl(token,venderId) {
     })
   })
 }
-/*
+
 async function showMsg() {
   if ($.isNode()) {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n${message}`);
   }
 }
-*/
+
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
