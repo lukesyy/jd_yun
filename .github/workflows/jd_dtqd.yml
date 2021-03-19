@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: zero205/JD
+          repository: cui521/jdqd
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -37,7 +37,7 @@ jobs:
           npm install
       - name: '运行 【店铺签到】'
         run: |
-          node jd_dtqd.js
+          node DIY_shopsign.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
