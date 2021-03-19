@@ -83,9 +83,30 @@ $.shareId = ["8051f482-5619-47d3-8d2e-7b49a1c1675e","27352a8c-365c-408f-83d4-175
     cookie = cookiesArr[v];
     $.index = v + 1;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-    console.log(`自己账号内部互助\n\n`);
+    await $.http.get({url: `https://code.chiang.fun//api/v1/jd/mohe/read/10`, timeout: 10000}).then(async (resp) => {
+      if (resp.statusCode === 200) {
+        try {
+          let { body } = resp;
+          body = JSON.parse(body);
+          if (body && body['code'] === 200) {
+            console.log(`开始随机互助互助\n\n`);
+            for (let item of body['data'] || []) {
+              console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item}进行助力`)
+              const res = await addShare(item);
+              if (res && res['code'] === 2005) {
+                console.log(`次数已用完，跳出助力`)
+                break
+              }
+            }
+          }
+        } catch (e) {
+          console.log(`助力异常:${e}`)
+        }
+      }
+    });
+    console.log(`\n\n自己账号内部互助`);
     for (let item of $.shareId) {
-      console.log(`账号${$.index}${$.UserName}开始给 ${item}进行助力`)
+      console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item}进行助力`)
       const res = await addShare(item);
       if (res && res['code'] === 2005) {
         console.log(`次数已用完，跳出助力`)
@@ -271,12 +292,13 @@ function taskList() {
             await strollShop(task2.shopId);
             await taskCoin(task2.type);
           }
-          // if (task6.finishNum < task6.totalNum) {
-          //   await strollMember(task6.venderId);
-          //   await taskCoin(task6.type);
-          // }
+          if (task5.finishNum < task5.totalNum) {
+            console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
+          } else {
+            console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
+          }
           if (task4.state === 2 && task1.state === 2 && task2.state === 2) {
-            console.log('taskList的任务全部做完了---')
+            console.log('\n\n----taskList的任务全部做完了---\n\n')
           } else {
             await taskList();
           }
@@ -463,7 +485,7 @@ function shareUrl() {
         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
-    $.get(options, (err, resp, data) => {
+    $.get(options, async (err, resp, data) => {
       try {
         console.log('好友邀请码', data)
         data = JSON.parse(data);
@@ -474,6 +496,24 @@ function shareUrl() {
         if (data['code'] === 200) {
           $.shareId.push(data['data']);
           console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}\n`);
+          await $.http.get({url: `https://code.chiang.fun/autocommit/mohe/insert/${data['data']}`, timeout: 10000}).then((resp) => {
+            // console.log('resp', resp)
+            if (resp.statusCode === 200) {
+              try {
+                let { body } = resp;
+                body = JSON.parse(body);
+                if (body['code'] === 200) {
+                  console.log(`邀请码${data['data']}}提交成功\n`)
+                } else if (body['code'] === 400) {
+                  // console.log(`邀请码 【${data['data']}】 已存在\n`)
+                } else {
+                  console.log(`邀请码提交结果:${JSON.stringify(body)}\n`)
+                }
+              } catch (e) {
+                console.log(`邀请码提交异常:${e}`)
+              }
+            }
+          });
         }
       } catch (e) {
         $.logErr(e, resp);
