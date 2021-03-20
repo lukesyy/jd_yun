@@ -5,8 +5,6 @@ name: jd_cash_exchange
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 16 * * *'
   watch:
     types: started
   repository_dispatch:
