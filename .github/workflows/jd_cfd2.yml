@@ -6,7 +6,7 @@ name: jd_cfd2
 on:
   workflow_dispatch:
   schedule:
-    - cron: '1 4,10,23 * * *'
+    - cron: '15 0,5,11 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -37,7 +37,7 @@ jobs:
           npm install
       - name: '运行 【京喜财富岛2】'
         run: |
-          node jd_cfd2.js
+          node jd_cfd.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
