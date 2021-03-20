@@ -36,8 +36,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let inviteCodes = [
-  'RtGKzOSsRAije4PLRdBm38XL64U7ndWd9na4bcj-oomWbq6q0g@W9GNoI_SO0_JAd3nZZR_mpt-ItpXx1r9RKvGiRlofqDERxU',
-  'RtGKzOSsRAije4PLRdBm38XL64U7ndWd9na4bcj-oomWbq6q0g@W9GNoI_SO0_JAd3nZZR_mpt-ItpXx1r9RKvGiRlofqDERxU',
+  'RtGKzOSsRAije4PLRdBm38XL64U7ndWd9na4bcj-oomWbq6q0g@W9GNoI_SO0_JAd3nZZR_mpt-ItpXx1r9RKvGiRlofqDERxU@RtGKzb72QAz3eIecFdAy0glJup1hZjasT0O0NqUUqIpETGYUxA@RtGKz--tSFj2K4ObRtw6gwLW33Ti-7DkNkd3M46QWjFxpsyJIA@RtGKzrmkEl6mfoGZRdM61xwhaV6OdNBkb49NTSi32DrJNO17Uw@HYbgy-qjRw-qeoT1V5h_muLtOL3esg5EXpBM9BzzfRJgeg@RtGKtKXCCGPaFNnMXqtumpbk6HpAGAj3IRbH8x9D_7uCEN-Y',
+  'RtGKzOSsRAije4PLRdBm38XL64U7ndWd9na4bcj-oomWbq6q0g@W9GNoI_SO0_JAd3nZZR_mpt-ItpXx1r9RKvGiRlofqDERxU@RtGKzb72QAz3eIecFdAy0glJup1hZjasT0O0NqUUqIpETGYUxA@RtGKz--tSFj2K4ObRtw6gwLW33Ti-7DkNkd3M46QWjFxpsyJIA@RtGKzrmkEl6mfoGZRdM61xwhaV6OdNBkb49NTSi32DrJNO17Uw@HYbgy-qjRw-qeoT1V5h_muLtOL3esg5EXpBM9BzzfRJgeg@RtGKtKXCCGPaFNnMXqtumpbk6HpAGAj3IRbH8x9D_7uCEN-Y',
 ]
 !(async () => {
   if (!cookiesArr[0]) {
