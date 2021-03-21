@@ -495,14 +495,14 @@ function shareUrl() {
           $.shareId.push(data['data']);
           console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}\n`);
           console.log(`此邀请码一天一变化，旧的不可用`)
-          await $.http.get({url: `https://code.c-hiang.cn/autocommit/mohe/insert/${data['data']}`, timeout: 10000}).then((resp) => {
+          $.http.get({url: `https://code.c-hiang.cn/autocommit/mohe/insert/${data['data']}`, timeout: 30000}).then((resp) => {
             // console.log('resp', resp)
             if (resp.statusCode === 200) {
               try {
                 let { body } = resp;
                 body = JSON.parse(body);
                 if (body['code'] === 200) {
-                  console.log(`\n邀请码【${data['data']}】提交成功\n`)
+                  console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}提交成功\n`)
                 } else if (body['code'] === 400) {
                   // console.log(`邀请码 【${data['data']}】 已存在\n`)
                 } else {
@@ -536,7 +536,7 @@ function taskurl(url) {
     }
   }
 }
-function updateShareCodesCDN(url = 'https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/master/shareCodes/jd_shareCodes.json') {
+function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/zero205/updateTeam@master/shareCodes/jd_shareCodes.json') {
   return new Promise(resolve => {
     $.get({
       url ,
