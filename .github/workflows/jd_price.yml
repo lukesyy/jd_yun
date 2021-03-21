@@ -5,8 +5,6 @@ name: jd_price
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '15 14 * * *'
   watch:
     types: started
   repository_dispatch:
