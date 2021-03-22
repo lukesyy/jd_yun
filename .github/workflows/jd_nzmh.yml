@@ -6,7 +6,7 @@ name: jd_nzmh
 on:
   workflow_dispatch:
   schedule:
-    - cron: '29 0 8-21/1 3 *'
+    - cron: '29 0 22-31/1 3 *'
   watch:
     types: started
   repository_dispatch:
