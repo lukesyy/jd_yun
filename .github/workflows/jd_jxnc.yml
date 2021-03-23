@@ -52,6 +52,5 @@ jobs:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
-          JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES }}
-          JXNCTOKENS: ${{ secrets.JXNCTOKENS }}
-          DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT }}
+          JXNC_SHARECODES: '{"smp":"f6611d59cdd31012ead697f5b30af529","active":"jdnc_1_2yuanhamigua210315_2","joinnum":2}'@'{"smp":"3af8e9be5918a8064f037baa3690bc3a","active":"jdnc_1_3yuanorange210305_2","joinnum":1}'@ ${{ secrets.JXNC_SHARECODES }}
+          JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL }}
