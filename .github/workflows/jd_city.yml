@@ -54,4 +54,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           CITY_SHARECODES: ${{ secrets.CITY_SHARECODES }}
-          CITY_SHARECODES: ${{ secrets.CITY_SHARECODES }}
+          JD_CITY_EXCHANGE: ${{ secrets.JD_CITY_EXCHANGE }}
