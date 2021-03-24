@@ -6,7 +6,7 @@ name: jd_city
 on:
   workflow_dispatch:
   schedule:
-    - cron: '1 23,0-15/1 * * *'
+    - cron: '30 11-15/1 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -53,4 +53,5 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          CITY_SHARECODES: ${{ secrets.CITY_SHARECODES }}
           CITY_SHARECODES: ${{ secrets.CITY_SHARECODES }}
