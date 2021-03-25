@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-11-20 11:42:03 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2021-3-16 12:27:14
+ * @Last Modified time: 2021-3-25 12:27:14
  */
 /*
 点点券，可以兑换无门槛红包（1元，5元，10元，100元，部分红包需抢购）
@@ -137,10 +137,9 @@ async function sign() {
 }
 async function reportTask(item = {}) {
   //普通任务
-  if (item['taskType'] !== 3 && item['taskType'] !== 4 && item['taskType'] !== 6) {
-    await necklace_startTask(item.id, 'necklace_reportTask');
-  }
-  if (item['taskType'] === 6) {
+  if (item['taskType'] === 2) await necklace_startTask(item.id, 'necklace_reportTask');
+  //逛很多商品店铺等等任务
+  if (item['taskType'] === 6 || item['taskType'] === 8 || item['taskType'] === 5 || item['taskType'] === 9) {
     //浏览精选活动任务
     await necklace_getTask(item.id);
     $.taskItems = $.taskItems.filter(value => !!value && value['status'] === 0);
