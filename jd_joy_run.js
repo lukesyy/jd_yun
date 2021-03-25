@@ -251,7 +251,7 @@ async function getToken() {
 }
 function readToken() {
   return new Promise(resolve => {
-    $.get({url: `http://jd.turinglabs.net/api/v2/jd/joy/abcdef/1/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `https://gitee.com/zero205/updateTeam/raw/master/shareCodes/joy_token.json`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
