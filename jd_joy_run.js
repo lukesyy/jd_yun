@@ -57,7 +57,7 @@ temp = [""];
 run_pins = [temp.join(',')];
 // $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
 // $.LKYLToken = $.getdata('jdJoyRunToken');
-let  friendsArr = ["jd_5bb16d6462414","jd_7399bee01a89e","jd_6e0cd5023b791","13536765947_p","jd_hFgUAWPPlvYv","wdwMJcEGPKgMlq","niujie678","hajiuhajiu2733","wdovJvWPLhUUqC","q2705322732","wdfxtlDMXHbaHu","wdaABrvfJIjgOl","hajiuhajiu2067","18939824134_p","jd_441027f2a1e0d","jd_747fca41dbd0a","jd_51d9ee19241e2","wdwMJcEGPKgMlq","ningbormb","jd_DcDTMOblJHiM", "jd_553ea3a6ef2f4", "yhr_19820404"];
+let friendsArr = ["jd_5bb16d6462414","jd_7399bee01a89e","jd_6e0cd5023b791","13536765947_p","jd_hFgUAWPPlvYv","wdwMJcEGPKgMlq","niujie678","hajiuhajiu2733","wdovJvWPLhUUqC","q2705322732","wdfxtlDMXHbaHu","wdaABrvfJIjgOl","hajiuhajiu2067","18939824134_p","jd_441027f2a1e0d","jd_747fca41dbd0a","jd_51d9ee19241e2","wdwMJcEGPKgMlq","ningbormb","jd_DcDTMOblJHiM", "jd_553ea3a6ef2f4", "yhr_19820404"];
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -175,7 +175,7 @@ async function getToken() {
 //https://raw.githubusercontent.com/hajiuhajiu/jdsign1112/master/backUp/joytoken.json
 function readToken() {
   return new Promise(resolve => {
-    $.get({url: `https://gitee.com/zero205/updateTeam/raw/master/shareCodes/joytoken.json`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `https://raw.githubusercontent.com/zero205/updateTeam/master/shareCodes/joytoken.json`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
