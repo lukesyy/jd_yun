@@ -5,8 +5,8 @@ name: lxk0301_live_redrain
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0-15/1 25 3 *'
+#  schedule:
+#    - cron: '0 0-15/1 25 3 *'
   watch:
     types: started
   repository_dispatch:
