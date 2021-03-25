@@ -175,7 +175,7 @@ async function getToken() {
 //https://raw.githubusercontent.com/hajiuhajiu/jdsign1112/master/backUp/joytoken.json
 function readToken() {
   return new Promise(resolve => {
-    $.get({url: `https://gitee.com/zero205/updateTeam/raw/master/shareCodes/joy_token.json`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `https://gitee.com/zero205/updateTeam/raw/master/shareCodes/joytoken.json`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
