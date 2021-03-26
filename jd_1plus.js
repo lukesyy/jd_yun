@@ -28,7 +28,7 @@ cron "11 12 17-30 3 *" script-path=https://raw.githubusercontent.com/i-chenzhe/q
  */
 const $ = new Env('一加盲盒');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const notify = $.isNode() ? require('./sendNotify') : '';
+const notify = '';
 const path = $.isNode() ? require('path') : '';
 let cookiesArr = [], cookie = '', originCookie = '', newCookie = '', message = '';
 
