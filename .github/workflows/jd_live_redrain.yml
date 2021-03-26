@@ -6,7 +6,7 @@ name: jd_live_redrain
 on:
   workflow_dispatch:
   schedule:
-    - cron: '29 12-15 * * *'
+    - cron: '30 11 30 3 *'
   watch:
     types: started
   repository_dispatch:
@@ -35,7 +35,14 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【超级直播间红包雨】'
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '等待运行【超级直播间红包雨】'
+        run: |
+              python3 accwait.py 0.1 0.1 29
+      - name: '开始运行'
         run: |
           node jd_live_redrain.js
         env:
