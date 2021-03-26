@@ -117,7 +117,7 @@ async function jdDreamFactory() {
   }
 }
 
-
+/*
 // 收取发电机的电力
 function collectElectricity(facId = $.factoryId, help = false, master) {
   return new Promise(async resolve => {
@@ -386,7 +386,7 @@ function assistFriend(sharepin) {
     const options = {
       'url': `https://m.jingxi.com/dreamfactory/friend/AssistFriend?zone=dream_factory&sharepin=${escape(sharepin)}&sceneval=2&g_login_type=1`,
       'headers': {
-        "Accept": "*/*",
+        "Accept": "",
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "zh-cn",
         "Connection": "keep-alive",
@@ -519,7 +519,6 @@ function doTask(taskId) {
     })
   })
 }
-
 // 初始化个人信息
 function userInfo() {
   return new Promise(async resolve => {
@@ -871,6 +870,7 @@ function getFactoryIdByPin(pin) {
     })
   })
 }
+*/
 async function tuanActivity() {
   const tuanConfig = await QueryActiveConfig();
   if (tuanConfig && tuanConfig.ret === 0) {
