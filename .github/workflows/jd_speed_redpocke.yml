@@ -1,12 +1,12 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_speed_redpocke（过期）
+name: jd_speed_redpocke
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: '1 0,12,16 * * *'
+  schedule:
+    - cron: '0 0,12,16 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东极速版红包】】'
+      - name: '运行 【京东极速版红包】'
         run: |
           node jd_speed_redpocke.js
         env:
