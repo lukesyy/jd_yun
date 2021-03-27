@@ -491,7 +491,6 @@ function completeTask(taskId, taskName) {
     })
   })
 }
-
 // 完成任务
 function doTask(taskId) {
   return new Promise(async resolve => {
@@ -519,6 +518,7 @@ function doTask(taskId) {
     })
   })
 }
+*/
 // 初始化个人信息
 function userInfo() {
   return new Promise(async resolve => {
@@ -654,6 +654,7 @@ function GetShelvesList(pageNo = 1) {
     })
   })
 }
+/*
 //领取红包
 function DrawProductionStagePrize() {
   return new Promise(async resolve => {
