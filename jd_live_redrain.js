@@ -20,10 +20,6 @@ cron "30,31 20-23/1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/
 const $ = new Env('超级直播间红包雨');
 let allMessage = '';
 let bodyList = {
-  "26": {
-    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1616564445042&sign=3ff4854f9d00fde86995e4a6d3efecb2&sv=121",
-    "body": "body=%7B%22liveId%22%3A%223759184%22%7D"
-  },
   "30": {
     "url": "https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&undefined",
     "body": "body=%7B%22liveId%22%3A%223761428%22%7D"
@@ -43,7 +39,6 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
-  if(JSON.stringify(process.env).indexOf('GITHUB')>-1) process.exit(0)
 }else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -54,7 +49,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     return;
   }
   await getRedRain();
-
+/*
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
     $.log(`远程红包雨配置获取错误，从本地读取配置`)
@@ -70,6 +65,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   } else{
     $.log(`远程红包雨配置获取成功`)
   }
+  */
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
