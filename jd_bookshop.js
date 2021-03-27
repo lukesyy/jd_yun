@@ -59,6 +59,7 @@ if ($.isNode()) {
       $.isLogin = true;
       $.nickName = '';
       message = '';
+      $.exit = false;
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
