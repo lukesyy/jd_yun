@@ -6,7 +6,7 @@ name: jd_cfd
 on:
   workflow_dispatch:
   schedule:
-    - cron: '6 0,5,11,16 * * *'
+    - cron: '20 0,5,11,16 * * *'
   watch:
     types: started
   repository_dispatch:
