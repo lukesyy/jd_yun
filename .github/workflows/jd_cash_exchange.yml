@@ -33,7 +33,14 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东领现金兑换】'
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '等待运行【京东领现金兑换红包】'
+        run: |
+              python3 accwait.py 0.1 0.1 29
+      - name: '开始运行'
         run: |
           node jd_cash_exchange.js
         env:
