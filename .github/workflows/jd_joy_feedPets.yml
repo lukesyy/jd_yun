@@ -35,10 +35,10 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: Set up Python 3.7
+      - name: Set up Python 2.7
         uses: actions/setup-python@v2
         with:
-          python-version: 3.7
+          python-version: 2.7
       - name: '等待运行【宠汪汪喂食】'
         run: |
               python3 sjys.py
