@@ -6,7 +6,7 @@ name: jd_shop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '55 15 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -35,7 +35,14 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【进店领豆脚本】'
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '等待运行【进店领京豆】'
+        run: |
+              python3 accwait.py 0.1 0.1 29
+      - name: '开始运行'
         run: |
           node jd_shop.js
         env:
