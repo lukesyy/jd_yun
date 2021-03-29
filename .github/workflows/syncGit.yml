@@ -1,4 +1,4 @@
-name: 同步zero205-JD脚本
+name: 1获取最新脚本
 on:
   schedule:
     - cron: '50 */2 * * *'
