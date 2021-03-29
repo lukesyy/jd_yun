@@ -6,7 +6,7 @@ name: jd_bean_sign
 on:
   workflow_dispatch:
   schedule:
-    - cron: '50 15 * * *'
+    - cron: '0 16 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -41,7 +41,6 @@ jobs:
           python-version: 3.7
       - name: '运行【随机延时】'
         run: |
-          python3 accwait.py 0.1 0.1 29
           python3 sjys.py
       - name: '运行 【京豆签到】'
         run: |
