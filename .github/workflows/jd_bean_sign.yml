@@ -6,7 +6,7 @@ name: jd_bean_sign
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '50 15 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -35,7 +35,15 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京豆签到脚本】'
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '运行【随机延时】'
+        run: |
+          python3 accwait.py 0.1 0.1 29
+          python3 sjys.py
+      - name: '运行 【京豆签到】'
         run: |
           node jd_bean_sign.js
         env:

@@ -39,6 +39,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
+      - name: '运行【随机延时】'
+        run: |
+          python3 sjys.py
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
       - name: '等待运行【进店领京豆】'
         run: |
               python3 accwait.py 0.1 0.1 29

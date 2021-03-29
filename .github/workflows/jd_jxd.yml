@@ -35,7 +35,14 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京小兑】】'
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '运行【随机延时】'
+        run: |
+          python3 sjys.py
+      - name: '运行 【京小兑】'
         run: |
           node jd_jxd.js
         env:

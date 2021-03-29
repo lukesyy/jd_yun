@@ -35,9 +35,19 @@ jobs:
       - name: npm install
         run: |
           npm install
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '运行【随机延时】'
+        run: |
+          python3 sjys.py
       - name: '运行 【京喜工厂】'
         run: |
+          curl https://raw.githubusercontent.com/zero205/JD/main/jd_dreamFactory.js -o jd_dreamFactory.js
+          curl https://raw.githubusercontent.com/zero205/JD/main/jd_dreamFactory_2.js -o jd_dreamFactory_2.js
           node jd_dreamFactory.js
+          node jd_dreamFactory_2.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}

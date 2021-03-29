@@ -35,8 +35,18 @@ jobs:
       - name: npm install
         run: |
           npm install
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '运行【随机延时】'
+        run: |
+          python3 sjys.py
       - name: '运行 【京喜农场】'
         run: |
+          curl https://raw.githubusercontent.com/zero205/JD/main/jd_jxnc.js -o jd_jxnc.js
+          curl https://raw.githubusercontent.com/zero205/JD/main/jd_jxnc2.js -o jd_jxnc2.js
+          node jd_jxnc2.js
           node jd_jxnc.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}

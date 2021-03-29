@@ -35,6 +35,13 @@ jobs:
       - name: npm install
         run: |
           npm install
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: '运行【随机延时】'
+        run: |
+          python3 sjys.py
       - name: '运行 【疯狂的Joy挂机任务】'
         run: |
           node jd_crazy_joy_coin.js
