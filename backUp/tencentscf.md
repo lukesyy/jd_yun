@@ -1,5 +1,5 @@
 
-# 云函数快速部署京东脚本
+# 云函数快速部署京东脚本（由于云函数官方升级此方法暂时失效）
 >
 > - 本地安装依赖使用serverless部署，[点这里](tencentscf.md#1-安装-nodejs-环境)
 > - Github Action 部署[点这里](tencentscf.md#github-action-部署)
@@ -109,15 +109,25 @@ triggers:
 > 将SecretId和SecretKey分别配置在仓库的secrets变量里面， TENCENT_SECRET_ID对应你的SecretId的值，TENCENT_SECRET_KEY对应你的SecretKey的值
 
 ## 3. 配置自己需要secrets变量[参考这里](githubAction.md#下方提供使用到的-secrets全集合)
+
+目前因为云函数改版升级，原GitHub Action部署云函数方案需要作出相应调整，secret变量新增`SCF_REGION`和`TENCENT_FUNCTION_NAME`。`SCF_REGION`用于控制部署区域的选择，具体参数代码填写可以自行查找官方说明 [地域和可用区](https://cloud.tencent.com/document/product/213/6091) `TENCENT_FUNCTION_NAME`用于控制部署到云函数后函数名的命名。<br>
+
+## 4. 配置index.js中secrets变量说明
+现在可以通过secret设置自定义index.js中的执行方式，环境变量分别为`TENCENTSCF_SOURCE_TYPE`和`TENCENTSCF_SOURCE_URL`，其中`TENCENTSCF_SOURCE_TYPE`值可以选取`local`、`git`、`custom`具体含义[参考这里](githubAction.md#下方提供使用到的-secrets全集合)。`TENCENTSCF_SOURCE_URL`格式为包含raw的URL，例如：`https://raw.githubusercontent.com/LXK9301/jd_scripts/master/`或`https://gitee.com/lxk0301/jd_scripts/raw/master/`<br>
+
+
 ### __重要的说三遍__   
-### 如果涉及一个变量配置多个值，如多个cookie，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
-### 如果涉及一个变量配置多个值，如多个cookie，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
-### 如果涉及一个变量配置多个值，如多个cookie，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
+### 如果涉及一个变量配置多个值，如多个cookie，互助码，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
+### 如果涉及一个变量配置多个值，如多个cookie，互助码，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
+### 如果涉及一个变量配置多个值，如多个cookie，互助码，多个取消订阅关键字，去掉里面的 *__[空格]()__* 和 __*[换行]()*__ 使用 `&` 连接   
 > 排查问题第一步先看自己[腾讯云函数](https://console.cloud.tencent.com/scf/list-detail?rid=5&ns=default&id=scf-jdscript)那边的环境变量跟自己在仓库配置的 `secrets` 是否一致
 ![image](https://user-images.githubusercontent.com/6993269/99937191-06617680-2da0-11eb-99ea-033f2c655683.png)
 
 
 ## 4.执行action workflow进行部署，workflow未报错即部署成功
+
+**在执行action workflow进行部署前，先在需要部署的区域下新建一个空函数，名称可以任意，比如：`jd`，此时secret中`TENCENT_FUNCTION_NAME`值也必须是`jd`，保持与云函数的函数名一致，目前部署云函数的策略是覆盖的方式，故而此步骤至关重要。**<br>
+
 ![image](https://user-images.githubusercontent.com/6993269/99513289-6a152980-29c5-11eb-9266-3f56ba13d3b2.png)
 ## 5. 查看和测试
 登录后，在 [腾讯云函数地址](https://console.cloud.tencent.com/scf/index) 点击管理控制台，查看最新部署的函数。
