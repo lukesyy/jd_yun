@@ -46,18 +46,18 @@ inputs:
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live
-    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币
+    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币 #店铺签到
         parameters:
-          name: redPacket_shop_unsubscribe_lotteryMachine_car_ms
+          name: redPacket_shop_unsubscribe_lotteryMachine_car_ms_dpqd
           cronExpression: "0 10 0 * * * *"
           enable: true
           argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms
-    - timer: #京东天天加速 #天天提鹅 #5G超级盲盒
+    - timer: #京东天天加速 #天天提鹅 #5G超级盲盒 #手机狂欢城
         parameters:
-          name: speed_dailyegg_mohe
+          name: speed_dailyegg_mohe_carnivalcity
           cronExpression: "0 8 */3 * * * *"
           enable: true
-          argument: jd_speed&jd_daily_egg&jd_mohe
+          argument: jd_speed&jd_daily_egg&jd_mohe&jd_carnivalcity
     - timer: #东东超市
         parameters:
           name: superMarket
