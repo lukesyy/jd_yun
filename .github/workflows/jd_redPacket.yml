@@ -44,7 +44,7 @@ jobs:
           python3 sjys.py
       - name: '运行 【全民开红包】'
         run: |
-          node jd_redPacket.js
+          node jd_redPacket_old.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
