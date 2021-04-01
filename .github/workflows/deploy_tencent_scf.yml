@@ -1,8 +1,12 @@
-name: 2部署到腾讯云函数(手动)
-
+name: 2部署到腾讯云函数(报错请手动关闭任务)
 on:
   workflow_dispatch:
-
+  schedule:
+    - cron: '30 0 * * *'
+  watch:
+    types: started
+  repository_dispatch:
+    types: deploy_tencent_scf
 jobs:
   build:
     runs-on: ubuntu-latest
