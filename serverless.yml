@@ -11,7 +11,7 @@ inputs:
   src: ./
   handler: index.main_handler #入口
   runtime: Nodejs12.16 # 运行环境 默认 Nodejs10.15
-  region: ap-hongkong # 函数所在区域
+  region: ap-guangzhou # 函数所在区域
   description: This is a function in ${app} application.
   memorySize: 128 # 内存大小，单位MB
   timeout: 900 # 超时时间，单位秒
@@ -19,18 +19,18 @@ inputs:
     - timer: #签到
         parameters:
           name: beansign
-          cronExpression: "0 0 0 * * * *"
+          cronExpression: "0 1 0 * * * *"
           enable: true
           argument: jd_bean_sign
-    - timer: #东东超市兑换奖品 #摇京豆 #京东汽车兑换
+    - timer: #摇京豆 #京东汽车兑换
         parameters:
-          name: blueCoin_clublottery_carexchange
+          name: clublottery_carexchange
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_blueCoin&jd_club_lottery&jd_car_exchange
-    - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场 #京东极速版签到 #京东家庭号
+    - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场 #京东极速版签到
         parameters:
-          name: fruit_pet_bookshop_jxnc_speedsign_family
+          name: fruit_pet_bookshop_jxnc_jxnc2_speedsign
           cronExpression: "0 5 6-18/6,8 * * * *"
           enable: true
           argument: jd_fruit&jd_pet&jd_bookshop&jd_jxnc&jd_speed_sign&jd_family
@@ -40,42 +40,42 @@ inputs:
           cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory
-    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播 #京东国际盲盒
+    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播
         parameters:
-          name: joyreward_cash_necklace_smallhome_cfd_live_globalmh
+          name: joyreward_cash_necklace_smallhome_cfd_live
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_global_mh
+          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live
     - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币
         parameters:
           name: redPacket_shop_unsubscribe_lotteryMachine_car_ms
           cronExpression: "0 10 0 * * * *"
           enable: true
           argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms
-    - timer: #京东天天加速 #天天提鹅 #环球挑战赛 #5G超级盲盒
+    - timer: #京东天天加速 #天天提鹅 #5G超级盲盒
         parameters:
-          name: speed_dailyegg_global_mohe
+          name: speed_dailyegg_mohe
           cronExpression: "0 8 */3 * * * *"
           enable: true
-          argument: jd_speed&jd_daily_egg&jd_global&jd_mohe
+          argument: jd_speed&jd_daily_egg&jd_mohe
     - timer: #东东超市
         parameters:
           name: superMarket
           cronExpression: "0 15 */6 * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: #京豆变动通知 #疯狂的joy #监控crazyJoy分红 #京东排行榜 #领京豆额外奖励 #京东保价 #闪购盲盒 #京小兑
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑
         parameters:
-          name: beanchange_crazyjoy_crazyjoybonus_rankingList_beanhome_price_sgmh_jxd
+          name: beanchange_crazyjoy_rankingList_beanhome_sgmh_jxd
           cronExpression: "0 30 7 * * * *"
           enable: true
           argument: jd_bean_change&jd_crazy_joy&jd_crazy_joy_bonus&jd_rankingList&jd_bean_home&jd_price&jd_sgmh&jd_jxd
-    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #京喜签到 #女装盲盒 #京东极速版红包
+    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #京喜签到 #京东极速版红包
         parameters:
-          name: pigPet_syj_kd_jdzz_sign_nzmh_speedredpocke
+          name: pigPet_syj_kd_jdzz_sign_speedredpocke
           cronExpression: "0 3 1 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jx_sign&jd_nzmh@jd_speed_redpocke
+          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jx_sign@jd_speed_redpocke
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
