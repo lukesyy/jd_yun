@@ -1,5 +1,5 @@
 
-# 云函数快速部署京东脚本（由于云函数官方升级此方法暂时失效）
+# 云函数快速部署京东脚本【建议直接看Github Action 部署，可自动同步最新脚本】
 >
 > - 本地安装依赖使用serverless部署，[点这里](tencentscf.md#1-安装-nodejs-环境)
 > - Github Action 部署[点这里](tencentscf.md#github-action-部署)
@@ -108,12 +108,12 @@ triggers:
 ## 2. 在这里新建一个访问密钥[新建密钥](https://console.cloud.tencent.com/cam/capi)
 > 将SecretId和SecretKey分别配置在仓库的secrets变量里面， TENCENT_SECRET_ID对应你的SecretId的值，TENCENT_SECRET_KEY对应你的SecretKey的值
 
-## 3. 配置自己需要secrets变量[参考这里](githubAction.md#下方提供使用到的-secrets全集合)
+## 3. 配置自己需要secrets变量[参考这里](./githubAction.md)下方提供使用到的-secrets全集合
 
 目前因为云函数改版升级，原GitHub Action部署云函数方案需要作出相应调整，secret变量新增`SCF_REGION`和`TENCENT_FUNCTION_NAME`。`SCF_REGION`用于控制部署区域的选择，具体参数代码填写可以自行查找官方说明 [地域和可用区](https://cloud.tencent.com/document/product/213/6091) `TENCENT_FUNCTION_NAME`用于控制部署到云函数后函数名的命名。<br>
 
-## 4. 配置index.js中secrets变量说明
-现在可以通过secret设置自定义index.js中的执行方式，环境变量分别为`TENCENTSCF_SOURCE_TYPE`和`TENCENTSCF_SOURCE_URL`，其中`TENCENTSCF_SOURCE_TYPE`值可以选取`local`、`git`、`custom`具体含义[参考这里](githubAction.md#下方提供使用到的-secrets全集合)。`TENCENTSCF_SOURCE_URL`格式为包含raw的URL，例如：`https://raw.githubusercontent.com/LXK9301/jd_scripts/master/`或`https://gitee.com/lxk0301/jd_scripts/raw/master/`<br>
+## 4. 配置index.js中secrets变量说明【可选，建议默认即可】
+现在可以通过secret设置自定义index.js中的执行方式，环境变量分别为`TENCENTSCF_SOURCE_TYPE`和`TENCENTSCF_SOURCE_URL`，其中`TENCENTSCF_SOURCE_TYPE`值可以选取`local`、`git`、`custom`具体含义[参考这里](githubAction.md#下方提供使用到的-secrets全集合)。`TENCENTSCF_SOURCE_URL`格式为包含raw的URL，例如：`https://ghproxy.com/https://raw.githubusercontent.com/zero205/JD/main/`或`https://gitee.com/zero205/JD/raw/main/`<br>
 
 
 ### __重要的说三遍__   
