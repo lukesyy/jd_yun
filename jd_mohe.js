@@ -566,7 +566,7 @@ function updateShareCodesCDN(url = 'https://gitee.com/lxk0301/updateTeam/raw/mas
     })
   })
 }
-function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/zero205/updateTeam@master/shareCodes/jd_shareCodes.json') {
+function updateShareCodesCDN(url = 'https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/master/shareCodes/jd_shareCodes.json') {
   return new Promise(resolve => {
     $.get({
       url ,
