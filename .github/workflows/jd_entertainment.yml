@@ -1,14 +1,14 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_entertainment（手动）
+name: jd_z_entertainment（手动）
 
 on:
   workflow_dispatch:
   watch:
     types: started
   repository_dispatch:
-    types: jd_entertainment
+    types: jd_z_entertainment
 jobs:
   build:
 
@@ -35,7 +35,7 @@ jobs:
           npm install
       - name: '运行 【百变大咖秀】'
         run: |
-          node jd_entertainment.js
+          node jd_z_entertainment.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
