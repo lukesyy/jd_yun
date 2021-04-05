@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_z_xmf
+name: jd_z_super5g
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 2 4-6 4 *'
+    - cron: '6 22,0-16/5 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_z_xmf
+    types: jd_z_super5g
 jobs:
   build:
 
@@ -33,16 +33,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: '运行【随机延时】'
+      - name: '运行 【5G超级盲盒】'
         run: |
-          python3 sjys.py
-      - name: '运行 【京东小魔方】'
-        run: |
-          node jd_z_xmf.js
+          node jd_z_super5g.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
@@ -58,3 +51,4 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          Z_SUPER5G_NOTIFY: ${{ secrets.Z_SUPER5G_NOTIFY }}

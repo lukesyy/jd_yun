@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2021-3-31
+更新时间：2021-4-2
 修复做任务、收集电力出现火爆，不能完成任务，重新计算h5st验证
 参考自 ：https://www.orzlee.com/web-development/2021/03/03/lxk0301-jingdong-signin-scriptjingxi-factory-solves-the-problem-of-unable-to-signin.html
 活动入口：京东APP-游戏与互动-查看更多-京喜工厂
@@ -106,12 +106,13 @@ if ($.isNode()) {
       }
       await joinLeaderTuan();//参团
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-      if ((cookiesArr && cookiesArr.length < $.tuanNum || 5) || !$.canHelp) return
-      console.log(`\n账号内部相互进团\n`);
-      for (let item of $.tuanIds) {
-        console.log(`\n${$.UserName} 去参加团 ${item}`);
-        if (!$.canHelp) break;
-        await JoinTuan(item);
+      if ((cookiesArr && cookiesArr.length >= ($.tuanNum || 5)) && $.canHelp) {
+        console.log(`\n账号内部相互进团\n`);
+        for (let item of $.tuanIds) {
+          console.log(`\n${$.UserName} 去参加团 ${item}`);
+          if (!$.canHelp) break;
+          await JoinTuan(item);
+        }
       }
     }
   }
@@ -602,8 +603,17 @@ function userInfo() {
                 message += `【当前等级】${data.user.userIdentity} ${data.user.currentLevel}\n`;
                 message += `【生产进度】${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%\n`;
                 if (production.investedElectric >= production.needElectric) {
-                  $.log(`可以对方商品了`)
+                  if (production['exchangeStatus'] === 1) $.log(`\n\n可以兑换商品了`)
+                  if (production['exchangeStatus'] === 3) {
+                    $.log(`\n\n商品兑换已超时`)
+                    if (new Date().getHours() === 9) {
+                      $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}兑换已超时，请选择新商品进行制造`)
+                      allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}兑换已超时，请选择新商品进行制造${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+                    }
+                  }
                   // await exchangeProNotify()
+                } else {
+                  console.log(`\n\n预计最快还需 【${((production.needElectric - production.investedElectric) / (2 * 60 * 60 * 24)).toFixed(2)}天】生产完毕\n\n`)
                 }
               } else {
                 $.unActive = false;//标记是否开启了京喜活动或者选购了商品进行生产
@@ -614,7 +624,7 @@ function userInfo() {
                   console.log(`【提示】京东账号${$.index}[${$.nickName}]京喜工厂未选购商品\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 选购\n`)
                   let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000);
                   if (nowTimes.getHours()  === 12) {
-                    //如按每小时运行一次，则此处将一天推送2次提醒
+                    //如按每小时运行一次，则此处将一天12点推送1次提醒
                     $.msg($.name, '提醒⏰', `京东账号${$.index}[${$.nickName}]京喜工厂未选择商品\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 选择商品`);
                     // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}[${$.nickName}]京喜工厂未选择商品\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 选择商品`)
                     if ($.isNode()) allMessage += `京东账号${$.index}[${$.nickName}]京喜工厂未选择商品\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 选择商品${$.index !== cookiesArr.length ? '\n\n' : ''}`
@@ -724,7 +734,7 @@ function DrawProductionStagePrize() {
 }
 async function PickUp(encryptPin = $.encryptPin, help = false) {
   $.pickUpMyselfComponent = true;
-  const GetUserComponentRes = await GetUserComponent(encryptPin, 1300);
+  const GetUserComponentRes = await GetUserComponent(encryptPin, 1500);
   if (GetUserComponentRes && GetUserComponentRes['ret'] === 0) {
     const { componentList } = GetUserComponentRes['data'];
     if (componentList && componentList.length <= 0) {
@@ -832,6 +842,8 @@ async function stealFriend() {
   //   $.log(`今日收取零件已达上限，偷好友零件也达到上限，故跳出`)
   //   return
   // }
+  //调整，只在每日1点，12点，19点尝试收取好友零件
+  if (new Date().getHours() !== 1 && new Date().getHours() !== 12 && new Date().getHours() !== 19) return
   await getFriendList();
   $.friendList = [...new Set($.friendList)].filter(vo => !!vo && vo['newFlag'] !== 1);
   console.log(`查询好友列表完成，共${$.friendList.length}好友，下面开始拾取好友地下的零件\n`);
@@ -1220,30 +1232,26 @@ async function exchangeProNotify() {
       $.exchangeEndTime = new Date(exchangeEndTime + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString('zh', {hour12: false});
       //脚本运行此时的时间点
       nowHours = nowTimes.getHours();
+    } else if (shel['exchangeStatus'] === 3) {
+      //兑换超时
     }
   }
   if (exchangeEndTime) {
     //比如兑换(超时)截止时间是2020/12/8 09:20:04,现在时间是2020/12/6
     if (nowTimes < exchangeEndTime) {
-      //还可以兑换
-      // 一:在兑换超时这一天(2020/12/8 09:20:04)的前2小时内通知
-      if ((exchangeEndTime - nowTimes.getTime()) <= 3600000 * 2) {
-        let expiredTime = parseInt(((exchangeEndTime - nowTimes.getTime()) / (60*1000)).toFixed(0))
-        $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}分钟后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, {'open-url': jxOpenUrl, 'media-url': $.picture})
+      // 一:在兑换超时这一天(2020/12/8 09:20:04)的前3小时内通知
+      if ((exchangeEndTime - nowTimes.getTime()) <= 3600000 * 3) {
+        let expiredTime = parseInt(((exchangeEndTime - nowTimes.getTime()) / (60*60*1000)).toFixed(1))
+        $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}小时后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, {'open-url': jxOpenUrl, 'media-url': $.picture})
         // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${(exchangeEndTime - nowTimes) / 60*60*1000}分钟后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, { url: jxOpenUrl })
-        if ($.isNode()) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}分钟后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
+        if ($.isNode()) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}小时后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
       }
-      //二:在兑换超时日期前的时间一天通知三次(2020/12/6 9,10,11点,以及在2020/12/7 9,10,11点各通知一次)
-      if (nowHours === exchangeEndHours || nowHours === (exchangeEndHours + 1) || nowHours === (exchangeEndHours + 2)) {
+      //二:在可兑换的时候，一天通知2次(2020/12/6 10,11点,以及在2020/12/7 10,11点各通知一次)
+      if (nowHours === (exchangeEndHours + 1) || nowHours === (exchangeEndHours + 2)) {
         $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, {'open-url': jxOpenUrl, 'media-url': $.picture})
         // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, { url: jxOpenUrl })
         if ($.isNode()) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
       }
-    } else {
-      //兑换已超时
-      $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}兑换已超时，请重新选择商品生产\n【兑换截止时间】${$.exchangeEndTime}`, {'open-url': jxOpenUrl})
-      // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}兑换已超时，请重新选择商品生产\n【兑换截止时间】${$.exchangeEndTime}`, { url: jxOpenUrl })
-      if ($.isNode()) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}兑换已超时，请重新选择商品生产\n【兑换截止时间】${$.exchangeEndTime}${$.index !== cookiesArr.length ? '\n\n' : ''}`
     }
   }
 }

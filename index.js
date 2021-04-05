@@ -27,10 +27,9 @@ exports.main_handler = async (event, context, callback) => {
           })
           break;
         default:
-          //执行github远端的js文件
-          request(`https://ghproxy.com/https://raw.githubusercontent.com/zero205/JD/main/${v}.js`, function (error, response, body) {
-            eval(response.body)
-          })
+          //执行自己上传的js文件
+          delete require.cache[require.resolve('./'+v+'.js')];
+          require('./'+v+'.js')
           break;
       }
     }
