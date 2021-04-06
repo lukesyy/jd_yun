@@ -6,7 +6,7 @@ name: jd_monk_shop_lottery
 on:
   workflow_dispatch:
   schedule:
-    - cron: '8 2,15,16 * * *'
+    - cron: '0 2,15,16 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -33,13 +33,6 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: '运行【随机延时】'
-        run: |
-          python3 sjys.py
       - name: '运行 【店铺大转盘】'
         run: |
           node jd_monk_shop_lottery.js

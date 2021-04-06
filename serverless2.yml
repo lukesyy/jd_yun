@@ -16,12 +16,12 @@ inputs:
   memorySize: 128 # 内存大小，单位MB
   timeout: 900 # 超时时间，单位秒
   events: #触发器
-    - timer: #签到 #进店领豆 #摇京豆 #interCenter渠道店铺签到 #京东极速版红包
+    - timer: # 华硕爱奇艺 #签到 #进店领豆 #摇京豆 #interCenter渠道店铺签到 #京东极速版红包
         parameters:
-          name: beansign_shop_clublottery_carexchange_speedredpocke
-          cronExpression: "0 1 0 * * * *"
+          name: asusiqiyi_shop_beansign_clublottery_carexchange_speedredpocke
+          cronExpression: "0 0 0 * * * *"
           enable: true
-          argument: jd_bean_sign&jd_shop&jd_club_lottery&jd_monk_inter_shop_sign&jd_speed_redpocke
+          argument: jd_z_asus_iqiyi&jd_shop&jd_bean_sign&jd_club_lottery&jd_monk_inter_shop_sign&jd_speed_redpocke
     - timer: #京东抽奖机 #店铺签到 #京东赚赚 #赚京豆
         parameters:
           name: lotteryMachine_dpqd_jdzz_syj
