@@ -1,24 +1,18 @@
 ## 使用教程（不要fork，觉得有用的可以点个star :blush:）
-* 1.创建新仓库[点击创建自己的仓库](https://github.com/new)
-* 2.填入`Repository name`后点击最下方的`Create repository` 点下面Import a repository.
-* 3.然后在Your old repository’s clone URL 填入 https://github.com/zero205/JD
-* 4.按提示完成复制后再在`Settings`-`Secrets`里面添加`JD_COOKIE`，多条 cookie 用`&`隔开，支持无数条 cookie
-> 具体如何获取Cookie可参考 > [获取京东Cookies教程1](https://github.com/zero205/JD/blob/main/backUp/GetJdCookie.md)  
-> 也可参考 > [获取京东Cookies教程2](https://github.com/zero205/JD/blob/main/backUp/GetJdCookie2.md)
-* 5.最后点击一下右上角的 star（fork 左边那个），让 workflow 运行一次。  </br>
-#### 注意：该方法需要自行定期替换或更新脚本，不会自动同步，强烈建议再按下面教程进行自动同步仓库脚本。
+* > 响应lxk大佬要求，删除Github Action 教程 >  
 
-### 自动同步脚本教程：在完成上面步骤后，再[点此按照这个教程进行自动同步脚本](https://github.com/zero205/JD/blob/main/backUp/reposync.md)  </br>
+### 自动同步脚本教程：[点此查看](https://github.com/zero205/JD/blob/main/backUp/reposync.md)  </br>
 
 ## 常见问题  
 * 此处借用[RayWangQvQ](https://github.com/RayWangQvQ)大佬的教程  
-* [点击查看](https://github.com/RayWangQvQ/BiliBiliTool.Docs/blob/main/questions.md)
+* [点击查看常见问题](https://github.com/RayWangQvQ/BiliBiliTool.Docs/blob/main/questions.md)
 
-# 注意！注意！注意！
-# 鉴于lxk大佬脚本逐渐开始加密限制AC运行，后期主要会使用腾讯云函数的方式运行脚本。
-# 虽然目前AC也还能继续用，此仓库也会继续维护下去，但是建议想要更长久使用脚本的认真阅读一下下面腾讯云函数部署的教程，尽早转移阵地。
+## 注意！注意！注意！
+## 鉴于lxk大佬脚本逐渐开始加密限制AC运行，后期主要会使用腾讯云函数的方式运行脚本。
+## 虽然目前AC也还能继续用，此仓库也会继续维护下去，但是建议想要更长久使用脚本的认真阅读一下下面腾讯云函数部署的教程，尽早转移阵地。  
+
 * 此处借用[DoveBoy](https://github.com/DoveBoy)大佬的教程  
-* [点击查看腾讯云函数部署教程](./backUp/tencentscf.md)
+* [点击查看腾讯云函数部署教程](./backUp/tencentscf.md)  
 
 ## 特别声明: 
 
