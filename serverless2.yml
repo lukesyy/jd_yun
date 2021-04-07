@@ -22,12 +22,12 @@ inputs:
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_z_asus_iqiyi&jd_shop&jd_bean_sign&jd_club_lottery&jd_monk_inter_shop_sign&jd_speed_redpocke
-    - timer: #店铺签到 #京东赚赚 #赚京豆
+    - timer: #店铺签到 #京东赚赚 #赚京豆 #全民开红包
         parameters:
-          name: dpqd_jdzz_syj
+          name: dpqd_jdzz_syj_redPacket
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_dpqd&jd_jdzz&jd_syj
+          argument: jd_dpqd&jd_jdzz&jd_syj&jd_redPacket
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
