@@ -6,7 +6,7 @@ name: jd_monk_shop_lottery
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 2,15 * * *'
+    - cron: '0 2,12 * * *'
   watch:
     types: started
   repository_dispatch:
