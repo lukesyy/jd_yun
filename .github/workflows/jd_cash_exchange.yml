@@ -17,8 +17,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          repository: zero205/JD
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -33,14 +31,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: '等待运行【京东领现金兑换红包】'
-        run: |
-              python3 accwait.py 0.1 0.1 29
-      - name: '开始运行'
+      - name: '运行【京东领现金兑换红包】'
         run: |
           node jd_cash_exchange.js
         env:
