@@ -48,7 +48,7 @@
       {
         "name": "口袋书店",
         "type": "cron",
-        "time": "2 8,12,18 * *",
+        "time": "2 8,12,18 * * *",
         "running": true,
         "job": {
           "type": "runjs",
