@@ -1,0 +1,549 @@
+{
+    "name": "LXK9301 task",
+    "desc": "https://gitee.com/lxk0301/jd_docker",
+    "author": "zero205",
+    "date": "2021-04-09 17:12:30",
+    "surl": "https://gitee.com/zero205/JD",
+    "list": [
+      {
+        "name": "京豆变动通知",
+        "type": "cron",
+        "time": "0 20 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_bean_change.js"
+        }
+      },
+      {
+        "name": "领京豆额外奖励",
+        "type": "cron",
+        "time": "15 7 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_bean_home.js"
+        }
+      },
+      {
+        "name": "京东签到",
+        "type": "cron",
+        "time": "0 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_bean_sign.js"
+        }
+      },
+      {
+        "name": "东东超市兑换奖品",
+        "type": "cron",
+        "time": "0 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_blueCoin.js"
+        }
+      },
+      {
+        "name": "口袋书店",
+        "type": "cron",
+        "time": "2 8,12,18 * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_bookshop.js"
+        }
+      },
+      {
+        "name": "京东汽车",
+        "type": "cron",
+        "time": "15 7 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_car.js"
+        }
+      },
+      {
+        "name": "京东汽车兑换",
+        "type": "cron",
+        "time": "0 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_car_exchange.js"
+        }
+      },
+      {
+        "name": "签到领现金",
+        "type": "cron",
+        "time": "5 0,6-23/4 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_cash.js"
+        }
+      },
+      {
+        "name": "京喜财富岛",
+        "type": "cron",
+        "time": "8 0,8,13,19 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_cfd.js"
+        }
+      },
+      {
+        "name": "摇京豆",
+        "type": "cron",
+        "time": "6 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_club_lottery.js"
+        }
+      },
+      {
+        "name": "疯狂的Joy",
+        "type": "cron",
+        "time": "6 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_crazy_joy.js"
+        }
+      },
+      {
+        "name": "天天提鹅",
+        "type": "cron",
+        "time": "15 0,7-23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_daily_egg.js"
+        }
+      },
+      {
+        "name": "京喜工厂",
+        "type": "cron",
+        "time": "16 0,7-23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_dreamFactory.js"
+        }
+      },   
+      {
+        "name": "东东农场",
+        "type": "cron",
+        "time": "10 6-18/6 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_fruit.js"
+        }
+      },    
+      {
+        "name": "东东工厂",
+        "type": "cron",
+        "time": "15 0,7-23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_jdfactory.js"
+        }
+      },
+      {
+        "name": "京东赚赚",
+        "type": "cron",
+        "time": "15 0,7-23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_jdzz.js"
+        }
+      },
+      {
+        "name": "京东宠汪汪",
+        "type": "cron",
+        "time": "18 0-23/2 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_joy.js"
+        }
+      },
+      {
+        "name": "京东宠汪汪喂食",
+        "type": "cron",
+        "time": "15 0,7-23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_joy_feedPets.js"
+        }
+      },
+      {
+        "name": "宠汪汪积分兑换奖品",
+        "type": "cron",
+        "time": "0 0-16/8 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_joy_reward.js"
+        }
+      },
+      {
+        "name": "京喜农场",
+        "type": "cron",
+        "time": "6 9,12,18 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_jxnc.js"
+        }
+      },
+      {
+        "name": "京东快递签到",
+        "type": "cron",
+        "time": "25 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_kd.js"
+        }
+      },
+      {
+        "name": "京东直播",
+        "type": "cron",
+        "time": "10-20/5 12 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_live.js"
+        }
+      },
+      {
+        "name": "京东抽奖机",
+        "type": "cron",
+        "time": "2 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_lotteryMachine.js"
+        }
+      }, 
+      {
+        "name": "京东摇钱树",
+        "type": "cron",
+        "time": "35 0-23/2 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_moneyTree.js"
+        }
+      },
+      {
+        "name": "京东秒秒币",
+        "type": "cron",
+        "time": "12 7 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_ms.js"
+        }
+      },
+      {
+        "name": "点点券",
+        "type": "cron",
+        "time": "23 0,20 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_necklace.js"
+        }
+      },
+      {
+        "name": "女装盲盒",
+        "type": "cron",
+        "time": "20 9,23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_nzmh.js"
+        }
+      },
+      {
+        "name": "东东萌宠",
+        "type": "cron",
+        "time": "16 6-18/6 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_pet.js"
+        }
+      },
+      {
+        "name": "京东金融养猪猪",
+        "type": "cron",
+        "time": "12 0,7-23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_pigPet.js"
+        }
+      },
+      {
+        "name": "种豆得豆",
+        "type": "cron",
+        "time": "6 7-21/2 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_plantBean.js"
+        }
+      },
+      {
+        "name": "京东排行榜",
+        "type": "cron",
+        "time": "6 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_rankingList.js"
+        }
+      },
+      {
+        "name": "京东全民开红包",
+        "type": "cron",
+        "time": "30 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_redPacket.js"
+        }
+      },
+      {
+        "name": "闪购盲盒",
+        "type": "cron",
+        "time": "25 8 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_sgmh.js"
+        }
+      },
+      {
+        "name": "进店领豆",
+        "type": "cron",
+        "time": "1 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_shop.js"
+        }
+      },
+      {
+        "name": "东东小窝",
+        "type": "cron",
+        "time": "18 22 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_small_home.js"
+        }
+      },
+      {
+        "name": "京东天天加速",
+        "type": "cron",
+        "time": "50 0-23/3 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_speed.js"
+        }
+      },
+      {
+        "name": "京东极速版红包",
+        "type": "cron",
+        "time": "1 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_speed_redpocke.js"
+        }
+      },
+      {
+        "name": "京东极速版",
+        "type": "cron",
+        "time": "2 7 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_speed_sign.js"
+        }
+      },
+      {
+        "name": "东东超市",
+        "type": "cron",
+        "time": "18 0,7-23/1 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_superMarket.js"
+        }
+      },
+      {
+        "name": "赚京豆",
+        "type": "cron",
+        "time": "13 7 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_syj.js"
+        }
+      },
+      {
+        "name": "取关京东店铺商品",
+        "type": "cron",
+        "time": "50 7,23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_unsubscribe.js"
+        }
+      },
+      {
+        "name": "京喜签到",
+        "type": "cron",
+        "time": "5 1 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jx_sign.js"
+        }
+      },
+      {
+        "name": "华硕爱奇艺",
+        "type": "cron",
+        "time": "0 0 5-11 * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_asus_iqiyi.js"
+        }
+      },
+      {
+        "name": "京东手机狂欢城",
+        "type": "cron",
+        "time": "0 0-23/6 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_carnivalcity.js"
+        }
+      },
+      {
+        "name": "京东粉丝互动",
+        "type": "cron",
+        "time": "30 8 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_fanslove.js"
+        }
+      },
+      {
+        "name": "京东母婴跳一跳",
+        "type": "cron",
+        "time": "15 6-23/6 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_mother_jump.js"
+        }
+      },
+      {
+        "name": "5G超级盲盒",
+        "type": "cron",
+        "time": "6 0,6-23/4 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_super5g.js"
+        }
+      },
+      {
+        "name": "京东小魔方",
+        "type": "cron",
+        "time": "15 8 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_xmf.js"
+        }
+      },
+      {
+        "name": "京小兑",
+        "type": "cron",
+        "time": "35 8 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_jxd.js"
+        }
+      },
+      {
+        "name": "interCenter渠道店铺签到",
+        "type": "cron",
+        "time": "0 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_monk_inter_shop_sign.js"
+         } 
+      },
+      {
+        "name": "蒙牛有机牧场",
+        "type": "cron",
+        "time": "1 7-23/2 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_monk_pasture.js"
+         }
+      },
+      {
+        "name": "店铺关注有礼",
+        "type": "cron",
+        "time": "10 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_monk_shop_follow_sku.js"
+         }
+      },
+      {
+        "name": "店铺大转盘",
+        "type": "cron",
+        "time": "1 8,20 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_monk_shop_lottery.js"
+         }
+      },
+      {
+        "name": "创维408下班全勤奖",
+        "type": "cron",
+        "time": "5 8 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_monk_skyworth.js"
+         }          
+      }
+    ]
+  }
