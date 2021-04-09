@@ -198,11 +198,21 @@
       {
         "name": "京喜农场",
         "type": "cron",
-        "time": "6 9,12,18 * * *",
+        "time": "10 9,12,18 * * *",
         "running": true,
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD/raw/main/jd_jxnc.js"
+        }
+      },
+      {
+        "name": "京喜农场2",
+        "type": "cron",
+        "time": "6 9,12,18 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_jxnc2.js"
         }
       },
       {
