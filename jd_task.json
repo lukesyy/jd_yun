@@ -508,7 +508,7 @@
       {
         "name": "京东小魔方",
         "type": "cron",
-        "time": "15 8 * * *",
+        "time": "15 10 * * *",
         "running": true,
         "job": {
           "type": "runjs",
