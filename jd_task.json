@@ -128,13 +128,23 @@
       {
         "name": "京喜工厂",
         "type": "cron",
+        "time": "20 0,7-23 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_dreamFactory.js"
+        }
+      },
+      {
+        "name": "京喜工厂(参团)",
+        "type": "cron",
         "time": "16 0,7-23 * * *",
         "running": true,
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD/raw/main/jd_dreamFactory.js"
         }
-      },   
+      },
       {
         "name": "东东农场",
         "type": "cron",
