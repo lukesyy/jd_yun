@@ -8,7 +8,7 @@ on:
   push:
     branches: [ master ]
   repository_dispatch:
-    types: sync-zero205-scripts
+    types: sync-scripts
 jobs:
   repo-sync:
     env:
@@ -20,11 +20,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync zero205-scripts
+      - name: sync 1908002701-scripts
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/zero205/JD.git"
+          source_repo: "https://github.com/1908002701/JD.git"
           source_branch: "main"
           destination_branch: "main"
           github_token: ${{ secrets.PAT }}
