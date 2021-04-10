@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_live_redrain
+name: jd_live_lottery_social
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 12 2 4 *'
+    - cron: '58 0,6,12 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_live_redrain
+    types: jd_live_lottery_social
 jobs:
   build:
 
@@ -33,9 +33,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行【超级直播间红包雨】'
+      - name: '运行【直播间抽奖（全局）】'
         run: |
-          node jd_live_redrain.js
+          node jd_live_lottery_social.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}

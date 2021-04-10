@@ -574,6 +574,25 @@
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD/raw/main/jd_monk_skyworth.js"
          }          
+      },
+      {
+        "name": "京东每日红包雨（由sngxpro代管随缘维护）",
+        "type": "cron",
+        "time": "1 8-23 * * 1-5",
+        "job": {
+          "type": "runjs",
+          "target": "https://raw.githubusercontent.com/sngxpro2/jdliveredrain/main/lxk0301_live_redrain.js"
+        }
+      },
+      {
+        "name": "直播间抽奖(全局)",
+        "type": "cron",
+        "time": "1 9,15,21 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_live_lottery_social.js"
+         }          
       }
     ]
   }
