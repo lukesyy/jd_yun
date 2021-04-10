@@ -142,7 +142,7 @@
         "running": true,
         "job": {
           "type": "runjs",
-          "target": "https://gitee.com/zero205/JD/raw/main/jd_dreamFactory.js"
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_dreamFactory_2.js"
         }
       },
       {
