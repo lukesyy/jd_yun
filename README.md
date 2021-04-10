@@ -1,10 +1,11 @@
-## 使用教程（不要fork，觉得有用的可以点个star :blush:）
-* > - 1. 响应lxk大佬要求，删除Github Action 教程
-* > - 2. 腾讯云函数部署，[点此查看](./backUp/tencentscf.md)
-* > - 3. [elecV2P](https://github.com/elecV2/elecV2P) 部署【建议】。[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
-#### elecV2P 京东任务订阅地址：https://raw.githubusercontent.com/1908002701/JD/main/jd_task.json  
-#### 使用方法  
-* 登录最新版本v2p后台，选择task，选择添加订阅，输入上面的订阅地址，获取内容，全部添加即可
+## 使用教程（不要fork！觉得有用的可以点个star :blush:）
+* > ~~Github Action 运行~~ (响应lxk大佬要求，删除AC教程)
+* > 腾讯云函数部署。[点此查看](./backUp/tencentscf.md)
+* > [elecV2P](https://github.com/elecV2/elecV2P) 部署【建议】。[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
+#### elecV2P 京东任务订阅地址  
+`https://raw.githubusercontent.com/1908002701/JD/main/jd_task.json`  
+#### 订阅地址使用说明  
+**登录elecV2P后台，选择TASK，选择添加订阅任务，输入上面的订阅地址，点击获取内容，点击全部添加即可**
 
 ### 自动同步脚本教程：[点此查看](https://github.com/1908002701/JD/blob/main/backUp/reposync.md)  </br>
 
