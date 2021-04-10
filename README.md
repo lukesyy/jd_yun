@@ -1,18 +1,16 @@
 ## 使用教程（不要fork，觉得有用的可以点个star :blush:）
-* > 响应lxk大佬要求，删除Github Action 教程 >  
+* > - 1. 响应lxk大佬要求，删除Github Action 教程
+* > - 2. 腾讯云函数部署，[点此查看](./backUp/tencentscf.md)
+* > - 3. [elecV2P](https://github.com/elecV2/elecV2P) 部署【建议】。[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
+#### elecV2P 京东任务订阅地址：https://raw.githubusercontent.com/1908002701/JD/main/jd_task.json  
+#### 使用方法  
+* 登录最新版本v2p后台，选择task，选择添加订阅，输入上面的订阅地址，获取内容，全部添加即可
 
-### 自动同步脚本教程：[点此查看](https://github.com/zero205/JD/blob/main/backUp/reposync.md)  </br>
+### 自动同步脚本教程：[点此查看](https://github.com/1908002701/JD/blob/main/backUp/reposync.md)  </br>
 
 ## 常见问题  
 * 此处借用[RayWangQvQ](https://github.com/RayWangQvQ)大佬的教程  
-* [点击查看常见问题](https://github.com/RayWangQvQ/BiliBiliTool.Docs/blob/main/questions.md)
-
-## 注意！注意！注意！
-## 鉴于lxk大佬脚本逐渐开始加密限制AC运行，后期主要会使用腾讯云函数的方式运行脚本。
-## 虽然目前AC也还能继续用，此仓库也会继续维护下去，但是建议想要更长久使用脚本的认真阅读一下下面腾讯云函数部署的教程，尽早转移阵地。  
-
-* 此处借用[DoveBoy](https://github.com/DoveBoy)大佬的教程  
-* [点击查看腾讯云函数部署教程](./backUp/tencentscf.md)  
+* [点击查看常见问题](https://github.com/RayWangQvQ/BiliBiliTool.Docs/blob/main/questions.md)  
 
 ## 特别声明: 
 
