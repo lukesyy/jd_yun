@@ -86,6 +86,16 @@
         }
       },
       {
+        "name": "领现金兑换红包",
+        "type": "cron",
+        "time": "0,2 0 0 * * 6,7,0,1",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_cash_exchange.js"
+        }
+      },
+      {
         "name": "京喜财富岛",
         "type": "cron",
         "time": "8 0,8,13,19 * * *",
