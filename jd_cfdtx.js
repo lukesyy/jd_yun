@@ -4,13 +4,11 @@
   Address: 京喜App ====>>>> 全民赚大钱
   Author：MoPoQAQ
   Update: 2021/2/2 13:00
-
   Thanks: 
     💢疯疯💢
     银河大佬：https://github.com/zbt494
   获取Token方式：
   打开【❗️京喜农场❗️】，手动任意完成<工厂任务>、<签到任务>、<金牌厂长任务>一项，提示获取cookie成功即可，然后退出跑任务脚本
-
 *
 **/
 
@@ -76,7 +74,7 @@ function taskUrl(function_path, body) {
       Cookie: $.currentCookie,
       Accept: "*/*",
       Connection: "keep-alive",
-      Referer:"https://st.jingxi.com/fortune_island/cash.html?jxsid=16115391812299482601&_f_i_jxapp=1",
+      Referer:"https://st.jingxi.com/fortune_island/cash.html?jxsid=16178634353215523301&_f_i_jxapp=1",
       "Accept-Encoding": "gzip, deflate, br",
       Host: "m.jingxi.com",
       "User-Agent":"jdpingou;iPhone;4.1.4;14.3;9f08e3faf2c0b4e72900552400dfad2e7b2273ba;network/wifi;model/iPhone11,6;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/428;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
