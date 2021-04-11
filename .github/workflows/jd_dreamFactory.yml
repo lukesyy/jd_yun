@@ -6,7 +6,7 @@ name: jd_dreamFactory
 on:
   workflow_dispatch:
   schedule:
-    - cron: '11 22,23,0-16 * * *'
+    - cron: '11 22,23,0-16/2 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -42,8 +42,8 @@ jobs:
           python3 sjys.py
       - name: '运行 【京喜工厂】'
         run: |
-          curl https://raw.githubusercontent.com/zero205/JD/main/jd_dreamFactory.js -o jd_dreamFactory.js
-          curl https://raw.githubusercontent.com/zero205/JD/main/jd_dreamFactory_2.js -o jd_dreamFactory_2.js
+          curl https://raw.githubusercontent.com/1908002701/JD/main/jd_dreamFactory.js -o jd_dreamFactory.js
+          curl https://raw.githubusercontent.com/1908002701/JD/main/jd_dreamFactory_2.js -o jd_dreamFactory_2.js
           node jd_dreamFactory.js
           node jd_dreamFactory_2.js
         env:

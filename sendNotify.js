@@ -135,7 +135,7 @@ if (process.env.PUSH_PLUS_USER) {
 
 async function sendNotify(text, desp, params = {}) {
   //提供6种通知
-  desp += `\n如发现lxk大佬新活动脚本\n请通过issues告知\nhttps://github.com/zero205/JD/issues/new`;
+  desp += `\n如发现新活动脚本\n请通过issues告知\nhttps://github.com/1908002701/JD/issues/new`;
   await Promise.all([
     serverNotify(text, desp),//微信server酱
     pushPlusNotify(text, desp)//pushplus(推送加)
