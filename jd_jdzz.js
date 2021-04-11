@@ -123,10 +123,11 @@ async function jdWish() {
   await getTaskList(true)
   await getUserTuanInfo()
   if (!$.tuan) {
+    console.log(`准备再次开团`)
     await openTuan()
     if ($.hasOpen) await getUserTuanInfo()
   }
-  if ($.tuan && $.assistStatus !== 3) $.tuanList.push($.tuan)
+  if ($.tuan && $.tuan.hasOwnProperty('assistedPinEncrypted') && $.assistStatus !== 3) $.tuanList.push($.tuan)
 
   await helpFriends()
   await getUserInfo()
@@ -190,7 +191,6 @@ function getAuthorShareCode(url) {
         if (err) {
         } else {
           $.authorTuanList = $.authorTuanList.concat(JSON.parse(data))
-          console.log(`作者助力码获取成功`)
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -242,7 +242,14 @@ function getUserTuanInfo() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['success']) {
-              $.log(`\n\n【赚京豆(微信小程序)-瓜分京豆】能否再次开团: ${data.data.canStartNewAssist ? '可以' : '否'}\n\n`)
+              $.log(`\n\n当前【赚京豆(微信小程序)-瓜分京豆】能否再次开团: ${data.data.canStartNewAssist ? '可以' : '否'}`)
+              if (data.data.assistStatus === 1 && !data.data.canStartNewAssist) {
+                console.log(`已开团(未达上限)，但团成员人未满\n\n`)
+              } else if (data.data.assistStatus === 3 && data.data.canStartNewAssist) {
+                console.log(`已开团(未达上限)，团成员人已满\n\n`)
+              } else if (data.data.assistStatus === 3 && !data.data.canStartNewAssist) {
+                console.log(`今日开团已达上限，且当前团成员人已满\n\n`)
+              }
               if (data.data && !data.data.canStartNewAssist) {
                 $.tuan = {
                   "activityIdEncrypted": data.data.id,
