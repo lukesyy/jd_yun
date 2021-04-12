@@ -1,6 +1,6 @@
 # 注意！原来使用zero205/JD仓库的用户可不用重新创建仓库，替换原脚本的代码即可同步本仓库
 * 1.[点击修改syncGit.yml文件](./.github/workflows/syncGit.yml)，点击右上角铅笔图标  
-* 2.点击复制[此issue](https://github.com/1908002701/JD/issues/1#issue-855043180)的代码替换原代码  
+* 2.[点此打开](https://ghproxy.com/https://raw.githubusercontent.com/1908002701/JD/main/.github/workflows/syncGit.yml)复制全部代码替换原代码  
 * 3.点击右边绿色`Start commit`,点击`Commit changes`，手动运行一次此任务即可
 ## 使用教程（不要fork！觉得有用的可以点个star :blush:）
 * > ~~Github Action 运行~~ (响应lxk大佬要求，删除AC教程)
@@ -29,7 +29,7 @@
 #### elecV2P 京东任务订阅地址  
 `https://raw.githubusercontent.com/1908002701/JD/main/jd_task.json`  
 #### 订阅地址使用说明  
-* 登录elecV2P后台，选择`TASK`，选择添加订阅任务，输入上面的订阅地址，点击获取内容，点击全部添加即可*  
+* 登录elecV2P后台，选择`TASK`，选择添加订阅任务，输入上面的订阅地址，点击获取内容，点击全部添加即可  
 
 ### 自动同步脚本教程：[点此查看](https://github.com/1908002701/JD/blob/main/backUp/reposync.md)  </br>
 
