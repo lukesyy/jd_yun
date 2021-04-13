@@ -4,7 +4,6 @@
 30,31 20-23/1 14 4 *
 下一场直播时间:04月13日  20:00，ID：3866703
 30,31 20-23/1 13 4 *
-下一场直播时间:04月09日  20:00，ID：3863492
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
 [task_local]
@@ -24,10 +23,6 @@ cron "0,30,31 20-23/1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/ra
 const $ = new Env('超级直播间红包雨');
 let allMessage = '';
 let bodyList = {
-  "9": {
-    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1617851039013&sign=75a906562a942575139e871715e5e95f&sv=122",
-    "body": "body=%7B%22liveId%22%3A%223863492%22%7D"
-  },
   "13": {
     "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1617851035011&sign=ce3542c09121b1474c0beba1413fec13&sv=112",
     "body": "body=%7B%22liveId%22%3A%223866703%22%7D"
@@ -85,9 +80,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   }
   console.log('下一场直播时间:04月14日  20:00，ID：3861625\n' +
       '30,31 20-23/1 14 4 *\n' +
-      '下一场直播时间:04月13日  20:00，ID：3866703\n' +
-      '30,31 20-23/1 13 4 *\n' +
-      '下一场直播时间:04月09日  20:00，ID：3863492')
+      '下一场直播时间:04月13日  20:00，ID：3866703')
   await getRedRain();
 
   let nowTs = new Date().getTime()
