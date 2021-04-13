@@ -32,7 +32,7 @@
         "running": true,
         "job": {
           "type": "runjs",
-          "target": "https://gitee.com/zero205/JD/raw/main/jd_bean_sign.js"
+          "target": "https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js"
         }
       },
       {
@@ -463,16 +463,6 @@
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD/raw/main/jx_sign.js"
-        }
-      },
-      {
-        "name": "华硕爱奇艺",
-        "type": "cron",
-        "time": "0 0 5-11 * *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_asus_iqiyi.js"
         }
       },
       {
