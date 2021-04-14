@@ -67,7 +67,7 @@ const JD_API_HOST = 'https://api.m.jd.com/'
       subTitle = '';
       await jDSpeedUp();
       await getMemBerList();
-      await showMsg();
+      //  await showMsg();
     }
   }
 })()

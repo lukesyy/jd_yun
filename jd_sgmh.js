@@ -80,7 +80,7 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
         continue
       }
       await interact_template_getHomeData()
-      await showMsg();
+      //  await showMsg();
     }
   }
 })()

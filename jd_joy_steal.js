@@ -100,7 +100,7 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
       message = '';
       subTitle = '';
       await jdJoySteal();
-      await showMsg();
+      //  await showMsg();
     }
   }
 })()

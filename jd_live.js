@@ -75,7 +75,7 @@ async function jdHealth() {
   await getTaskList()
   await sign()
   message += `领奖完成，共计获得 ${$.bean} 京豆\n`
-  await showMsg();
+  //  await showMsg();
 }
 
 function getTs() {

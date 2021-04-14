@@ -59,7 +59,7 @@ if ($.isNode()) {
       }
       else{
         await cashOut();
-    await showMsg();
+    //  await showMsg();
       }
     }
   }

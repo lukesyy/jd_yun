@@ -75,7 +75,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       }
       $.discount = 0;
       await redPacket();
-      await showMsg();
+      //  await showMsg();
     }
   }
 })()

@@ -75,7 +75,7 @@ async function jdBeauty() {
   while (!$.hasDone) {
     await $.wait(1000)
   }
-  await showMsg();
+  //  await showMsg();
 }
 
 async function mr() {

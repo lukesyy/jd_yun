@@ -74,7 +74,7 @@ async function open_box() {
       await qqreadbox2();//宝箱翻倍
     }
   }
-  await showmsg();//通知
+  //  await showMsg();//通知
 }
 
 
