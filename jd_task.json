@@ -32,7 +32,7 @@
         "running": true,
         "job": {
           "type": "runjs",
-          "target": "https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js"
+          "target": "https://ghproxy.com/https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js"
         }
       },
       {
@@ -263,6 +263,15 @@
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD/raw/main/jd_live.js"
+        }
+      },
+      {
+        "name": "超级直播间红包雨",
+        "type": "cron",
+        "time": "0,30,31 20-23/1 14 * *",
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_live_redrain.js"
         }
       },
       {
@@ -581,7 +590,7 @@
         "time": "1 8-23 * * 1-5",
         "job": {
           "type": "runjs",
-          "target": "https://raw.githubusercontent.com/sngxpro2/jdliveredrain/main/lxk0301_live_redrain.js"
+          "target": "https://ghproxy.com/https://raw.githubusercontent.com/sngxpro2/jdliveredrain/main/lxk0301_live_redrain.js"
         }
       },
       {
