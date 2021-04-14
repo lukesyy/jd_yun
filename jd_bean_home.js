@@ -122,7 +122,7 @@ async function jdBeanHome() {
   await $.wait(1000)
   await getTaskList();
   await receiveJd2();
-  await showMsg();
+  // await showMsg();
 }
 
 function getRandomInt(min, max) {

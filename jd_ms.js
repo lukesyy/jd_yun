@@ -92,7 +92,7 @@ async function jdMs() {
     await getTaskList()
   }
   await getUserInfo(false)
-  await showMsg()
+  // await showMsg()
 }
 
 function getActInfo() {

@@ -19,7 +19,7 @@ let lotteryArr = []
   $.acts = 0
   await main()
   $.name = '直播间抽奖（全局）'
-  await showMsg()
+  // await showMsg()
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')

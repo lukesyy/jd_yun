@@ -86,7 +86,7 @@ async function jdGlobalMh() {
     await getHome()
     await getTask()
     await getHome(true)
-    await showMsg()
+    // await showMsg()
   } catch (e) {
     $.logErr(e)
   }
