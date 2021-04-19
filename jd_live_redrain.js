@@ -123,7 +123,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
       // console.log(nowTs, $.startTime, $.endTime)
       await receiveRedRain();
-      // await showMsg();
+      await showMsg();
     }
   }
   if (allMessage) {

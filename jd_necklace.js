@@ -89,7 +89,7 @@ async function jd_necklace() {
   await sign();
   await necklace_homePage();
   // await necklace_exchangeGift($.totalScore);//自动兑换多少钱的无门槛红包，1000代表1元，默认兑换全部点点券
-  // await showMsg();
+  await showMsg();
 }
 function showMsg() {
   return new Promise(async resolve => {

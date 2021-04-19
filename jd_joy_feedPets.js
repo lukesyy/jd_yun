@@ -83,7 +83,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 20;   //喂食数量默认10g,
       }
       await feedPets(FEED_NUM);//喂食
       await ThreeMeals();//三餐
-      //  await showMsg();
+      await showMsg();
     }
   }
 })()

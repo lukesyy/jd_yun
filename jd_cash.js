@@ -88,7 +88,7 @@ async function jdCash() {
   await helpFriends()
   await index(true)
   await getReward()
-  // await showMsg()
+  await showMsg()
 }
 function index(info=false) {
   return new Promise((resolve) => {

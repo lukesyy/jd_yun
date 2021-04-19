@@ -275,7 +275,7 @@ async function jdCrazyJoy() {
     await doApplyJdBean(applyJdBean)
   }
   await getSpecialJoy();
-  //  await showMsg();
+  await showMsg();
 }
 async function doTasks() {
   await getTaskInfo()

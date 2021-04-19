@@ -94,7 +94,7 @@ async function jdGlobal() {
     await getTask()
     await getHome(true)
     await helpFriends()
-    // await showMsg()
+    await showMsg()
   } catch (e) {
     $.logErr(e)
   }

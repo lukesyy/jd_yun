@@ -112,7 +112,7 @@ async function jdJdh() {
   await doTask(null,50,`${rand(10000, 20000)}`) // 家庭医生走路
   await queryTask(17,"235741")  // 家庭医生资讯，这个可以不用开启直接完成
   await queryInviteHome()
-  // await showMsg()
+  await showMsg()
 }
 function getAuthorShareCode(url) {
   return new Promise(resolve => {

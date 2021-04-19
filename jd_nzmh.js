@@ -88,7 +88,7 @@ async function jdMh(url) {
       await getUserInfo()
       await $.wait(500)
     }
-    //  await showMsg();
+    await showMsg();
   } catch (e) {
     $.logErr(e)
   }

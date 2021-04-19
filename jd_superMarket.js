@@ -75,7 +75,7 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
       subTitle = '';
       //await shareCodesFormat();//格式化助力码
       await jdSuperMarket();
-      //  await showMsg();
+      await showMsg();
       // await businessCircleActivity();
     }
   }

@@ -188,7 +188,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         continue
       }
       await jdHealth()
-      //  await showMsg();
+      await showMsg();
     }
   }
 })()
@@ -325,7 +325,7 @@ function reward() {
             if(data.success){
               console.log(`领奖成功，${$.task.taskSubTitleExt}`)
               message += `京东看一看：${$.task.taskSubTitleExt}`;
-              //  await showMsg();
+              await showMsg();
             }else{
               console.log(`领奖失败，${data.message}`)
             }

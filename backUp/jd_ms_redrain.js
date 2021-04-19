@@ -71,7 +71,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         await getRedRain();
         await $.wait(5000); //防止黑号
       }
-      //  await showMsg();
+      await showMsg();
     }
   }
 })()

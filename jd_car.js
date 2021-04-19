@@ -69,7 +69,7 @@ const JD_API_HOST = 'https://car-member.jd.com/api/';
         continue
       }
       await jdCar();
-      //  await showMsg();
+      await showMsg();
     }
   }
 })()
