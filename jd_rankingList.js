@@ -221,7 +221,7 @@ if (needSum)
   }
   message += `请点击通知跳转至APP查看`
   //message = message.substr(0,message.length - 1);
-  $.msg($.name, title, message, url);
+  //$.msg($.name, title, message, url);
 }
 
 function jsonParse(str) {

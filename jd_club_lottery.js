@@ -224,7 +224,7 @@ async function shaking() {
 function showMsg() {
   return new Promise(resolve => {
     if (message) {
-      $.msg(`${$.name}`, `京东账号${$.index} ${$.nickName}`, message);
+      // $.msg(`${$.name}`, `京东账号${$.index} ${$.nickName}`, message);
     }
     resolve();
   })
