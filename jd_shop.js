@@ -76,7 +76,7 @@ async function jdShop() {
   if (taskData.code === '0') {
     if (!taskData.data.taskList) {
       console.log(`${taskData.data.taskErrorTips}\n`);
-      $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n${taskData.data.taskErrorTips}`);
+      // $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n${taskData.data.taskErrorTips}`);
     } else {
       const { taskList } = taskData.data;
       let beanCount = 0;
@@ -93,7 +93,7 @@ async function jdShop() {
       }
       console.log(`beanCount::${beanCount}`);
       if (beanCount > 0) {
-        $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n成功领取${beanCount}京豆`);
+        // $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n成功领取${beanCount}京豆`);
         // if ($.isNode()) {
         //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
         // }

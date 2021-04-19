@@ -241,7 +241,7 @@ function doTask(body) {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得秒秒币${$.score-$.cur}枚，共${$.score}枚`;
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

@@ -131,7 +131,7 @@ async function showMsg() {
     await notify.sendNotify(`【京东账号${$.index}】${$.nickName}`, message)
   }
   return new Promise(resolve => {
-    $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }

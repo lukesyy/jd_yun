@@ -96,7 +96,7 @@ async function jdGlobalMh() {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得${$.earn}碎片，${$.beans}京豆，共计${$.score}碎片`
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

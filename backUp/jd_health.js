@@ -105,7 +105,7 @@ function showMsg() {
       $.log(`京东账号${$.index}${$.nickName}\n${message}`);
     }
     if (new Date().getHours() === 23) {
-      $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+      // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     }
     resolve()
   })

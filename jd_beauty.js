@@ -528,7 +528,7 @@ function getToken() {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得美妆币${$.coins}枚\n当前美妆币${$.total}`;
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

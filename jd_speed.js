@@ -143,7 +143,7 @@ function jDSpeedUp(sourceId) {
                 if (data.match(/\"beans_num\":\d+/)) {
                   //message += "【上轮奖励】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶";
                   if (!jdNotify || jdNotify === 'false') {
-                    $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n` + "【上轮太空旅行】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶");
+                    // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n` + "【上轮太空旅行】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶");
                   }
                 } else {
                   console.log("京东天天-加速: 成功, 明细: 无京豆 🐶")

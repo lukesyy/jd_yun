@@ -308,7 +308,7 @@ function help(shareCode, groupCode, isTask = 0) {
 
 function showMsg() {
   return new Promise(resolve => {
-    if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    if (message) // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }
