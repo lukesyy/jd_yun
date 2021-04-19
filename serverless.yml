@@ -52,12 +52,12 @@ inputs:
           cronExpression: "0 10 0 * * * *"
           enable: true
           argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_dpqd
-    - timer: #京东天天加速 #天天提鹅 #5G超级盲盒 #手机狂欢城
+    - timer: #京东天天加速 #天天提鹅 #5G超级盲盒
         parameters:
-          name: speed_dailyegg_mohe_carnivalcity
+          name: speed_dailyegg_mohe
           cronExpression: "0 8 */3 * * * *"
           enable: true
-          argument: jd_speed&jd_daily_egg&jd_mohe&jd_carnivalcity
+          argument: jd_speed&jd_daily_egg&jd_mohe
     - timer: #东东超市
         parameters:
           name: superMarket
