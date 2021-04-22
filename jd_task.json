@@ -405,16 +405,6 @@
         }
       },
       {
-        "name": "京东天天加速",
-        "type": "cron",
-        "time": "50 0-23/3 * * *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD/raw/main/jd_speed.js"
-        }
-      },
-      {
         "name": "京东极速版红包",
         "type": "cron",
         "time": "1 0 * * *",

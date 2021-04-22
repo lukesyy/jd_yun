@@ -42,7 +42,7 @@ jobs:
           python3 sjys.py
       - name: '运行 【京喜财富岛】'
         run: |
-          node jd_cfd.js
+          node jd_cfd2.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
