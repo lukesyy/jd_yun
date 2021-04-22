@@ -525,6 +525,26 @@
         }
       },
       {
+        "name": "健康社区",
+        "type": "cron",
+        "time": "30 10-22/3 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_health_community.js"
+        }
+      },
+      {
+        "name": "健康社区收取能量",
+        "type": "cron",
+        "time": "30 0,6-23/1 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_health_energy.js"
+        }
+      },
+      {
         "name": "京小兑",
         "type": "cron",
         "time": "35 8 * * *",
