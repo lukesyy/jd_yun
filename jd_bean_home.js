@@ -122,7 +122,7 @@ async function jdBeanHome() {
   await $.wait(1000)
   await getTaskList();
   await receiveJd2();
-  // await showMsg();
+  await showMsg();
 }
 
 function getRandomInt(min, max) {
@@ -308,7 +308,7 @@ function help(shareCode, groupCode, isTask = 0) {
 
 function showMsg() {
   return new Promise(resolve => {
-    if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    if (message) // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }

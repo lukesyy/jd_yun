@@ -219,7 +219,7 @@ async function QQ_READ() {
       await qqreadwithdraw();
     }
   }
-  //  await showMsg();//通知
+  await showMsg();//通知
 }
 function showmsg() {
   return new Promise(async resolve => {

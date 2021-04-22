@@ -88,7 +88,7 @@ async function jdMh(url) {
       await getUserInfo()
       await $.wait(500)
     }
-    //  await showMsg();
+    await showMsg();
   } catch (e) {
     $.logErr(e)
   }
@@ -97,7 +97,7 @@ async function jdMh(url) {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得${$.beans}京豆`
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

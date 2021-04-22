@@ -90,7 +90,7 @@ async function jdGlobal() {
     await queryJoy()
     await signInit()
     await cash()
-    // await showMsg()
+    await showMsg()
   } catch (e) {
     $.logErr(e)
   }
@@ -100,7 +100,7 @@ async function jdGlobal() {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得${$.score}金币，共计${$.total}金币`
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

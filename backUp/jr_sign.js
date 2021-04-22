@@ -66,7 +66,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         continue
       }
       await sign()
-      //  await showMsg();
+      await showMsg();
     }
   }
 })()
@@ -84,7 +84,7 @@ function showMsg() {
       $.msg($.name, '活动已结束', `咱江湖再见\nhttps://github.com/lxk0301/jd_scripts`, {"open-url": "https://github.com/lxk0301/jd_scripts"});
       if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `咱江湖再见\n https://github.com/lxk0301/jd_scripts`)
     } else {
-      $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+      // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     }
     resolve()
   })

@@ -21,6 +21,7 @@ inputs:
           name: shop_beansign_clublottery_intershopsign
           cronExpression: "0 0 0 * * * *"
           enable: true
+<<<<<<< HEAD
           argument: jd_shop&jd_bean_sign&jd_club_lottery&jd_monk_inter_shop_sign
     - timer: #京东赚赚 #赚京豆 #全民开红包
         parameters:
@@ -29,10 +30,21 @@ inputs:
           enable: true
           argument: jd_jdzz&jd_syj&jd_redPacket
     - timer: #京东极速版红包 #健康社区
+=======
+          argument: jd_z_asus_iqiyi&jd_shop&jd_bean_sign&jd_club_lottery&jd_monk_inter_shop_sign
+    - timer: #京东赚赚 #赚京豆 #全民开红包
+        parameters:
+          name: jdzz_syj_redPacket
+          cronExpression: "0 10 0 * * * *"
+          enable: true
+          argument: jd_jdzz&jd_syj&jd_redPacket
+    - timer: #京东极速版红包
+>>>>>>> ee8d612afd9f9b5b7b126c216212939030e56b34
         parameters:
           name: speedredpocke_healthcommunity
           cronExpression: "0 30 10-22/3 * * * *"
           enable: true
+<<<<<<< HEAD
           argument: jd_speed_redpocke&jd_z_health_community
     - timer: #健康社区收取能量
         parameters:
@@ -40,6 +52,15 @@ inputs:
           cronExpression: "0 30 0,7-23/1 * * * *"
           enable: true
           argument: jd_z_health_energy
+=======
+          argument: jd_speed_redpocke
+    - timer: #整点京豆雨
+        parameters:
+          name:superredrain
+          cronExpression: "0 1 0,6-23/1 * * * *"
+          enable: true
+          argument: jd_super_redrain
+>>>>>>> ee8d612afd9f9b5b7b126c216212939030e56b34
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的

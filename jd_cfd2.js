@@ -167,7 +167,7 @@ $.info = {};
     }
   }
   await $.wait(500);
-  //  await showMsg();
+  await showMsg();
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done());

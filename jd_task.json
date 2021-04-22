@@ -475,16 +475,6 @@
         }
       },
       {
-        "name": "京东手机狂欢城",
-        "type": "cron",
-        "time": "0 0-23/6 * * *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD/raw/main/jd_z_carnivalcity.js"
-        }
-      },
-      {
         "name": "京东粉丝互动",
         "type": "cron",
         "time": "30 8 * * *",
@@ -611,6 +601,15 @@
         "job": {
           "type": "runjs",
           "target": "https://ghproxy.com/https://raw.githubusercontent.com/sngxpro2/jdliveredrain/main/lxk0301_live_redrain.js"
+        }
+      },
+      {
+        "name": "整点京豆雨",
+        "type": "cron",
+        "time": "1 0,6-23/1 * * *",
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_super_redrain.js"
         }
       },
       {

@@ -69,7 +69,7 @@ const JD_API_HOST = 'https://car-member.jd.com/api/';
         continue
       }
       await jdCar();
-      //  await showMsg();
+      await showMsg();
     }
   }
 })()
@@ -91,7 +91,7 @@ async function jdCar() {
 
 function showMsg() {
   return new Promise(resolve => {
-    $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }

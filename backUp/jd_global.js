@@ -94,7 +94,7 @@ async function jdGlobal() {
     await getTask()
     await getHome(true)
     await helpFriends()
-    // await showMsg()
+    await showMsg()
   } catch (e) {
     $.logErr(e)
   }
@@ -115,7 +115,7 @@ async function helpFriends() {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得${$.earn}里程，${$.beans}京豆，共计${$.score}里程`
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

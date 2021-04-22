@@ -68,7 +68,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         continue
       }
       await userSignIn();
-      //  await showMsg();
+      await showMsg();
     }
   }
 })()
@@ -81,7 +81,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 
 function showMsg() {
   return new Promise(resolve => {
-    $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }

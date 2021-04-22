@@ -94,7 +94,7 @@ async function jdHealth() {
     console.log(`当前用户金币: ${$.userInfo.userScore}，抽奖需要${$.userInfo.scorePerLottery}，金币不足无法抽奖`)
     message += `当前用户金币: ${$.userInfo.userScore}，抽奖需要${$.userInfo.scorePerLottery}，金币不足无法抽奖\n`
   }
-  //  await showMsg();
+  await showMsg();
 }
 
 function showMsg() {
@@ -105,7 +105,7 @@ function showMsg() {
       $.log(`京东账号${$.index}${$.nickName}\n${message}`);
     }
     if (new Date().getHours() === 23) {
-      $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+      // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     }
     resolve()
   })

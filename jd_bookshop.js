@@ -105,7 +105,7 @@ async function jdBeauty() {
   }
   if($.userInfo.storeGold) await chargeGold()
   await helpFriends()
-  //  await showMsg();
+  await showMsg();
 }
 
 async function helpFriends() {
@@ -553,7 +553,7 @@ function chargeGold() {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得积分${$.score}`;
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

@@ -275,7 +275,7 @@ async function jdCrazyJoy() {
     await doApplyJdBean(applyJdBean)
   }
   await getSpecialJoy();
-  //  await showMsg();
+  await showMsg();
 }
 async function doTasks() {
   await getTaskInfo()
@@ -643,7 +643,7 @@ function getSpecialJoy() {
                   message += `暂无`;
                 }
                 if (data['data'].length >= 5) {
-                  $.msg($.name, '', `京东账号 ${$.index}${$.nickName}\n恭喜你,已集成五福汪可合成分红JOY了`)
+                  // $.msg($.name, '', `京东账号 ${$.index}${$.nickName}\n恭喜你,已集成五福汪可合成分红JOY了`)
                   if ($.isNode()) await notify.sendNotify(`${$.name} - ${$.index} - ${$.nickName}`, `京东账号 ${$.index}${$.nickName}\n恭喜你,已集成五福汪可合成分红JOY了`);
                 }
               }
@@ -685,7 +685,7 @@ function obtainAward(eventRecordId) {
 function showMsg() {
   return new Promise(async resolve => {
     message += `\n当前信息：${$.bean}京豆，${$.coin}金币`
-    $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`)
+    // $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`)
     resolve()
   })
 }

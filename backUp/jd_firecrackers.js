@@ -77,7 +77,7 @@ async function jdFamily() {
   await getInfo()
   await getUserInfo()
   await getUserInfo(true)
-  //  await showMsg();
+  await showMsg();
 }
 
 function showMsg() {
