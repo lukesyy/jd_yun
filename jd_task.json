@@ -88,7 +88,7 @@
       {
         "name": "领现金兑换红包",
         "type": "cron",
-        "time": "0,2 0 0 * * 6,7,0,1",
+        "time": "0 0 0 * * 6,7,0,1",
         "running": true,
         "job": {
           "type": "runjs",
