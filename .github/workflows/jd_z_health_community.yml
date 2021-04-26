@@ -6,7 +6,7 @@ name: jd_z_health_community
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 2-14/3 * * *'
+    - cron: '30 22,0-14/3 * * *'
   watch:
     types: started
   repository_dispatch:
