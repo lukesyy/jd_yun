@@ -603,6 +603,15 @@
         }
       },
       {
+        "name": "球队赢好礼",
+        "type": "cron",
+        "time": "30 0 * * *",
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_tcl.js"
+        }
+      },
+      {
         "name": "直播间抽奖(全局)",
         "type": "cron",
         "time": "1 9,15,21 * * *",
