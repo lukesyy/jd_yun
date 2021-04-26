@@ -58,4 +58,4 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-          JD_USER_AGENT: jdapp;android;9.4.0;9;8363532363230343238303836333-43D2468336563316936636265356;network/wifi;model/MI 8;addressid/652096850;aid/059b2009dc5afb88;oaid/665d225a3f96764;osVer/28;appBuild/86737;partner/xiaomi001;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 9; MI 8 Build/PKQ1-wesley_iui-19.08.25; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/045131 Mobile Safari/537.36
+          JD_USER_AGENT: Dalvik/2.1.0 (Linux; U; Android 9; MI 8 MIUI/V10.3.5.0.PEACNXM)
