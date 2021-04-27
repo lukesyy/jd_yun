@@ -196,6 +196,16 @@
         }
       },
       {
+        "name": "领金贴",
+        "type": "cron",
+        "time": "12 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD/raw/main/jd_jin_tie.js"
+        }
+      },
+      {
         "name": "京东宠汪汪",
         "type": "cron",
         "time": "18 0-23/2 * * *",
