@@ -90,6 +90,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: "安装依赖"
+        run: |
+          npm install crypto-js
+          npm install got
+          npm install tough-cookie
+
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
           if [ $JD_COOKIE ]; then sed -i "/variables/a\      JD_COOKIE: $JD_COOKIE" serverless.yml; fi;
