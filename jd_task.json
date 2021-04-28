@@ -447,7 +447,7 @@
       {
         "name": "赚京豆",
         "type": "cron",
-        "time": "13 7 * * *",
+        "time": "15 0,7,12,23 * * *",
         "running": true,
         "job": {
           "type": "runjs",

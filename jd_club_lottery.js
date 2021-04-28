@@ -2,12 +2,13 @@
 * @Author: LXK9301
 * @Date: 2020-11-03 20:35:07
 * @Last Modified by: LXK9301
-* @Last Modified time: 2021-4-25 13:27:09
+* @Last Modified time: 2021-4-28 13:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
 增加京东APP首页超级摇一摇(不定时有活动)
 增加超级品牌日做任务及抽奖
+增加 京东小魔方 抽奖
 Modified from https://github.com/Zero-S1/JD_tools/blob/master/JD_vvipclub.py
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -66,6 +67,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.prizeBeanCount = 0;
       $.totalBeanCount = 0;
       $.superShakeBeanNum = 0;
+      $.moFangBeanNum = 0;
       $.isLogin = true;
       $.nickName = '';
       message = ''
@@ -143,9 +145,10 @@ async function clubLottery() {
     await vvipclub_receive_lottery_times();//京东会员：领取一次免费的机会
     await vvipclub_shaking_info();//京东会员：查询多少次摇奖次数
     await shaking();//开始摇奖
-    await shakeSign();
+    await shakeSign();//京东会员签到
     await superShakeBean();//京东APP首页超级摇一摇
     await superbrandShakeBean();//京东APP首页超级品牌日
+    await mofang();//小魔方
   } catch (e) {
     $.logErr(e)
   }
@@ -227,7 +230,7 @@ async function shaking() {
 function showMsg() {
   return new Promise(resolve => {
     if (message) {
-      //$.msg(`${$.name}`, `京东账号${$.index} ${$.nickName}`, message);
+      $.msg(`${$.name}`, `京东账号${$.index} ${$.nickName}`, message);
     }
     resolve();
   })
@@ -682,7 +685,7 @@ function superBrandTaskLottery() {
                   console.log(`超级摇一摇 抽奖结果:${JSON.stringify($.rewardComponent)}`)
                   if ($.rewardComponent.beanList && $.rewardComponent.beanList.length) {
                     console.log(`获得${$.rewardComponent.beanList[0]['quantity']}京豆`)
-                    $.superShakeBeanNum = $.superShakeBeanNum + parseInt($.rewardComponent.beanList[0]['quantity']);
+                    $.superShakeBeanNum += parseInt($.rewardComponent.beanList[0]['quantity']);
                   }
                 }
               } else if (data['data']['bizCode'] === "TK1703") {
@@ -895,6 +898,166 @@ function superbrand_getHomeData() {
               }
             } else {
               console.log(`超级超级品牌日 getHomeData 异常： ${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//=================京东小魔方=================
+async function mofang() {
+  try {
+    await getInteractionInfo();
+    await executeNewInteractionTaskFun();
+    await getInteractionInfo(false);
+    for (let i = 0; i < new Array($.lotteryNum).fill('').length; i++) {
+      await getNewLotteryInfo();
+      await $.wait(200);
+    }
+    if ($.moFangBeanNum > 0) {
+      message += `${message ? '\n' : ''}京东小魔方：获得${$.moFangBeanNum}京豆\n`;
+      allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n京东小魔方：获得${$.moFangBeanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+    }
+  } catch (e) {
+    $.logErr(e)
+  }
+}
+function getInteractionInfo(info = true) {
+  $.taskSkuInfo = [];
+  $.taskList = [];
+  $.shopInfoList = [];
+  $.lotteryNum = 0;
+  return new Promise(resolve => {
+    const body = {}
+    const options = superShakePostUrl('getInteractionInfo', body)
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} 小魔方 getInteractionInfo API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data)
+            if (data['result'] && data['result']['code'] === 0) {
+              const { result } = data;
+              if (info) console.log(`\n\n京东小魔方：${result['brandName']}`)
+              $.taskSkuInfo = result['taskSkuInfo'];
+              $.taskList = result['taskPoolInfo']['taskList'];
+              $.taskPoolId = result['taskPoolInfo']['taskPoolId'];
+              $.taskSkuNum = result['taskSkuNum'];
+              $.interactionId = result['interactionId'];
+              $.shopInfoList = result['shopInfoList'];
+              $.lotteryNum = result['lotteryInfo']['lotteryNum'] || 0;
+              if (!info) console.log(`京东小魔方当前抽奖次数：${$.lotteryNum}\n`)
+            } else {
+              console.log(`小魔方 getInteractionInfo 异常： ${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+async function executeNewInteractionTaskFun() {
+  $.taskList = $.taskList.filter(vo => !!vo && vo['taskStatus'] === 0)
+  for (let item of $.taskList) {
+    if (item['taskId'] === 9) {
+      console.log(`开始做：【${item['taskTitle']}】任务`)
+      const body = {"interactionId": $.interactionId, "taskPoolId": $.taskPoolId, "taskType": item['taskId']}
+      await executeNewInteractionTask(body);
+    } else if (item['taskId'] === 4) {
+      $.taskSkuInfo = $.taskSkuInfo.filter(vo => !!vo && vo['browseStatus'] === 0);
+      console.log(`开始做：【${item['taskTitle']}】任务`)
+      for (let v of $.taskSkuInfo) {
+        const body = {"sku": v['skuId'], "interactionId": $.interactionId, "taskPoolId": $.taskPoolId, "taskType": item['taskId']};
+        await executeNewInteractionTask(body);
+        await $.wait(100);
+      }
+    } else {
+      $.shopInfoList = $.shopInfoList.filter(vo => !!vo && vo['browseStatus'] === 0);
+      for (let v of $.shopInfoList) {
+        console.log(`开始做：【${item['taskTitle']}】任务，需等待${v['browseTime']}秒`);
+        let body = {
+          "shopId": v['shopId'],
+          "interactionId": $.interactionId,
+          "taskPoolId": $.taskPoolId,
+          "taskType": item['taskId'],
+          "action": 1
+        };
+        await executeNewInteractionTask(body);
+        await $.wait(v['browseTime'] * 1000);
+        body = {
+          "shopId": v['shopId'],
+          "interactionId": $.interactionId,
+          "taskPoolId": $.taskPoolId,
+          "taskType": item['taskId']
+        };
+        await executeNewInteractionTask(body);
+      }
+    }
+  }
+}
+function executeNewInteractionTask(body) {
+  return new Promise(resolve => {
+    const options = superShakePostUrl('executeNewInteractionTask', body)
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} 小魔方 executeNewInteractionTask API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data)
+            if (data['result'] && data['result']['code'] === 0) {
+              const { result } = data;
+              if (result['toast'] && result['lotteryNum']) console.log(`${result['toast']}，当前抽奖次数：${result['lotteryNum']}\n`);
+            } else {
+              console.log(`小魔方 executeNewInteractionTask 异常： ${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function getNewLotteryInfo() {
+  return new Promise(resolve => {
+    const body = {"interactionId": $.interactionId};
+    const options = superShakePostUrl('getNewLotteryInfo', body)
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} 小魔方 getNewLotteryInfo API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data)
+            if (data['result'] && data['result']['code'] === 0) {
+              const { result } = data;
+              if (result['isLottery'] === 0) {
+                console.log(`京东小魔方抽奖：${result['toast']}`);
+              } else if (result['isLottery'] === 1) {
+                console.log(`京东小魔方抽奖：${result['lotteryInfo']['quantity']}京豆`);
+                // allMessage += `【京东小魔方】获得：${result['lotteryInfo']['quantity']}京豆\n`;
+                $.moFangBeanNum += parseInt(result['lotteryInfo']['quantity']);
+              } else {
+                console.log(`京东小魔方抽奖：${JSON.stringify(data)}`);
+              }
+            } else {
+              console.log(`小魔方 getNewLotteryInfo 异常： ${JSON.stringify(data)}`)
             }
           }
         }
