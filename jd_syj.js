@@ -112,7 +112,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 
 function showMsg() {
   return new Promise(resolve => {
-    if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    //if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }
