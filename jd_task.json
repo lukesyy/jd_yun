@@ -377,7 +377,7 @@
       {
         "name": "京东全民开红包",
         "type": "cron",
-        "time": "30 0 * * *",
+        "time": "30,35 0 * * *",
         "running": true,
         "job": {
           "type": "runjs",
