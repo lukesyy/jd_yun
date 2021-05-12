@@ -2,7 +2,7 @@
 *
   Name:财富岛提现
   Address: 京喜App ====>>>> 全民赚大钱
-  Author：MoPoQAQ  ====>>>> 由1908002701（zero205）进行二次修改，兼容elecV2P运行
+  Author：MoPoQAQ  ====>>>> 由zero205（zero205）进行二次修改，兼容elecV2P运行
   Update: 2021/2/2 13:00
   Thanks: 
     💢疯疯💢

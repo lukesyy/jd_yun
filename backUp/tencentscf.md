@@ -23,7 +23,7 @@
 ## 4. 配置index.js中secrets变量说明【可不填，建议默认即可】
 现在可以通过secret设置自定义index.js中的执行方式，环境变量分别为`TENCENTSCF_SOURCE_TYPE`和`TENCENTSCF_SOURCE_URL`  
 `TENCENTSCF_SOURCE_TYPE`值可以选取`local`、`git`、`custom`具体含义可查看仓库中的`index.js`文件说明  
-`TENCENTSCF_SOURCE_URL`格式为包含raw的URL，例如：`https://ghproxy.com/https://raw.githubusercontent.com/1908002701/JD/main/`或`https://gitee.com/1908002701/JD/raw/main/`<br>
+`TENCENTSCF_SOURCE_URL`格式为包含raw的URL，例如：`https://ghproxy.com/https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/`或`https://gitee.com/zero205/JD_tencent_scf/raw/main/`<br>
 
 
 ### __重要的说三遍__   

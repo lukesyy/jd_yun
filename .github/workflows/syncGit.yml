@@ -6,7 +6,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: sync-1908002701-scripts
+    types: sync-zero205-scripts
 jobs:
   repo-sync:
     env:
@@ -19,11 +19,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync 1908002701-scripts
+      - name: sync zero205-scripts
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/1908002701/JD.git"
+          source_repo: "https://github.com/zero205/JD_tencent_scf.git"
           source_branch: "main"
           destination_branch: "main"
           github_token: ${{ secrets.PAT }}

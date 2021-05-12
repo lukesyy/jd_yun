@@ -52,7 +52,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     return;
   }
   await getAuthorShareCode('http://qr6pzoy01.hn-bkt.clouddn.com/jd_zz.json');
-  await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/1908002701/updateTeam/master/shareCodes/jd_zz.json');
+  await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/master/shareCodes/jd_zz.json');
   await getRandomCode();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
