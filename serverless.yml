@@ -58,12 +58,12 @@ inputs:
           cronExpression: "0 8 */3 * * * *"
           enable: true
           argument: jd_daily_egg&jd_mohe&jd_z_health_community
-    - timer: #东东超市
+    - timer: #东东超市 #每日抽奖
         parameters:
           name: superMarket
           cronExpression: "0 15 */6 * * * *"
           enable: true
-          argument: jd_superMarket
+          argument: jd_superMarket&jd_daily_lottery
     - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑 #超级无线组队分京豆
         parameters:
           name: beanchange_crazyjoy_rankingList_beanhome_sgmh_jxd
