@@ -607,7 +607,7 @@
       {
         "name": "半点京豆雨",
         "type": "cron",
-        "time": "30,20-23/1 * * *",
+        "time": "30 20-23/1 * * *",
         "running": true,
         "job": {
           "type": "runjs",
