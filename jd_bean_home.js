@@ -26,7 +26,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const helpAuthor = true; // 是否帮助作者助力，false打开通知推送，true关闭通知推送
+const helpAuthor = true; // 是否帮助作者助力
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
@@ -41,8 +41,8 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
   $.newShareCodes = []
-  // await getAuthorShareCode();
-  // await getAuthorShareCode2();
+  await getAuthorShareCode();
+  await getAuthorShareCode2();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -50,7 +50,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
@@ -68,34 +68,35 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await jdBeanHome();
     }
   }
-  // for (let i = 0; i < cookiesArr.length; i++) {
-  //   if (cookiesArr[i]) {
-  //     $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-  //     console.log(`${$.UserName}去帮助下一个人`)
-  //     cookie = cookiesArr[i];
-  //     if ($.newShareCodes.length > 1) {
-  //       let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
-  //       await help(code[0], code[1])
-  //     }
-  //     if (helpAuthor && $.authorCode) {
-  //       console.log(`去帮助作者`)
-  //       const helpRes = await help($.authorCode[0], $.authorCode[1])
-  //       if (helpRes && helpRes.data.respCode === 'SG209') {
-  //         console.log(`助力次数已耗尽，跳出助力`)
-  //         break;
-  //       }
-  //     }
-  //     if (helpAuthor && $.authorCode2) {
-  //       for (let code of $.authorCode2) {
-  //         const helpRes = await help(code.shareCode, code.groupCode);
-  //         if (helpRes && helpRes.data.respCode === 'SG209') {
-  //           console.log(`助力次数已耗尽，跳出助力`)
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+	  cookie = cookiesArr[i];
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      console.log(`${$.UserName}去帮助下一个人`)
+      cookie = cookiesArr[i];
+      if ($.newShareCodes.length > 1) {
+        let code = $.newShareCodes[(0) % $.newShareCodes.length]
+        await help(code[0], code[1])
+      }
+      if (helpAuthor && $.authorCode) {
+        console.log(`去帮助作者`)
+        const helpRes = await help($.authorCode[0], $.authorCode[1])
+        if (helpRes && helpRes.data.respCode === 'SG209') {
+          console.log(`助力次数已耗尽，跳出助力`)
+          break;
+        }
+      }
+      if (helpAuthor && $.authorCode2) {
+        for (let code of $.authorCode2) {
+          const helpRes = await help(code.shareCode, code.groupCode);
+          if (helpRes && helpRes.data.respCode === 'SG209') {
+            console.log(`助力次数已耗尽，跳出助力`)
+            break;
+          }
+        }
+      }
+    }
+  }
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -165,13 +166,13 @@ function doTask2() {
 
 function getAuthorShareCode() {
   return new Promise(resolve => {
-    $.get({url: "https://gitee.com/shylocks/updateTeam/raw/main/jd_bean_home",headers:{
+    $.get({url: "https://raw.githubusercontent.com/1277002811/JDbot/master/shareCodes/jd_updateBeanHome.json",headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       }}, async (err, resp, data) => {
       try {
         if (err) {
         } else {
-          $.authorCode = data.replace('\n', '').split(' ')
+          $.authorCode = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -181,9 +182,10 @@ function getAuthorShareCode() {
     })
   })
 }
+
 function getAuthorShareCode2() {
   return new Promise(resolve => {
-    $.get({url: "https://gitee.com/lxk0301/updateTeam/raw/master/shareCodes/jd_updateBeanHome.json",headers:{
+    $.get({url: "https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_updateBeanHome.json",headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       }}, async (err, resp, data) => {
       try {
@@ -220,7 +222,7 @@ function getUserInfo() {
               } else {
                 console.log(shareCode, groupCode)
                 // 去做逛会场任务
-                if (data.data.beanActivityVisitVenue.taskStatus === '0') {
+                if (data.data.beanActivityVisitVenue && data.data.beanActivityVisitVenue.taskStatus === '0') {
                   await help(shareCode, groupCode, 1)
                 }
                 $.newShareCodes.push([shareCode, groupCode])
@@ -308,7 +310,7 @@ function help(shareCode, groupCode, isTask = 0) {
 
 function showMsg() {
   return new Promise(resolve => {
-    if (message) // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }
@@ -453,7 +455,7 @@ function taskGetUrl(function_id, body) {
       'Host': 'api.m.jd.com',
       'Accept': '*/*',
       'Connection': 'keep-alive',
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
       'Accept-Encoding': 'gzip, deflate, br',
       'Content-Type': "application/x-www-form-urlencoded"
@@ -474,7 +476,7 @@ function taskUrl(function_id, body) {
       'Host': 'api.m.jd.com',
       'Accept': '*/*',
       'Connection': 'keep-alive',
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
       'Accept-Encoding': 'gzip, deflate, br',
       'Content-Type': "application/x-www-form-urlencoded"
@@ -494,7 +496,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -510,7 +512,7 @@ function TotalBean() {
               return
             }
             if (data['retcode'] === 0) {
-              $.nickName = data['base'].nickname;
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
             } else {
               $.nickName = $.UserName
             }

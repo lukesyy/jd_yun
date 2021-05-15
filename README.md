@@ -1,4 +1,5 @@
-# 已修复云函数部署错误问题，请同步最新脚本  
+# 为防止仓库再次被封，本仓库仅保留腾讯云函数、elecV2P方式运行。建议选择这两种方式运行。  
+# 希望继续使用AC运行的朋友请移步原仓库，没有大的更新随缘维护：https://github.com/zero205/JD  
 
 ## 注意！原来使用zero205/JD仓库的用户可不用重新创建仓库，替换原脚本的代码即可同步本仓库
 * 1.[点击修改syncGit.yml文件](./.github/workflows/syncGit.yml)，点击右上角铅笔图标  
@@ -6,32 +7,11 @@
 * 3.点击右边绿色`Start commit`,点击`Commit changes`，手动运行一次此任务即可
 ## 使用教程（不要fork！觉得有用的可以点个star :blush:）
 * > ~~Github Action 运行~~ (响应lxk大佬要求，删除AC教程)
-* > 腾讯云函数部署。[点此查看](./backUp/tencentscf.md)
-* > [elecV2P](https://github.com/elecV2/elecV2P) 部署【推荐】。[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
-#### elecV2P 环境变量使用说明  
-* 1.以京东CK为例，登录elecV2P后台（默认地址:127.0.0.1:80）
-* 2.选择`JSMANAGE`，key填`CookiesJD`，下面空白处即value值按下面的格式填写，多账号以此类推，自行删减。  
-```bash
-[
-  {
-    "userName": "jd_5bbxxx414",
-    "cookie": "pt_key=xxx;pt_pin=jd_5xxx414;"
-  },
-  {
-    "userName": "jd_739xxx89e",
-    "cookie": "pt_key=xxx;pt_pin=jd_739xxx89e;"
-  },
-  {
-    "userName": "jd_413xxxe89",
-    "cookie": "pt_key=xxx;pt_pin=jd_413xxxe89;"
-  }
-]
-```
-* 其他环境变量按正常填写即可  
-#### elecV2P 京东任务订阅地址  
-`https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_task.json`  
-#### 订阅地址使用说明  
-* 登录elecV2P后台，选择`TASK`，选择添加订阅任务，输入上面的订阅地址，点击获取内容，点击全部添加即可  
+* > 腾讯云函数部署【推荐】。[点此查看](./backUp/tencentscf.md)
+* > [elecV2P](https://github.com/elecV2/elecV2P) 部署【备用】。
+    * 安装教程[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
+    * 相关补充说明[点此查看](./backUp/elecV2P.md)  
+
 
 ### 自动同步脚本教程：[点此查看](https://github.com/zero205/JD_tencent_scf/blob/main/backUp/reposync.md)  </br>
 
@@ -148,9 +128,9 @@
 
 ## 食用方法
 
-### 1. Docker
+### ~~1. Docker~~
 
-- [部署方法](./docker)
+- ~~[部署方法](./docker)~~
 
 - [环境变量集合](./githubAction.md)
  

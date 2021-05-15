@@ -34,6 +34,6 @@ jobs:
         with:
           src: ${{ secrets.SRC_USER }}
           dst: ${{ secrets.DST_USER }}
-          static_list: "JD"
+          static_list: "JD_tencent_scf"
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}

@@ -1,8 +1,8 @@
 /*
-* @Author: LXK9301
+* @Author: lxk0301
 * @Date: 2020-11-03 20:35:07
-* @Last Modified by: LXK9301
-* @Last Modified time: 2021-4-30 13:27:09
+* @Last Modified by: lxk0301
+* @Last Modified time: 2021-5-11 09:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
@@ -492,7 +492,7 @@ function welcomeHome() {
                   console.log(`【超级摇一摇】活动链接：${jump.params.url}`);
                 }
               }
-              if (shakeFloorNew && shakeFloorNew2) {
+              if (shakeFloorNew2) {
                 const jump = shakeFloorNew2['jump'];
                 if (jump && jump.params && jump['params']['url'].includes('https://h5.m.jd.com/babelDiy/Zeus/2PTXhrEmiMEL3mD419b8Gn9bUBiJ/index.html')) {
                   console.log(`【超级品牌日】活动链接：${jump.params.url}`);
@@ -913,11 +913,16 @@ function superBrandTaskLottery() {
 }
 //============超级品牌日==============
 async function superbrandShakeBean() {
-  $.bradCanLottery = true;
+  $.bradCanLottery = true;//是否有超级品牌日活动
+  $.bradHasLottery = false;//是否已抽奖
   await qryCompositeMaterials("advertGroup", "04405074", "Brands");//获取品牌活动ID
   await superbrand_getHomeData();
   if (!$.bradCanLottery) {
-    console.log(`【${$.stageName} 超级品牌日】：已完成抽奖或活动不在进行中`)
+    console.log(`【${$.stageName} 超级品牌日】：活动不在进行中`)
+    return
+  }
+  if ($.bradHasLottery) {
+    console.log(`【${$.stageName} 超级品牌日】：已完成抽奖`)
     return
   }
   await superbrand_getMaterial();//获取完成任务所需的一些ID
@@ -1052,12 +1057,12 @@ function superbrand_getGift() {
                 $.jpeasList = result['jpeasList'];
                 if ($.jpeasList && $.jpeasList.length) {
                   for (let item of $.jpeasList) {
-                    console.log(`超级品牌日 抽奖 活动：${item['prizeName']}`);
-                    message += `【超级品牌日】获得：${item['prizeName']}\n`;
+                    console.log(`超级品牌日 抽奖 获得：${item['quantity']}${item['prizeName']}`);
+                    message += `【超级品牌日】获得：${item['quantity']}${item['prizeName']}\n`;
                     if ($.superShakeBeanNum === 0) {
-                      allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n【超级品牌日】获得：${item['prizeName']}\n`;
+                      allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n【超级品牌日】获得：${item['quantity']}${item['prizeName']}\n`;
                     } else {
-                      allMessage += `【超级品牌日】获得：${item['prizeName']}\n`;
+                      allMessage += `【超级品牌日】获得：${item['quantity']}${item['prizeName']}\n`;
                     }
                   }
                 }
@@ -1093,7 +1098,7 @@ function superbrand_getHomeData() {
               if (data['data']['bizCode'] === 0) {
                 const { result } = data['data'];
                 if (result && result.length) {
-                  if (result[0]['activityStatus'] === "2" && result[0]['taskVos']) $.bradCanLottery = false;
+                  if (result[0]['activityStatus'] === "2" && result[0]['taskVos'].length) $.bradHasLottery = true;
                 }
               } else {
                 console.log(`超级超级品牌日 getHomeData 失败： ${data['data']['bizMsg']}`)
@@ -1287,7 +1292,7 @@ async function shakeSign() {
       beanNum = signRes['data']['rewardVos'] && signRes['data']['rewardVos'][0]['jingBeanVo'] && signRes['data']['rewardVos'][0]['jingBeanVo']['beanNum']
     }
     if (beanNum) {
-      message += `\n京东会员签到：${beanNum}获得京豆`;
+      message += `\n京东会员签到：获得${beanNum}京豆\n`;
     }
   } else {
     console.log(`京东会员第${$.currSignCursor}天已签到`)

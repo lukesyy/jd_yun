@@ -2,11 +2,11 @@
 口袋书店
 活动入口：京东app首页-京东图书-右侧口袋书店
 已支持IOS双京东账号,Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+脚本兼容:QuantumultX,Surge,Loon,JSBox,Node.js
 ============Quantumultx===============
 [task_local]
 #口袋书店
-1 8,12,18 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bookshop.js, tag=口袋书店, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+1 8,12,18 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bookshop.js, tag=口袋书店, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
@@ -24,14 +24,14 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-const ACT_ID = 'dz2010100034444201', shareUuid = '28a699ac78d74aa3b31f7103597f8927'
+const ACT_ID = 'dz2010100034444201', shareUuid = 'b44ed5c2c6d24cca91578a0287f7b8f0'
 let ADD_CART = false
 ADD_CART = $.isNode() ? (process.env.PURCHASE_SHOPS ? process.env.PURCHASE_SHOPS : ADD_CART) : ($.getdata("ADD_CART") ? $.getdata("ADD_CART") : ADD_CART);
 // 加入购物车开关，与东东小窝共享
 
 let inviteCodes = [
-  '4dd98623868f4292b5432822389fe3e9@daf75e50044144c68b2aff47de57fe49@e341962809ae42c5b8d2d61995bbb5a4@77f08ad1aea04b73acd4542f7fd1dac6@fe5536751f89403d87bad635a87bd956',
-  '4dd98623868f4292b5432822389fe3e9@daf75e50044144c68b2aff47de57fe49@e341962809ae42c5b8d2d61995bbb5a4'
+'4dd98623868f4292b5432822389fe3e9@daf75e50044144c68b2aff47de57fe49@e341962809ae42c5b8d2d61995bbb5a4@77f08ad1aea04b73acd4542f7fd1dac6@fe5536751f89403d87bad635a87bd956',
+'4dd98623868f4292b5432822389fe3e9@daf75e50044144c68b2aff47de57fe49@e341962809ae42c5b8d2d61995bbb5a4@77f08ad1aea04b73acd4542f7fd1dac6@fe5536751f89403d87bad635a87bd956'
 ]
 
 if ($.isNode()) {
@@ -41,7 +41,13 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
 } else {
-  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
+  let cookiesData = $.getdata('CookiesJD') || "[]";
+  cookiesData = jsonParse(cookiesData);
+  cookiesArr = cookiesData.map(item => item.cookie);
+  cookiesArr.reverse();
+  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
+  cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 
 !(async () => {
@@ -59,7 +65,6 @@ if ($.isNode()) {
       $.isLogin = true;
       $.nickName = '';
       message = '';
-      $.exit = false;
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -553,7 +558,7 @@ function chargeGold() {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得积分${$.score}`;
-    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }
@@ -635,7 +640,7 @@ function TotalBean() {
               return
             }
             if (data['retcode'] === 0) {
-              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+              $.nickName = data['base'].nickname;
             } else {
               $.nickName = $.UserName
             }

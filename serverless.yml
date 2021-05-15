@@ -22,12 +22,12 @@ inputs:
           cronExpression: "0 1 0 * * * *"
           enable: true
           argument: jd_bean_sign
-    - timer: #摇京豆 #京东汽车兑换 #interCenter渠道店铺签到
+    - timer: #摇京豆 #京东汽车兑换 #interCenter渠道店铺签到 #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币 #天天提鹅 #领金贴
         parameters:
-          name: clublottery_carexchange
+          name: clublottery_carexchange_redPacket_shop_unsubscribe_lotteryMachine_car_ms_jintie
           cronExpression: "0 0 0 * * * *"
           enable: true
-          argument: jd_club_lottery&jd_car_exchange&jd_monk_inter_shop_sign
+          argument: jd_club_lottery&jd_car_exchange&jd_monk_inter_shop_sign&jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_jin_tie
     - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场 #京东极速版签到 #京东极速版红包 #美丽研究院
         parameters:
           name: fruit_pet_bookshop_jxnc_jxnc2_speedsign_speedredpocke_beauty
@@ -46,30 +46,30 @@ inputs:
           cronExpression: "0 6 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_cfd&jd_cash&jd_necklace&jd_small_home&jd_live
-    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币 #天天提鹅 #领金贴
+    - timer: #整点京豆雨 #半点京豆雨
         parameters:
-          name: redPacket_shop_unsubscribe_lotteryMachine_car_ms_jintie
-          cronExpression: "0 10 0 * * * *"
+          name: superredrain_halfredrain
+          cronExpression: "0 1,30 0,6-23/1 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_jin_tie
-    - timer: #天天提鹅 #5G超级盲盒 #健康社区
+          argument: jd_super_redrain&jd_half_redrain
+    - timer: #天天提鹅 #健康社区
         parameters:
-          name: dailyegg_mohe_healthcommunity
+          name: dailyegg_healthcommunity
           cronExpression: "0 8 */3 * * * *"
           enable: true
-          argument: jd_daily_egg&jd_mohe&jd_z_health_community
+          argument: jd_daily_egg&jd_z_health_community
     - timer: #东东超市 #每日抽奖
         parameters:
           name: superMarket
           cronExpression: "0 15 */6 * * * *"
           enable: true
           argument: jd_superMarket&jd_daily_lottery
-    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑 #超级无线组队分京豆
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑 #超级无线组队分京豆 #幸运大转盘
         parameters:
           name: beanchange_crazyjoy_rankingList_beanhome_sgmh_jxd
           cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_jxd&jd_z_shop_captain
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_jxd&jd_z_shop_captain&jd_market_lottery
     - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #京喜签到 #女装盲盒 #关注有礼
         parameters:
           name: pigPet_syj_kd_jdzz_sign_nzmh_follow

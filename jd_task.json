@@ -457,7 +457,7 @@
       {
         "name": "取关京东店铺商品",
         "type": "cron",
-        "time": "50 7,23 * * *",
+        "time": "50 7,11,23 * * *",
         "running": true,
         "job": {
           "type": "runjs",
@@ -492,16 +492,6 @@
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_z_mother_jump.js"
-        }
-      },
-      {
-        "name": "5G超级盲盒",
-        "type": "cron",
-        "time": "6 0,6-23/4 * * *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_z_super5g.js"
         }
       },
       {
@@ -622,6 +612,16 @@
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_daily_lottery.js"
+        }
+      },
+      {
+        "name": "幸运大转盘",
+        "type": "cron",
+        "time": "20 10 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_market_lottery.js"
         }
       },
       {
