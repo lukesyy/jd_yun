@@ -73,7 +73,7 @@ inputs:
     - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #京喜签到 #女装盲盒 #关注有礼
         parameters:
           name: pigPet_syj_kd_jdzz_sign_nzmh_follow
-          cronExpression: "0 20 0 * * * *"
+          cronExpression: "0 20 0,7,9 * * * *"
           enable: true
           argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jx_sign&jd_nzmh&jd_monk_shop_follow_sku
   environment: #  环境变量

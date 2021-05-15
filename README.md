@@ -1,5 +1,5 @@
-# 为防止仓库再次被封，本仓库仅保留腾讯云函数、elecV2P方式运行。建议选择这两种方式运行。  
-# 希望继续使用AC运行的朋友请移步原仓库，没有大的更新随缘维护：https://github.com/zero205/JD  
+# 为防止仓库再次被封，本仓库仅保留腾讯云函数、elecV2P两种方式运行
+# 想继续使用AC运行的朋友请移步原仓库，没有大的更新随缘维护：https://github.com/zero205/JD  
 
 ## 注意！原来使用zero205/JD仓库的用户可不用重新创建仓库，替换原脚本的代码即可同步本仓库
 * 1.[点击修改syncGit.yml文件](./.github/workflows/syncGit.yml)，点击右上角铅笔图标  
@@ -9,13 +9,13 @@
 * > ~~Github Action 运行~~ (响应lxk大佬要求，删除AC教程)
 * > 腾讯云函数部署【推荐】。[点此查看](./backUp/tencentscf.md)
 * > [elecV2P](https://github.com/elecV2/elecV2P) 部署【备用】。
-    * 安装教程[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
-    * 相关补充说明[点此查看](./backUp/elecV2P.md)  
+    * 安装教程:[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
+    * 相关补充说明:[点此查看](./backUp/elecV2P.md)  
 
 
 ### 自动同步脚本教程：[点此查看](https://github.com/zero205/JD_tencent_scf/blob/main/backUp/reposync.md)  </br>
 
-## 常见问题  
+## AC运行常见问题  
 * 此处借用[RayWangQvQ](https://github.com/RayWangQvQ)大佬的教程  
 * [点击查看常见问题](https://github.com/RayWangQvQ/BiliBiliTool.Docs/blob/main/questions.md)  
 

@@ -447,7 +447,7 @@
       {
         "name": "赚京豆",
         "type": "cron",
-        "time": "15 0,7,12,23 * * *",
+        "time": "15 0,7,8-10/1 * * *",
         "running": true,
         "job": {
           "type": "runjs",
@@ -627,7 +627,7 @@
       {
         "name": "超级无线组队分京豆",
         "type": "cron",
-        "time": "15 6 * * *",
+        "time": "15 6 * * 2",
         "running": true,
         "job": {
           "type": "runjs",
