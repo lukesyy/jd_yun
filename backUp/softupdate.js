@@ -14,15 +14,15 @@ let CONFIG = {
     restart: 'elecV2P',            // false: 只更新文件，不重启不应用。 其他值表示 pm2 重启线程名，比如 all/elecV2P/index（暂时不清楚就保持不动）
     noupdate: [
       'script/Store',        // 设置一些不覆盖更新的文件夹（保留个人数据）。根据个人需求进行调整
-      // 'script/JSFile',    // 如果不设置，也只会覆盖更新 elecV2P 自带的同名文件，对其他文件无影响
-      // 'script/Shell',
+      'script/JSFile',    // 如果不设置，也只会覆盖更新 elecV2P 自带的同名文件，对其他文件无影响
+      'script/Shell',
       'script/Lists',
       'rootCA',
       'Docker',              // 当文件夹或名称中包含 Docker 时，跳过下载更新
       'Todo',                // 排除单个文件，使用文件名包含的关键字即可
       '^\\.',                // 也可以使用正则表示式。匹配方式为 new RegExp(str).test(fileurl)
     ],
-    wbtoken: '652ead25-1c3c-4fc8-b0b2-76a16882d571',    // webhook token（在 SETTING 界面查看）用于发送保存当前任务列表的网络请求，可省略。
+    wbtoken: '0a6f6e68-eaba-4036-8e1d-7a1bef657cf8',    // webhook token（在 SETTING 界面查看）用于发送保存当前任务列表的网络请求，可省略。
     cdngit: 'https://ghproxy.com/https://raw.githubusercontent.com',        // 可自定义 raw.githubusercontent.com 加速站点
     about: 'elecV2P 软更新配置文件，详情: https://raw.githubusercontent.com/elecV2/elecV2P/master/script/JSFile/softupdate.js'
   }
@@ -50,7 +50,7 @@ let CONFIG = {
     }
     try {
       console.log('开始获取最新版本号...')
-      let res = await $axios(CONFIG.cdngit + '/elecV2/elecV2P/master/package.json')
+      let res = await $axios('https://ghproxy.com/https://raw.githubusercontent.com/elecV2/elecV2P/master/package.json')
       let newversion = res.data.version
       if (newversion) {
         console.log('当前版本:', __version, '最新版本:', newversion)
@@ -104,7 +104,7 @@ let CONFIG = {
             }
           }
           if (btoUP) {
-            let durl = CONFIG.cdngit + '/elecV2/elecV2P/master/' + file.path
+            let durl = 'https://ghproxy.com/https://raw.githubusercontent.com/elecV2/elecV2P/master/' + file.path
             console.log('获取更新:', durl)
             try {
               await $download(durl, { folder: './', name: file.path }, d=>{

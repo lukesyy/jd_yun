@@ -2,7 +2,7 @@
     "name": "京东定时任务",
     "desc": "elecV2P 京东定时任务订阅。该订阅仅可用于 elecV2P, 与其他软件并不兼容。相关说明参考: https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md",
     "author": "zero205",
-    "date": "2021-04-09 17:12:30",
+    "date": "2021-05-15 16:16:30",
     "surl": "https://gitee.com/zero205/JD_tencent_scf",
     "list": [
       {
@@ -278,7 +278,7 @@
       {
         "name": "超级直播间红包雨",
         "type": "cron",
-        "time": "0,30,31 20-23/1 14 * *",
+        "time": "0,30,31 20-23/1 18 * *",
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_live_redrain.js"
@@ -397,7 +397,7 @@
       {
         "name": "进店领豆",
         "type": "cron",
-        "time": "1 0 * * *",
+        "time": "10 0 0 * * *",
         "running": true,
         "job": {
           "type": "runjs",
@@ -457,7 +457,7 @@
       {
         "name": "取关京东店铺商品",
         "type": "cron",
-        "time": "50 7,11,23 * * *",
+        "time": "50 10,19,23 * * *",
         "running": true,
         "job": {
           "type": "runjs",
