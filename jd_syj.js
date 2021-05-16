@@ -2,29 +2,29 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-11-27 09:19:21
  * @Last Modified by: lxk0301
- * @Last Modified time: 2021-4-27 16:58:02
+ * @Last Modified time: 2021-5-12 16:58:02
  */
 /*
 赚京豆脚本，一：签到(一周签到可获得30京豆)，二：做任务 天天领京豆(加速领京豆)、三：赚京豆-瓜分京豆
 活动入口：赚京豆(微信小程序)-赚京豆-签到领京豆
-更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js
+更新地址：https://jdsharedresourcescdn.azureedge.net/jdresource/jd_syj.js
 签到(一周签到可获得30京豆)参考github@jidesheng6修改而来
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #赚京豆
-10 0,7,23 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js, tag=赚京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+10 0,7,23 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_syj.js, tag=赚京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 0,7,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js, tag=赚京豆
+cron "10 0,7,23 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_syj.js, tag=赚京豆
 
 ===============Surge=================
-赚京豆 = type=cron,cronexp="10 0,7,23 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js
+赚京豆 = type=cron,cronexp="10 0,7,23 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_syj.js
 
 ============小火箭=========
-赚京豆 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js, cronexpr="10 0,7,23 * * *", timeout=3600, enable=true
+赚京豆 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_syj.js, cronexpr="10 0,7,23 * * *", timeout=3600, enable=true
  */
 const $ = new Env('赚京豆');
 
@@ -51,8 +51,8 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  await getAuthorShareCode('http://qr6pzoy01.hn-bkt.clouddn.com/jd_zz.json');
   await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/master/shareCodes/jd_zz.json');
+  await getAuthorShareCode('https://raw.githubusercontent.com/gitupdate/updateTeam/master/shareCodes/jd_zz.json');
   await getRandomCode();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -112,7 +112,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 
 function showMsg() {
   return new Promise(resolve => {
-    //if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }
@@ -540,7 +540,7 @@ function openRedPacket(floorToken) {
 //================赚京豆开团===========
 async function distributeBeanActivity() {
   try {
-    $.tuan = null
+    $.tuan = ''
     $.hasOpen = false;
     $.assistStatus = 0;
     await getUserTuanInfo()
@@ -585,7 +585,8 @@ function helpFriendTuan(body) {
       "assistStartRecordId": body['assistStartRecordId'],
       "channel": body['channel'],
     }
-    $.get(taskUrl("vvipclub_distributeBean_assist", data), async (err, resp, data) => {
+    delete body['time'];
+    $.get(taskTuanUrl("vvipclub_distributeBean_assist", body), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -617,7 +618,7 @@ function helpFriendTuan(body) {
 function getUserTuanInfo() {
   let body = {"paramData": {"channel": "FISSION_BEAN"}}
   return new Promise(resolve => {
-    $.get(taskUrl("distributeBeanActivityInfo", body), async (err, resp, data) => {
+    $.get(taskTuanUrl("distributeBeanActivityInfo", body), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -665,7 +666,7 @@ function getUserTuanInfo() {
 function openTuan() {
   let body = {"activityIdEncrypted": $.tuanActId, "channel": "FISSION_BEAN"}
   return new Promise(resolve => {
-    $.get(taskUrl("vvipclub_distributeBean_startAssist", body), async (err, resp, data) => {
+    $.get(taskTuanUrl("vvipclub_distributeBean_startAssist", body), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -759,7 +760,22 @@ function taskUrl(function_id, body = {}) {
   }
 }
 
-
+function taskTuanUrl(function_id, body = {}) {
+  return {
+    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=swat_miniprogram&osVersion=5.0.0&clientVersion=3.1.3&fromType=wxapp&timestamp=${new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000}`,
+    headers: {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Accept-Language": "zh-cn",
+      "Connection": "keep-alive",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Host": "api.m.jd.com",
+      "Referer": "https://servicewechat.com/wxa5bf5ee667d91626/108/page-frame.html",
+      "Cookie": cookie,
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    }
+  }
+}
 
 function TotalBean() {
   return new Promise(async resolve => {

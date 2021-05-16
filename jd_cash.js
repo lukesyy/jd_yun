@@ -2,22 +2,23 @@
 签到领现金，每日2毛～5毛
 可互助，助力码每日不变，只变日期
 活动入口：京东APP搜索领现金进入
+更新时间：2021-04-28
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #签到领现金
-2 0-23/4 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+2 0-23/4 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "2 0-23/4 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js,tag=签到领现金
+cron "2 0-23/4 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_cash.js,tag=签到领现金
 
 ===============Surge=================
-签到领现金 = type=cron,cronexp="2 0-23/4 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js
+签到领现金 = type=cron,cronexp="2 0-23/4 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_cash.js
 
 ============小火箭=========
-签到领现金 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js, cronexpr="2 0-23/4 * * *", timeout=3600, enable=true
+签到领现金 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_cash.js, cronexpr="2 0-23/4 * * *", timeout=3600, enable=true
  */
 const $ = new Env('签到领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -28,6 +29,7 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = true;
 const randomCount = $.isNode() ? 0 : 5;
+let cash_exchange = true;//是否消耗2元红包兑换200京豆，默认是
 const inviteCodes = [
   `eU9YL5XqGLxSmRSAkwxR@eU9YaO7jMvwh-W_VzyUX0Q@eU9YaurkY69zoj3UniVAgg@eU9YaOnjYK4j-GvWmXIWhA@eU9YMZ_gPpRurC-foglg@eU9Ya77gZK5z-TqHn3UWhQ@eU9Yaui2ZP4gpG-Gz3EThA@eU9YaeizbvQnpG_SznIS0w@eU9Yab7gZ_py92rTyXcS0g@eU9Ya--7b65zpG7Umnsagw@eU9YarmyNagj8WzWmXQa1w@Ihgyb-q1YPkv9Wm6iw@eU9YEKXUL5VfmzSDggxO@eU9YaO2xZqhyo2jTwiYb3w@eU9YNJrlA41BkQ6JjRpV@eU9YaOS7M_x0pWiDzCZC3w@eU9Ya-7mN651-TuHwnMVhw`,
   `-4msulYas0O2JsRhE-2TA5XZmBQ@eU9Yar_mb_9z92_WmXNG0w@eU9YaO7jMvwh-W_VzyUX0Q@eU9YaurkY69zoj3UniVAgg@eU9YaOnjYK4j-GvWmXIWhA@eU9YaO23bvtyozuGyHsR1A@eU9Yab7gZ_py92rTyXcS0g@eU9Ya--7b65zpG7Umnsagw@eU9YarmyNagj8WzWmXQa1w@Ihgyb-q1YPkv9Wm6iw@eU9YEKXUL5VfmzSDggxO@eU9YaO2xZqhyo2jTwiYb3w@eU9YNJrlA41BkQ6JjRpV@eU9YaOS7M_x0pWiDzCZC3w@eU9Ya-7mN651-TuHwnMVhw`
@@ -49,7 +51,6 @@ let allMessage = '';
   }
   await requireConfig()
   await getAuthorShareCode();
-  await getAuthorShareCode2();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -89,15 +90,27 @@ async function jdCash() {
   await getReward()
   await getReward('2');
   $.exchangeBeanNum = 0;
-  console.log(`\n\n开始花费2元红包兑换200京豆，一周可换四次`)
-  for (let i = 0; i < 4; i++) {
-    await exchange2();//兑换200京豆(2元红包换200京豆，一周四次。)
-  }
-  if ($.exchangeBeanNum) {
-    message += `兑换京豆成功，获得${$.exchangeBeanNum}京豆\n`;
+  cash_exchange = $.isNode() ? (process.env.CASH_EXCHANGE ? process.env.CASH_EXCHANGE : `${cash_exchange}`) : ($.getdata('cash_exchange') ? $.getdata('cash_exchange') : `${cash_exchange}`);
+  if (cash_exchange === 'true') {
+    console.log(`\n\n开始花费2元红包兑换200京豆，一周可换五次`)
+    for (let item of ["-1", "0", "1", "2", "3"]) {
+      $.canLoop = true;
+      if ($.canLoop) {
+        for (let i = 0; i < 5; i++) {
+          await exchange2(item);//兑换200京豆(2元红包换200京豆，一周五次。)
+        }
+        if (!$.canLoop) {
+          console.log(`已找到符合的兑换条件，跳出\n`);
+          break
+        }
+      }
+    }
+    if ($.exchangeBeanNum) {
+      message += `兑换京豆成功，获得${$.exchangeBeanNum * 100}京豆\n`;
+    }
   }
   await index(true)
-  // await showMsg()
+  await showMsg()
 }
 function index(info=false) {
   return new Promise((resolve) => {
@@ -260,12 +273,24 @@ function getReward(source = 1) {
     })
   })
 }
-function exchange2() {
-  let body = 'body=%7B%22node%22%3A%22-1%22%2C%22configVersion%22%3A%221.0%22%7D&client=apple&clientVersion=9.4.6&openudid=ad9e83697b055306e6b5c1d78bf341d8dd990644&sign=3a5351d59e976ac3c75e55d840fa82c0&st=1616142615135&sv=102&uuid=hjudwgohxzVu96krv%2FT6Hg%3D%3D'
+function exchange2(node) {
+  let body = '';
+  const data = {node,"configVersion":"1.0"}
+  if (data['node'] === '-1') {
+    body = `body=${encodeURIComponent(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1619595890027&sign=92a8abba7b6846f274ac9803aa5a283d&sv=102`;
+  } else if (data['node'] === '0') {
+    body = `body=${encodeURIComponent(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1619597882090&sign=e00bd6c3af2a53820825b94f7a648551&sv=100`;
+  } else if (data['node'] === '1') {
+    body = `body=${encodeURIComponent(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1619595655007&sign=2e72bbd21e5f5775fe920eac129f89a2&sv=111`;
+  } else if (data['node'] === '2') {
+    body = `body=${encodeURIComponent(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1619597924095&sign=c04c70370ff68d71890de08a18cac981&sv=112`;
+  } else if (data['node'] === '3') {
+    body = `body=${encodeURIComponent(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1619597953001&sign=4c36b3d816d4f0646b5c34e7596502f8&sv=122`;
+  }
   return new Promise((resolve) => {
     const options = {
-      url: `${JD_API_HOST}?functionId=cash_exchangeBeans&t=${Date.now()}`,
-      body: body,
+      url: `${JD_API_HOST}?functionId=cash_exchangeBeans&t=${Date.now()}&${body}`,
+      body: `body=${escape(JSON.stringify(data))}`,
       headers: {
         'Cookie': cookie,
         'Host': 'api.m.jd.com',
@@ -284,11 +309,18 @@ function exchange2() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.code === 0 && data.data && data.data.bizCode === 0) {
-              console.log(`花费2元红包兑换200成功！获得${data.data.result.beanName}`)
-              $.exchangeBeanNum += data.data.result.beanName;
+            if (data['code'] === 0) {
+              if (data.data.bizCode === 0) {
+                console.log(`花费${data.data.result.needMoney}元红包兑换成功！获得${data.data.result.beanName}\n`)
+                $.exchangeBeanNum += parseInt(data.data.result.needMoney);
+                $.canLoop = false;
+              } else {
+                console.log('花费2元红包兑换200京豆失败：' + data.data.bizMsg)
+                if (data.data.bizCode === 504) $.canLoop = true;
+                if (data.data.bizCode === 120) $.canLoop = false;
+              }
             } else {
-              console.log('花费2元红包兑换200京豆失败：' + data.data.bizMsg)
+              console.log(`兑换京豆失败：${JSON.stringify(data)}\n`);
             }
           }
         }
@@ -379,6 +411,9 @@ function requireConfig() {
           $.shareCodesArr.push(shareCodes[item])
         }
       })
+    } else {
+      if ($.getdata('jd_cash_invite')) $.shareCodesArr = $.getdata('jd_cash_invite').split('\n').filter(item => !!item);
+      console.log(`\nBoxJs设置的领现金邀请码:${$.getdata('jd_cash_invite')}\n`);
     }
     console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
     resolve()
@@ -417,7 +452,7 @@ function taskUrl(functionId, body = {}) {
   }
 }
 
-function getAuthorShareCode(url = "http://qr6pzoy01.hn-bkt.clouddn.com/jd_cash.json") {
+function getAuthorShareCode(url = "https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/master/shareCodes/jd_updateCash.json") {
   return new Promise(resolve => {
     $.get({url, headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
@@ -427,28 +462,6 @@ function getAuthorShareCode(url = "http://qr6pzoy01.hn-bkt.clouddn.com/jd_cash.j
         if (err) {
         } else {
           $.authorCode = JSON.parse(data)
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function getAuthorShareCode2(url = "https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/master/shareCodes/jd_updateCash.json") {
-  return new Promise(resolve => {
-    $.get({url, headers:{
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }, timeout: 200000,}, async (err, resp, data) => {
-      $.authorCode2 = [];
-      try {
-        if (err) {
-        } else {
-          $.authorCode2 = JSON.parse(data)
-          if ($.authorCode2 && $.authorCode2.length) {
-            $.authorCode.push(...$.authorCode2);
-          }
         }
       } catch (e) {
         $.logErr(e, resp)
