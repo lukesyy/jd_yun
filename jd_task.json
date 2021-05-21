@@ -631,7 +631,27 @@
         "running": true,
         "job": {
           "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_pk.js.js"
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_pk.js"
+        }
+      },
+      {
+        "name": "人头马x博朗",
+        "type": "cron",
+        "time": "25 9 20-31 5 *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_martin.js"
+        }
+      },
+      {
+        "name": "Redmi->合成小金刚",
+        "type": "cron",
+        "time": "28 9 20-27 5 *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_mi.js"
         }
       },
       {

@@ -13,7 +13,7 @@ let tokenNull = {'farm_jstoken': '', 'phoneid': '', 'timestamp': ''}; // 内置�
 let tokenArr = []; // 用户 token 数组
 let currentToken = {}; // 当前用户 token
 let shareCode = ''; // 内置助力码
-let jxncShareCodeArr = ['{\"smp\":\"636dc4a0a444dabb8d26b68f34d5413e\",\"active\":\"jdnc_1_3yuantiangua210422_2\",\"joinnum\":1}@{\"smp\":\"71749c3b6266437bacaa28f79f2f2b04\",\"active\":\"jdnc_1_4yuantaimang210422_2\",\"joinnum\":2}@{\"smp\":\"f6611d59cdd31012ead697f5b30af529\",\"active\":\"jdnc_1_3yuanshanyao210422_2\",\"joinnum\":3}@{\"smp\":\"3af8e9be5918a8064f037baa3690bc3a\",\"active\":\"jdnc_1_2yuanhuamei210422_2\",\"joinnum\":1}'
+let jxncShareCodeArr = ['{\"smp\":\"636dc4a0a444dabb8d26b68f34d5413e\",\"active\":\"jdnc_1_3yuanhuaniu210422_2\",\"joinnum\":1}@{\"smp\":\"71749c3b6266437bacaa28f79f2f2b04\",\"active\":\"jdnc_1_4yuantaimang210422_2\",\"joinnum\":1}@{\"smp\":\"f6611d59cdd31012ead697f5b30af529\",\"active\":\"jdnc_1_3yuanhuaniu210422_2\",\"joinnum\":2}@{\"smp\":\"3af8e9be5918a8064f037baa3690bc3a\",\"active\":\"jdnc_1_3yuanqiuligao210422_2\",\"joinnum\":1}'
  ];
 const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "jump", "des": "m", "url": "https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2"}',)}`; // 打开京喜农场
 let subTitle = '', message = '', option = {'open-url': openUrl}; // 消息副标题，消息正文，消息扩展参数
