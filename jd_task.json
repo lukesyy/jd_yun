@@ -685,6 +685,26 @@
         }
       },
       {
+        "name": "飞利浦电视成长记",
+        "type": "cron",
+        "time": "30 9 * 5,6 *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_flp.js"
+        }
+      },
+      {
+        "name": "赢一加新品手机",
+        "type": "cron",
+        "time": "28 9 * 5,6 *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_oneplus.js"
+        }
+      },
+      {
         "name": "超级无线组队分京豆",
         "type": "cron",
         "time": "15 6 * * 2",
