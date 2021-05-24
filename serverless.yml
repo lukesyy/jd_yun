@@ -28,18 +28,18 @@ inputs:
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_jin_tie
-    - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场 #京东极速版红包 #美丽研究院 #京享值PK
+    - timer: #东东农场 #东东萌宠 #京喜农场 #京东极速版红包 #美丽研究院 #京享值PK #手机狂欢城
         parameters:
-          name: fruit_pet_bookshop_jxnc_jxnc2_speedsign_speedredpocke_beauty_pk
-          cronExpression: "0 5 6-18/6,8 * * * *"
+          name: fruit_pet_jxnc_jxnc2_speedsign_speedredpocke_beauty_pk
+          cronExpression: "0 5 0-18/6,8 * * * *"
           enable: true
-          argument: jd_fruit&jd_pet&jd_bookshop&jd_jxnc&jd_jxnc2&jd_speed_sign&jd_speed_redpocke&jd_beauty&jd_adolf_pk
-    - timer: #宠汪汪喂食 #宠汪汪 #摇钱树 #京东种豆得豆 #京喜工厂 #东东工厂 #健康社区收取能量
+          argument: jd_fruit&jd_pet&jd_jxnc&jd_jxnc2&jd_speed_sign&jd_speed_redpocke&jd_beauty&jd_adolf_pk&jd_carnivalcity
+    - timer: #宠汪汪喂食 #宠汪汪 #摇钱树 #京东种豆得豆 #京喜工厂 #东东工厂 #健康社区收取能量 #城城领现金
         parameters:
           name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory_healthenergy
-          cronExpression: "0 3 */1 * * * *"
+          cronExpression: "0 3 0,6-23/1 * * * *"
           enable: true
-          argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_z_health_energy
+          argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_z_health_energy&jd_city
     - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京东直播
         parameters:
           name: joyreward_cash_necklace_smallhome_live
@@ -70,12 +70,12 @@ inputs:
           cronExpression: "0 30 7 * * * *"
           enable: true
           argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_jxd&jd_z_shop_captain&jd_market_lottery
-    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #京喜签到 #女装盲盒 #关注有礼 #人头马x博朗
+    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #京喜签到 #女装盲盒 #关注有礼 #人头马x博朗 #跳跳乐瓜分京豆
         parameters:
           name: pigPet_syj_kd_jdzz_sign_nzmh_follow
-          cronExpression: "0 20 0,9 * * * *"
+          cronExpression: "0 20 0,9,11,21 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jx_sign&jd_nzmh&jd_monk_shop_follow_sku&jd_adolf_martin&jd_adolf_mi
+          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jx_sign&jd_nzmh&jd_monk_shop_follow_sku&jd_adolf_martin&jd_adolf_mi&jd_jump
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的

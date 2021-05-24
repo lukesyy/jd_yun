@@ -457,7 +457,7 @@
       {
         "name": "取关京东店铺商品",
         "type": "cron",
-        "time": "50 10,19,23 * * *",
+        "time": "45 23 * * *",
         "running": true,
         "job": {
           "type": "runjs",
@@ -652,6 +652,36 @@
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_mi.js"
+        }
+      },
+      {
+        "name": "京东手机狂欢城",
+        "type": "cron",
+        "time": "0 0-18/6 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_carnivalcity.js"
+        }
+      },
+      {
+        "name": "城城领现金",
+        "type": "cron",
+        "time": "0 0,6-23/1 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_city.js"
+        }
+      },
+      {
+        "name": "跳跳乐瓜分京豆",
+        "type": "cron",
+        "time": "2 0,11,21 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_jump.js"
         }
       },
       {
