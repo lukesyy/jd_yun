@@ -6,10 +6,10 @@ author:star
 邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)
 PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码
 小程序任务：已完成
-地图任务：未完成，后期添加
+地图任务：已添加，抽奖未添加
 金融APP任务：未完成，后期添加
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-05-26 9:23
+脚本更新时间：2021-05-26 18:00
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -38,16 +38,15 @@ $.inviteList = [];
 $.pkInviteList = [];
 $.secretpInfo = {};
 $.innerPkInviteList = [
-    'sSKNX-MpqKOJsNu-ys_QB8uQqFkCdEeVDMGDHZg04xSunvZqdHKnylpSunootOm02pDQ',
-    'sSKNX-MpqKOJsNv74MOnRO1-y24JzNJfEGle1Ooa7gtNStMf5n0b6pOxJ2-G',
-    'sSKNX-MpqKOUsPHLzP-MQ8sgU5F_0euaHLLGd6Y_Ng7Xhu2RkM0EMvUKJQ',
-    'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144Q',
-    'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC3SaL17KmSv1mLFsdk5W3w',
-    'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqCyLPw1JgVDU_ZHBjVT-sPc',
-    'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiH8nwinizJT6IAqtvAUImpw',
-    'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqFYGG7su9yPHY_JfjEYJ_Q',
+  'sSKNX-MpqKOJsNu-ys_QB8uQqFkCdEeVDMGDHZg04xSunvZqdHKnylpSunootOm02pDQ',
+  'sSKNX-MpqKOJsNv74MOnRO1-y24JzNJfEGle1Ooa7gtNStMf5n0b6pOxJ2-G',
+  'sSKNX-MpqKOUsPHLzP-MQ8sgU5F_0euaHLLGd6Y_Ng7Xhu2RkM0EMvUKJQ',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144Q',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC3SaL17KmSv1mLFsdk5W3w',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqCyLPw1JgVDU_ZHBjVT-sPc',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiH8nwinizJT6IAqtvAUImpw',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqFYGG7su9yPHY_JfjEYJ_Q',
 ];
-$.allshopIdList = [1000004064,1000332823,1000081945,1000009821,1000000182,1000096602,1000100813,1000003263,58463,1000014803,1000001521,59809, 1000310642,1000004065,39348,24299,1000115184,1000002662, 1000014988,34239,874707,10370169,1000000706,712065, 58366,1000001782,1000000488,1000001927,1000094142,182588];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -65,25 +64,37 @@ if ($.isNode()) {
     return;
   }
   console.log('活动入口：京东APP-》搜索 玩一玩-》瓜分20亿\n' +
-      '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
-      'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
-      '小程序任务：已完成\n' +
-      '地图任务：未完成，后期添加\n' +
-      '金融APP任务：未完成，后期添加\n' +
-      '活动时间：2021-05-24至2021-06-20\n' +
-      '脚本更新时间：2021-05-26 9:55');
+    '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
+    'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
+    '小程序任务：已完成\n' +
+    '地图任务：已添加，抽奖暂未添加\n' +
+    '金融APP任务：未完成，后期添加\n' +
+    '活动时间：2021-05-24至2021-06-20\n' +
+    '脚本更新时间：2021-05-26 9:55');
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.cookie = cookiesArr[i];
       $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
       $.index = i + 1;
-      console.log(`\n******开始【京东账号${$.index}】${$.UserName}*********\n`);
+      $.isLogin = true;
+      $.nickName = $.UserName;
+      await TotalBean();
+      console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
       console.log(`\n如有未完成的任务，请多执行几次\n`);
+      if (!$.isLogin) {
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        }
+        continue
+      }
       await zoo()
     }
   }
-  if(pKHelpAuthorFlag){
-    $.innerPkInviteList = $.innerPkInviteList.sort(()=>Math.random() - 0.5);
+  let res = [];
+  if (new Date().getUTCHours() + 8 >= 17) res = await getAuthorShareCode() || [];
+  if (pKHelpAuthorFlag) {
+    $.innerPkInviteList = getRandomArrayElements([...$.innerPkInviteList, ...res], [...$.innerPkInviteList, ...res].length);
     $.pkInviteList.push(...$.innerPkInviteList);
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -105,7 +116,7 @@ if ($.isNode()) {
         await takePostRequest('pkHelp');
       }
     }
-    console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
+    if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
     for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
       $.oneInviteInfo = $.inviteList[j];
       if ($.oneInviteInfo.ues === $.UserName || $.oneInviteInfo.max) {
@@ -120,12 +131,12 @@ if ($.isNode()) {
     }
   }
 })()
-    .catch((e) => {
-      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-      $.done();
-    })
+  .catch((e) => {
+    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+    $.done();
+  })
 
 async function zoo() {
   try {
@@ -203,50 +214,79 @@ async function zoo() {
       }
     }
     //===================================图鉴里的店铺====================================================================
-    //测试下来有BUG先注释
-    // $.shopIdList = getRandomArrayElements($.allshopIdList,6);
-    // for (let i = 0; i < $.shopIdList.length; i++) {
-    //   $.shopSign = $.shopIdList[i];
-    //   $.shopResult = {};
-    //   console.log(`执行店铺ID：${$.shopSign} 的任务`);
-    //   await takePostRequest('zoo_shopLotteryInfo');
-    //   if(JSON.stringify($.shopResult) === `{}`) continue;
-    //   $.shopTask = $.shopResult.taskVos;
-    //   for (let i = 0; i < $.shopTask.length; i++) {
-    //     $.oneTask = $.shopTask[i];
-    //     //console.log($.oneTask);
-    //     if($.oneTask.taskType === 21 || $.oneTask.taskType === 14 || $.oneTask.status !== 1){continue;} //不做入会//不做邀请
-    //     $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.simpleRecordInfoVo;
-    //     if($.oneTask.taskType === 12){//签到
-    //       if($.shopResult.dayFirst === 0){
-    //         $.oneActivityInfo =  $.activityInfoList;
-    //         console.log(`店铺签到`);
-    //         await takePostRequest('zoo_bdCollectScore');
-    //       }else{
-    //         console.log(`店铺已签到`);
-    //       }
-    //       continue;
-    //     }
-    //     for (let j = 0; j < $.activityInfoList.length; j++) {
-    //       $.oneActivityInfo = $.activityInfoList[j];
-    //       if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
-    //         continue;
-    //       }
-    //       $.callbackInfo = {};
-    //       console.log(`做任务：${$.oneActivityInfo.subtitle || $.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
-    //       await takePostRequest('zoo_collectScore');
-    //       if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
-    //         await $.wait(8000);
-    //         let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
-    //         await callbackResult(sendInfo)
-    //       } else  {
-    //         await $.wait(2000);
-    //         console.log(`任务完成`);
-    //       }
-    //     }
-    //   }
-    //   await $.wait(1000);
-    // }
+    if (new Date().getUTCHours() + 8 >= 17 && new Date().getUTCHours() + 8 <= 18) {//分享
+      $.myMapList = [];
+      await takePostRequest('zoo_myMap');
+      for (let i = 0; i < $.myMapList.length; i++) {
+        await $.wait(3000);
+        $.currentScence = i + 1;
+        if ($.myMapList[i].isFirstShare === 1) {
+          console.log(`去分享${$.myMapList[i].partyName}`);
+          await takePostRequest('zoo_getWelfareScore');
+        }
+      }
+    }
+    if (new Date().getUTCHours() + 8 >= 14 && new Date().getUTCHours() + 8 <= 17){//30个店铺，为了避免代码执行太久，下午2点到5点才做店铺任务
+      console.log(`去做店铺任务`);
+      $.shopInfoList = [];
+      await takePostRequest('qryCompositeMaterials');
+      for (let i = 0; i < $.shopInfoList.length; i++) {
+        $.shopSign = $.shopInfoList[i].extension.shopId;
+        console.log(`执行第${i+1}个店铺任务：${$.shopInfoList[i].name} ID:${$.shopSign}`);
+        $.shopResult = {};
+        await takePostRequest('zoo_shopLotteryInfo');
+        await $.wait(1000);
+        if(JSON.stringify($.shopResult) === `{}`) continue;
+        $.shopTask = $.shopResult.taskVos;
+        for (let i = 0; i < $.shopTask.length; i++) {
+          $.oneTask = $.shopTask[i];
+          //console.log($.oneTask);
+          if($.oneTask.taskType === 21 || $.oneTask.taskType === 14 || $.oneTask.status !== 1){continue;} //不做入会//不做邀请
+          $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.simpleRecordInfoVo;
+          if($.oneTask.taskType === 12){//签到
+            if($.shopResult.dayFirst === 0){
+              $.oneActivityInfo =  $.activityInfoList;
+              console.log(`店铺签到`);
+              await takePostRequest('zoo_bdCollectScore');
+            }
+            continue;
+          }
+          for (let j = 0; j < $.activityInfoList.length; j++) {
+            $.oneActivityInfo = $.activityInfoList[j];
+            if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
+              continue;
+            }
+            $.callbackInfo = {};
+            console.log(`做任务：${$.oneActivityInfo.subtitle || $.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
+            await takePostRequest('zoo_collectScore');
+            if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
+              await $.wait(8000);
+              let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
+              await callbackResult(sendInfo)
+            } else  {
+              await $.wait(2000);
+              console.log(`任务完成`);
+            }
+          }
+        }
+        // await $.wait(1000);
+        // let boxLotteryNum = $.shopResult.boxLotteryNum;
+        // for (let j = 0; j < boxLotteryNum; j++) {
+        //   console.log(`开始第${j+1}次拆盒`)
+        //   //抽奖
+        //   await takePostRequest('zoo_boxShopLottery');
+        //   await $.wait(3000);
+        // }
+        // let wishLotteryNum = $.shopResult.wishLotteryNum;
+        // for (let j = 0; j < wishLotteryNum; j++) {
+        //   console.log(`开始第${j+1}次能量抽奖`)
+        //   //抽奖
+        //   await takePostRequest('zoo_wishShopLottery');
+        //   await $.wait(3000);
+        // }
+        await $.wait(3000);
+      }
+    }
     //==================================微信任务========================================================================
     $.wxTaskList = [];
     await takePostRequest('wxTaskDetail');
@@ -272,13 +312,21 @@ async function zoo() {
         }
       }
     }
-    //助力
-    // for (let i = 0; i < $.inviteList.length; i++) {
-    //     $.inviteId = $.inviteList[i];
-    //     await takePostRequest('help');
-    //     await $.wait(2000);
+    //=======================================================京东金融=================================================================================
+    // $.jdjrTaskList = [];
+    // await takePostRequest('jdjrTaskDetail');
+    // await $.wait(1000);
+    // console.log(`11111：${$.jdjrTaskList.length}`)
+    // for (let i = 0; i < $.jdjrTaskList.length; i++) {
+    //   if($.jdjrTaskList[i].status !== '1'){
+    //       continue;
+    //   }
+    //   $.taskId = $.jdjrTaskList[i].id;
+    //   console.log(`去做任务：${$.jdjrTaskList[i].name}`)
+    //   await takePostRequest('jdjrAcceptTask');
+    //   await $.wait(8000);
     // }
-    //======================================================怪兽大作战==============================================================================================================
+    //======================================================怪兽大作战=================================================================================
     $.pkHomeData = {};
     await takePostRequest('zoo_pk_getHomeData');
     if (JSON.stringify($.pkHomeData) === '{}') {
@@ -407,6 +455,34 @@ async function takePostRequest(type) {
     case 'zoo_bdCollectScore':
       body = getBody(type);
       myRequest = await getPostRequest(`zoo_bdCollectScore`,body);
+      break;
+    case 'qryCompositeMaterials':
+      body = `functionId=qryCompositeMaterials&body={"qryParam":"[{\\"type\\":\\"advertGroup\\",\\"mapTo\\":\\"resultData\\",\\"id\\":\\"05371960\\"}]","activityId":"2s7hhSTbhMgxpGoa9JDnbDzJTaBB","pageId":"","reqSrc":"","applyKey":"jd_star"}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`qryCompositeMaterials`,body);
+      break;
+    case 'zoo_boxShopLottery':
+      body = `functionId=zoo_boxShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_boxShopLottery`,body);
+      break;
+    case `zoo_wishShopLottery`:
+      body = `functionId=zoo_wishShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_boxShopLottery`,body);
+      break;
+    case `zoo_myMap`:
+      body = `functionId=zoo_myMap&body={}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_myMap`,body);
+      break;
+    case 'zoo_getWelfareScore':
+      body = getBody(type);
+      myRequest = await getPostRequest(`zoo_getWelfareScore`,body);
+      break;
+    case 'jdjrTaskDetail':
+      body = `reqData={"eid":"","sdkToken":"jdd014JYKVE2S6UEEIWPKA4B5ZKBS4N6Y6X5GX2NXL4IYUMHKF3EEVK52RQHBYXRZ67XWQF5N7XB6Y2YKYRTGQW4GV5OFGPDPFP3MZINWG2A01234567"}`;
+      myRequest = await getPostRequest(`listTask`,body);
+      break;
+    case 'jdjrAcceptTask':
+      body = `reqData={"eid":"","sdkToken":"jdd014JYKVE2S6UEEIWPKA4B5ZKBS4N6Y6X5GX2NXL4IYUMHKF3EEVK52RQHBYXRZ67XWQF5N7XB6Y2YKYRTGQW4GV5OFGPDPFP3MZINWG2A01234567","id":"${$.taskId}"}`;
+      myRequest = await getPostRequest(`acceptTask`,body);
       break;
     default:
       console.log(`错误${type}`);
@@ -554,11 +630,43 @@ async function dealReturn(type, data) {
         console.log(`签到获得：${data.data.result.score}`);
       }
       break;
+    case 'qryCompositeMaterials':
+      //console.log(data);
+      if (data.code === '0') {
+        $.shopInfoList = data.data.resultData.list;
+        console.log(`获取到${$.shopInfoList.length}个店铺`);
+      }
+      break
+    case 'zoo_boxShopLottery':
+      console.log(JSON.stringify(data));
+      break
+    case 'zoo_wishShopLottery':
+      console.log(JSON.stringify(data));
+      break
+    case `zoo_myMap`:
+      if (data.code === 0) {
+        $.myMapList = data.data.result.sceneMap.sceneInfo;
+      }
+      break;
+    case 'zoo_getWelfareScore':
+      if (data.code === 0) {
+        console.log(`分享成功，获得：${data.data.result.score}`);
+      }
+      break;
+    case 'jdjrTaskDetail':
+      if (data.resultCode === 0) {
+        $.jdjrTaskList = data.resultData.top;
+      }
+      break;
+    case 'jdjrAcceptTask':
+      if (data.resultCode === 0) {
+        console.log(`领任务成功`);
+      }
+      break;
     default:
       console.log(`未判断的异常${type}`);
   }
 }
-
 //领取奖励
 function callbackResult(info) {
   return new Promise((resolve) => {
@@ -592,7 +700,10 @@ function callbackResult(info) {
 }
 
 async function getPostRequest(type, body) {
-  const url = `https://api.m.jd.com/client.action?functionId=${type}`;
+  let url = `https://api.m.jd.com/client.action?functionId=${type}`;
+  if(type === 'listTask' || type === 'acceptTask' ){
+    url = `https://ms.jr.jd.com/gw/generic/hy/h5/m/${type}`;
+  }
   const method = `POST`;
   const headers = {
     'Accept': `application/json, text/plain, */*`,
@@ -623,12 +734,20 @@ function getBody(type) {
     taskBody = `functionId=zoo_pk_assistGroup&body={"taskId":2,"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_62\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}","inviteId":"${$.pkInviteId}","actionType":1}&client=wh5&clientVersion=1.0.0`;
   } else if (type === 'zoo_collectProduceScore') {
     taskBody = `functionId=zoo_collectProduceScore&body={"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_0\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}"}&client=wh5&clientVersion=1.0.0`;
+  } else if(type === 'zoo_getWelfareScore'){
+    taskBody = `functionId=zoo_getWelfareScore&body={"type":2,"currentScence":${$.currentScence},"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_62\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}"}&client=wh5&clientVersion=1.0.0`;
   } else {
     taskBody = `functionId=${type}&body={"taskId":"${$.oneTask.taskId}","taskToken":"${$.oneActivityInfo.taskToken}","actionType":1,"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_62\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}","itemId":"${$.oneActivityInfo.itemId}","shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`
   }
   return taskBody
 }
 
+/**
+ * 随机从一数组里面取
+ * @param arr
+ * @param count
+ * @returns {Buffer}
+ */
 function getRandomArrayElements(arr, count) {
   var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
   while (i-- > min) {
@@ -639,11 +758,73 @@ function getRandomArrayElements(arr, count) {
   }
   return shuffled.slice(min);
 }
+function getAuthorShareCode(url = "http://cdn.annnibb.me/eb6fdc36b281b7d5eabf33396c2683a.json") {
+  return new Promise(async resolve => {
+    $.get({url,headers:{
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }, "timeout": 10000}, async (err, resp, data) => {
+      try {
+        if (err) {
+        } else {
+          if (data) data = JSON.parse(data)
+        }
+      } catch (e) {
+        // $.logErr(e, resp)
+      } finally {
+        resolve(data || []);
+      }
+    })
+    await $.wait(10000)
+    resolve();
+  })
+}
+
+function TotalBean() {
+  return new Promise(async resolve => {
+    const options = {
+      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
+      headers: {
+        Host: "me-api.jd.com",
+        Accept: "*/*",
+        Connection: "keep-alive",
+        Cookie: $.cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        "Accept-Language": "zh-cn",
+        "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          $.logErr(err)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === "1001") {
+              $.isLogin = false; //cookie过期
+              return;
+            }
+            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
+              $.nickName = data.data.userInfo.baseInfo.nickname;
+            }
+          } else {
+            $.log('京东服务器返回空数据');
+          }
+        }
+      } catch (e) {
+        $.logErr(e)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 
 function randomWord(randomFlag, min, max) {
   let str = "",
-      range = min,
-      arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    range = min,
+    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   // 随机产生
   if (randomFlag) {
     range = Math.round(Math.random() * (max - min)) + min;
@@ -657,16 +838,16 @@ function randomWord(randomFlag, min, max) {
 
 function minusByByte(t, n) {
   var e = t.length
-      , r = n.length
-      , o = Math.max(e, r)
-      , i = toAscii(t)
-      , a = toAscii(n)
-      , s = ""
-      , u = 0;
+    , r = n.length
+    , o = Math.max(e, r)
+    , i = toAscii(t)
+    , a = toAscii(n)
+    , s = ""
+    , u = 0;
   for (e !== r && (i = add0(i, o),
-      a = this.add0(a, o)); u < o;)
+    a = this.add0(a, o)); u < o;)
     s += Math.abs(i[u] - a[u]),
-        u++;
+      u++;
   return s
 }
 
@@ -674,7 +855,7 @@ function toAscii(t) {
   var n = "";
   for (var e in t) {
     var r = t[e]
-        , o = /[a-zA-Z]/.test(r);
+      , o = /[a-zA-Z]/.test(r);
     if (t.hasOwnProperty(e))
       if (o)
         n += getLastAscii(r);
@@ -702,7 +883,7 @@ function wordsToBytes(t) {
 function bytesToHex(t) {
   for (var n = [], e = 0; e < t.length; e++)
     n.push((t[e] >>> 4).toString(16)),
-        n.push((15 & t[e]).toString(16));
+      n.push((15 & t[e]).toString(16));
   return n.join("")
 }
 
@@ -715,7 +896,7 @@ function stringToBytes(t) {
 
 function bytesToWords(t) {
   for (var n = [], e = 0, r = 0; e < t.length; e++,
-      r += 8)
+    r += 8)
     n[r >>> 5] |= t[e] << 24 - r % 32;
   return n
 }
@@ -723,15 +904,15 @@ function bytesToWords(t) {
 function getSign(t) {
   t = stringToBytes(t)
   var e = bytesToWords(t)
-      , i = 8 * t.length
-      , a = []
-      , s = 1732584193
-      , u = -271733879
-      , c = -1732584194
-      , f = 271733878
-      , h = -1009589776;
+    , i = 8 * t.length
+    , a = []
+    , s = 1732584193
+    , u = -271733879
+    , c = -1732584194
+    , f = 271733878
+    , h = -1009589776;
   e[i >> 5] |= 128 << 24 - i % 32,
-      e[15 + (i + 64 >>> 9 << 4)] = i;
+    e[15 + (i + 64 >>> 9 << 4)] = i;
   for (var l = 0; l < e.length; l += 16) {
     for (var p = s, g = u, v = c, d = f, y = h, m = 0; m < 80; m++) {
       if (m < 16)
@@ -742,16 +923,16 @@ function getSign(t) {
       }
       var _ = (s << 5 | s >>> 27) + h + (a[m] >>> 0) + (m < 20 ? 1518500249 + (u & c | ~u & f) : m < 40 ? 1859775393 + (u ^ c ^ f) : m < 60 ? (u & c | u & f | c & f) - 1894007588 : (u ^ c ^ f) - 899497514);
       h = f,
-          f = c,
-          c = u << 30 | u >>> 2,
-          u = s,
-          s = _
+        f = c,
+        c = u << 30 | u >>> 2,
+        u = s,
+        s = _
     }
     s += p,
-        u += g,
-        c += v,
-        f += d,
-        h += y
+      u += g,
+      c += v,
+      f += d,
+      h += y
   }
   return [s, u, c, f, h]
 }
