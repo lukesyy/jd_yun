@@ -705,6 +705,36 @@
         }
       },
       {
+        "name": "618大势新品赏",
+        "type": "cron",
+        "time": "17 9,20 * 5,6 *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_newInteraction.js"
+        }
+      },
+      {
+        "name": "京喜阶梯红包",
+        "type": "cron",
+        "time": "35 9,20 * 5,6 *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_jxhb.js"
+        }
+      },
+      {
+        "name": "京东超级盒子",
+        "type": "cron",
+        "time": "20 9,20 * 5,6 *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_superbox.js"
+        }
+      },
+      {
         "name": "618动物联萌",
         "type": "cron",
         "time": "15 0,1,5-23/1 * * *",
