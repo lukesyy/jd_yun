@@ -55,7 +55,7 @@ inputs:
     - timer: #天天提鹅 #健康社区 #618动物联萌
         parameters:
           name: dailyegg_healthcommunity
-          cronExpression: "0 15 0,1,5-23/2 * * * *"
+          cronExpression: "0 15 0,1,5-23/1 * * * *"
           enable: true
           argument: jd_daily_egg&jd_z_health_community&jd_zoo
     - timer: #东东超市 #每日抽奖 #京喜财富岛

@@ -707,7 +707,7 @@
       {
         "name": "618动物联萌",
         "type": "cron",
-        "time": "15 0,5-23/2 * * *",
+        "time": "15 0,1,5-23/1 * * *",
         "running": true,
         "job": {
           "type": "runjs",
