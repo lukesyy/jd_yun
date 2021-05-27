@@ -745,6 +745,16 @@
         }
       },
       {
+        "name": "家电星推官",
+        "type": "cron",
+        "time": "0 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_xtg.js"
+        }
+      },
+      {
         "name": "超级无线组队分京豆",
         "type": "cron",
         "time": "15 6 * * 2",

@@ -22,12 +22,12 @@ inputs:
           cronExpression: "0 1 0 * * * *"
           enable: true
           argument: jd_bean_sign&jd_club_lottery&jd_car_exchange&jd_monk_inter_shop_sign&jd_redPacket&jd_shop
-    - timer: #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币 #天天提鹅 #领金贴
+    - timer: #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币 #天天提鹅 #领金贴 家电星推官
         parameters:
-          name: unsubscribe_lotteryMachine_car_ms_jintie
+          name: unsubscribe_lotteryMachine_car_ms_jintie_xtg
           cronExpression: "0 0 0 * * * *"
           enable: true
-          argument: jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_jin_tie
+          argument: jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_jin_tie&jd_xtg
     - timer: #东东农场 #东东萌宠 #京喜农场 #京东极速版红包 #美丽研究院 #京享值PK #手机狂欢城
         parameters:
           name: fruit_pet_jxnc_jxnc2_speedsign_speedredpocke_beauty_pk
