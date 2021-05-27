@@ -1,11 +1,13 @@
-## 京东618活动开始了，先手动做任务，坐等大佬更新脚本！(๑•̀ㅂ•́)و✧
+## 京东618活动开始了，已同步LXK大佬618动物联萌脚本，冲就完事了(๑•̀ㅂ•́)و✧
+
 # 为防止仓库再次被封，本仓库仅保留腾讯云函数、elecV2P两种方式运行
 # 想继续使用AC运行的朋友请移步原仓库，没有大的更新随缘维护：https://github.com/zero205/JD  
 
 ## 注意！原来使用zero205/JD仓库的用户可不用重新创建仓库，替换原脚本的代码即可同步本仓库
-* 1.先打开自己的仓库，然后[点击修改syncGit.yml文件](./.github/workflows/syncGit.yml)，点击右上角铅笔图标  
-* 2.[点此打开](https://ghproxy.com/https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/.github/workflows/syncGit.yml)复制全部代码替换原代码  
+* 1.先打开自己的仓库，然后找到syncGit.yml文件【`路径：./.github/workflows/syncGit.yml`】，点击右上角铅笔图标进行修改  
+* 2.[点此打开最新同步脚本](https://ghproxy.com/https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/.github/workflows/syncGit.yml)，然后复制全部代码替换原代码  
 * 3.点击右边绿色`Start commit`,点击`Commit changes`，手动运行一次此任务即可
+
 ## 使用教程（不要fork！觉得有用的可以点个star :blush:）
 * > ~~Github Action 运行~~ (响应lxk大佬要求，删除AC教程)
 * > 腾讯云函数部署【推荐】。[点此查看](./backUp/tencentscf.md)

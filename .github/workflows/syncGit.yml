@@ -1,7 +1,7 @@
 name: 1获取最新脚本
 on:
   schedule:
-    - cron: '50 */3 * * *'
+    - cron: '5 */3 * * *'
   workflow_dispatch:
   watch:
     types: started
