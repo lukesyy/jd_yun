@@ -755,6 +755,16 @@
         }
       },
       {
+        "name": "家电星推官好友互助",
+        "type": "cron",
+        "time": "0 0 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_xtg_help.js"
+        }
+      },
+      {
         "name": "金榜创造营",
         "type": "cron",
         "time": "25 6,22 * * *",
