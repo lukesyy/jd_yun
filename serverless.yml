@@ -40,12 +40,12 @@ inputs:
           cronExpression: "0 3 0,6-23/1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_z_health_energy&jd_city
-    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京东直播
+    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京东直播 #金榜创造营
         parameters:
           name: joyreward_cash_necklace_smallhome_live
           cronExpression: "0 6 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_live
+          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_live&jd_gold_creator
     - timer: #整点京豆雨 #半点京豆雨
         parameters:
           name: superredrain_halfredrain
