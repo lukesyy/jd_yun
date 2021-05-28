@@ -2,7 +2,7 @@
  * @Author: LXK9301
  * @Date: 2020-10-21 17:04:04
  * @Last Modified by: LXK9301
- * @Last Modified time: 2021-05-27 13:15:04
+ * @Last Modified time: 2021-05-27 18:15:04
  */
 /*
 家电星推官脚本
@@ -54,14 +54,6 @@ let starID = [
     "starId": "ykd-liutao",
   }
 ];
-const shareID = [
-  "39440572-136a-4b38-bc13-f767d07406fb",
-  "796a8a5e-ef50-4501-a6a6-b7717de022ae",
-  "2bc87513-9344-453c-8733-a106bcbbb6a7",
-  "f18b535a-d9c0-48c7-9a15-16f674065b64",
-  "a778e308-858d-4039-a4f0-15aafbb83181",
-  "45f97217-e150-4dc9-baed-054a4e07ae02",
-];
 $.allShareId = {};
 const JD_API_HOST = "https://guardianstarjd.m.jd.com/star";
 !(async () => {
@@ -112,7 +104,8 @@ const JD_API_HOST = "https://guardianstarjd.m.jd.com/star";
         }
         continue;
       }
-      console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓`);
+      console.log(`一共${starID.length}个${$.name}任务，耗时会很久，京豆先到先得！！！！！！！！！！！
+请提前知晓`);
       // $.beanCount = beforeTotal && beforeTotal['base'].jdNum;
       for (let index = 0; index < starID.length; index++) {
         $.activeId = starID[index]['starId'];
@@ -121,41 +114,51 @@ const JD_API_HOST = "https://guardianstarjd.m.jd.com/star";
         $.times = 0;
         await JD_XTG(true);
       }
-      // console.log(`\n等待8秒后，再去领取奖励\n`);
-      // console.log(`做任务之前京豆总计:${$.beanCount}`)
-      // await $.wait(8000);
-      // for (let index = 0; index < starID.length; index++) {
-      //   $.activeId = starID[index]['starId'];
-      //   $.j = index;
-      //   await JD_XTG();
-      //   // await doSupport(shareID[index]);
-      // }
-      // $.allShareId[i] = $.shareID;
-      // const afterTotal = await TotalBean();
-      // $.jdNum = afterTotal['base'].jdNum;
       await showMsg();
     }
   }
   if ($.isNode() && allMsg) {
     await notify.sendNotify($.name, allMsg);
   }
-  // console.log($.allShareId);
-  // for (let v = 0; v < cookiesArr.length; v++) {
-  //   cookie = cookiesArr[v];
-  //   console.log(`自己账号内部互助\n\n`);
-  //   for (let item of Object.keys($.allShareId)) {
-  //     for (let index = 0; index < starID.length; index++) {
-  //       $.activeId = starID[index]['starId'];
-  //       console.log(`账号${v + 1}去助力 账号${Number(item) + 1} 的${$.activeId}活动的邀请码${$.allShareId[item][index]}\n`)
-  //       await doSupport($.allShareId[item][index]);
-  //     }
-  //   }
-  //   console.log(`如有剩下的机会，助力作者\n\n`);
-  //   for (let index = 0; index < starID.length; index++) {
-  //     $.activeId = starID[index]['starId'];
-  //     await doSupport(shareID[index]['starId']);
-  //   }
-  // }
+  //助力功能
+  for (let index = 0; index < starID.length; index++) {
+    $.invites = [];
+    $.activeId = starID[index]['starId'];
+    $.appIndex = index + 1;
+    console.log(`\n获取星推官【${$.activeId}】下的邀请码\n`)
+    for (let v = 0; v < cookiesArr.length; v++) {
+      cookie = cookiesArr[v];
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+      $.index = v + 1;
+      await initSuportInfo();
+    }
+    if ($.invites.length > 0) {
+      $.allShareId[starID[index]['starId']] = $.invites;
+    }
+  }
+  if (!cookiesArr || cookiesArr.length < 2) return
+  for (let v = 0; v < cookiesArr.length; v++) {
+    cookie = cookiesArr[v];
+    $.index = v + 1;
+    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+    console.log(`自己账号内部互助\n\n`);
+    for (let oneAppId in $.allShareId) {
+      let oneAcHelpList = $.allShareId[oneAppId];
+      for (let j = 0; j < oneAcHelpList.length; j++) {
+        $.item = oneAcHelpList[j];
+        if ($.UserName === $.item['userName']) continue;
+        if (!$.item['inviteId'] || $.item['max']) continue
+        console.log(`账号${$.index} ${$.UserName} 去助力账号 ${$.item['userName']}的第${$.item['index']}个星推官活动【${$.item['starId']}】，邀请码 【${$.item['inviteId']}】`)
+        $.canHelp = true;
+        $.activeId = $.item['starId'];
+        await doSupport($.item['inviteId']);
+        if (!$.canHelp) {
+          console.log(`助力机会已耗尽，跳出`);
+          break;//此处如果break，则遇到第一个活动就无助力机会时，不会继续助力第二个活动了
+        }
+      }
+    }
+  }
 })()
     .catch((e) => {
       $.log("", `❌ ${$.name}, 失败! 原因: ${e}!`, "");
@@ -170,8 +173,8 @@ async function showMsg() {
     if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`)
   } else {
     if ($.beanCount) {
-      $.msg($.name, ``, `京东账号${$.index} ${$.nickName || $.UserName}星推官活动获得：${$.beanCount}京豆`);
-      allMsg += `京东账号${$.index} ${$.nickName || $.UserName}星推官活动获得：${$.beanCount}京豆\n`;
+      $.msg($.name, ``, `京东账号${$.index} ${$.nickName || $.UserName}\n星推官活动获得：${$.beanCount}京豆`);
+      allMsg += `京东账号${$.index} ${$.nickName || $.UserName}\n星推官活动获得：${$.beanCount}京豆\n`;
     }
   }
 }
@@ -248,7 +251,14 @@ function initSuportInfo() {
           // console.log(`\n助力结果:${data}`);
           data = JSON.parse(data);
           if (data['code'] === 200) {
-            $.shareID.push(data.data);//邀请码
+            console.log(`账号${$.index} ${$.UserName} ${$.activeId}星推官邀请码：${data.data}`);
+            $.invites.push({
+              inviteId: data.data,
+              userName: $.UserName,
+              starId: $.activeId,
+              index: $.appIndex,
+              max: false
+            })
           } else {
             console.log(`邀请码获取失败:`)
           }
@@ -358,79 +368,24 @@ function getBrowsePrize(browseId) {
     });
   });
 }
-function shareTask(shareId) {
-  let r = Date.now().toString();
-  let hi = "07035cabb557f096";
-  let o = hi + r;
-  let t = "/guardianstar/shareTask";
-  let a = `starId=${$.activeId}&shareId=${shareId}`;
-  return new Promise(async (resolve) => {
-    const options = {
-      url: `${JD_API_HOST}/shareTask`,
-      body: `shareId=${shareId}&starId=${$.activeId}`,
-      headers: {
-        Accept: "application/json,text/plain, */*",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "zh-cn",
-        Connection: "keep-alive",
-        Cookie: cookie,
-        Host: "guardianstarjd.m.jd.com",
-        Referer: "https://guardianstarjd.m.jd.com/",
-        sign: za(a, o, t).toString(),
-        timestamp: r,
-        "User-Agent": "jdapp;android;9.4.4;10;3b78ecc3f490c7ba;network/UNKNOWN;model/M2006J10C;addressid/138543439;aid/3b78ecc3f490c7ba;oaid/7d5870c5a1696881;osVer/29;appBuild/85576;psn/3b78ecc3f490c7ba|541;psq/2;uid/3b78ecc3f490c7ba;adk/;ads/;pap/JA2015_311210|9.2.4|ANDROID 10;osv/10;pv/548.2;jdv/0|iosapp|t_335139774|appshare|CopyURL|1606277982178|1606277986;ref/com.jd.lib.personal.view.fragment.JDPersonalFragment;partner/xiaomi001;apprpd/MyJD_Main;Mozilla/5.0 (Linux; Android 10; M2006J10C Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36",
-      },
-    }
-    $.post(options, (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`);
-          console.log(`${$.name} API请求失败，请检查网路重试`);
-        } else {
-          // console.log(`好友助力领京豆结果:${data}`);
-          // data = JSON.parse(data);
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    });
-  });
-}
 function doSupport(shareId) {
-  let r = Date.now().toString();
-  let hi = "07035cabb557f096";
-  let o = hi + r;
-  let t = "doSupport";
-  let a = `starId=${$.activeId}&shareId=${shareId}`;
   return new Promise(async (resolve) => {
-    const options = {
-      url: `${JD_API_HOST}/doSupport`,
-      body: `starId=${$.activeId}&shareId=${shareId}`,
-      headers: {
-        Accept: "application/json,text/plain, */*",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "zh-cn",
-        Connection: "keep-alive",
-        Cookie: cookie,
-        Host: "guardianstarjd.m.jd.com",
-        Referer: "https://guardianstarjd.m.jd.com/",
-        sign: za(a, o, t).toString(),
-        timestamp: r,
-        "User-Agent": "jdapp;android;9.4.4;10;3b78ecc3f490c7ba;network/UNKNOWN;model/M2006J10C;addressid/138543439;aid/3b78ecc3f490c7ba;oaid/7d5870c5a1696881;osVer/29;appBuild/85576;psn/3b78ecc3f490c7ba|541;psq/2;uid/3b78ecc3f490c7ba;adk/;ads/;pap/JA2015_311210|9.2.4|ANDROID 10;osv/10;pv/548.2;jdv/0|iosapp|t_335139774|appshare|CopyURL|1606277982178|1606277986;ref/com.jd.lib.personal.view.fragment.JDPersonalFragment;partner/xiaomi001;apprpd/MyJD_Main;Mozilla/5.0 (Linux; Android 10; M2006J10C Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36",
-      },
-    };
+    const options = taskPostUrl('task/doSupport', 'doSupport', `starId=${$.activeId}&shareId=${shareId}`)
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`);
           console.log(`${$.name} API请求失败，请检查网路重试`);
         } else {
-          // console.log(`\n助力结果:${data}`);
-          // data = JSON.parse(data);
+          data = JSON.parse(data);
+          if (data && data.code === 200) {
+            if (data['data']['status'] === 6) {
+              console.log('助力成功')
+            }
+            if (data['data']['status'] === 5) $.canHelp = false;
+            if (data['data']['status'] === 4) $.item['max'] = true;
+          }
+          console.log(`助力结果:${JSON.stringify(data)}\n`);
         }
       } catch (e) {
         $.logErr(e, resp);
