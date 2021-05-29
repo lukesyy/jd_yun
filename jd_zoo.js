@@ -38,11 +38,11 @@ $.inviteList = [];
 $.pkInviteList = [];
 $.secretpInfo = {};
 $.innerPkInviteList = [
-  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144o',
-  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC3SaL17KmSv1mLFsdk5W3I',
-  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqCyLPw1JgVDU_ZHBjVT-sPk',
-  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiH8nwinizJT6IAqtvAUImpI',
-  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqFYGG7su9yPHY_JfjEYJ8w',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144s',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC3SaL17KmSv1mLFsdk5W3M',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqCyLPw1JgVDU_ZHBjVT-sPg',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiH8nwinizJT6IAqtvAUImpM',
+  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqFYGG7su9yPHY_JfjEYJ8g',
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
