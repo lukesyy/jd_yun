@@ -93,8 +93,8 @@ jobs:
       - name: "安装依赖"
         run: |
           npm install
-          npm install crypto-js
-          npm install got@11.5.1
+          npm install tencentcloud-sdk-nodejs
+          npm install got
           npm install tough-cookie
           npm install js-yaml
 
@@ -171,14 +171,6 @@ jobs:
 
       - name: "压缩文件夹"
         run: zip -r myfile.zip ./*
-        
-      - name: "安装依赖"
-        run: |
-          npm install
-          npm install tencentcloud-sdk-nodejs
-          npm install got@11.5.1
-          npm install tough-cookie
-          npm install js-yaml
 
       - name: "部署到腾讯云函数"
         run: node tencentscf.js
