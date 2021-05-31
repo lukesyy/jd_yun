@@ -9,7 +9,7 @@ PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余
 地图任务：已添加，下午2点到5点执行,抽奖已添加(基本都是优惠券)
 金融APP任务：已完成
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-05-28 9:20
+脚本更新时间：2021-05-30 21:25
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -43,11 +43,7 @@ $.inviteList = [
 ];
 $.pkInviteList = [];
 $.secretpInfo = {};
-$.innerPkInviteList = [
-  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144Mi',
-  'sSKNX-MpqKOJsNu-kMjfVxvBEiqC4-11EPBBqpXJ29RbBX7Bhsvq9t0JdD9-jooP',
-  'sSKNX-MpqKOJsNu8mJjZUAR9HdtkIkCz4HcgxwQZTOvfN7VZhP1o1GA5KVYT16Y1'
-];
+$.innerPkInviteList = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -92,7 +88,8 @@ if ($.isNode()) {
         }
         continue
       }
-      await zoo()
+      await zoo();
+      if($.hotFlag)$.secretpInfo[$.UserName] = false;//火爆账号不执行助力
     }
   }
   let res = [], res2 = [], res3 = [];
