@@ -46,18 +46,18 @@ inputs:
           cronExpression: "0 6 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_live&jd_gold_creator
-    - timer: #整点京豆雨 #半点京豆雨
+    - timer: #半点京豆雨 #618动物联萌收集金币
         parameters:
-          name: superredrain_halfredrain
-          cronExpression: "2 1,30 0,6-23/1 * * * *"
+          name: halfredrain_zooCollect
+          cronExpression: "2 1,35 0,6-23/1 * * * *"
           enable: true
-          argument: jd_super_redrain&jd_half_redrain
-    - timer: #天天提鹅 #健康社区 #618动物联萌
+          argument: jd_half_redrain&jd_zooCollect
+    - timer: #整点京豆雨 #天天提鹅 #健康社区 #618动物联萌
         parameters:
           name: dailyegg_healthcommunity
-          cronExpression: "0 15 0,1,5-23/1 * * * *"
+          cronExpression: "0 15 0,5-23/2 * * * *"
           enable: true
-          argument: jd_daily_egg&jd_z_health_community&jd_zoo
+          argument: jd_daily_egg&jd_z_health_community&jd_zoo&jd_super_redrain
     - timer: #东东超市 #每日抽奖 #京喜财富岛
         parameters:
           name: cfd_superMarket

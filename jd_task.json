@@ -737,11 +737,21 @@
       {
         "name": "618动物联萌",
         "type": "cron",
-        "time": "15 0,1,5-23/1 * * *",
+        "time": "35 0,5-23/2 * * *",
         "running": true,
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_zoo.js"
+        }
+      },
+      {
+        "name": "618动物联萌收集金币",
+        "type": "cron",
+        "time": "*/30 0,5-23/1 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_zooCollect.js"
         }
       },
       {

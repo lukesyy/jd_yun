@@ -65,7 +65,7 @@ const JD_API_HOST = "https://api.m.jd.com/client.action";
       console.log(`\n******开始【京东账号${$.index}】${$.UserName}*********\n`);
       await shareCodesFormat()
       await main()
-      await showMsg()
+      // await showMsg()
     }
   }
 })()
@@ -114,7 +114,7 @@ async function helpFriends() {
 function showMsg() {
   return new Promise(async resolve => {
     message += `本次获得${$.earn}健康值，累计${$.score}健康值\n`
-    $.msg($.name, '', `京东账号${$.index} ${$.UserName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index} ${$.UserName}\n${message}`);
     resolve();
   })
 }
