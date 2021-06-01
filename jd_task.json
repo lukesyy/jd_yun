@@ -246,16 +246,6 @@
         }
       },
       {
-        "name": "京喜农场2",
-        "type": "cron",
-        "time": "6 9,12,18 * * *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_jxnc2.js"
-        }
-      },
-      {
         "name": "京东快递签到",
         "type": "cron",
         "time": "25 0 * * *",
@@ -377,7 +367,7 @@
       {
         "name": "京东全民开红包",
         "type": "cron",
-        "time": "30,35 0 * * *",
+        "time": "30,35 */3 * * *",
         "running": true,
         "job": {
           "type": "runjs",
@@ -622,36 +612,6 @@
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_market_lottery.js"
-        }
-      },
-      {
-        "name": "京享值PK",
-        "type": "cron",
-        "time": "20 8,13,18 17-31 5 *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_pk.js"
-        }
-      },
-      {
-        "name": "人头马x博朗",
-        "type": "cron",
-        "time": "25 9 20-31 5 *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_martin.js"
-        }
-      },
-      {
-        "name": "Redmi->合成小金刚",
-        "type": "cron",
-        "time": "28 9 20-27 5 *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_mi.js"
         }
       },
       {
