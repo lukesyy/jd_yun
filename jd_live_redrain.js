@@ -1,7 +1,8 @@
 /*
 超级直播间红包雨
-更新时间：2021-05-29
+更新时间：2021-06-2
 下一场超级直播间时间:06月08日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4272306
+下一场超级直播间时间:06月05日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4313541
 下一场超级直播间时间:06月04日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4228810
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
@@ -23,11 +24,15 @@ const $ = new Env('超级直播间红包雨');
 let allMessage = '', id = 'RRA2cUocg5uYEyuKpWNdh4qE4NW1bN2';
 let bodyList = {
   "4": {
-    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1622272071067&sign=d7196ce70d3f6ac82d868d338d6999aa&sv=101",
+    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1622629280006&sign=6061fe75c9fbdc72dd4831d26dab245f&sv=121",
     "body": "body=%7B%22liveId%22%3A%224228810%22%7D"
   },
+  "5": {
+    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1622629276077&sign=ba151dffe4d5edc17bc174258d7abe21&sv=112",
+    "body": "body=%7B%22liveId%22%3A%224313541%22%7D"
+  },
   "8": {
-    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1622272070075&sign=abbe74eed81c256a0a705e593f4c9e0f&sv=120",
+    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1622629275093&sign=2a49aec55b35456616d7a48d725d622f&sv=102",
     "body": "body=%7B%22liveId%22%3A%224272306%22%7D"
   }
 }
@@ -44,8 +49,6 @@ if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
-  // if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
-  // if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0)
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -56,10 +59,8 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     return;
   }
   console.log('下一场超级直播间时间:06月08日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4272306\n' +
-      '下一场超级直播间时间:06月04日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4228810\n' +
-      '下一场超级直播间时间:06月01日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4263922\n' +
-      '下一场超级直播间时间:06月01日  00:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4263889\n' +
-      '下一场超级直播间时间:05月31日  19:30，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4241322')
+      '下一场超级直播间时间:06月05日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4313541\n' +
+      '下一场超级直播间时间:06月04日  18:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4228810')
   $.newAcids = [];
   await getRedRain();
 
@@ -268,7 +269,7 @@ function taskUrl(function_id, body = {}) {
 function getRedRainIds(url = "https://raw.githubusercontent.com/gitupdate/updateTeam/master/redrain.json") {
   return new Promise(async resolve => {
     const options = {
-      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
+      url: `${url}`, "timeout": 10000, headers: {
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       }
     };
