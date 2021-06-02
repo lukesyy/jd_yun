@@ -91,7 +91,7 @@ if ($.isNode()) {
   let res = [], res2 = [], res3 = [];
   res3 = await getAuthorShareCode('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json');
   if (!res3) await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json')
-  if (new Date().getHours()>= 17) {
+  if (new Date().getHours()>= 9) {
     res = await getAuthorShareCode() || [];
     res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json') || [];
   }
