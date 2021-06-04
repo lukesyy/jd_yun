@@ -135,7 +135,7 @@ if (process.env.PUSH_PLUS_USER) {
 
 async function sendNotify(text, desp, params = {}) {
   //提供6种通知
-  desp += `如发现新活动脚本\n请通过issues告知\nhttps://github.com/zero205/JD_tencent_scf/issues/new`;
+  desp += `\n通知：\n618动物联萌将取消自动释放技能\n请自行手动使用技能\n本仓库备份地址：\nhttps://gitee.com/zero205/JD_tencent_scf`;
   await Promise.all([
     serverNotify(text, desp),//微信server酱
     pushPlusNotify(text, desp)//pushplus(推送加)

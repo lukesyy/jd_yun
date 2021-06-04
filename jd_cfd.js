@@ -149,6 +149,7 @@ let cookiesArr = [], cookie = '', token;
              console['log']('账号' + $['UserName'] + ' 去参加 ' + _0x3b1965 + ' 寻宝大作战');
              await _0x5557a9['ottNj'](joinGroup, _0x3b1965);
              await $['wait'](0x1f40);
+             await $['wait'](0x2710);
              if (!$['canHelp']) break;
          }
      }
@@ -182,8 +183,10 @@ let cookiesArr = [], cookie = '', token;
                  console['log']('去助力好友 【' + _0x527224 + '】');
                  if (token) await _0x305178['KOjuG'](createSuperAssistUser, _0x527224);
                  await $['wait'](0x2710);
+                 await $['wait'](0x2710);
                  await _0x305178['mUBsZ'](createAssistUser, _0x527224);
                  if (!$['canHelp']) break;
+                 await $['wait'](0x2710);
                  await $['wait'](0x2ee0);
              }
              if (token) {
@@ -192,6 +195,7 @@ let cookiesArr = [], cookie = '', token;
                      console['log']('去参加寻宝大作战 ' + _0x4dcea1 + ' 等待10秒');
                      await _0x305178['DULXw'](joinGroup, _0x4dcea1);
                      if (!$['canHelp']) break;
+                     await $['wait'](0x2710);
                      await $['wait'](0x2710);
                  }
              }
