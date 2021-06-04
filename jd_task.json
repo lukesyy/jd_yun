@@ -98,7 +98,7 @@
     {
       "name": "京喜财富岛",
       "type": "cron",
-      "time": "8 0,8,13,19 * * *",
+      "time": "45 0,13,19 * * *",
       "running": true,
       "job": {
         "type": "runjs",

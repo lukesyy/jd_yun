@@ -61,7 +61,7 @@ inputs:
     - timer: #东东超市 #每日抽奖 #京喜财富岛
         parameters:
           name: cfd_superMarket
-          cronExpression: "0 40 0,8,12,19,6-23/6 * * * *"
+          cronExpression: "0 40 0,12,19,6-23/6 * * * *"
           enable: true
           argument: jd_cfd&jd_superMarket&jd_daily_lottery
     - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑 #幸运大转盘
