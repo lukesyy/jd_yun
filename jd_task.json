@@ -455,16 +455,6 @@
         }
       },
       {
-        "name": "京喜签到",
-        "type": "cron",
-        "time": "5 0 * * *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jx_sign.js"
-        }
-      },
-      {
         "name": "京东粉丝互动",
         "type": "cron",
         "time": "30 8 * * *",
@@ -625,16 +615,6 @@
         }
       },
       {
-        "name": "城城领现金",
-        "type": "cron",
-        "time": "0 0,6-23/1 * * *",
-        "running": true,
-        "job": {
-          "type": "runjs",
-          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_city.js"
-        }
-      },
-      {
         "name": "跳跳乐瓜分京豆",
         "type": "cron",
         "time": "2 0,11,21 * * *",
@@ -742,6 +722,26 @@
         "job": {
           "type": "runjs",
           "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_gold_creator.js"
+        }
+      },
+      {
+        "name": "京喜领88元红包",
+        "type": "cron",
+        "time": "8 10,19 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_jxlhb.js"
+        }
+      },
+      {
+        "name": "新潮品牌狂欢",
+        "type": "cron",
+        "time": "13 10 * * *",
+        "running": true,
+        "job": {
+          "type": "runjs",
+          "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_mcxhd.js"
         }
       },
       {
