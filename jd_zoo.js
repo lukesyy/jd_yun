@@ -396,17 +396,20 @@ async function zoo() {
       }
     }
     await $.wait(1000);
-    //await takePostRequest('zoo_pk_getTaskDetail');
-    let skillList = $.pkHomeData.result.groupInfo.skillList || [];
-    //activityStatus === 1未开始，2 已开始
-    $.doSkillFlag = true;
-    for (let i = 0; i < skillList.length && $.pkHomeData.result.activityStatus === 2 && $.doSkillFlag; i++) {
-      if (Number(skillList[i].num) > 0) {
-        $.skillCode = skillList[i].code;
-        for (let j = 0; j < Number(skillList[i].num) && $.doSkillFlag; j++) {
-          console.log(`使用技能`);
-          await takePostRequest('zoo_pk_doPkSkill');
-          await $.wait(2000);
+    if (new Date().getHours() >= 18) {
+      console.log(`\n******开始【怪兽大作战守护红包】******\n`);
+      //await takePostRequest('zoo_pk_getTaskDetail');
+      let skillList = $.pkHomeData.result.groupInfo.skillList || [];
+      //activityStatus === 1未开始，2 已开始
+      $.doSkillFlag = true;
+      for (let i = 0; i < skillList.length && $.pkHomeData.result.activityStatus === 2 && $.doSkillFlag; i++) {
+        if (Number(skillList[i].num) > 0) {
+          $.skillCode = skillList[i].code;
+          for (let j = 0; j < Number(skillList[i].num) && $.doSkillFlag; j++) {
+            console.log(`使用技能`);
+            await takePostRequest('zoo_pk_doPkSkill');
+            await $.wait(2000);
+          }
         }
       }
     }
