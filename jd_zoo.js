@@ -9,7 +9,7 @@ PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余
 地图任务：已添加，下午2点到5点执行,抽奖已添加(基本都是优惠券)
 金融APP任务：已完成
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-06-03 9:30
+脚本更新时间：2021-06-05 18:30
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -35,16 +35,10 @@ const pKHelpAuthorFlag = true;//是否助力作者PK  true 助力，false 不助
 let cookiesArr = [];
 $.cookie = '';
 $.inviteList = [];
-$.pkInviteList = [];
+$.pkInviteList = [
+];
 $.secretpInfo = {};
 $.innerPkInviteList = [
-  "sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144An",
-  "sSKNX-MpqKOJsNu-zJuKUHj2-v3Nwqvdkyk9Jsxn6oqHcInoKRfdLKKVzeW1cJSK",
-  "sSKNX-MpqKOJsNu_mpLQVscEUFEwqZlwdIW6w-kWLlQuLST3RQYUu_nMUcjkUvTQ",
-  "sSKNX-MpqKPS57G7n5zfASzKWDgQnPJog7w97sxWkvqknQRSVSIjjVV5",
-  "sSKNX-MpqKOJsNu8mJjZUAR9HdtkIkCz4HcgxwQZTOvfN7VZhP1o1GA5KVYT16Uw",
-  "sSKNX-MpqKOJsNu-kMjfVxvBEiqC4-11EPBBqpXJ29RbBX7Bhsvq9t0JdD9-jokK",
-  "sSKNX-MpqKOJsNu_m8-IVoICv3GjRl6m_xnt6JebwSAFlJU3PoRN_Cavx2FuaCLY"
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -69,7 +63,7 @@ if ($.isNode()) {
       '地图任务：已添加，下午2点到5点执行,抽奖已添加\n' +
       '金融APP任务：已完成\n' +
       '活动时间：2021-05-24至2021-06-20\n' +
-      '脚本更新时间：2021-06-03 9:30\n'
+      '脚本更新时间：2021-06-05 18:30\n'
       );
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -213,25 +207,43 @@ async function zoo() {
             await $.wait(3000);
           }
         }
+      } else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 2){
+        console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
+        $.taskId = $.oneTask.taskId;
+        $.feedDetailInfo = {};
+        await takePostRequest('zoo_getFeedDetail');
+        let productList = $.feedDetailInfo.productInfoVos;
+        let needTime = Number($.feedDetailInfo.maxTimes) - Number($.feedDetailInfo.times);
+        for (let j = 0; j < productList.length && needTime > 0; j++) {
+          if(productList[j].status !== 1){
+            continue;
+          }
+          $.taskToken = productList[j].taskToken;
+          console.log(`加购：${productList[j].skuName}`);
+          await takePostRequest('add_car');
+          await $.wait(1500);
+          needTime --;
+        }
+      }else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 0){
+        $.activityInfoList = $.oneTask.productInfoVos ;
+        for (let j = 0; j < $.activityInfoList.length; j++) {
+          $.oneActivityInfo = $.activityInfoList[j];
+          if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
+            continue;
+          }
+          $.callbackInfo = {};
+          console.log(`做任务：浏览${$.oneActivityInfo.skuName};等待完成`);
+          await takePostRequest('zoo_collectScore');
+          if ($.oneTask.taskType === 2) {
+            await $.wait(2000);
+            console.log(`任务完成`);
+          } else {
+            console.log($.callbackInfo);
+            console.log(`任务失败`);
+            await $.wait(3000);
+          }
+        }
       }
-      // else if ($.oneTask.taskType === 2 && $.oneTask.status === 1){
-      //   console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
-      //   $.taskId = $.oneTask.taskId;
-      //   $.feedDetailInfo = {};
-      //   await takePostRequest('zoo_getFeedDetail');
-      //   let productList = $.feedDetailInfo.productInfoVos;
-      //   let needTime = Number($.feedDetailInfo.maxTimes) - Number($.feedDetailInfo.times);
-      //   for (let j = 0; j < productList.length && needTime > 0; j++) {
-      //     if(productList[j].status !== 1){
-      //       continue;
-      //     }
-      //     $.taskToken = productList[j].taskToken;
-      //     console.log(`加购：${productList[j].skuName}`);
-      //     await takePostRequest('add_car');
-      //     await $.wait(1500);
-      //     needTime --;
-      //   }
-      // }
     }
     await $.wait(1000);
     await takePostRequest('zoo_getHomeData');
@@ -384,20 +396,17 @@ async function zoo() {
       }
     }
     await $.wait(1000);
-    if (new Date().getHours() >= 18) {
-      console.log(`\n******开始【怪兽大作战守护红包】******\n`);
-      //await takePostRequest('zoo_pk_getTaskDetail');
-      let skillList = $.pkHomeData.result.groupInfo.skillList || [];
-      //activityStatus === 1未开始，2 已开始
-      $.doSkillFlag = true;
-      for (let i = 0; i < skillList.length && $.pkHomeData.result.activityStatus === 2 && $.doSkillFlag; i++) {
-        if (Number(skillList[i].num) > 0) {
-          $.skillCode = skillList[i].code;
-          for (let j = 0; j < Number(skillList[i].num) && $.doSkillFlag; j++) {
-            console.log(`使用技能`);
-            await takePostRequest('zoo_pk_doPkSkill');
-            await $.wait(2000);
-          }
+    //await takePostRequest('zoo_pk_getTaskDetail');
+    let skillList = $.pkHomeData.result.groupInfo.skillList || [];
+    //activityStatus === 1未开始，2 已开始
+    $.doSkillFlag = true;
+    for (let i = 0; i < skillList.length && $.pkHomeData.result.activityStatus === 2 && $.doSkillFlag; i++) {
+      if (Number(skillList[i].num) > 0) {
+        $.skillCode = skillList[i].code;
+        for (let j = 0; j < Number(skillList[i].num) && $.doSkillFlag; j++) {
+          console.log(`使用技能`);
+          await takePostRequest('zoo_pk_doPkSkill');
+          await $.wait(2000);
         }
       }
     }
@@ -865,7 +874,7 @@ function getRandomArrayElements(arr, count) {
 function getAuthorShareCode(url = "https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json") {
   return new Promise(async resolve => {
     const options = {
-      "url": `${url}`,
+      "url": `${url}?${new Date()}`,
       "timeout": 10000,
       "headers": {
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
