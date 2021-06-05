@@ -650,6 +650,11 @@ function userInfo() {
                 } else {
                   console.log(`\n\n预计最快还需 【${((production.needElectric - production.investedElectric) / (2 * 60 * 60 * 24)).toFixed(2)}天】生产完毕\n\n`)
                 }
+                if (production.status === 3) {
+                  $.log(`\n\n商品生产已失效`)
+                  $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n【超时未完成】已失效，请选择新商品进行制造`)
+                  allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n【超时未完成】已失效，请选择新商品进行制造${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+                }
               } else {
                 $.unActive = false;//标记是否开启了京喜活动或者选购了商品进行生产
                 if (!data.factoryList) {
