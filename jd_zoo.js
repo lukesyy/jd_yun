@@ -35,9 +35,7 @@ const pKHelpAuthorFlag = true;//是否助力作者PK  true 助力，false 不助
 let cookiesArr = [];
 $.cookie = '';
 $.inviteList = [];
-$.pkInviteList = [
-  'sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144Ah',
-];
+$.pkInviteList = [];
 $.secretpInfo = {};
 $.innerPkInviteList = [
 ];
@@ -90,7 +88,7 @@ if ($.isNode()) {
   }
   let res = [], res2 = [], res3 = [];
   res3 = await getAuthorShareCode('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json');
-  if (!res3) await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json')
+  if (!res3) await getAuthorShareCode('https://cdn.jsdelivr.net/gh/zero205/updateTeam@main/shareCodes/jd_zoo.json')
   if (new Date().getHours()>= 9) {
     res = await getAuthorShareCode() || [];
     res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json') || [];
@@ -208,24 +206,25 @@ async function zoo() {
             await $.wait(3000);
           }
         }
-      }else if ($.oneTask.taskType === 2 && $.oneTask.status === 1){
-        console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
-        $.taskId = $.oneTask.taskId;
-        $.feedDetailInfo = {};
-        await takePostRequest('zoo_getFeedDetail');
-        let productList = $.feedDetailInfo.productInfoVos;
-        let needTime = Number($.feedDetailInfo.maxTimes) - Number($.feedDetailInfo.times);
-        for (let j = 0; j < productList.length && needTime > 0; j++) {
-          if(productList[j].status !== 1){
-            continue;
-          }
-          $.taskToken = productList[j].taskToken;
-          console.log(`加购：${productList[j].skuName}`);
-          await takePostRequest('add_car');
-          await $.wait(1500);
-          needTime --;
-        }
       }
+      // else if ($.oneTask.taskType === 2 && $.oneTask.status === 1){
+      //   console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
+      //   $.taskId = $.oneTask.taskId;
+      //   $.feedDetailInfo = {};
+      //   await takePostRequest('zoo_getFeedDetail');
+      //   let productList = $.feedDetailInfo.productInfoVos;
+      //   let needTime = Number($.feedDetailInfo.maxTimes) - Number($.feedDetailInfo.times);
+      //   for (let j = 0; j < productList.length && needTime > 0; j++) {
+      //     if(productList[j].status !== 1){
+      //       continue;
+      //     }
+      //     $.taskToken = productList[j].taskToken;
+      //     console.log(`加购：${productList[j].skuName}`);
+      //     await takePostRequest('add_car');
+      //     await $.wait(1500);
+      //     needTime --;
+      //   }
+      // }
     }
     await $.wait(1000);
     await takePostRequest('zoo_getHomeData');
@@ -381,13 +380,13 @@ async function zoo() {
     //await takePostRequest('zoo_pk_getTaskDetail');
     let skillList = $.pkHomeData.result.groupInfo.skillList || [];
     //activityStatus === 1未开始，2 已开始
-    $.doSkillFlag = false; //使用技能，默认false
+    $.doSkillFlag = true;
     for (let i = 0; i < skillList.length && $.pkHomeData.result.activityStatus === 2 && $.doSkillFlag; i++) {
       if (Number(skillList[i].num) > 0) {
         $.skillCode = skillList[i].code;
         for (let j = 0; j < Number(skillList[i].num) && $.doSkillFlag; j++) {
-          // console.log(`使用技能`);
-          await takePostRequest('zoo_pk_doPkSkill');
+          //console.log(`使用技能`);
+          //await takePostRequest('zoo_pk_doPkSkill');
           await $.wait(2000);
         }
       }
