@@ -765,6 +765,16 @@
       }
     },
     {
+      "name": "省钱大赢家之翻翻乐",
+      "type": "cron",
+      "time": "25 0,6-23/1 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_big_winner.js"
+      }
+    },
+    {
       "name": "超级无线组队分京豆",
       "type": "cron",
       "time": "15 6 * * 2",
