@@ -15,7 +15,7 @@ inputs:
   description: This is a function in ${app} application.
   memorySize: 128 # 内存大小，单位MB
   timeout: 900 # 超时时间，单位秒
-  asyncRunEnable: true # 是否启用异步执行（长时间运行）
+  asyncRunEnable: true # 是否启用异步执行
   events: #触发器
     - timer: #签到 #摇京豆 #店铺签到 #进店领豆
         parameters:
@@ -59,12 +59,12 @@ inputs:
           cronExpression: "0 15 0,5-23/2 * * * *"
           enable: true
           argument: jd_daily_egg&jd_z_health_community&jd_zoo&jd_super_redrain&jd_mohe&jd_big_winner
-    - timer: #东东超市 #每日抽奖 #京喜财富岛
+    - timer: #东东超市 #京喜财富岛
         parameters:
           name: cfd_superMarket
-          cronExpression: "0 40 8,12,19,6-23/6 * * * *"
+          cronExpression: "0 30 8,12,19,6-23/6 * * * *"
           enable: true
-          argument: jd_cfd&jd_superMarket&jd_daily_lottery
+          argument: jd_cfd&jd_superMarket
     - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑 #幸运大转盘
         parameters:
           name: beanchange_crazyjoy_rankingList_beanhome_sgmh_jxd
