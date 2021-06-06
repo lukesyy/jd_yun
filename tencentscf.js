@@ -57,7 +57,7 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
         FunctionName: process.env.TENCENT_FUNCTION_NAME,
         Runtime: "Nodejs12.16",
         Timeout: 900,
-        AsyncRunEnable: true,
+        AsyncRunEnable: "true",
         Environment: {
           Variables: []
         }
