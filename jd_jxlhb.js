@@ -37,7 +37,6 @@ if ($['isNode']()) {
         cookiesArr['push'](jdCookieNode[_0x4551c2]);
     });
     if (process['env']['JD_DEBUG'] && process['env']['JD_DEBUG'] === 'false') console['log'] = () => {};
-    if (JSON['stringify'](process['env'])['indexOf']('GITHUB') > -0x1) process['exit'](0x0);
 } else {
     cookiesArr = [$['getdata']('CookieJD'), $['getdata']('CookieJD2'), ...$['toObj']($['getdata']('CookiesJD') || '[]')['map'](_0x24190b => _0x24190b['cookie'])]['filter'](_0x5f3a8e => !!_0x5f3a8e);
 }
@@ -753,7 +752,6 @@ _0xodD = 'jsjiami.com.v6';
 
 
 function Env(t, e) {
-    "undefined" != typeof process && JSON.stringify(process.env).indexOf("GITHUB") > -1 && process.exit(0);
     class s {
         constructor(t) {
             this.env = t
