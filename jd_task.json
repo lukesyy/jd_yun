@@ -575,16 +575,6 @@
       }
     },
     {
-      "name": "每日抽奖",
-      "type": "cron",
-      "time": "15 7,22,23 * * *",
-      "running": true,
-      "job": {
-        "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_daily_lottery.js"
-      }
-    },
-    {
       "name": "幸运大转盘",
       "type": "cron",
       "time": "20 10 * * *",
