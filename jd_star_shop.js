@@ -5,7 +5,7 @@
 明星小店(星店长)
 助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码
 抽奖：是否中奖没判断，需自行查看
-更新时间：2021-06-04
+更新时间：2021-06-06
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
@@ -28,8 +28,8 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 $.inviteCodeList = [];
 $.authorCodeList = [
-  'rQI0TkBIzVwHI4fxBQnt6v0doiabNQfNdJglrUVhOP0','Rcl-dpjMZKyZUzie7lg4ow','lqU3wfq2eBw8N6pRbRBGHg','xsK-EVpDVVszF0j95pGD6g','AEIIwA6L3k8ePzU3fXDzg8sPlLyAUpJKplSENnlQTGA','AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU','lYeCjR-Tqlt2Rdvzm3BstucggfTsQxjqV5WhG7YX80I','H4PMazmFkCU2k1O53vpIyw','VqFbegTWUP9DJrZBj0UUJw',
-  'r3yIDGE86HSsdtyFlrPHJHu_0mNpX_AnBREYO-c3BFY', 'Mve7TKmP8UKnC9IULuBrQHzgY54j_0U5BLm5Ox6aigY','AEIIwA6L3k8ePzU3fXDzg8sPlLyAUpJKplSENnlQTGA','AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU','lYeCjR-Tqlt2Rdvzm3BstucggfTsQxjqV5WhG7YX80I','H4PMazmFkCU2k1O53vpIyw','VqFbegTWUP9DJrZBj0UUJw',
+  'AEIIwA6L3k8ePzU3fXDzg8sPlLyAUpJKplSENnlQTGA','AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU','lYeCjR-Tqlt2Rdvzm3BstucggfTsQxjqV5WhG7YX80I','H4PMazmFkCU2k1O53vpIyw','VqFbegTWUP9DJrZBj0UUJw',
+  'r3yIDGE86HSsdtyFlrPHJHu_0mNpX_AnBREYO-c3BFY', 'Mve7TKmP8UKnC9IULuBrQHzgY54j_0U5BLm5Ox6aigY','AEIIwA6L3k8ePzU3fXDzg8sPlLyAUpJKplSENnlQTGA','AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU','lYeCjR-Tqlt2Rdvzm3BstucggfTsQxjqV5WhG7YX80I','H4PMazmFkCU2k1O53vpIyw','VqFbegTWUP9DJrZBj0UUJw'
 ];
 let cookiesArr = [];
 let uniqueIdList = [
@@ -67,7 +67,7 @@ if ($.isNode()) {
   console.log('明星小店(星店长)\n' +
       '助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码\n' +
       '抽奖：是否中奖没判断，需自行查看\n' +
-      '更新时间：2021-06-04\n');
+      '更新时间：2021-06-06\n');
 
   // console.log(`==================开始执行星店长任务==================`);
   // for (let i = 0; i < cookiesArr.length; i++) {
@@ -80,7 +80,7 @@ if ($.isNode()) {
   //   console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
   //   if (!$.isLogin) {
   //     $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
-
+  //
   //     if ($.isNode()) {
   //       await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
   //     }
@@ -133,7 +133,7 @@ if ($.isNode()) {
     }
     await main();
   }
-  $.inviteCodeList.push(...getRandomArrayElements($.authorCodeList, $.authorCodeList.length));
+  $.inviteCodeList.push(...getRandomArrayElements($.authorCodeList, 5));
   for (let i = 0; i < cookiesArr.length; i++) {
     $.cookie = cookiesArr[i];
     $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -159,16 +159,20 @@ async function main() {
   uniqueIdList = getRandomArrayElements(uniqueIdList, uniqueIdList.length);
   console.log(`现共查询到${uniqueIdList.length}个明星小店\n`);
   for (let j = 0; j < uniqueIdList.length; j++) {
-    $.uniqueId = uniqueIdList[j].id;
-    $.helpCode = '';
-    console.log(`开始第${j + 1}个明星小店，ID：${$.uniqueId},明星：${uniqueIdList[j].name}`);
-    await starShop();
-    await $.wait(1000);
-    if (j === 0) {
-      console.log(`互助码：${$.helpCode}`);
-      $.inviteCodeList.push($.helpCode);
+    try{
+      $.uniqueId = uniqueIdList[j].id;
+      $.helpCode = '';
+      console.log(`开始第${j + 1}个明星小店，ID：${$.uniqueId},明星：${uniqueIdList[j].name}`);
+      await starShop();
+      await $.wait(1000);
+      if (j === 0) {
+        console.log(`互助码：${$.helpCode}`);
+        $.inviteCodeList.push($.helpCode);
+      }
+      console.log(`\n`);
+    }catch (e) {
+      console.log(JSON.stringify(e.message));
     }
-    console.log(`\n`);
   }
   console.log(`=============${$.UserName }：星店长奖励汇总================`);
   await $.wait(1000);
@@ -182,7 +186,7 @@ async function main() {
     } else if ($.rewards[i].prizeType === 5) {
       if(!$.rewards[i].fillReceiverFlag){
         console.log(`获得实物：${$.rewards[i].prizeDesc || ''},未填写地址`);
-        sendMessage += `${$.UserName }，获得实物：${$.rewards[i].prizeDesc || '' }\n`;
+        sendMessage += `【京东账号${$.index}】${$.UserName }，获得实物：${$.rewards[i].prizeDesc || '' }\n`;
       }else{
         console.log(`获得实物：${$.rewards[i].prizeDesc || ''},已填写地址`);
       }
@@ -199,51 +203,106 @@ async function main() {
 }
 
 async function xdz(){
-  $.xdzInfo = {};
-  await getXdzInfo();
-  if(JSON.stringify($.xdzInfo) === '{}'){
-    console.log(`获取活动数据为空`);
-    return ;
-  }
-  $.xdzUseInfo = [];
-  await getXdzUseInfo();
-  if(JSON.stringify($.xdzUseInfo) === '{}'){
-    console.log(`获取用户数据为空`);
-    return ;
-  }
-  let tasksList =  $.xdzUseInfo.tasks;
-  for (let i = 0; i < tasksList.length; i++) {
-    $.oneTask = tasksList[i];
-    if($.oneTask.status !== 1){
-      continue;
-    }
-    if($.oneTask.taskType !== '22' && $.oneTask.taskType !== '6'){
-      console.log(`执行任务：${$.oneTask.taskName}`);
-      let subItem = $.oneTask.subItem;
-      for (let j = 0; j < subItem.length; j++) {
-        $.subItemInfo = subItem[j];
-        if(!$.subItemInfo.itemToken &&  $.subItemInfo.status !==1 ){
-          continue;
+  // $.xdzInfo = {};
+  // await getXdzInfo();
+  // if(JSON.stringify($.xdzInfo) === '{}'){
+  //   console.log(`获取活动数据为空`);
+  //   return ;
+  // }
+  // $.xdzUseInfo = {};
+  // await getXdzUseInfo();
+  // if(JSON.stringify($.xdzUseInfo) === '{}'){
+  //   console.log(`获取用户数据为空`);
+  //   return ;
+  // }
+  // let tasksList =  $.xdzUseInfo.tasks;
+  // for (let i = 0; i < tasksList.length; i++) {
+  //   $.oneTask = tasksList[i];
+  //   if($.oneTask.status !== 1){
+  //     continue;
+  //   }
+  //   if($.oneTask.taskType !== '22' && $.oneTask.taskType !== '6'){
+  //     console.log(`执行任务：${$.oneTask.taskName}`);
+  //     let subItem = $.oneTask.subItem;
+  //     for (let j = 0; j < subItem.length; j++) {
+  //       $.subItemInfo = subItem[j];
+  //       if(!$.subItemInfo.itemToken &&  $.subItemInfo.status !==1 ){
+  //         continue;
+  //       }
+  //       await doXdzTask();
+  //       await $.wait(2000);
+  //     }
+  //   }else if($.oneTask.taskType === '6'){
+  //     if($.oneTask.subItem && $.oneTask.subItem.length>0 && $.oneTask.times === 0){
+  //       $.xdzHelpCodeList.push($.oneTask.subItem[0].itemToken);
+  //       console.log(`助力码：${$.oneTask.subItem[0].itemToken}`);
+  //     }
+  //   }
+  // }
+  // let awardVoList = $.xdzInfo.awardVoList;
+  // for (let i = 0; i < awardVoList.length; i++) {
+  //   $.oneAwardInfo = awardVoList[i];
+    // if($.oneAwardInfo.status === 1 && $.oneAwardInfo.grade === 1){
+    //   console.log(`执行抽奖`);
+    //   drawAward();
+    //   await $.wait(2000);
+    // }
+  // }
+
+  console.log(`执行瓜分`);
+  await guafen();
+  await $.wait(2000);
+}
+async function guafen(){
+  let a = (new Date()).Format("yyyy-MM-ddThh:mm:ss.SZ");
+  console.log(a);
+  const url = `https://api.m.jd.com/?body=%7B%22shopId%22:%22${$.shopId}%22,%22nowTime%22:%22${a}%22,%22token%22:%22${$.tokenId}%22%7D&appid=xdz&functionId=mcxhd_starmall_getRedPacketAward&t=${Date.now()}&loginWQBiz=`;
+  const method = `GET`;
+  const headers = {
+    'Origin': `https://h5.m.jd.com`,
+    'Cookie': $.cookie,
+    'Accept-Encoding': `gzip, deflate, br`,
+    'Accept-Language': `zh-cn`,
+    'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'Referer': `https://h5.m.jd.com/babelDiy/Zeus/3Vuj8Uw26NEDNRjaT2uspf2pphK/index.html`,
+    'Content-Type':`application/x-www-form-urlencoded;charset=UTF-8`,
+    'Accept': `application/json, text/plain, */*`,
+    'Host': `api.m.jd.com`,
+  };
+  const myRequest = {url: url, method: method, headers: headers,};
+  return new Promise(async resolve => {
+    $.get(myRequest, (err, resp, data) => {
+      try {
+        console.log(data);
+        data = JSON.parse(data);
+        if(data.retCode === '200'){
+          console.log(`瓜分获得：${data.result.quota}`);
         }
-        await doXdzTask();
-        await $.wait(2000);
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
       }
-    }else if($.oneTask.taskType === '6'){
-      if($.oneTask.subItem && $.oneTask.subItem.length>0 && $.oneTask.times === 0){
-        $.xdzHelpCodeList.push($.oneTask.subItem[0].itemToken);
-        console.log(`助力码：${$.oneTask.subItem[0].itemToken}`);
-      }
-    }
-  }
-  let awardVoList = $.xdzInfo.awardVoList;
-  for (let i = 0; i < awardVoList.length; i++) {
-    $.oneAwardInfo = awardVoList[i];
-    if($.oneAwardInfo.status === 1 && $.oneAwardInfo.grade === 1){
-      console.log(`执行抽奖`);
-      drawAward();
-      await $.wait(2000);
-    }
-  }
+    })
+  })
+}
+
+Date.prototype.Format = function (fmt) { //author: meizz
+  var o = {
+    "M+": this.getUTCMonth() + 1,                 //月份
+    "d+": this.getUTCDate(),                    //日
+    "h+": this.getUTCHours(),                   //小时
+    "m+": this.getUTCMinutes(),                 //分
+    "s+": this.getUTCSeconds(),                 //秒
+    "q+": Math.floor((this.getUTCMonth() + 3) / 3), //季度
+    "S": this.getUTCMilliseconds()             //毫秒
+  };
+  if (/(y+)/.test(fmt))
+    fmt = fmt.replace(RegExp.$1, (this.getUTCFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt))
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
 }
 async function help(){
   const url = `https://api.m.jd.com/?body=%7B%22shopId%22:%22${$.shopId}%22,%22itemToken%22:%22${$.helpCode}%22,%22token%22:%22${$.tokenId}%22%7D&appid=xdz&functionId=mcxhd_starmall_doTask&t=${Date.now()}&loginWQBiz=`;
