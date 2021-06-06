@@ -69,51 +69,51 @@ if ($.isNode()) {
       '抽奖：是否中奖没判断，需自行查看\n' +
       '更新时间：2021-06-04\n');
 
-  console.log(`==================开始执行星店长任务==================`);
-  for (let i = 0; i < cookiesArr.length; i++) {
-    $.index = i + 1;
-    $.cookie = cookiesArr[i];
-    $.isLogin = true;
-    $.nickName = '';
-    await TotalBean();
-    $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
-    if (!$.isLogin) {
-      $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+  // console.log(`==================开始执行星店长任务==================`);
+  // for (let i = 0; i < cookiesArr.length; i++) {
+  //   $.index = i + 1;
+  //   $.cookie = cookiesArr[i];
+  //   $.isLogin = true;
+  //   $.nickName = '';
+  //   await TotalBean();
+  //   $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+  //   console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
+  //   if (!$.isLogin) {
+  //     $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
-      if ($.isNode()) {
-        await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-      }
-      continue
-    }
-    await xdz();
-  }
-  console.log(`开始执行星店长助力\n`);
-  if(cookiesArr.length > 1 && $.xdzHelpCodeList.length > 0){
-    if($.xdzHelpCodeList.length > 1){
-      $.xdzHelpCodeList.push($.xdzHelpCodeList.shift());
-    }
-    for (let i = 0; i < cookiesArr.length; i++) {
-      $.cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-      $.helpCode = $.xdzHelpCodeList[i];
-      console.log(`${$.UserName},去助力${$.helpCode}`);
-      await help();
-      await $.wait(2000);
-      if($.xdzHelpCodeList[i+1]){
-        $.helpCode = $.xdzHelpCodeList[i+1];
-        console.log(`${$.UserName},去助力${$.helpCode}`);
-        await help();
-        await $.wait(2000);
-      }else{
-        $.helpCode = $.xdzHelpCodeList[0];
-        console.log(`${$.UserName},去助力${$.helpCode}`);
-        await help();
-        await $.wait(2000);
-      }
-    }
-  }
-  console.log(`==================星店长任务执行完毕==================\n`);
+  //     if ($.isNode()) {
+  //       await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+  //     }
+  //     continue
+  //   }
+  //   await xdz();
+  // }
+  // console.log(`开始执行星店长助力\n`);
+  // if(cookiesArr.length > 1 && $.xdzHelpCodeList.length > 0){
+  //   if($.xdzHelpCodeList.length > 1){
+  //     $.xdzHelpCodeList.push($.xdzHelpCodeList.shift());
+  //   }
+  //   for (let i = 0; i < cookiesArr.length; i++) {
+  //     $.cookie = cookiesArr[i];
+  //     $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+  //     $.helpCode = $.xdzHelpCodeList[i];
+  //     console.log(`${$.UserName},去助力${$.helpCode}`);
+  //     await help();
+  //     await $.wait(2000);
+  //     if($.xdzHelpCodeList[i+1]){
+  //       $.helpCode = $.xdzHelpCodeList[i+1];
+  //       console.log(`${$.UserName},去助力${$.helpCode}`);
+  //       await help();
+  //       await $.wait(2000);
+  //     }else{
+  //       $.helpCode = $.xdzHelpCodeList[0];
+  //       console.log(`${$.UserName},去助力${$.helpCode}`);
+  //       await help();
+  //       await $.wait(2000);
+  //     }
+  //   }
+  // }
+  // console.log(`==================星店长任务执行完毕==================\n`);
   console.log(`==================开始执行明星小店任务==================`);
   for (let i = 0; i < cookiesArr.length; i++) {
     $.index = i + 1;

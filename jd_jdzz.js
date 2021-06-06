@@ -148,7 +148,7 @@ async function jdWish() {
     }
   }
   await getTaskList();
-  await showMsg();
+  // await showMsg();
 }
 
 function showMsg() {

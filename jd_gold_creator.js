@@ -80,7 +80,7 @@ async function main() {
   try {
     await goldCreatorTab();//获取顶部主题
     await getDetail();
-    await showMsg();
+    // await showMsg();
   } catch (e) {
     $.logErr(e)
   }

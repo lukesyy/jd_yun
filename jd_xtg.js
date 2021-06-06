@@ -110,7 +110,7 @@ const JD_API_HOST = "https://guardianstarjd.m.jd.com/star";
         await JD_XTG(true);
         await indexInfo();//抽奖
       }
-      await showMsg();
+      // await showMsg();
     }
   }
   if ($.isNode() && allMsg) {

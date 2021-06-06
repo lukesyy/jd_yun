@@ -121,7 +121,7 @@ async function main() {
     // await userSignIn();//赚京豆-签到领京豆
     await vvipTask();//赚京豆-加速领京豆
     await distributeBeanActivity();//赚京豆-瓜分京豆
-    await showMsg();
+    // await showMsg();
   } catch (e) {
     $.logErr(e)
   }

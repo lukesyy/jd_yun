@@ -98,7 +98,7 @@
     {
       "name": "京喜财富岛",
       "type": "cron",
-      "time": "45 0,13,19 * * *",
+      "time": "10 8,13,19,22 * * *",
       "running": true,
       "job": {
         "type": "runjs",
@@ -243,6 +243,16 @@
       "job": {
         "type": "runjs",
         "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_jxnc.js"
+      }
+    },
+    {
+      "name": "京喜农场2",
+      "type": "cron",
+      "time": "30 10,15,21 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_jxnc2.js"
       }
     },
     {
@@ -447,7 +457,7 @@
     {
       "name": "取关京东店铺商品",
       "type": "cron",
-      "time": "45 23 * * *",
+      "time": "30 23 * * *",
       "running": true,
       "job": {
         "type": "runjs",
@@ -462,26 +472,6 @@
       "job": {
         "type": "runjs",
         "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_z_fanslove.js"
-      }
-    },
-    {
-      "name": "京东母婴跳一跳",
-      "type": "cron",
-      "time": "15 6-23/6 * * *",
-      "running": true,
-      "job": {
-        "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_z_mother_jump.js"
-      }
-    },
-    {
-      "name": "京东小魔方",
-      "type": "cron",
-      "time": "15 10 * * *",
-      "running": true,
-      "job": {
-        "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_z_xmf.js"
       }
     },
     {
