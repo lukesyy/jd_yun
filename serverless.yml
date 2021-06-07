@@ -14,7 +14,7 @@ inputs:
   region: ap-guangzhou # 函数所在区域
   description: This is a function in ${app} application.
   memorySize: 128 # 内存大小，单位MB
-  timeout: 900 # 超时时间，单位秒
+  timeout: 86400 # 超时时间，单位秒
   asyncRunEnable: true # 是否启用异步执行
   events: #触发器
     - timer: #签到 #摇京豆 #店铺签到 #进店领豆
@@ -47,18 +47,18 @@ inputs:
           cronExpression: "0 6 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_cash&jd_small_home&jd_live&jd_gold_creator&jd_redPacket
-    - timer: #半点京豆雨 #618动物联萌收集金币
+    - timer: #半点京豆雨 #整点京豆雨 #618动物联萌收集金币
         parameters:
           name: halfredrain_zooCollect
-          cronExpression: "2 1,35 0,6-23/1 * * * *"
+          cronExpression: "2 1,31 0,6-23/1 * * * *"
           enable: true
-          argument: jd_half_redrain&jd_zooCollect
-    - timer: #整点京豆雨 #天天提鹅 #健康社区 #618动物联萌 #5G超级盲盒 #省钱大赢家之翻翻乐
+          argument: jd_half_redrain&&jd_z_health_community&jd_zooCollect
+    - timer: #天天提鹅 #健康社区 #618动物联萌 #5G超级盲盒 #省钱大赢家之翻翻乐
         parameters:
           name: dailyegg_healthcommunity
-          cronExpression: "0 1,30 0,5-23/2 * * * *"
+          cronExpression: "0 1,30 0,18,5-23/2 * * * *"
           enable: true
-          argument: jd_daily_egg&jd_z_health_community&jd_zoo&jd_super_redrain&jd_mohe&jd_big_winner
+          argument: jd_daily_egg&jd_zoo&jd_super_redrain&jd_mohe&jd_big_winner
     - timer: #东东超市 #京喜财富岛 #京享值PK
         parameters:
           name: cfd_superMarket
@@ -76,7 +76,7 @@ inputs:
           name: pigPet_syj_kd_jdzz_sign_nzmh_follow
           cronExpression: "0 20 0,9,11,21 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jd_nzmh&jd_monk_shop_follow_sku&jd_jump&jd_mcxhd&jd_jxlhb&jd_star_shop
+          argument: jd_pigPet&jd_syj&jd_kd&&jd_jxlhb&jd_jdzz&jd_nzmh&jd_monk_shop_follow_sku&jd_jump&jd_mcxhd&jd_star_shop
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的

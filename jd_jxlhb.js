@@ -164,6 +164,8 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3';
                     if (!$['canHelp']) break;
                     await _0x2d5026['GYvpF'](enrollFriend, _0x4c4334);
                     await $['wait'](0x3e8);
+                    await $['wait'](0x3e8);
+                    await $['wait'](0x3e8);
                 } else {
                     $['log']('', '❌ ' + $['name'] + ', 失败! 原因: ' + e + '!', '');
                 }
@@ -194,6 +196,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3';
                 if (!$['canOpenGrade']) break;
                 console['log']('\x0a【' + $['UserName'] + '】去拆第' + _0x40a18b + '个红包');
                 await _0x2d5026['tzgwX'](openRedPack, $['packetIdArr'][_0x3de622][_0x2d5026['KAMGL']], _0x40a18b);
+                await $['wait'](0x3e8);
                 await $['wait'](0x3e8);
             }
         }
