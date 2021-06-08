@@ -184,7 +184,6 @@ async function zoo() {
     await takePostRequest('zoo_getTaskDetail');
     await $.wait(1000);
     //做任务
-    if (new Date().getHours() <= 10) {
       for (let i = 0; i < $.taskList.length && $.secretp && !$.hotFlag; i++) {
         $.oneTask = $.taskList[i];
         if ([1, 3, 5, 7, 9, 26].includes($.oneTask.taskType) && $.oneTask.status === 1) {
@@ -248,7 +247,6 @@ async function zoo() {
           }
         }
       }
-    }
     await $.wait(1000);
     await takePostRequest('zoo_getHomeData');
     raiseInfo = $.homeData.result.homeMainInfo.raiseInfo;
@@ -332,7 +330,6 @@ async function zoo() {
       }
     }
     //==================================微信任务========================================================================
-    if (new Date().getHours() <= 10) {
       $.wxTaskList = [];
       if (!$.hotFlag) await takePostRequest('wxTaskDetail');
       for (let i = 0; i < $.wxTaskList.length; i++) {
@@ -357,9 +354,7 @@ async function zoo() {
           }
         }
       }
-    }
     //=======================================================京东金融=================================================================================
-    if (new Date().getHours() <= 10) {
       $.jdjrTaskList = [];
       if (!$.hotFlag) await takePostRequest('jdjrTaskDetail');
       await $.wait(1000);
@@ -375,7 +370,6 @@ async function zoo() {
           console.log(`任务：${$.jdjrTaskList[i].name},已完成`);
         }
       }
-    }
     //======================================================怪兽大作战=================================================================================
     $.pkHomeData = {};
     await takePostRequest('zoo_pk_getHomeData');
