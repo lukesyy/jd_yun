@@ -18,7 +18,7 @@ $.result = [];$.shareCodes = [];
 let cookiesArr = [], cookie = '', token;
 
 
- const randomCount = 0; //$['isNode']() ? 0x14 : 0x5;
+ const randomCount = 5; //$['isNode']() ? 0x14 : 0x5;
  if ($['isNode']()) {
      Object['keys'](jdCookieNode)['forEach'](_0x263b06 => {
          cookiesArr['push'](jdCookieNode[_0x263b06]);
@@ -99,8 +99,8 @@ let cookiesArr = [], cookie = '', token;
          _0x14c33c = await _0x5557a9['UDmWB'](getAuthorShareCode, _0x5557a9['dnDIo']);
      if (_0x5557a9['Fpxcy'](new Date()['getHours'](), 0x3)) await _0x5557a9['UDmWB'](getAuthorShareCode, 'https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json');
      if (!_0x14c33c) _0x14c33c = await _0x5557a9['LiXuS'](getAuthorShareCode, _0x5557a9['uOgiE']);
-     $['strMyShareIds'] = [..._0x3b6899 && _0x3b6899['shareId'] || [], ..._0x14c33c && _0x14c33c['shareId'] || []];
-     $['strGroupIds'] = [..._0x3b6899 && _0x3b6899['strGroupIds'] || [], ..._0x14c33c && _0x14c33c['strGroupIds'] || []];
+     $['strMyShareIds'] = [..._0x14c33c && _0x14c33c['shareId'] || [], ..._0x3b6899 && _0x3b6899['shareId'] || []];
+     $['strGroupIds'] = [..._0x14c33c && _0x14c33c['strGroupIds'] || [], ..._0x3b6899 && _0x3b6899['strGroupIds'] || []];
      for (let _0x57fa7b = 0x0; _0x57fa7b < cookiesArr['length']; _0x57fa7b++) {
          if (cookiesArr[_0x57fa7b]) {
              cookie = cookiesArr[_0x57fa7b];
@@ -148,8 +148,7 @@ let cookiesArr = [], cookie = '', token;
          for (let _0x3b1965 of $['shareCodes']) {
              console['log']('账号' + $['UserName'] + ' 去参加 ' + _0x3b1965 + ' 寻宝大作战');
              await _0x5557a9['ottNj'](joinGroup, _0x3b1965);
-             await $['wait'](0x1f40);
-             await $['wait'](0x2710);
+             await $.wait(30000);
              if (!$['canHelp']) break;
          }
      }
@@ -182,21 +181,19 @@ let cookiesArr = [], cookie = '', token;
              for (let _0x527224 of $['newShareCodes']['filter'](_0x1df5a1 => !!_0x1df5a1 && !_0x1df5a1['includes']('GroupId'))) {
                  console['log']('去助力好友 【' + _0x527224 + '】');
                  if (token) await _0x305178['KOjuG'](createSuperAssistUser, _0x527224);
-                 await $['wait'](0x2710);
-                 await $['wait'](0x2710);
+                 await $.wait(30000);
                  await _0x305178['mUBsZ'](createAssistUser, _0x527224);
                  if (!$['canHelp']) break;
-                 await $['wait'](0x2710);
+                 await $.wait(30000);
                  await $['wait'](0x2ee0);
              }
              if (token) {
                  $['canHelp'] = !![];
                  for (let _0x4dcea1 of $['strGroupIds']) {
-                     console['log']('去参加寻宝大作战 ' + _0x4dcea1 + ' 等待10秒');
+                     console['log']('去参加寻宝大作战 ' + _0x4dcea1 + ' 等待30秒');
                      await _0x305178['DULXw'](joinGroup, _0x4dcea1);
                      if (!$['canHelp']) break;
-                     await $['wait'](0x2710);
-                     await $['wait'](0x2710);
+                     await $.wait(30000);
                  }
              }
              _0x56cd7b();
@@ -278,7 +275,7 @@ let cookiesArr = [], cookie = '', token;
              const _0x51d8cd = await _0x36ce54['YsBIW'](getUserInfo, ![]);
              await _0x36ce54['djCUT'](helpFriend);
              $['result']['push']('【京东账号' + $['index'] + '】' + ($['nickName'] || $['UserName']), '【💵财富值】任务前: ' + _0x2145b0['ddwMoney'] + '\n【💵财富值】任务后: ' + _0x51d8cd['ddwMoney'], '【💵财富值】净增值: ' + _0x36ce54['dsQNV'](_0x51d8cd['ddwMoney'], _0x2145b0['ddwMoney']) + '\x0a');
-             await _0x36ce54['IjkbQ'](helpAuthor3);
+            //  await _0x36ce54['IjkbQ'](helpAuthor3);
          }
      } catch (_0x4e3541) {
          $['logErr'](_0x4e3541);
@@ -419,49 +416,49 @@ let cookiesArr = [], cookie = '', token;
      }
      return _0x521e0e['slice'](_0x5ac183);
  }
- async function helpAuthor3() {
-     var _0x1cc2e4 = {
-         'KFyPc': function(_0x2d935a) {
-             return _0x2d935a();
-         },
-         'rmHhC': 'https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json',
-         'HEaIw': function(_0x6746f0, _0x13959e, _0x4c3961) {
-             return _0x6746f0(_0x13959e, _0x4c3961);
-         },
-         'salfQ': function(_0x37c1ab, _0x50a5fa) {
-             return _0x37c1ab > _0x50a5fa;
-         },
-         'wiNin': 'KhXTA',
-         'OtKKv': 'https://h5.m.jd.com',
-         'itfSv': 'zh-cn',
-         'hYoXt': 'https://h5.m.jd.com/babelDiy/Zeus/25C6dc6HY6if6DT7e58A1pi2Vxe4/index.html?activityId=73cf1fe89d33433d9cc8688d1892d432&assistId=R2u2OCB9eEbcCVB_CiVKhg'
-     };
-     let _0x4760cc = await _0x1cc2e4['KFyPc'](getAuthorShareCode2),
-         _0x5e63f2 = await getAuthorShareCode2(_0x1cc2e4['rmHhC']);
-     $['MyShareIds'] = [..._0x4760cc || [], ..._0x5e63f2 || []];
-     $['MyShareIds'] = _0x1cc2e4['HEaIw'](getRandomArrayElements, $['MyShareIds'], _0x1cc2e4['salfQ']($['MyShareIds']['length'], 0x3) ? 0x6 : $['MyShareIds']['length']);
-     for (let _0x409d51 of $['MyShareIds'] || []) {
-         if (_0x1cc2e4['wiNin'] === 'SBkqX') {
-             console['log']('' + JSON['stringify'](err));
-             console['log']($['name'] + ' activeScene API请求失败，请检查网路重试');
-         } else {
-             const _0x1d0345 = {
-                 'url': 'https://api.m.jd.com/client.action?clientVersion=9.3.5&client=wh5&functionId=smtfission_assist&appid=smtFission&body=' + escape(JSON['stringify'](_0x409d51)),
-                 'headers': {
-                     'Host': 'api.m.jd.com',
-                     'accept': 'application/json, text/plain, */*',
-                     'origin': _0x1cc2e4['OtKKv'],
-                     'user-agent': 'jdapp;iPhone;9.3.5;14.2;53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,2;addressid/137923973;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/2217.74;apprpd/MyJD_PersonalSpace;ref/MySpace;psq/8;ads/;psn/53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2|8703;jdv/0|kong|t_1000170135|tuiguang|notset|1610674234917|1610674234;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.2;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
-                     'accept-language': _0x1cc2e4['itfSv'],
-                     'referer': _0x1cc2e4['hYoXt'],
-                     'Cookie': cookie
-                 },
-                 'timeout': 0x2710
-             };
-             $['get'](_0x1d0345);
-         }
-     }
- }
+//  async function helpAuthor3() {
+//      var _0x1cc2e4 = {
+//          'KFyPc': function(_0x2d935a) {
+//              return _0x2d935a();
+//          },
+//          'rmHhC': 'https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json',
+//          'HEaIw': function(_0x6746f0, _0x13959e, _0x4c3961) {
+//              return _0x6746f0(_0x13959e, _0x4c3961);
+//          },
+//          'salfQ': function(_0x37c1ab, _0x50a5fa) {
+//              return _0x37c1ab > _0x50a5fa;
+//          },
+//          'wiNin': 'KhXTA',
+//          'OtKKv': 'https://h5.m.jd.com',
+//          'itfSv': 'zh-cn',
+//          'hYoXt': 'https://h5.m.jd.com/babelDiy/Zeus/25C6dc6HY6if6DT7e58A1pi2Vxe4/index.html?activityId=73cf1fe89d33433d9cc8688d1892d432&assistId=R2u2OCB9eEbcCVB_CiVKhg'
+//      };
+//      let _0x4760cc = await _0x1cc2e4['KFyPc'](getAuthorShareCode2),
+//          _0x5e63f2 = await getAuthorShareCode2(_0x1cc2e4['rmHhC']);
+//      $['MyShareIds'] = [..._0x4760cc || [], ..._0x5e63f2 || []];
+//      $['MyShareIds'] = _0x1cc2e4['HEaIw'](getRandomArrayElements, $['MyShareIds'], _0x1cc2e4['salfQ']($['MyShareIds']['length'], 0x3) ? 0x6 : $['MyShareIds']['length']);
+//      for (let _0x409d51 of $['MyShareIds'] || []) {
+//          if (_0x1cc2e4['wiNin'] === 'SBkqX') {
+//              console['log']('' + JSON['stringify'](err));
+//              console['log']($['name'] + ' activeScene API请求失败，请检查网路重试');
+//          } else {
+//              const _0x1d0345 = {
+//                  'url': 'https://api.m.jd.com/client.action?clientVersion=9.3.5&client=wh5&functionId=smtfission_assist&appid=smtFission&body=' + escape(JSON['stringify'](_0x409d51)),
+//                  'headers': {
+//                      'Host': 'api.m.jd.com',
+//                      'accept': 'application/json, text/plain, */*',
+//                      'origin': _0x1cc2e4['OtKKv'],
+//                      'user-agent': 'jdapp;iPhone;9.3.5;14.2;53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,2;addressid/137923973;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/2217.74;apprpd/MyJD_PersonalSpace;ref/MySpace;psq/8;ads/;psn/53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2|8703;jdv/0|kong|t_1000170135|tuiguang|notset|1610674234917|1610674234;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.2;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+//                      'accept-language': _0x1cc2e4['itfSv'],
+//                      'referer': _0x1cc2e4['hYoXt'],
+//                      'Cookie': cookie
+//                  },
+//                  'timeout': 0x2710
+//              };
+//              $['get'](_0x1d0345);
+//          }
+//      }
+//  }
 
  function getAuthorShareCode2(_0x4f0d87 = 'https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json') {
      var _0x23c948 = {
