@@ -36,7 +36,6 @@ let cookiesArr = [];
 $.cookie = '';
 $.inviteList = [];
 $.pkInviteList = [
-  "sSKNX-MpqKOJsNu9y8nYAqXFF5NKOpRPsMffiCRwqC9Qb8MWZnWWJhg7JHU144Aq"
 ];
 $.secretpInfo = {};
 $.innerPkInviteList = [
@@ -115,12 +114,12 @@ if ($.isNode()) {
     //pk助力
     if (new Date().getHours() >= 9) {
       console.log(`\n******开始内部京东账号【怪兽大作战pk】助力*********\n`);
-      // for (let i = 0; i < $.pkInviteList.length && pKHelpFlag && $.canHelp; i++) {
-      //   console.log(`${$.UserName} 去助力PK码 ${$.pkInviteList[i]}`);
-      //   $.pkInviteId = $.pkInviteList[i];
-      //   await takePostRequest('pkHelp');
-      //   await $.wait(2000);
-      // }
+      for (let i = 0; i < $.pkInviteList.length && pKHelpFlag && $.canHelp; i++) {
+        console.log(`${$.UserName} 去助力PK码 ${$.pkInviteList[i]}`);
+        $.pkInviteId = $.pkInviteList[i];
+        await takePostRequest('pkHelp');
+        await $.wait(2000);
+      }
       $.canHelp = true;
     }
     if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
@@ -186,65 +185,67 @@ async function zoo() {
     await takePostRequest('zoo_getTaskDetail');
     await $.wait(1000);
     //做任务
-    for (let i = 0; i < $.taskList.length && $.secretp && !$.hotFlag; i++) {
-      $.oneTask = $.taskList[i];
-      if ([1, 3, 5, 7, 9, 26].includes($.oneTask.taskType) && $.oneTask.status === 1) {
-        $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
-        for (let j = 0; j < $.activityInfoList.length; j++) {
-          $.oneActivityInfo = $.activityInfoList[j];
-          if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
-            continue;
+    if (new Date().getHours() <= 10) {
+      for (let i = 0; i < $.taskList.length && $.secretp && !$.hotFlag; i++) {
+        $.oneTask = $.taskList[i];
+        if ([1, 3, 5, 7, 9, 26].includes($.oneTask.taskType) && $.oneTask.status === 1) {
+          $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
+          for (let j = 0; j < $.activityInfoList.length; j++) {
+            $.oneActivityInfo = $.activityInfoList[j];
+            if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
+              continue;
+            }
+            $.callbackInfo = {};
+            console.log(`做任务：${$.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
+            await takePostRequest('zoo_collectScore');
+            if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
+              await $.wait(8000);
+              let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
+              await callbackResult(sendInfo)
+            } else if ($.oneTask.taskType === 5 || $.oneTask.taskType === 3 || $.oneTask.taskType === 26) {
+              await $.wait(2000);
+              console.log(`任务完成`);
+            } else {
+              console.log($.callbackInfo);
+              console.log(`任务失败`);
+              await $.wait(3000);
+            }
           }
-          $.callbackInfo = {};
-          console.log(`做任务：${$.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
-          await takePostRequest('zoo_collectScore');
-          if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
-            await $.wait(8000);
-            let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
-            await callbackResult(sendInfo)
-          } else if ($.oneTask.taskType === 5 || $.oneTask.taskType === 3 || $.oneTask.taskType === 26) {
-            await $.wait(2000);
-            console.log(`任务完成`);
-          } else {
-            console.log($.callbackInfo);
-            console.log(`任务失败`);
-            await $.wait(3000);
+        } else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 2) {
+          console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
+          $.taskId = $.oneTask.taskId;
+          $.feedDetailInfo = {};
+          await takePostRequest('zoo_getFeedDetail');
+          let productList = $.feedDetailInfo.productInfoVos;
+          let needTime = Number($.feedDetailInfo.maxTimes) - Number($.feedDetailInfo.times);
+          for (let j = 0; j < productList.length && needTime > 0; j++) {
+            if (productList[j].status !== 1) {
+              continue;
+            }
+            $.taskToken = productList[j].taskToken;
+            console.log(`加购：${productList[j].skuName}`);
+            await takePostRequest('add_car');
+            await $.wait(1500);
+            needTime--;
           }
-        }
-      } else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 2){
-        console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
-        $.taskId = $.oneTask.taskId;
-        $.feedDetailInfo = {};
-        await takePostRequest('zoo_getFeedDetail');
-        let productList = $.feedDetailInfo.productInfoVos;
-        let needTime = Number($.feedDetailInfo.maxTimes) - Number($.feedDetailInfo.times);
-        for (let j = 0; j < productList.length && needTime > 0; j++) {
-          if(productList[j].status !== 1){
-            continue;
-          }
-          $.taskToken = productList[j].taskToken;
-          console.log(`加购：${productList[j].skuName}`);
-          await takePostRequest('add_car');
-          await $.wait(1500);
-          needTime --;
-        }
-      }else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 0){
-        $.activityInfoList = $.oneTask.productInfoVos ;
-        for (let j = 0; j < $.activityInfoList.length; j++) {
-          $.oneActivityInfo = $.activityInfoList[j];
-          if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
-            continue;
-          }
-          $.callbackInfo = {};
-          console.log(`做任务：浏览${$.oneActivityInfo.skuName};等待完成`);
-          await takePostRequest('zoo_collectScore');
-          if ($.oneTask.taskType === 2) {
-            await $.wait(2000);
-            console.log(`任务完成`);
-          } else {
-            console.log($.callbackInfo);
-            console.log(`任务失败`);
-            await $.wait(3000);
+        } else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 0) {
+          $.activityInfoList = $.oneTask.productInfoVos;
+          for (let j = 0; j < $.activityInfoList.length; j++) {
+            $.oneActivityInfo = $.activityInfoList[j];
+            if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
+              continue;
+            }
+            $.callbackInfo = {};
+            console.log(`做任务：浏览${$.oneActivityInfo.skuName};等待完成`);
+            await takePostRequest('zoo_collectScore');
+            if ($.oneTask.taskType === 2) {
+              await $.wait(2000);
+              console.log(`任务完成`);
+            } else {
+              console.log($.callbackInfo);
+              console.log(`任务失败`);
+              await $.wait(3000);
+            }
           }
         }
       }
@@ -332,44 +333,48 @@ async function zoo() {
       }
     }
     //==================================微信任务========================================================================
-    $.wxTaskList = [];
-    if(!$.hotFlag) await takePostRequest('wxTaskDetail');
-    for (let i = 0; i < $.wxTaskList.length; i++) {
-      $.oneTask = $.wxTaskList[i];
-      if($.oneTask.taskType === 2 || $.oneTask.status !== 1){continue;} //不做加购
-      $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
-      for (let j = 0; j < $.activityInfoList.length; j++) {
-        $.oneActivityInfo = $.activityInfoList[j];
-        if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
-          continue;
-        }
-        $.callbackInfo = {};
-        console.log(`做任务：${$.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
-        await takePostRequest('zoo_collectScore');
-        if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
-          await $.wait(8000);
-          let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
-          await callbackResult(sendInfo)
-        } else  {
-          await $.wait(2000);
-          console.log(`任务完成`);
+    if (new Date().getHours() <= 10) {
+      $.wxTaskList = [];
+      if (!$.hotFlag) await takePostRequest('wxTaskDetail');
+      for (let i = 0; i < $.wxTaskList.length; i++) {
+        $.oneTask = $.wxTaskList[i];
+        if ($.oneTask.taskType === 2 || $.oneTask.status !== 1) { continue; } //不做加购
+        $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
+        for (let j = 0; j < $.activityInfoList.length; j++) {
+          $.oneActivityInfo = $.activityInfoList[j];
+          if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
+            continue;
+          }
+          $.callbackInfo = {};
+          console.log(`做任务：${$.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
+          await takePostRequest('zoo_collectScore');
+          if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
+            await $.wait(8000);
+            let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
+            await callbackResult(sendInfo)
+          } else {
+            await $.wait(2000);
+            console.log(`任务完成`);
+          }
         }
       }
     }
     //=======================================================京东金融=================================================================================
-    $.jdjrTaskList = [];
-    if(!$.hotFlag) await takePostRequest('jdjrTaskDetail');
-    await $.wait(1000);
-    for (let i = 0; i < $.jdjrTaskList.length; i++) {
-      $.taskId = $.jdjrTaskList[i].id;
-      if($.taskId === '3980' || $.taskId === '3981' || $.taskId === '3982') continue;
-      if($.jdjrTaskList[i].status === '1' || $.jdjrTaskList[i].status === '3'){
-        console.log(`去做任务：${$.jdjrTaskList[i].name}`);
-        await takePostRequest('jdjrAcceptTask');
-        await $.wait(8000);
-        await takeGetRequest();
-      }else if($.jdjrTaskList[i].status === '2'){
-        console.log(`任务：${$.jdjrTaskList[i].name},已完成`);
+    if (new Date().getHours() <= 10) {
+      $.jdjrTaskList = [];
+      if (!$.hotFlag) await takePostRequest('jdjrTaskDetail');
+      await $.wait(1000);
+      for (let i = 0; i < $.jdjrTaskList.length; i++) {
+        $.taskId = $.jdjrTaskList[i].id;
+        if ($.taskId === '3980' || $.taskId === '3981' || $.taskId === '3982') continue;
+        if ($.jdjrTaskList[i].status === '1' || $.jdjrTaskList[i].status === '3') {
+          console.log(`去做任务：${$.jdjrTaskList[i].name}`);
+          await takePostRequest('jdjrAcceptTask');
+          await $.wait(8000);
+          await takeGetRequest();
+        } else if ($.jdjrTaskList[i].status === '2') {
+          console.log(`任务：${$.jdjrTaskList[i].name},已完成`);
+        }
       }
     }
     //======================================================怪兽大作战=================================================================================
