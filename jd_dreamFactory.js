@@ -39,7 +39,7 @@ const helpAu = true; //帮作者助力 免费拿活动
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 0 : 5;
-let tuanActiveId = `Ua5GeE6MFKugys4xkUeKEg==`;
+let tuanActiveId = `laD7IwPwDF1-Te-MvbW9Iw==`;
 const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
 let cookiesArr = [], cookie = '', message = '', allMessage = '';
 const inviteCodes = [
@@ -150,9 +150,8 @@ async function jdDreamFactory() {
     if (helpAu === true) {
       await helpAuthor();
       $.packetIdArr = [
-        'f5d0e428bc4a40dc8984db2cd4c2b54a',
-        'f08c120405284e72a924a2b2bdbd26ae',
-        'e216a7ac4da94556844ed6af4e7d2ca5'
+        'b5c67b502104477dbddb4df7819843bb',
+        'c56d132f31c94ee0ac7e913fc5bfcdee'
       ]
 
       for (let code of $.packetIdArr) {
@@ -775,7 +774,7 @@ function DrawProductionStagePrize() {
 async function PickUp(encryptPin = $.encryptPin, help = false) {
   $.pickUpMyselfComponent = true;
   const GetUserComponentRes = await GetUserComponent(encryptPin, 1500);
-  if (GetUserComponentRes && GetUserComponentRes['ret'] === 0) {
+  if (GetUserComponentRes && GetUserComponentRes['ret'] === 0 && GetUserComponentRes['data']) {
     const { componentList } = GetUserComponentRes['data'];
     if (componentList && componentList.length <= 0) {
       if (help) {

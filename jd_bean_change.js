@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-11-01 16:25:41
  * @Last Modified by:   lxk0301
- * @Last Modified time: 2021-05-17 15:25:41
+ * @Last Modified time: 2021-06-09 15:25:41
  */
 /*
 京东资产变动通知脚本：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_change.js
@@ -307,7 +307,7 @@ function redPacket() {
             t.setHours(0, 0, 0, 0)
             t = parseInt((t - 1) / 1000)
             for (let vo of data.useRedInfo.redList || []) {
-              if (vo.activityName.includes("京喜") || vo.activityName.includes("阶梯")) {
+              if (vo.orgLimitStr && vo.orgLimitStr.includes("京喜")) {
                 $.jxRed += parseFloat(vo.balance)
                 if (vo['endTime'] === t) {
                   $.jxRedExpire += parseFloat(vo.balance)

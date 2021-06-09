@@ -637,7 +637,7 @@ async function dealReturn(type, data) {
     case 'zoo_pk_getHomeData':
       if (data.code === 0) {
         console.log(`PK互助码：${data.data.result.groupInfo.groupAssistInviteId}`);
-        // if (data.data.result.groupInfo.groupAssistInviteId) $.pkInviteList.push(data.data.result.groupInfo.groupAssistInviteId);
+        if (data.data.result.groupInfo.groupAssistInviteId) $.pkInviteList.push(data.data.result.groupInfo.groupAssistInviteId);
         $.pkHomeData = data.data;
       }
       break;
