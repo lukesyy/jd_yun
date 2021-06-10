@@ -16,17 +16,29 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-let actId = '95814'; //你要参加砍价的商品ID
+let actId = ''; //你要参加砍价的商品ID
 let packetId = 'b5c67b502104477dbddb4df7819843bb';//你要参加砍价的邀请码
 //c50d6379ad3b4782bfc05940e358ace3
 //ac4a4b0b300e4fc6a2fdb88412f51e94-amRfTFBtdnNBVGdyQ0t1
-if (process.env.actId) {
-    actId = process.env.actId;
+// if (process.env.actId) {
+//     actId = process.env.actId;
+// }
+
+// if (process.env.packetId) {
+//     packetId = process.env.packetId;
+// }
+
+//兼容elecV2P
+actId = $.getdata('actId') ? $.getdata('actId') : actId;
+if ($.isNode() && process.env.ACTID) {
+    actId = process.env.ACTID;
+}
+packetId = $.getdata('packetId') ? $.getdata('packetId') : packetId;
+if ($.isNode() && process.env.PACKETID) {
+  packetId = process.env.PACKETID;
 }
 
-if (process.env.packetId) {
-    packetId = process.env.packetId;
-}
+
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
