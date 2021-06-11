@@ -62,7 +62,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       }
       //await zhuli()
      // await list()
-      await helpme()
+      // await helpme()
     }
   }
 })()

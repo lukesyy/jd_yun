@@ -1,14 +1,3 @@
-## 鉴于目前仓库fork人数过多，为防止账号再次遭到封禁，临时建立了一个TG群
-## 有条（科学）件（上网）的可以加入TG群防止失联
-## TG群频道：https:/t.me/jd_zero205
-
-# 为防止仓库再次被封，本仓库仅保留腾讯云函数、elecV2P两种方式运行
-# 想继续使用AC运行的朋友请移步原仓库，没有大的更新随缘维护：https://github.com/zero205/JD  
-
-## 注意！原来使用zero205/JD仓库的用户可不用重新创建仓库，替换原脚本的代码即可同步本仓库
-* 1.先打开自己的仓库，然后找到syncGit.yml文件【`路径：./.github/workflows/syncGit.yml`】，点击右上角铅笔图标进行修改  
-* 2.[点此打开最新同步脚本](https://ghproxy.com/https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/.github/workflows/syncGit.yml)，然后复制全部代码替换原代码  
-* 3.点击右边绿色`Start commit`,点击`Commit changes`，手动运行一次此任务即可
 
 ## 使用教程（不要fork！觉得有用的可以点个star :blush:）
 * > ~~Github Action 运行~~ (响应lxk大佬要求，删除AC教程)
@@ -161,15 +150,7 @@
 
 - QuantumultX Task脚本订阅链接: [lxk0301_gallery.json](https://gitee.com/lxk0301/jd_scripts/raw/master/QuantumultX/lxk0301_gallery.json)，cookie(重写)订阅链接: [lxk0301_cookies.conf](https://gitee.com/lxk0301/jd_scripts/raw/master/QuantumultX/lxk0301_cookies.conf)
 
-## 通知频道 [https://t.me/jdfruit](https://t.me/jdfruit)
-
-## 赞赏码(开发维护不易,请赏杯茶水费)
-
-<div align=center><img width="250" height="250" src="./icon/thanks.jpg"/></div>
-
-
 ## 特别感谢(排名不分先后)：
-
 
 * [@NobyDa](https://github.com/NobyDa)
 

@@ -28,8 +28,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 $.inviteCodeList = [];
 $.authorCodeList = [
-  'AEIIwA6L3k8ePzU3fXDzg8sPlLyAUpJKplSENnlQTGA','AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU','lYeCjR-Tqlt2Rdvzm3BstucggfTsQxjqV5WhG7YX80I','H4PMazmFkCU2k1O53vpIyw','VqFbegTWUP9DJrZBj0UUJw',
-  'r3yIDGE86HSsdtyFlrPHJHu_0mNpX_AnBREYO-c3BFY', 'Mve7TKmP8UKnC9IULuBrQHzgY54j_0U5BLm5Ox6aigY','AEIIwA6L3k8ePzU3fXDzg8sPlLyAUpJKplSENnlQTGA','AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU','lYeCjR-Tqlt2Rdvzm3BstucggfTsQxjqV5WhG7YX80I','H4PMazmFkCU2k1O53vpIyw','VqFbegTWUP9DJrZBj0UUJw'
+
 ];
 let cookiesArr = [];
 let uniqueIdList = [

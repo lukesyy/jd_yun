@@ -1184,9 +1184,6 @@ cron "5 8,13,19 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mast
       if ($.shareCodesArr[$.index - 1]) {
         $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
       } else {
-        console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-        // const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
-        $.newShareCodes = [...$.strMyShareIds, "F45CB4F07997DFE748E5656521A9034446A1568F6950206B0D44A5664662275D"];
       }
       const readShareCodeRes = await readShareCode();
       if (readShareCodeRes && readShareCodeRes.code === 200) {

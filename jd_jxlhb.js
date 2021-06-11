@@ -50,7 +50,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
   let res = await getAuthorShareCode() || [];
   let res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jxhb.json') || [];
   if (res && res.activeId) $.activeId = res.activeId;
-  $.authorMyShareIds = [...((res && res.codes) || []), ...res2];
+  $.authorMyShareIds = [];
   //开启红包,获取互助码
   for (let i = 0; i < cookiesArr.length; i++) {
     $.index = i + 1;
