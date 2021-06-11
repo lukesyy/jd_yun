@@ -1,27 +1,20 @@
 /*
-#自定义变量
-export tytpacketId=""
- [task_local]
-#柠檬推一推
-0 0 * * * http://nm66.top/jd_tyt.js, tag=柠檬推一推, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+
+[task_local]
+#柠檬618限时盲盒
+0 0 * * * http://nm66.top/jd_xsmh.js, tag=柠檬618限时盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
-const $ = new Env('柠檬推一推');
+
+
+const $ = new Env('柠檬618限时盲盒');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-let tytpacketId = '7822f0d111b8421ca693706e5faf9fa4-amRfNzM5OWJlZTAxYTg5ZQ!!';
-// if (process.env.tytpacketId) {
-//   tytpacketId = process.env.tytpacketId;
-// }
+let allMessage = '';
 
-//兼容elecV2P
-tytpacketId = $.getdata('tytpacketId') ? $.getdata('tytpacketId') : tytpacketId;
-if ($.isNode() && process.env.TYT_PACKETID) {
-    tytpacketId = process.env.TYT_PACKETID;
-}
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -38,10 +31,12 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      $.pin = cookie.match(/pt_pin=(.+?);/)[1]
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
@@ -55,11 +50,21 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         }
         continue
-      }    
-      await $.wait(10000)
-      await tythelp()
+      }
+            
+
+await info()
+await task(1)
+await task(2)
+await kmh()
+await $.wait(1000)
+await kmh()
+
     }
   }
+if ($.isNode() && allMessage) {
+        await notify.sendNotify(`${$.name}`, `${allMessage}` )
+    }
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -67,28 +72,27 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   .finally(() => {
     $.done();
   })
-function tythelp() {
-    return new Promise(async (resolve) => {
 
+function info() {
+    return new Promise(async (resolve) => {
         let options = {
-            url: `https://api.m.jd.com/?t=1623066557140`,
-            //dS%2Bp85VyjydPuAOOnFP%2Faw%3D%3D
-            body: `functionId=helpCoinDozer&appid=station-soa-h5&client=H5&clientVersion=1.0.0&t=1623120183787&body={"actId":"b980f1dd277a4ae4a0f52918709469bb","channel":"coin_dozer","antiToken":"mmkajtm9eqonssy6xoi1623119406463ic84~NmZeSyVEbFNSd3V+dVNdA3pxAABkRHpTBiUjb35DFm5vLUROOBEzLUF7G28iAAFBKBgVFA1EPwIVKDclGENXbm8iVlQiAwpTTx1lKSsTCG5vfmsaDUR6LUEnG29+PU9ReSdSWTNTNxICI3V0dlYOV3p0Bwg3UW9IVnd+KSdUC1E3KQFkc0oKUwoyKhFmWzEQOTZCXQ1Eei1BKTQ5GENXbm80Qks5ATkdB28tKWoCAl8RZhtkcxY4LUF7G29rPU8eEWZHTA1EbC1BKTM5NBJXbm9oaxohDwpTWR1lf3RNWR56aAcUYUpnQFcdZTBmTU9XKSBEX3NcdEEFMDdvaEMOQW9+FV82CDAUAXhzfTEDXV07I0VUZx49F1MucyosBwIHeTFSDycPIlNPYyRvfkMDQCwiBFo1VWFHBzsuPnVZB185dQEKYlZkRFR3cnVxUAFFf3QVFHMCJR9Be2U3MwkVQC8nWBp9RD8CQXtlfGZNT1gkJxUCc19vSFpjOg==|~1623120183785~1~20201218~eyJ2aXdlIjoiMCIsImJhaW4iOnt9fQ==~2~281~1pl4|5563f-70,aa,,;751e-,,,;359-70,aa,40,u;b512-70,aa,40,u;058-70,aa,40,u;doei:,1,0,0,0,0,1000,-1000,1000,-1000;dmei:,1,0,0,1000,-1000,1000,-1000,1000,-1000;emc:,5:1;emmm:;emcf:,5:1;ivli:;iivl:;ivcvj:;scvje:;ewhi:,5:197-49;1623120175774,1623120183784,0,1,5,5,0,1,0,0,0;u5ge","referer":"-1","frontendInitStatus":"s","packetId":"${tytpacketId}","helperStatus":"0"}&_ste=1&_stk=appid,body,client,clientVersion,functionId,t&h5st=20210608104303790;8489907903583162;10005;tk01w89681aa9a8nZDdIanIyWnVuWFLK4gnqY+05WKcPY3NWU2dcfa73B7PBM7ufJEN0U+4MyHW5N2mT/RNMq72ycJxH;7e6b956f1a8a71b269a0038bbb4abd24bcfb834a88910818cf1bdfc55b7b96e5`,
+            url: `https://api.m.jd.com/client.action?functionId=signBeanAct&body={"fp":"-1","shshshfp":"-1","shshshfpa":"-1","referUrl":"-1","userAgent":"-1","jda":"-1","rnVersion":"3.9"}&appid=ld&client=android&clientVersion=9.1.4&networkType=4g&osVersion=10&uuid=7049442d7e415231&openudid=7049442d7e415231&jsonp=jsonp_1623319626959_24411`,
             headers: {
-                "Origin": "https://pushgold.jd.com",
-                "Host": "api.m.jd.com",
-                "User-Agent": "jdltapp;iPhone;3.3.6;14.3;75aeceef3046d8ce11d354ff89af9517a2e4aa18;network/wifi;hasUPPay/0;pushNoticeIsOpen/0;lang/zh_CN;model/iPhone9,2;addressid/4585826605;hasOCPay/0;appBuild/1060;supportBestPay/0;pv/53.31;apprpd/;ref/https://invite-reward.jd.com/?lng=106.286950&lat=29.969353&sid=547255867e847394aedfb6d68c3e50fw&un_area=4_48201_54794_0#/invitee?inviterId=dS%2Bp85VyjydPuAOOnFP%2Faw%3D%3D;psq/0;ads/;psn/75aeceef3046d8ce11d354ff89af9517a2e4aa18|89;jdv/0|kong|t_1001003207_1762319_6901310|jingfen|30578707801140d09fcd54e5cd83bbf7|1621510932517|1621511027;adk/;app_device/IOS;pap/JA2020_3112531|3.3.6|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+                //"Origin": "https://h5.m.jd.com/",
+                //"Host": "api.m.jd.com",
+                "User-Agent": "jdapp;android;9.1.4;10;7049442d7e415232;network/4g;model/PCAM00;addressid/0;aid/7049442d7e415232;oaid/;osVer/29;appBuild/84555;partner/oppo;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; PCAM00 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
                 "Cookie": cookie,
             }
         }
-        $.post(options, async (err, resp, data) => {
+        $.get(options, async (err, resp, data) => {
             try {
-                data = JSON.parse(data);
-                console.log(data.msg)
-                if (data.code == 0) {
-                    console.log("帮推：" + data.data.amount)
-                } else
-                    console.log(data.msg)
+                $.info = jsonpToJson(data);
+                $.info = JSON.stringify($.info)
+                //$.log($.info.data.continuityAward.beanAward.beanCount)
+                if ($.info.code === 0) {
+                    $.log($.info.data.continuityAward.beanAward.beanCount)
+                    allMessage += `京东账号${$.index}-${$.nickName || $.UserName}\n获得：${$.info.data.continuityAward.beanAward.beanCount}京豆${$.index !== cookiesArr.length ? '\n\n' : '\n\n'}`;
+                }
             } catch (e) {
                 $.logErr(e, resp);
             } finally {
@@ -97,6 +101,80 @@ function tythelp() {
         });
     });
 }
+function kmh() {
+    return new Promise(async (resolve) => {
+
+        let options = {
+            url: `https://api.m.jd.com/client.action?functionId=limitBoxDraw&body=%7B%7D&appid=ld&client=m&clientVersion=9.1.4&networkType=4g&osVersion=10&uuid=7049442d7e415232&openudid=7049442d7e415231&jsonp=jsonp_1623319640949_31804`,
+            headers: {
+                //"Origin": "https://h5.m.jd.com/",
+                //"Host": "api.m.jd.com",
+                "User-Agent": "jdapp;android;9.1.4;10;7049442d7e415232;network/4g;model/PCAM00;addressid/0;aid/7049442d7e415232;oaid/;osVer/29;appBuild/84555;partner/oppo;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; PCAM00 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
+                "Cookie": cookie,
+            }
+        }
+        $.get(options, async (err, resp, data) => {
+            try {
+
+                $.info1 = jsonpToJson(data);
+                $.info1 = JSON.stringify($.info1)
+                $.log($.info1)
+                if ($.info1.code === 0) {
+                    $.log($.info1.data.beanNum)
+                    allMessage += `京东账号${$.index}-${$.nickName || $.UserName}\n获得：${$.info1.data.beanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : '\n\n'}`;
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        });
+    });
+}
+function task(type) {
+    return new Promise(async (resolve) => {
+        let options = {
+            url: `https://api.m.jd.com/client.action?functionId=limitBoxDoTask&body={"type":"${type}"}&appid=ld&client=m&clientVersion=9.1.4&networkType=4g&osVersion=10&uuid=7049442d7e415232&openudid=7049442d7e415231&jsonp=jsonp_1623319743749_3939`,
+            headers: {
+                //"Origin": "https://h5.m.jd.com/",
+                //"Host": "api.m.jd.com",
+                "User-Agent": "jdapp;android;9.1.4;10;7049442d7e415232;network/4g;model/PCAM00;addressid/0;aid/7049442d7e415232;oaid/;osVer/29;appBuild/84555;partner/oppo;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; PCAM00 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
+                "Cookie": cookie,
+            }
+        }
+        $.get(options, async (err, resp, data) => {
+            try {
+                $.dotask = jsonpToJson(data);
+                $.dotask = JSON.stringify($.dotask)
+                //$.log($.info.data.continuityAward.beanAward.beanCount)
+                if ($.dotask.errorCode === "LB906") {
+                    $.log($.dotask.errorMessage)
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        });
+    });
+}
+
+function jsonpToJson (datas) {
+  let jsonData = null
+  // 下面是对获取到的数据进行处理，把jsonp格式的数据处理成json格式的数据
+  if (typeof datas === 'string') {            
+    // 返回的是jsonp类型的数据，所以要用正则表达式来匹配截取json数据
+    const reg = /\w+\((\{[^()]+\})\)/
+    const matches = datas.match(reg)
+    // matches匹配到的是数组，数组第一个是所有正则表达式匹配的字符串，第二个是第一个小括号匹配到的字符串
+    if (matches) {
+      jsonData = JSON.parse(matches[1])
+    }
+  }
+  return jsonData
+}
+
+
 
 async function taskPostUrl(functionId,body) {
   return {
