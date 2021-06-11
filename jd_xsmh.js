@@ -1,30 +1,20 @@
 /*
-#柠檬省钱大赢家
-#自定义邀请码环境变量
-export redEnvelopeId="" ##本期活动ID
-export inviter="" ##邀请码
 
 [task_local]
-#柠檬省钱大赢家
- 0,2 0 * * * http://nm66.top/jd_sqdyj.js, tag=柠檬省钱大赢家, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+#柠檬618限时盲盒
+0 0 * * * http://nm66.top/jd_xsmh.js, tag=柠檬618限时盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
-const $ = new Env('柠檬省钱大赢家');
+
+
+const $ = new Env('柠檬618限时盲盒');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-let redEnvelopeId = '94f07c77cf504f04bde8ee9ed033968074191623349824627';
-let inviter = 'AghrnocwyBzh_6aDh3BPmS5acIv86eToUuynlVFt-GU';
+let allMessage = '';
 
-// if (process.env.redEnvelopeId) {
-//   redEnvelopeId = process.env.redEnvelopeId;
-// }
-
-// if (process.env.inviter) {
-//   inviter = process.env.inviter;
-// }
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -46,6 +36,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      $.pin = cookie.match(/pt_pin=(.+?);/)[1]
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
@@ -60,11 +51,20 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         }
         continue
       }
-      //await zhuli()
-     // await list()
-      await helpme()
+            
+
+await info()
+await task(1)
+await task(2)
+await kmh()
+await $.wait(1000)
+await kmh()
+
     }
   }
+if ($.isNode() && allMessage) {
+        await notify.sendNotify(`${$.name}`, `${allMessage}` )
+    }
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -72,56 +72,109 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   .finally(() => {
     $.done();
   })
-function helpme() {
-  return new Promise(async (resolve) => {
-    let options = {
-      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"${redEnvelopeId}","inviter":"${inviter}","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
-      headers: {
-        "Origin": "https://618redpacket.jd.com",
-        "Host": "api.m.jd.com",
-        "User-Agent": "jdapp;iPhone;9.5.2;14.3;6898c30638c55142969304c8e2167997fa59eb53;network/wifi;ADID/F108E1B6-8E30-477C-BE54-87CF23435488;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone9,2;addressid/4585826605;supportBestPay/0;appBuild/167650;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
-        "Cookie": cookie,
-      }
-    }
-    $.get(options, async (err, resp, data) => {
-      try {
-        data = JSON.parse(data);
-        console.log(data.data.helpResult.errMsg)
-        if (data.data.helpResult.code == 16005) {
-          await helpme1()
+
+function info() {
+    return new Promise(async (resolve) => {
+        let options = {
+            url: `https://api.m.jd.com/client.action?functionId=signBeanAct&body={"fp":"-1","shshshfp":"-1","shshshfpa":"-1","referUrl":"-1","userAgent":"-1","jda":"-1","rnVersion":"3.9"}&appid=ld&client=android&clientVersion=9.1.4&networkType=4g&osVersion=10&uuid=7049442d7e415231&openudid=7049442d7e415231&jsonp=jsonp_1623319626959_24411`,
+            headers: {
+                //"Origin": "https://h5.m.jd.com/",
+                //"Host": "api.m.jd.com",
+                "User-Agent": "jdapp;android;9.1.4;10;7049442d7e415232;network/4g;model/PCAM00;addressid/0;aid/7049442d7e415232;oaid/;osVer/29;appBuild/84555;partner/oppo;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; PCAM00 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
+                "Cookie": cookie,
+            }
         }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
+        $.get(options, async (err, resp, data) => {
+            try {
+                $.info = jsonpToJson(data);
+                $.info = JSON.stringify($.info)
+                //$.log($.info.data.continuityAward.beanAward.beanCount)
+                if ($.info.code === 0) {
+                    $.log($.info.data.continuityAward.beanAward.beanCount)
+                    allMessage += `京东账号${$.index}-${$.nickName || $.UserName}\n获得：${$.info.data.continuityAward.beanAward.beanCount}京豆${$.index !== cookiesArr.length ? '\n\n' : '\n\n'}`;
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        });
     });
-  });
+}
+function kmh() {
+    return new Promise(async (resolve) => {
+
+        let options = {
+            url: `https://api.m.jd.com/client.action?functionId=limitBoxDraw&body=%7B%7D&appid=ld&client=m&clientVersion=9.1.4&networkType=4g&osVersion=10&uuid=7049442d7e415232&openudid=7049442d7e415231&jsonp=jsonp_1623319640949_31804`,
+            headers: {
+                //"Origin": "https://h5.m.jd.com/",
+                //"Host": "api.m.jd.com",
+                "User-Agent": "jdapp;android;9.1.4;10;7049442d7e415232;network/4g;model/PCAM00;addressid/0;aid/7049442d7e415232;oaid/;osVer/29;appBuild/84555;partner/oppo;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; PCAM00 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
+                "Cookie": cookie,
+            }
+        }
+        $.get(options, async (err, resp, data) => {
+            try {
+
+                $.info1 = jsonpToJson(data);
+                $.info1 = JSON.stringify($.info1)
+                $.log($.info1)
+                if ($.info1.code === 0) {
+                    $.log($.info1.data.beanNum)
+                    allMessage += `京东账号${$.index}-${$.nickName || $.UserName}\n获得：${$.info1.data.beanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : '\n\n'}`;
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        });
+    });
+}
+function task(type) {
+    return new Promise(async (resolve) => {
+        let options = {
+            url: `https://api.m.jd.com/client.action?functionId=limitBoxDoTask&body={"type":"${type}"}&appid=ld&client=m&clientVersion=9.1.4&networkType=4g&osVersion=10&uuid=7049442d7e415232&openudid=7049442d7e415231&jsonp=jsonp_1623319743749_3939`,
+            headers: {
+                //"Origin": "https://h5.m.jd.com/",
+                //"Host": "api.m.jd.com",
+                "User-Agent": "jdapp;android;9.1.4;10;7049442d7e415232;network/4g;model/PCAM00;addressid/0;aid/7049442d7e415232;oaid/;osVer/29;appBuild/84555;partner/oppo;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; PCAM00 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
+                "Cookie": cookie,
+            }
+        }
+        $.get(options, async (err, resp, data) => {
+            try {
+                $.dotask = jsonpToJson(data);
+                $.dotask = JSON.stringify($.dotask)
+                //$.log($.info.data.continuityAward.beanAward.beanCount)
+                if ($.dotask.errorCode === "LB906") {
+                    $.log($.dotask.errorMessage)
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        });
+    });
 }
 
-function helpme1() {
-  return new Promise(async (resolve) => {
-    let options = {
-      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"${redEnvelopeId}","inviter":"${inviter}","helpType":"2"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
-      headers: {
-        "Origin": "https://618redpacket.jd.com",
-        "Host": "api.m.jd.com",
-        "User-Agent": "jdapp;iPhone;9.5.2;14.3;6898c30638c55142969304c8e2167997fa59eb53;network/wifi;ADID/F108E1B6-8E30-477C-BE54-87CF23435488;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone9,2;addressid/4585826605;supportBestPay/0;appBuild/167650;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
-        "Cookie": cookie,
-      }
+function jsonpToJson (datas) {
+  let jsonData = null
+  // 下面是对获取到的数据进行处理，把jsonp格式的数据处理成json格式的数据
+  if (typeof datas === 'string') {            
+    // 返回的是jsonp类型的数据，所以要用正则表达式来匹配截取json数据
+    const reg = /\w+\((\{[^()]+\})\)/
+    const matches = datas.match(reg)
+    // matches匹配到的是数组，数组第一个是所有正则表达式匹配的字符串，第二个是第一个小括号匹配到的字符串
+    if (matches) {
+      jsonData = JSON.parse(matches[1])
     }
-    $.get(options, async (err, resp, data) => {
-      try {
-        data = JSON.parse(data);
-        console.log(data.data.helpResult.errMsg)
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    });
-  });
+  }
+  return jsonData
 }
+
+
 
 async function taskPostUrl(functionId,body) {
   return {
@@ -138,6 +191,7 @@ async function taskPostUrl(functionId,body) {
     }
   }
 }
+
 
 async function TotalBean() {
   return new Promise(async resolve => {
