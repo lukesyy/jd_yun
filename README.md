@@ -1,4 +1,6 @@
-## 京东618活动开始了，已同步LXK大佬618动物联萌脚本，冲就完事了(๑•̀ㅂ•́)و✧
+## 鉴于目前仓库fork人数过多，为防止账号再次遭到封禁，临时建立了一个TG群
+## 有条（科学）件（上网）的可以加入TG群防止失联
+## TG群频道：https:/t.me/jd_zero205
 
 # 为防止仓库再次被封，本仓库仅保留腾讯云函数、elecV2P两种方式运行
 # 想继续使用AC运行的朋友请移步原仓库，没有大的更新随缘维护：https://github.com/zero205/JD  
@@ -16,7 +18,7 @@
     * 相关补充说明：[点此查看](./backUp/elecV2P.md)  
 
 
-### 自动同步脚本教程：[点此查看](https://github.com/zero205/JD_tencent_scf/blob/main/backUp/reposync.md)  </br>
+## 自动同步脚本教程：[点此查看](https://github.com/zero205/JD_tencent_scf/blob/main/backUp/reposync.md)  </br>
 
 ## AC运行常见问题  
 * 此处借用[RayWangQvQ](https://github.com/RayWangQvQ)大佬的教程  
