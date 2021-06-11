@@ -23,7 +23,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/zero205/JD_tencent_scf.git"
+          source_repo: "https://github.com//lukesyy/jd_yun.git"
           source_branch: "main"
           destination_branch: "main"
           github_token: ${{ secrets.PAT }}
