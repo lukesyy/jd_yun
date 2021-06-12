@@ -1,6 +1,6 @@
 /*
 动物联萌 618活动
-更新时间：2021-06-10 09:13
+更新时间：2021-06-11 11:27
 做任务，收金币
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -25,7 +25,7 @@ const $ = new Env('动物联萌');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '',secretp = '',shareCodeList = [],showCode = true;
-let doPkSkill = false;  //自动放技能，不需要的改为false
+let doPkSkill = true;  //自动放技能，不需要的改为false
 const JD_API_HOST = `https://api.m.jd.com/client.action?functionId=`;
 !(async () => {
   await requireConfig()
@@ -649,13 +649,13 @@ function zoo_getHomeData(inviteId= "",timeout = 0) {
             secretp = data.data.result.homeMainInfo.secretp
             await zoo_collectProduceScore();
             if (merge.black) return;
-            await zoo_pk_getHomeData('')
+            await zoo_pk_getHomeData('sSKNX-MpqKOJsNu9yJrYBniM2s3PdKnwjGIKsiw-rGx4UdckYeKYnvgOpEigW3sx')
             //await zoo_pk_assistGroup()
             //if (data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 )
             if (parseInt(data.data.result.homeMainInfo.raiseInfo.totalScore) >= parseInt(data.data.result.homeMainInfo.raiseInfo.nextLevelScore) ) await zoo_raise(1000)
             await zoo_getHomeData('ZXTKT0225KkcRU8Y9FaEIh_3wPAKcQFjRWn6-7zx55awQ');//ZXTKT0225KkcRBka_FPTJBjzkv9YfAFjRWn6-7zx55awQ
             await zoo_getTaskDetail()
-            await zoo_getTaskDetail("sSKNX-MpqKOJsNu9yJrYBniM2s3PdKnwjGIKsiw-rGx4UdckYeKYnvgOpEigW3sx","app")
+            await zoo_getTaskDetail("","app")
           } else {
             return
           }
@@ -758,7 +758,7 @@ function zoo_pk_getHomeData(inviteId = "",timeout = 0) {
       $.post(url, async (err, resp, data) => {
         try {
           if (inviteId !== "") {
-            await $.getScript("https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json").then((text) => (shareCodeList = text ? text.split('\n') : []))
+            await $.getScript("https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/memo/jd_nianBeastShareCode.txt").then((text) => (shareCodeList = text ? text.split('\n') : []))
             for (let i in shareCodeList) {
               if (shareCodeList[i]) await zoo_pk_assistGroup(shareCodeList[i]);
             }
