@@ -48,7 +48,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
       '活动入口：京喜app-》我的-》京喜领88元红包\n' +
       '助力逻辑：脚本会助力作者，介意请取消脚本')
   let res = [];
-  let res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jxhb.json') || [];
+  let res2 = [];
   if (res && res.activeId) $.activeId = res.activeId;
   $.authorMyShareIds = [];
   //开启红包,获取互助码
@@ -66,19 +66,25 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
     $.canHelp = true;
     $.max = false;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    // for (let code of $.packetIdArr) {
-    //   if (!code) continue;
-    //   if ($.UserName === code['userName']) continue;
-    //   if (!$.canHelp) break
-    //   if ($.max) break
-    //   console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
-    //   await enrollFriend(code['strUserPin']);
-    //   await $.wait(2500);
-    // }
-    if ($.canHelp) {
-      console.log(`\n【${$.UserName}】有剩余助力机会，开始助力作者\n`)
-     
+    for (let code of $.packetIdArr) {
+      if (!code) continue;
+      if ($.UserName === code['userName']) continue;
+      if (!$.canHelp) break
+      if ($.max) break
+      console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
+      await enrollFriend(code['strUserPin']);
+      await $.wait(2500);
     }
+    // if ($.canHelp) {
+    //   console.log(`\n【${$.UserName}】有剩余助力机会，开始助力作者\n`)
+    //   for (let item of $.authorMyShareIds) {
+    //     if (!item) continue;
+    //     if (!$.canHelp) break
+    //     console.log(`【${$.UserName}】去助力作者的邀请码：${item}`);
+    //     await enrollFriend(item);
+    //     await $.wait(2500);
+    //   }
+    // }
   }
   //拆红包
   for (let i = 0; i < cookiesArr.length; i++) {
