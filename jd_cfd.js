@@ -58,9 +58,9 @@ cron "5 8,13,19 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mast
     }
     $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
     await requestAlgo();
-    let res = {}, res2 = await getAuthorShareCode("https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json")
-    if (new Date().getHours() <= 3) res = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json');
-    if (!res2) res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json')
+    let res = {}, res2 = []
+    if (new Date().getHours() <= 3) res =[]
+    if (!res2) res2 = []
     $.strMyShareIds = [...(res && res.shareId || []),...(res2 && res2.shareId || [])]
     $.strGroupIds = [...(res && res.strGroupIds || []),...(res2 && res2.strGroupIds || [])]
     for (let i = 0; i < cookiesArr.length; i++) {

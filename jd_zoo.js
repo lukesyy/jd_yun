@@ -1,6 +1,6 @@
 /*
 动物联萌 618活动
-更新时间：2021-06-11 11:27
+更新时间：2021-06-10 09:13
 做任务，收金币
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -25,7 +25,7 @@ const $ = new Env('动物联萌');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '',secretp = '',shareCodeList = [],showCode = true;
-let doPkSkill = true;  //自动放技能，不需要的改为false
+let doPkSkill = false;  //自动放技能，不需要的改为false
 const JD_API_HOST = `https://api.m.jd.com/client.action?functionId=`;
 !(async () => {
   await requireConfig()
@@ -104,7 +104,7 @@ function zoo_getTaskDetail(shopSign = "",appSign = "",timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -189,7 +189,7 @@ function zoo_myMap(timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -227,7 +227,7 @@ function zoo_pk_doPkSkill(skillType, timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -263,7 +263,7 @@ function zoo_sign(timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -304,7 +304,7 @@ function zoo_shopSignInWrite(shopSign,timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -342,7 +342,7 @@ function zoo_shopSignInRead(shopSign,timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -380,7 +380,7 @@ function zoo_collectProduceScore(timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`,
           'Content-Type' : `application/x-www-form-urlencoded`
@@ -420,7 +420,7 @@ function zoo_collectScore(taskBody,timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -469,7 +469,7 @@ function zoo_doAdditionalTask(taskBody,timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -509,7 +509,7 @@ function zoo_getFeedDetail(taskId,timeout = 0){
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -558,7 +558,7 @@ function qryViewkitCallbackResult(taskBody,timeout = 0) {
           'Connection' : `keep-alive`,
           'Accept' : `*/*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`,
           'Content-Type' : 'application/x-www-form-urlencoded',
@@ -628,7 +628,7 @@ function zoo_getHomeData(inviteId= "",timeout = 0) {
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -649,7 +649,7 @@ function zoo_getHomeData(inviteId= "",timeout = 0) {
             secretp = data.data.result.homeMainInfo.secretp
             await zoo_collectProduceScore();
             if (merge.black) return;
-            await zoo_pk_getHomeData('sSKNX-MpqKOJsNu9yJrYBniM2s3PdKnwjGIKsiw-rGx4UdckYeKYnvgOpEigW3sx')
+            await zoo_pk_getHomeData('sSKNX-MpqKOJsNu9yJrYBniM2s3PdKnwjGIKsiw-rGx4UdckYeKYnvgOpEigW3sw')
             //await zoo_pk_assistGroup()
             //if (data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 )
             if (parseInt(data.data.result.homeMainInfo.raiseInfo.totalScore) >= parseInt(data.data.result.homeMainInfo.raiseInfo.nextLevelScore) ) await zoo_raise(1000)
@@ -680,7 +680,7 @@ function zoo_raise(timeout = 0) {
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -712,7 +712,7 @@ function qryCompositeMaterials(timeout = 0) {
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -749,7 +749,7 @@ function zoo_pk_getHomeData(inviteId = "",timeout = 0) {
           'Connection' : `keep-alive`,
           'Accept' : `application/json, text/plain, */*`,
           'Host' : `api.m.jd.com`,
-          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.5(0x18000528) NetType/WIFI Language/zh_CN`,
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
@@ -758,7 +758,7 @@ function zoo_pk_getHomeData(inviteId = "",timeout = 0) {
       $.post(url, async (err, resp, data) => {
         try {
           if (inviteId !== "") {
-            await $.getScript("https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/memo/jd_nianBeastShareCode.txt").then((text) => (shareCodeList = text ? text.split('\n') : []))
+            await $.getScript("https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_zoo.json").then((text) => (shareCodeList = text ? text.split('\n') : []))
             for (let i in shareCodeList) {
               if (shareCodeList[i]) await zoo_pk_assistGroup(shareCodeList[i]);
             }
