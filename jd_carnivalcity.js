@@ -51,7 +51,7 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-let inviteCodes = ['b722495e-b180-4d06-abab-515e89ad325f'];
+let inviteCodes = ['1bd95011-dbcd-4a02-9f07-a9f03bef6486'];
 const JD_API_HOST = 'https://carnivalcity.m.jd.com';
 const activeEndTime = '2021/06/21 00:00:00+08:00';//活动结束时间
 let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;

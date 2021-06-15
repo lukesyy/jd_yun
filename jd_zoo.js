@@ -45,11 +45,11 @@ const pKHelpAuthorFlag = true;//是否助力作者PK  true 助力，false 不助
 let cookiesArr = [];
 $.cookie = '';
 $.inviteList = [];
-$.pkInviteList = [
+$.pkInviteList = ['ZXTKT0225KkcRU8Y9FaEIh_3wPAKcQFjRWn6-7zx55awQ'
 ];
 $.secretpInfo = {};
 $.innerPkInviteList = [
-  'sSKNX-MpqKOJsNu9yJrYBniM2s3PdKnwjGIKsiw-rGx4UdckYeKYnvgOpEigW3sw'
+  'sSKNX-MpqKOJsNu9yJrYBniM2s3PdKnwjGIKsiw-rGx4UdckYeKYnvgOpEigW3s2'
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {

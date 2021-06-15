@@ -49,7 +49,7 @@ let superShakeBeanConfig = {
   "taskVipName": "",
 }
 $.assigFirends = [];
-$.brandActivityId = '';//超级品牌日活动ID
+$.brandActivityId = 'b55f6f40-3cb4-4b37-9062-8616d34ce9ab';//超级品牌日活动ID
 $.brandActivityId2 = '2vSNXCeVuBy8mXTL2hhG3mwSysoL';//超级品牌日活动ID2
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {

@@ -28,13 +28,13 @@ inputs:
           name: unsubscribe_lotteryMachine_car_ms_jintie_xtg
           cronExpression: "0 0 0 * * * *"
           enable: true
-          argument: jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_jin_tie&jd_xtg&jd_xtg_help&jd_get_share_code
+          argument: jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms&jd_jin_tie&jd_xtg&jd_xtg_help&jd_get_share_code&jd_jintie_wx
     - timer: #东东农场 #东东萌宠 #京喜农场 #京东极速版红包 #美丽研究院 #手机狂欢城
         parameters:
           name: fruit_pet_jxnc2_speedsign_speedredpocke_beauty
           cronExpression: "0 5 0-18/6,8 * * * *"
           enable: true
-          argument: jd_fruit&jd_pet&jd_jxnc&jd_speed_sign&jd_speed_redpocke&jd_beauty&jd_carnivalcity
+          argument: jd_fruit&jd_pet&jd_jxnc&jd_speed_sign&jd_speed_redpocke&jd_beauty&jd_carnivalcity&jd_adolf_flp&jd_daily_lottery
     - timer: #宠汪汪喂食 #宠汪汪 #摇钱树 #京东种豆得豆 #京喜工厂 #东东工厂 #健康社区收取能量
         parameters:
           name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory_healthenergy
@@ -46,7 +46,7 @@ inputs:
           name: joyreward_cash_smallhome_live
           cronExpression: "0 6 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_cash&jd_small_home&jd_live&jd_gold_creator&jd_redPacket
+          argument: jd_joy_reward&jd_cash&jd_small_home&jd_live&jd_gold_creator
     - timer: #618动物联萌收集金币
         parameters:
           name: halfredrain_zooCollect
