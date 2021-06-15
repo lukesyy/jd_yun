@@ -20,7 +20,7 @@ inputs:
     - timer: #签到 #摇京豆 #店铺签到 #进店领豆
         parameters:
           name: beansign_clublottery_carexchange_shop
-          cronExpression: "0 1 0 * * * *"
+          cronExpression: "0 0 2,10 * * * *"
           enable: true
           argument: jd_bean_sign&jd_club_lottery&jd_car_exchange&jd_monk_inter_shop_sign&jd_shop&jd_xsmh
     - timer: #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币 #天天提鹅 #领金贴 #家电星推官
@@ -38,7 +38,7 @@ inputs:
     - timer: #宠汪汪喂食 #宠汪汪 #摇钱树 #京东种豆得豆 #京喜工厂 #东东工厂 #健康社区收取能量
         parameters:
           name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory_healthenergy
-          cronExpression: "0 3 0,6-23/1 * * * *"
+          cronExpression: "0 3 0,6-23/2 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_z_health_energy
     - timer: #宠汪汪积分兑换京豆 #签到领现金 #东东小窝 #京东直播 #金榜创造营 #全民开红包
@@ -68,13 +68,13 @@ inputs:
     - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京小兑 #幸运大转盘
         parameters:
           name: beanchange_crazyjoy_rankingList_beanhome_sgmh_jxd
-          cronExpression: "0 30 7 * * * *"
+          cronExpression: "0 30 7,10 * * * *"
           enable: true
           argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_jxd&jd_try&jd_market_lottery
     - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #女装盲盒 #关注有礼 #跳跳乐瓜分京豆 #新潮品牌狂欢 #京喜领88元红包 #星店长
         parameters:
           name: pigPet_syj_kd_jdzz_sign_nzmh_follow
-          cronExpression: "0 20 0,9,11,21 * * * *"
+          cronExpression: "0 20 0,9,13,21 * * * *"
           enable: true
           argument: jd_pigPet&jd_syj&jd_kd&jd_jxlhb&jd_jdzz&jd_nzmh&jd_monk_shop_follow_sku&jd_jump&jd_mcxhd&jd_star_shop
   environment: #  环境变量
