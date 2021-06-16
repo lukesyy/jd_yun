@@ -35,7 +35,7 @@ cron "10 * * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresou
 
 const $ = new Env('京喜工厂');
 const JD_API_HOST = 'https://m.jingxi.com';
-const helpAu = true; //帮作者助力 免费拿活动
+const helpAu = false; //帮作者助力 免费拿活动
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 0 : 5;
@@ -131,7 +131,7 @@ async function jdDreamFactory() {
   try {
     await userInfo();
     await QueryFriendList();//查询今日招工情况以及剩余助力次数
-    // await joinLeaderTuan();//参团
+    await joinLeaderTuan();//参团
     await helpFriends();
     if (!$.unActive) return
     // await collectElectricity()
@@ -146,7 +146,7 @@ async function jdDreamFactory() {
     await exchangeProNotify();
     await showMsg();
     if (helpAu === true) {
-      await helpAuthor();
+      // await helpAuthor();
       $.packetIdArr = [
       ]
 
@@ -1001,9 +1001,8 @@ async function tuanActivity() {
   }
 }
 async function joinLeaderTuan() {
-  let res = await updateTuanIdsCDN(), res2 = await updateTuanIdsCDN("https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_updateFactoryTuanId.json")
-  if (!res) res = await updateTuanIdsCDN('https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_updateFactoryTuanId.json');
-  $.authorTuanIds = [...(res && res.tuanIds || []),...(res2 && res2.tuanIds || [])]
+ 
+  $.authorTuanIds = ['jznSBhZhgPgIi0M6r53FSQ==']
   if ($.authorTuanIds && $.authorTuanIds.length) {
     for (let tuanId of $.authorTuanIds) {
       if (!tuanId) continue
@@ -1133,6 +1132,7 @@ function JoinTuan(tuanId, stk = '_time,activeId,tuanId') {
     })
   })
 }
+
 //查询所有的团情况(自己开团以及参加别人的团)
 function QueryAllTuan() {
   return new Promise((resolve) => {
@@ -1365,7 +1365,7 @@ function shareCodesFormat() {
     }
     const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
-      $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
+      $.newShareCodes = [...new Set([...$.newShareCodes]),[]];
     }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();

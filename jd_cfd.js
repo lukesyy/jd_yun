@@ -62,7 +62,7 @@ cron "5 8,13,19 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mast
     if (new Date().getHours() <= 3) res =[]
     if (!res2) res2 = []
     $.strMyShareIds = [...(res && res.shareId || []),...(res2 && res2.shareId || [])]
-    $.strGroupIds = [...(res && res.strGroupIds || []),...(res2 && res2.strGroupIds || [])]
+    $.strGroupIds = ['D612E78658BD9A6A772F79D66FB3937DB0A0F4A53966A04EEA4153AC98F89D5C']
     for (let i = 0; i < cookiesArr.length; i++) {
       if (cookiesArr[i]) {
         cookie = cookiesArr[i];
@@ -1180,15 +1180,12 @@ cron "5 8,13,19 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mast
   function shareCodesFormat() {
     return new Promise(async resolve => {
       // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
-      $.newShareCodes = [];
+      $.newShareCodes = ['D612E78658BD9A6A772F79D66FB3937D9298B2EF2FBA13BB188D3467CBD6BE58'];
       if ($.shareCodesArr[$.index - 1]) {
         $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
       } else {
       }
-      const readShareCodeRes = await readShareCode();
-      if (readShareCodeRes && readShareCodeRes.code === 200) {
-        $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
-      }
+     
       console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
       resolve();
     })
