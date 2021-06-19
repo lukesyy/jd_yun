@@ -80,6 +80,11 @@ jobs:
       TYT_PACKETID: ${{ secrets.TYT_PACKETID}}
       CHB_PACKETID: ${{ secrets.CHB_PACKETID}}
       JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL}}
+      DYJ_INVITER: ${{ secrets.DYJ_INVITER}}
+      JD_TRY: ${{ secrets.JD_TRY}}
+      JD_WXJ: ${{ secrets.JD_WXJ}}
+      SHARECODE_WXJ: ${{ secrets.SHARECODE_WXJ}}
+      HELPAUTHOR_WXJ: ${{ secrets.HELPAUTHOR_WXJ}}
       
     steps:
       - name: Checkout
@@ -168,7 +173,11 @@ jobs:
           if [ $JD_JXD_EXCHANGE ]; then sed -i "/variables/a\      JD_JXD_EXCHANGE: $JD_JXD_EXCHANGE" serverless.yml; fi;
           if [ $JXNC_NOTIFY_LEVEL ]; then sed -i "/variables/a\      JXNC_NOTIFY_LEVEL: $JXNC_NOTIFY_LEVEL" serverless.yml; fi;
           if [ $TYT_PACKETID ]; then sed -i "/variables/a\      TYT_PACKETID: $TYT_PACKETID" serverless.yml; fi;
-          if [ $CHB_PACKETID ]; then sed -i "/variables/a\      CHB_PACKETID: $CHB_PACKETID" serverless.yml; fi;
+          if [ $CHB_PACKETID ]; then sed -i "/variables/a\      CHB_PACKETID: $CHB_PACKETID" serverless.yml; 
+          if [ $JD_TRY ]; then sed -i "/variables/a\      JD_TRY: $JD_TRY" serverless.yml; fi;
+          if [ $JD_WXJ ]; then sed -i "/variables/a\      JD_WXJ: $JD_WXJ" serverless.yml; fi;
+          if [ $SHARECODE_WXJ ]; then sed -i "/variables/a\      SHARECODE_WXJ: $SHARECODE_WXJ" serverless.yml; fi;
+          if [ $HELPAUTHOR_WXJ ]; then sed -i "/variables/a\      HELPAUTHOR_WXJ: $HELPAUTHOR_WXJ" serverless.yml; fi
           cat serverless.yml
           env
 

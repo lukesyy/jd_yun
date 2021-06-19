@@ -39,11 +39,10 @@ const helpAu = false; //帮作者助力 免费拿活动
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 0 : 5;
-let tuanActiveId = `LCgGZyPfNU62QiZXUcaeWg==`;
+let tuanActiveId = `bozIUUFcANuUdWpw3QdvPw==`;
 const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
 let cookiesArr = [], cookie = '', message = '', allMessage = '';
 const inviteCodes = [
-  'xE2FHpwP8-NFxEoASj29sw==',
   'xE2FHpwP8-NFxEoASj29sw=='
 ];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -1002,7 +1001,7 @@ async function tuanActivity() {
 }
 async function joinLeaderTuan() {
  
-  $.authorTuanIds = ['jznSBhZhgPgIi0M6r53FSQ==']
+  $.authorTuanIds = ['b_xuRvsSsQSFc-Dl20e1Rw==']
   if ($.authorTuanIds && $.authorTuanIds.length) {
     for (let tuanId of $.authorTuanIds) {
       if (!tuanId) continue

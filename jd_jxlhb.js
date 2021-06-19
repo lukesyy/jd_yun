@@ -66,7 +66,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
     $.canHelp = true;
     $.max = false;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    $.packetIdArr.push({ strUserPin: 'QZRR6XCI0kJS49w-ATy8PFh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk', 'userName': 'o' })
+    $.packetIdArr.push({ strUserPin: 'Hzb5IKuYblPXt7uPGaRwBFh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk', 'userName': 'o' })
     
     for (let code of $.packetIdArr) {
       if (!code) continue;
