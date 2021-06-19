@@ -1,4 +1,4 @@
-name: 部署到腾讯云函数
+name: 2部署到腾讯云函数
 on:
   workflow_dispatch:
   schedule:
@@ -77,14 +77,15 @@ jobs:
       JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
       CFD_NOTIFY_CONTROL: ${{ secrets.CFD_NOTIFY_CONTROL}}
       JD_JXD_EXCHANGE: ${{ secrets.JD_JXD_EXCHANGE}}
-      TYT_PACKETID: ${{ secrets.TYT_PACKETID}}
-      CHB_PACKETID: ${{ secrets.CHB_PACKETID}}
-      JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL}}
+      DYJ_PACKETID: ${{ secrets.DYJ_PACKETID}}
+      DYJ_INVITER: ${{ secrets.DYJ_INVITER}}
+      InviterPin: ${{ secrets.InviterPin}}
       DYJ_INVITER: ${{ secrets.DYJ_INVITER}}
       JD_TRY: ${{ secrets.JD_TRY}}
       JD_WXJ: ${{ secrets.JD_WXJ}}
       SHARECODE_WXJ: ${{ secrets.SHARECODE_WXJ}}
       HELPAUTHOR_WXJ: ${{ secrets.HELPAUTHOR_WXJ}}
+      JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL}}
       
     steps:
       - name: Checkout
@@ -103,7 +104,7 @@ jobs:
           npm install got
           npm install tough-cookie
           npm install js-yaml
-
+          npm install promises
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
           if [ $JD_COOKIE ]; then sed -i "/variables/a\      JD_COOKIE: $JD_COOKIE" serverless.yml; fi;
@@ -172,15 +173,15 @@ jobs:
           if [ $CFD_NOTIFY_CONTROL ]; then sed -i "/variables/a\      CFD_NOTIFY_CONTROL: $CFD_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $JD_JXD_EXCHANGE ]; then sed -i "/variables/a\      JD_JXD_EXCHANGE: $JD_JXD_EXCHANGE" serverless.yml; fi;
           if [ $JXNC_NOTIFY_LEVEL ]; then sed -i "/variables/a\      JXNC_NOTIFY_LEVEL: $JXNC_NOTIFY_LEVEL" serverless.yml; fi;
-          if [ $TYT_PACKETID ]; then sed -i "/variables/a\      TYT_PACKETID: $TYT_PACKETID" serverless.yml; fi;
-          if [ $CHB_PACKETID ]; then sed -i "/variables/a\      CHB_PACKETID: $CHB_PACKETID" serverless.yml; 
+          if [ $InviterPin ]; then sed -i "/variables/a\      InviterPin: $InviterPin" serverless.yml; fi;
+          if [ $DYJ_PACKETID ]; then sed -i "/variables/a\      DYJ_PACKETID: $DYJ_PACKETID" serverless.yml; fi;
+          if [ $DYJ_INVITER ]; then sed -i "/variables/a\      DYJ_INVITER: $DYJ_INVITER" serverless.yml; fi;
           if [ $JD_TRY ]; then sed -i "/variables/a\      JD_TRY: $JD_TRY" serverless.yml; fi;
           if [ $JD_WXJ ]; then sed -i "/variables/a\      JD_WXJ: $JD_WXJ" serverless.yml; fi;
           if [ $SHARECODE_WXJ ]; then sed -i "/variables/a\      SHARECODE_WXJ: $SHARECODE_WXJ" serverless.yml; fi;
-          if [ $HELPAUTHOR_WXJ ]; then sed -i "/variables/a\      HELPAUTHOR_WXJ: $HELPAUTHOR_WXJ" serverless.yml; fi
+          if [ $HELPAUTHOR_WXJ ]; then sed -i "/variables/a\      HELPAUTHOR_WXJ: $HELPAUTHOR_WXJ" serverless.yml; fi;
           cat serverless.yml
           env
-
       - name: "压缩文件夹"
         run: zip -r myfile.zip ./*
 
@@ -188,7 +189,6 @@ jobs:
         run: |
           npm install
           npm install tencentcloud-sdk-nodejs
-
       - name: "部署到腾讯云函数"
         run: node tencentscf.js
         env:
