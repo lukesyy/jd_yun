@@ -34,7 +34,7 @@ inputs:
           name: fruit_pet_jxnc2_speedsign_speedredpocke_beauty
           cronExpression: "0 5 0-18/6,8 * * * *"
           enable: true
-          argument: jd_fruit&jd_pet&jd_jxnc&jd_speed_sign&jd_speed_redpocke&jd_beauty&jd_carnivalcity&jd_adolf_flp&jd_daily_lottery&jd_jxmc
+          argument: jd_fruit&jd_pet&jd_jxnc&jd_speed_sign&jd_speed_redpocke&jd_beauty&jd_carnivalcity&jd_daily_lottery&jd_jxmc
     - timer: #宠汪汪喂食 #宠汪汪 #摇钱树 #京东种豆得豆 #京喜工厂 #东东工厂 #健康社区收取能量
         parameters:
           name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory_healthenergy
@@ -52,13 +52,13 @@ inputs:
           name: halfredrain_zooCollect
           cronExpression: "2 1,31 0,6-23/1 * * * *"
           enable: true
-          argument: jd_zooCollect&jd_chb&jd_tyt&jd_zjb&jd_z_health_community
+          argument: jd_chb&jd_tyt&jd_zjb&jd_z_health_community
     - timer: #天天提鹅 #健康社区 #618动物联萌 #5G超级盲盒 #省钱大赢家之翻翻乐
         parameters:
           name: dailyegg_healthcommunity
           cronExpression: "0 1,30 0,5-18/2,18-21/1 * * * *"
           enable: true
-          argument: jd_daily_egg&jd_zoo&jd_super_redrain&jd_mohe&jd_big_winner
+          argument: jd_daily_egg&jd_super_redrain&jd_mohe&jd_big_winner
     - timer: #东东超市 #京喜财富岛 #京享值PK
         parameters:
           name: cfd_superMarket
