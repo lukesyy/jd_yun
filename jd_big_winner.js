@@ -387,7 +387,7 @@ function help2() {
 function helpAuthor() {
   return new Promise(async (resolve) => {
     let options = {
-      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"56aa702237434bf687c214f4cea3169985881624034100882","inviter":"TLkD8PycMVws9HtL2YLxaNNJCYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
+      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"56aa702237434bf687c214f4cea3169985881624034100882","inviter":"TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
       headers: {
         "Origin": "https://618redpacket.jd.com",
         "Host": "api.m.jd.com",
@@ -400,9 +400,6 @@ function helpAuthor() {
       try {
         data = JSON.parse(data);
         console.log(data.data.helpResult.errMsg)
-        if (data.data.helpResult.code == 16005) {
-          await helpAuthor2()
-        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
