@@ -382,12 +382,12 @@ function help2() {
     });
   });
 }
-// https://618redpacket.jd.com/?activityId=DA4SkG7NXupA9sksI00L0g&redEnvelopeId=dbcb985a2cbe48d69f6d38a74e66f70023171624118462758&inviterId=TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI&helpType=1&ad_od=share&utm_source=androidapp&utm_medium=appshare&utm_campaign=t_335139774&utm_term=QQfriends
+//https://618redpacket.jd.com/?activityId=DA4SkG7NXupA9sksI00L0g&redEnvelopeId=0a41672cd1224032b4b9594827ca5a2333261624291264309&inviterId=TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI&helpType=1&ad_od=share&utm_source=androidapp&utm_medium=appshare&utm_campaign=t_335139774&utm_term=QQfriends
 //帮助作者
 function helpAuthor() {
   return new Promise(async (resolve) => {
     let options = {
-      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"dbcb985a2cbe48d69f6d38a74e66f70023171624118462758","inviter":"TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
+      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"0a41672cd1224032b4b9594827ca5a2333261624291264309","inviter":"TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
       headers: {
         "Origin": "https://618redpacket.jd.com",
         "Host": "api.m.jd.com",
