@@ -62,7 +62,7 @@ const len = cookiesArr.length;
       $.nickName = '';
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       await main()
-      await help()
+      // await help()
       if (helpAu === true) {
         await helpAuthor()
       }
