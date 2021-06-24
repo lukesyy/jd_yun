@@ -22,7 +22,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '', linkId = 'DA4SkG7NXupA9sksI00L0g', fflLinkId = 'YhCkrVusBVa_O2K-7xE6hA';
-let redEnvelopeId = '56aa702237434bf687c214f4cea3169985881624034100882';
+let redEnvelopeId = '6be855e69aa8488e889e1cf25e65904711451624464062937';
 let inviter = '=TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI';
 //兼容elecV2P
 redEnvelopeId = $.getdata('redEnvelopeId') ? $.getdata('redEnvelopeId') : redEnvelopeId;
@@ -62,7 +62,7 @@ const len = cookiesArr.length;
       $.nickName = '';
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       await main()
-      // await help()
+      await help()
       if (helpAu === true) {
         await helpAuthor()
       }
