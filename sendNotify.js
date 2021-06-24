@@ -115,7 +115,6 @@ if (process.env.DD_BOT_TOKEN) {
 if (process.env.QYWX_KEY) {
   QYWX_KEY = process.env.QYWX_KEY;
 }
-
 if (process.env.QYWX_AM) {
   QYWX_AM = process.env.QYWX_AM;
 }
