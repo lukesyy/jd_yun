@@ -7,7 +7,7 @@
     * 相关补充说明：[点此查看](./backUp/elecV2P.md)  
 
 
-## 自动同步脚本教程：[点此查看](https://github.com/zero205/JD_tencent_scf/blob/main/backUp/reposync.md)  </br>
+## 自动同步脚本教程：[点此查看](https://github.com/lukesyy/jd_yun/blob/main/backUp/reposync.md)  </br>
 
 ## AC运行常见问题  
 * 此处借用[RayWangQvQ](https://github.com/RayWangQvQ)大佬的教程  
