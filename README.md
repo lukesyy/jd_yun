@@ -1,6 +1,6 @@
 
 ## 使用教程（不要fork！觉得有用的可以点个star :blush:）
-* > ~~Github Action 运行~~ (响应lxk大佬要求，删除AC教程)
+## 群:589445369
 * > 腾讯云函数部署【推荐】。[点此查看](./backUp/tencentscf.md)
 * > [elecV2P](https://github.com/elecV2/elecV2P) 部署【备用】。
     * 安装教程：[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
