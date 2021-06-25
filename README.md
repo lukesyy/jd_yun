@@ -1,13 +1,17 @@
 
 ## 使用教程（不要fork！觉得有用的可以点个star :blush:）
+
+## 1.先去创建一个空白库 [立即创建](https://github.com/new)  </br>
+
+## 2.自动同步脚本教程：[点此查看](https://github.com/lukesyy/jd_yun/blob/main/backUp/reposync.md)  </br>
+
 ## 群:589445369
-* > 腾讯云函数部署【推荐】。[点此查看](./backUp/tencentscf.md)
+
+* > 3.腾讯云函数部署【推荐】。[点此查看](./backUp/tencentscf.md)
 * > [elecV2P](https://github.com/elecV2/elecV2P) 部署【备用】。
     * 安装教程：[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
     * 相关补充说明：[点此查看](./backUp/elecV2P.md)  
 
-
-## 自动同步脚本教程：[点此查看](https://github.com/lukesyy/jd_yun/blob/main/backUp/reposync.md)  </br>
 
 ## AC运行常见问题  
 * 此处借用[RayWangQvQ](https://github.com/RayWangQvQ)大佬的教程  
