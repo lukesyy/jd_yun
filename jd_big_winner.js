@@ -22,7 +22,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '', linkId = 'DA4SkG7NXupA9sksI00L0g', fflLinkId = 'YhCkrVusBVa_O2K-7xE6hA';
-let redEnvelopeId = '5f23b1c8413f46a0b53ed3a323bc46ee28841624550463220';
+let redEnvelopeId = 'b59a366ff23e4ffaabdd8b58717e395231391624636863587';
 let inviter = '=TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI';
 //兼容elecV2P
 redEnvelopeId = $.getdata('redEnvelopeId') ? $.getdata('redEnvelopeId') : redEnvelopeId;
@@ -387,7 +387,7 @@ function help2() {
 function helpAuthor() {
   return new Promise(async (resolve) => {
     let options = {
-      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"5f23b1c8413f46a0b53ed3a323bc46ee28841624550463220","inviter":"TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
+      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"b59a366ff23e4ffaabdd8b58717e395231391624636863587","inviter":"TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
       headers: {
         "Origin": "https://618redpacket.jd.com",
         "Host": "api.m.jd.com",
