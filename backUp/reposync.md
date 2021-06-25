@@ -7,7 +7,7 @@
 
 ### 填写PAT到Secrets
 
-申请完毕后，在分支中点击`Settings`-`Secrets`-`New secret`
+申请完毕后，在分刚刚创建的库中点击`Settings`-`Secrets`-`New secret`
 
 `name`填`PAT`，`Value`填入上方申请到的PAT,保存即可
 
