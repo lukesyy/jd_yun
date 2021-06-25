@@ -22,7 +22,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '', linkId = 'DA4SkG7NXupA9sksI00L0g', fflLinkId = 'YhCkrVusBVa_O2K-7xE6hA';
-let redEnvelopeId = '6be855e69aa8488e889e1cf25e65904711451624464062937';
+let redEnvelopeId = '5f23b1c8413f46a0b53ed3a323bc46ee28841624550463220';
 let inviter = '=TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI';
 //兼容elecV2P
 redEnvelopeId = $.getdata('redEnvelopeId') ? $.getdata('redEnvelopeId') : redEnvelopeId;
@@ -381,13 +381,13 @@ function help2() {
       }
     });
   });
-}
+}//https://618redpacket.jd.com/?activityId=DA4SkG7NXupA9sksI00L0g&redEnvelopeId=5f23b1c8413f46a0b53ed3a323bc46ee28841624550463220&inviterId=TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI&helpType=1&ad_od=share&utm_source=androidapp&utm_medium=appshare&utm_campaign=t_335139774&utm_term=QQfriends
 
 //帮助作者
 function helpAuthor() {
   return new Promise(async (resolve) => {
     let options = {
-      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"6be855e69aa8488e889e1cf25e65904711451624464062937","inviter":"TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
+      url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={"linkId":"DA4SkG7NXupA9sksI00L0g","redEnvelopeId":"5f23b1c8413f46a0b53ed3a323bc46ee28841624550463220","inviter":"TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI","helpType":"1"}&t=1623064535450&appid=activities_platform&clientVersion=3.3.6`,
       headers: {
         "Origin": "https://618redpacket.jd.com",
         "Host": "api.m.jd.com",
