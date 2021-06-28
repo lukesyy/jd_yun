@@ -3,7 +3,8 @@
 
 ## 1.先去创建一个空白库 [立即创建](https://github.com/new)  </br>
 ## 2.进入空白的库创建Actions </br>
-   ①点击Actions ②点击New workflow </br>
+   ①点击Actions </br>
+   ②点击New workflow </br>
    ③点击Node.js里的Set up this workflow </br>
    ④把这个代码[去复制代码](https://github.com/lukesyy/jd_yun/blob/main/.github/workflows/syncGit.yml)放进去保存执行一次就好了</br>
    
