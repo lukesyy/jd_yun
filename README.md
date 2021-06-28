@@ -6,7 +6,7 @@
    ①点击Actions </br>
    ②点击New workflow </br>
    ③点击Node.js里的Set up this workflow </br>
-   ④把这个代码[去复制代码](https://github.com/lukesyy/jd_yun/blob/main/.github/workflows/syncGit.yml)放进去保存执行一次就好了</br>
+   ④把这个代码[去复制代码](https://github.com/lukesyy/jd_yun/blob/main/.github/workflows/syncGit.yml)放进去保存.然后去做第三步</br>
    
 ## 3.自动同步脚本教程：[点此查看](https://github.com/lukesyy/jd_yun/blob/main/backUp/reposync.md)  </br>
 
