@@ -119,7 +119,8 @@ function getTaskDetail(taskId = '') {
           if (safeGet(data)) {
             data = $.toObj(data)
             if (taskId === -1) {
-              let tmp = data?.data?.result?.userScore ?? '0'
+              console.log(data);
+              let tmp = '未知'
               if (!$.earn) {
                 $.score = tmp
                 $.earn = 1
