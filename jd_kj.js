@@ -17,8 +17,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-let skuId = '10025732612585'; //你要参加砍价的商品ID
-let activity = '858498567168643072'; //看日志查看你的activity 比如export activity="854366883120689152"
+let skuId = '10031056322089'; //你要参加砍价的商品ID
+let activity = '859002283818770432'; //看日志查看你的activity 比如export activity="854366883120689152"
 if (process.env.skuId) {
   skuId = process.env.skuId;
 }

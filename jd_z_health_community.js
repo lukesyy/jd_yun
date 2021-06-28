@@ -99,12 +99,6 @@ async function main() {
 async function helpFriends() {
   for (let code of $.newShareCodes) {
     if (!code) continue
-    console.log(`去助力好友${code}`)
-    let res = await doTask(code, 6)
-    if([108,-1001].includes(res?.data?.bizCode)){
-      console.log(`助力次数已满，跳出`)
-      break
-    }
     await $.wait(1000)
   }
 }
