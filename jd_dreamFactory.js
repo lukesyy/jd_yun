@@ -1001,7 +1001,7 @@ async function tuanActivity() {
 }
 async function joinLeaderTuan() {
  
-  $.authorTuanIds = ['b_xuRvsSsQSFc-Dl20e1Rw==']
+  $.authorTuanIds = ['WhnQFvHStUL0rwwNfyCeqw==']
   if ($.authorTuanIds && $.authorTuanIds.length) {
     for (let tuanId of $.authorTuanIds) {
       if (!tuanId) continue
@@ -1016,7 +1016,7 @@ async function joinLeaderTuan() {
 //如果团ID不为空，则查询QueryTuan()
 function QueryActiveConfig() {
   return new Promise((resolve) => {
-    const body = `activeId=${escape(tuanActiveId)}&tuanId=`;
+    const body = `activeId=${escape(tuanActiveId)}&tuanId=WhnQFvHStUL0rwwNfyCeqw==`;
     const options = taskTuanUrl(`QueryActiveConfig`, body, `_time,activeId,tuanId`)
     $.get(options, async (err, resp, data) => {
       try {
