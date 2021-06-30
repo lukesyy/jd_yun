@@ -33,6 +33,8 @@ let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
  '9bfe7b5b330f4af0b1f979fc87fe2944'
 
 ]
+let delFrinde = process.env.DEL_FRINDE||true //是否开启自动删除好友 false否,true是
+console.log(delFrinde);
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
@@ -786,7 +788,7 @@ async function getAwardInviteFriend() {
   if ($.friendList) {
     console.log(`\n今日已邀请好友${$.friendList.inviteFriendCount}个 / 每日邀请上限${$.friendList.inviteFriendMax}个`);
     console.log(`开始删除${$.friendList.friends && $.friendList.friends.length}个好友,可拿每天的邀请奖励`);
-    if ($.friendList.friends && $.friendList.friends.length > 0) {
+    if (delFrinde&&$.friendList.friends && $.friendList.friends.length > 0) {
       for (let friend of $.friendList.friends) {
         console.log(`\n开始删除好友 [${friend.shareCode}]`);
         const deleteFriendForFarm = await request('deleteFriendForFarm', { "shareCode": `${friend.shareCode}`,"version":8,"channel":1 });

@@ -85,7 +85,7 @@ jobs:
       SHARECODE_WXJ: ${{ secrets.SHARECODE_WXJ}}
       HELPAUTHOR_WXJ: ${{ secrets.HELPAUTHOR_WXJ}}
       JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL}}
-      
+      DEL_FRINDE: ${{ secrets.DEL_FRINDE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
