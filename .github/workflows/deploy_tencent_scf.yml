@@ -180,6 +180,7 @@ jobs:
           if [ $JD_WXJ ]; then sed -i "/variables/a\      JD_WXJ: $JD_WXJ" serverless.yml; fi;
           if [ $SHARECODE_WXJ ]; then sed -i "/variables/a\      SHARECODE_WXJ: $SHARECODE_WXJ" serverless.yml; fi;
           if [ $HELPAUTHOR_WXJ ]; then sed -i "/variables/a\      HELPAUTHOR_WXJ: $HELPAUTHOR_WXJ" serverless.yml; fi;
+          if [ $DEL_FRIENDS ]; then sed -i "/variables/a\      DEL_FRIENDS: $DEL_FRIENDS" serverless.yml; fi;
           cat serverless.yml
           env
       - name: "压缩文件夹"
