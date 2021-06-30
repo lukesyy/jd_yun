@@ -33,7 +33,7 @@ let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
  '9bfe7b5b330f4af0b1f979fc87fe2944'
 
 ]
-let delFrinde = process.env.DEL_FRINDE||true //是否开启自动删除好友 false否,true是
+let delFrinde = process.env.DEL_FRINDE||true//是否开启自动删除好友 false否,true是
 console.log(delFrinde);
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
