@@ -42,12 +42,12 @@ inputs:
           cronExpression: "0 3 0,6-23/1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_z_health_energy
-    - timer: #宠汪汪积分兑换京豆 #签到领现金 #东东小窝 #京东直播 #金榜创造营 #全民开红包
+    - timer: #宠汪汪积分兑换京豆 #签到领现金 #东东小窝 #京东直播 #金榜创造营 #全民开红包  #特物z
         parameters:
           name: joyreward_cash_smallhome_live
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_cash&jd_small_home&jd_live&jd_gold_creator
+          argument: jd_joy_reward&jd_cash&jd_small_home&jd_live&jd_gold_creator&jd_superBrand
     - timer: #健康社区
         parameters:
           name: healthcommunity
@@ -71,7 +71,7 @@ inputs:
           name: beanchange_crazyjoy_rankingList_beanhome_sgmh_jxd
           cronExpression: "0 30 9 * * * *"
           enable: true
-          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_jxd&jd_try&jd_market_lottery&jd_djjl&jd_ddly
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_jxd&jd_market_lottery&jd_djjl&jd_ddly
     - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #女装盲盒 #关注有礼 #跳跳乐瓜分京豆 #新潮品牌狂欢 #京喜领88元红包 #星店长
         parameters:
           name: pigPet_syj_kd_jdzz_sign_nzmh_follow
