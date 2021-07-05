@@ -33,7 +33,7 @@ if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);
   });
-  console.log(`如果出现提示 ?.data. 错误，请升级nodejs版本(进入容器后，apk add nodejs-current)`)
+  console.log(`如果出现提示 .data. 错误，请升级nodejs版本(进入容器后，apk add nodejs-current)`)
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === "false") console.log = () => {};
 } else {
   cookiesArr = [
@@ -129,28 +129,28 @@ function getTaskDetail(taskId = '') {
                 $.score = tmp
               }
             } else if (taskId === 6) {
-              if (data?.data?.result?.taskVos) {
-                console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken}\n`);
-                console.log('好友助力码：' + data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken)
+              if (data.data.result.taskVos) {
+                console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.data.result.taskVos[0].assistTaskDetailVo.taskToken}\n`);
+                console.log('好友助力码：' + data.data.result.taskVos[0].assistTaskDetailVo.taskToken)
               }
-            } else for (let vo of data?.data?.result?.taskVos.filter(vo => vo.taskType !== 19) ?? []) {
+            } else for (let vo of data.data.result.taskVos.filter(vo => vo.taskType !== 19) ?? []) {
               console.log(`${vo.taskName}任务，完成次数：${vo.times}/${vo.maxTimes}`)
               for (let i = vo.times; i < vo.maxTimes; ++i) {
                 console.log(`去完成${vo.taskName}任务`)
                 if (vo.taskType === 13) {
-                  await doTask(vo.simpleRecordInfoVo?.taskToken, vo?.taskId)
+                  await doTask(vo.simpleRecordInfoVo.taskToken, vo.taskId)
                 } else if (vo.taskType === 8) {
-                  await doTask(vo.productInfoVos[i]?.taskToken, vo?.taskId, 1)
+                  await doTask(vo.productInfoVos[i].taskToken, vo.taskId, 1)
                   await $.wait(1000 * 10)
-                  await doTask(vo.productInfoVos[i]?.taskToken, vo?.taskId, 0)
+                  await doTask(vo.productInfoVos[i].taskToken, vo.taskId, 0)
                 } else if (vo.taskType === 9) {
-                  await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId, 1)
+                  await doTask(vo.shoppingActivityVos[0].taskToken, vo.taskId, 1)
                   await $.wait(1000 * 10)
-                  await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId, 0)
+                  await doTask(vo.shoppingActivityVos[0].taskToken, vo.taskId, 0)
                 } else if (vo.taskType === 10) {
-                  await doTask(vo.threeMealInfoVos[0]?.taskToken, vo?.taskId)
+                  await doTask(vo.threeMealInfoVos[0].taskToken, vo.taskId)
                 } else if (vo.taskType === 26 || vo.taskType === 3) {
-                  await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId)
+                  await doTask(vo.shoppingActivityVos[0].taskToken, vo.taskId)
                 }
               }
             }
@@ -171,14 +171,14 @@ function doTask(taskToken, taskId, actionType = 0) {
         try {
           if (safeGet(data)) {
             data = $.toObj(data)
-            if ([0, 1].includes(data?.data?.bizCode ?? -1)) {
+            if ([0, 1].includes(data.data.bizCode ?? -1)) {
               $.canDo = true
-              if (data?.data?.result?.score)
-                console.log(`任务完成成功，获得：${data?.data?.result?.score ?? '未知'}能量`)
+              if (data.data.result.score)
+                console.log(`任务完成成功，获得：${data.data.result.score ?? '未知'}能量`)
               else
-                console.log(`任务领取结果：${data?.data?.bizMsg ?? JSON.stringify(data)}`)
+                console.log(`任务领取结果：${data.data.bizMsg ?? JSON.stringify(data)}`)
             } else {
-              console.log(`任务完成失败：${data?.data?.bizMsg ?? JSON.stringify(data)}`)
+              console.log(`任务完成失败：${data.data.bizMsg ?? JSON.stringify(data)}`)
             }
           }
         } catch (e) {
@@ -197,13 +197,13 @@ function collectScore() {
         try {
           if (safeGet(data)) {
             data = $.toObj(data)
-            if (data?.data?.bizCode === 0) {
-              if (data?.data?.result?.produceScore)
-                console.log(`任务完成成功，获得：${data?.data?.result?.produceScore ?? '未知'}能量`)
+            if (data.data.bizCode === 0) {
+              if (data.data.result.produceScore)
+                console.log(`任务完成成功，获得：${data.data.result.produceScore ?? '未知'}能量`)
               else
-                console.log(`任务领取结果：${data?.data?.bizMsg ?? JSON.stringify(data)}`)
+                console.log(`任务领取结果：${data.data.bizMsg ?? JSON.stringify(data)}`)
             } else {
-              console.log(`任务完成失败：${data?.data?.bizMsg ?? JSON.stringify(data)}`)
+              console.log(`任务完成失败：${data.data.bizMsg ?? JSON.stringify(data)}`)
             }
           }
         } catch (e) {
