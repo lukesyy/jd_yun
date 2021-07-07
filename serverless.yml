@@ -24,7 +24,7 @@ inputs:
           cronExpression: "0 1 0 * * * *"
           enable: true
           argument: jd_bean_sign&jd_club_lottery&jd_car_exchange&jd_monk_inter_shop_sign&jd_shop
-     - timer:  #汪汪乐园
+    - timer:  #汪汪乐园
         parameters:
           name: superBrand_joypark
           cronExpression: "0 10 9,21 * * * *"
