@@ -9,7 +9,7 @@ const $ = new Env('京享值PK');
 
 $.appId = 'dafbe42d5bff9d82298e5230eb8c3f79';
 $.appMD5Key = '34e1e81ae8122ca039ec5738d33b4eee';
-
+/** @type {*} */
 const notify = $.isNode() ? require("./sendNotify") : "";
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 let timestamp = Date.now();
