@@ -6,18 +6,20 @@
  完成度 1%，要用的手动执行，先不加cron了
  默认80，10、20、40、80可选
  export feedNum = 80
+ 默认双人跑
+ export JD_JOY_teamLevel = 2
  */
 
  const $ = new Env("宠汪汪二代目")
  console.log('\n====================Hello World====================\n')
  
- const https = require('https');
  const http = require('http');
  const stream = require('stream');
  const zlib = require('zlib');
  const vm = require('vm');
  const PNG = require('png-js');
  const UA = require('./USER_AGENTS.js').USER_AGENT;
+ const fs = require("fs");
  
  
  Math.avg = function average() {
@@ -216,7 +218,7 @@
    "product": "embed",
    "lang": "zh_CN",
  };
- const SERVER = 'iv.jd.com';
+ const SERVER = '61.49.99.122';
  
  class JDJRValidator {
    constructor() {
@@ -290,75 +292,64 @@
        }
      }
  
-     console.log('successful: %f\%', (count / n) * 100);
+     // console.log('successful: %f\%', (count / n) * 100);
      console.timeEnd('PuzzleRecognizer');
    }
  
    static jsonp(api, data = {}) {
      return new Promise((resolve, reject) => {
-       try {
-         const fnId = `jsonp_${String(Math.random()).replace('.', '')}`;
-         const extraData = {callback: fnId};
-         const query = new URLSearchParams({...DATA, ...extraData, ...data}).toString();
-         const url = `http://${SERVER}${api}?${query}`;
-         const headers = {
-           'Accept': '*/*',
-           'Accept-Encoding': 'gzip,deflate,br',
-           'Accept-Language': 'zh-CN,en-US',
-           'Connection': 'keep-alive',
-           'Host': SERVER,
-           'Proxy-Connection': 'keep-alive',
-           'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
-           'User-Agent': UA,
-         };
-         const req = http.get(url, {headers}, (response) => {
-           try {
-             let res = response;
-             if (res.headers['content-encoding'] === 'gzip') {
-               const unzipStream = new stream.PassThrough();
-               stream.pipeline(
-                 response,
-                 zlib.createGunzip(),
-                 unzipStream,
-                 reject,
-               );
-               res = unzipStream;
-             }
-             res.setEncoding('utf8');
- 
-             let rawData = '';
- 
-             res.on('data', (chunk) => rawData += chunk);
-             res.on('end', () => {
-               try {
-                 const ctx = {
-                   [fnId]: (data) => ctx.data = data,
-                   data: {},
-                 };
- 
-                 vm.createContext(ctx);
-                 vm.runInContext(rawData, ctx);
- 
-                 // console.log(ctx.data);
-                 res.resume();
-                 resolve(ctx.data);
-               } catch (e) {
-                 reject('11111:',e);
-               } finally {
-               }
-             });
-           } catch (e) {
-             console.log('22222:', e)
-           } finally {
+       const fnId = `jsonp_${String(Math.random()).replace('.', '')}`;
+       const extraData = {callback: fnId};
+       const query = new URLSearchParams({...DATA, ...extraData, ...data}).toString();
+       const url = `http://${SERVER}${api}?${query}`;
+       const headers = {
+         'Accept': '*/*',
+         'Accept-Encoding': 'gzip,deflate,br',
+         'Accept-Language': 'zh-CN,en-US',
+         'Connection': 'keep-alive',
+         'Host': SERVER,
+         'Proxy-Connection': 'keep-alive',
+         'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
+         'User-Agent': UA,
+       };
+       const req = http.get(url, {headers}, (response) => {
+         try {
+           let res = response;
+           if (res.headers['content-encoding'] === 'gzip') {
+             const unzipStream = new stream.PassThrough();
+             stream.pipeline(
+               response,
+               zlib.createGunzip(),
+               unzipStream,
+               reject,
+             );
+             res = unzipStream;
            }
+           res.setEncoding('utf8');
  
-         });
-         req.on('error', reject);
-         req.end();
-       } catch (e) {
-         console.log('环境不支持')
-       } finally {
-       }
+           let rawData = '';
+ 
+           res.on('data', (chunk) => rawData += chunk);
+           res.on('end', () => {
+             try {
+               const ctx = {
+                 [fnId]: (data) => ctx.data = data,
+                 data: {},
+               };
+               vm.createContext(ctx);
+               vm.runInContext(rawData, ctx);
+               res.resume();
+               resolve(ctx.data);
+             } catch (e) {
+               console.log('生成验证码必须使用大陆IP')
+             }
+           })
+         } catch (e) {
+         }
+       })
+ 
+       req.on('error', reject);
+       req.end();
      });
    }
  }
@@ -518,12 +509,14 @@
    return (opts, cb) => {
      fn(opts, async (err, resp, data) => {
        if (err) {
-         console.error('Error: ', err);
+         console.error('Failed to request.');
          return;
        }
+ 
        if (data.search('验证') > -1) {
          console.log('JDJRValidator trying......');
          const res = await new JDJRValidator().run();
+ 
          opts.url += `&validate=${res.validate}`;
          fn(opts, cb);
        } else {
@@ -533,7 +526,7 @@
    };
  }
  
- let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '';
+ let cookiesArr = [], cookie = '', notify;
  $.get = injectToRequest($.get.bind($))
  $.post = injectToRequest($.post.bind($))
  
@@ -551,10 +544,10 @@
        $.isLogin = true;
        $.nickName = '';
        await TotalBean();
-      //  if (!require('./JS_USER_AGENTS').HelloWorld) {
-      //    console.log(`\n【京东账号${$.index}】${$.nickName || $.UserName}：运行环境检测失败\n`);
-      //    continue
-      //  }
+       if (!require('./JS_USER_AGENTS').HelloWorld) {
+         console.log(`\n【京东账号${$.index}】${$.nickName || $.UserName}：运行环境检测失败\n`);
+         continue
+       }
        console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
        if (!$.isLogin) {
          $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -567,31 +560,31 @@
        message = '';
        subTitle = '';
  
+       await run('detail/v2');
+       await run();
        await feed();
  
        let tasks = await taskList();
- 
        for (let tp of tasks.datas) {
          console.log(tp.taskName, tp.receiveStatus)
-         if (tp.taskName === '每日签到' && tp.receiveStatus === 'chance_left')
-           await sign();
  
          if (tp.receiveStatus === 'unreceive') {
            await award(tp.taskType);
-           await $.wait(5000);
+           await $.wait(3000);
          }
          if (tp.taskName === '浏览频道') {
-           for (let i = 0; i < 5; i++) {
+           for (let i = 0; i < 3; i++) {
              console.log(`\t第${i + 1}次浏览频道 检查遗漏`)
              let followChannelList = await getFollowChannels();
              for (let t of followChannelList['datas']) {
                if (!t.status) {
                  console.log('┖', t['channelName'])
+                 await beforeTask('follow_channel', t.channelId);
                  await doTask(JSON.stringify({"channelId": t.channelId, "taskType": 'FollowChannel'}))
-                 await $.wait(5000)
+                 await $.wait(3000)
                }
              }
-             await $.wait(5000)
+             await $.wait(3000)
            }
          }
          if (tp.taskName === '逛会场') {
@@ -602,7 +595,7 @@
                  "marketLink": `${t.marketLink || t.marketLinkH5}`,
                  "taskType": "ScanMarket"
                }))
-               await $.wait(5000)
+               await $.wait(3000)
              }
            }
          }
@@ -610,16 +603,20 @@
            for (let t of tp.followGoodList) {
              if (!t.status) {
                console.log('┖', t.skuName)
+               await beforeTask('follow_good', t.sku)
+               await $.wait(1000)
                await doTask(`sku=${t.sku}`, 'followGood')
-               await $.wait(5000)
+               await $.wait(3000)
              }
            }
          }
          if (tp.taskName === '关注店铺') {
            for (let t of tp.followShops) {
              if (!t.status) {
-               await doTask(`shopId=${t.shopId}`, 'followShop')
-               await $.wait(5000)
+               await beforeTask('follow_shop', t.shopId);
+               await $.wait(1000);
+               await followShop(t.shopId)
+               await $.wait(2000);
              }
            }
          }
@@ -650,7 +647,6 @@
  function taskList() {
    return new Promise(resolve => {
      $.get({
-       // url: `https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
        url: `https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
        headers: {
          'Host': 'jdjoy.jd.com',
@@ -677,6 +673,51 @@
    })
  }
  
+ function beforeTask(fn, shopId) {
+   return new Promise(resolve => {
+     $.get({
+       url: `https://jdjoy.jd.com/common/pet/icon/click?iconCode=${fn}&linkAddr=${shopId}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+       headers: {
+         'Accept': '*/*',
+         'Connection': 'keep-alive',
+         'Content-Type': 'application/json',
+         'Origin': 'https://h5.m.jd.com',
+         'Accept-Language': 'zh-cn',
+         'Host': 'jdjoy.jd.com',
+         'User-Agent': 'jdapp;iPhone;10.0.6;12.4.1;fc13275e23b2613e6aae772533ca6f349d2e0a86;network/wifi;ADID/C51FD279-5C69-4F94-B1C5-890BC8EB501F;model/iPhone11,6;addressid/589374288;appBuild/167724;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+         'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
+         'cookie': cookie
+       }
+     }, (err, resp, data) => {
+       console.log('before task:', data);
+       resolve();
+     })
+   })
+ }
+ 
+ function followShop(shopId) {
+   return new Promise(resolve => {
+     $.post({
+       url: `https://jdjoy.jd.com/common/pet/followShop?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+       headers: {
+         'User-Agent': 'jdapp;iPhone;10.0.6;12.4.1;fc13275e23b2613e6aae772533ca6f349d2e0a86;network/wifi;ADID/C51FD279-5C69-4F94-B1C5-890BC8EB501F;model/iPhone11,6;addressid/589374288;appBuild/167724;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+         'Accept-Language': 'zh-cn',
+         'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html?babelChannel=ttt12&lng=0.000000&lat=0.000000&sid=87e644ae51ba60e68519b73d1518893w&un_area=12_904_3373_62101',
+         'Host': 'jdjoy.jd.com',
+         'Origin': 'https://h5.m.jd.com',
+         'Accept': '*/*',
+         'Connection': 'keep-alive',
+         'Content-Type': 'application/x-www-form-urlencoded',
+         'cookie': cookie
+       },
+       body: `shopId=${shopId}`
+     }, (err, resp, data) => {
+       console.log(data)
+       resolve();
+     })
+   })
+ }
+ 
  function doTask(body, fnId = 'scan') {
    return new Promise(resolve => {
      $.post({
@@ -684,7 +725,7 @@
        headers: {
          'Host': 'jdjoy.jd.com',
          'accept': '*/*',
-         'content-type': fnId === 'followGood' ? 'application/x-www-form-urlencoded' : 'application/json',
+         'content-type': fnId === 'followGood' || fnId === 'followShop' ? 'application/x-www-form-urlencoded' : 'application/json',
          'origin': 'https://h5.m.jd.com',
          'accept-language': 'zh-cn',
          'referer': 'https://h5.m.jd.com/',
@@ -790,27 +831,50 @@
    })
  }
  
- function sign() {
+ function run(fn = 'match') {
+   let level = process.env.JD_JOY_teamLevel ? process.env.JD_JOY_teamLevel : 2
    return new Promise(resolve => {
      $.get({
-       url: `https://jdjoy.jd.com/common/pet/sign?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE&taskType=SignEveryDay`,
+       url: `https://jdjoy.jd.com/common/pet/combat/${fn}?teamLevel=${level}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
        headers: {
          'Host': 'jdjoy.jd.com',
-         'accept': '*/*',
-         'content-type': 'application/json',
+         'sec-fetch-mode': 'cors',
          'origin': 'https://h5.m.jd.com',
-         'accept-language': 'zh-cn',
+         'content-type': 'application/json',
+         'accept': '*/*',
+         'x-requested-with': 'com.jingdong.app.mall',
+         'sec-fetch-site': 'same-site',
+         'referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
+         'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
          "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-         'referer': 'https://h5.m.jd.com/',
-         'Content-Type': 'application/json; charset=UTF-8',
          'cookie': cookie
        },
-     }, (err, resp, data) => {
+     }, async (err, resp, data) => {
        try {
-         data = JSON.parse(data);
-         data.success ? console.log(`\t签到成功！`) : console.log('\t签到失败！', JSON.stringify(data))
+         if (fn === 'receive') {
+           console.log('领取赛跑奖励：', data)
+         } else {
+           data = JSON.parse(data);
+           let race = data.data.petRaceResult
+           if (race === 'participate') {
+             console.log('匹配成功！')
+           } else if (race === 'unbegin') {
+             console.log('还未开始！')
+           } else if (race === 'matching') {
+             console.log('正在匹配！')
+             await $.wait(2000)
+             await run()
+           } else if (race === 'unreceive') {
+             console.log('开始领奖')
+             await run('receive')
+           } else if (race === 'time_over') {
+             console.log('不在比赛时间')
+           } else {
+             console.log('这是什么！', data)
+           }
+         }
        } catch (e) {
-         $.logErr(e);
+         console.log(e)
        } finally {
          resolve();
        }
@@ -823,7 +887,6 @@
      notify = $.isNode() ? require('./sendNotify') : '';
      //Node.js用户请在jdCookie.js处填写京东ck;
      const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-     const jdPetShareCodes = '';
      //IOS等用户直接用NobyDa的jd cookie
      if ($.isNode()) {
        Object.keys(jdCookieNode).forEach((item) => {
@@ -837,18 +900,6 @@
        cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
      }
      console.log(`共${cookiesArr.length}个京东账号\n`)
-     $.shareCodesArr = [];
-     if ($.isNode()) {
-       Object.keys(jdPetShareCodes).forEach((item) => {
-         if (jdPetShareCodes[item]) {
-           $.shareCodesArr.push(jdPetShareCodes[item])
-         }
-       })
-     } else {
-       // if ($.getdata('jd_pet_inviter')) $.shareCodesArr = $.getdata('jd_pet_inviter').split('\n').filter(item => !!item);
-       // console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_pet_inviter') ? $.getdata('jd_pet_inviter') : '暂无'}\n`);
-     }
-     // console.log(`您提供了${$.shareCodesArr.length}个账号的东东萌宠助力码\n`);
      resolve()
    })
  }
@@ -912,14 +963,9 @@
  
  function writeFile(text) {
    if ($.isNode()) {
-     const fs = require('fs');
      fs.writeFile('a.json', text, () => {
      })
    }
- }
- 
- function random() {
-   return Math.round(Math.random() * 2)
  }
  
  // prettier-ignore
