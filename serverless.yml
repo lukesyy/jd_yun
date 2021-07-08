@@ -38,10 +38,10 @@ inputs:
           argument: jd_fruit&jd_pet&jd_jxnc&jd_speed_sign&jd_speed_redpocke
     - timer: #宠汪汪 #摇钱树 #京东种豆得豆 #京喜工厂 #东东工厂 #健康社区收取能量  #燃动夏季
         parameters:
-          name: feedPets_moneyTree_plantBean_dreamFactory_jdfactory_healthenergy&jd_summer_movement
+          name: feedPets_moneyTree_plantBean_dreamFactory_jdfactory_healthenergy
           cronExpression: "0 3 0,6-23/1 * * * *"
           enable: true
-          argument: jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_z_health_energy
+          argument: jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_z_health_energy&jd_summer_movement
     - timer: #宠汪汪积分兑换京豆 #签到领现金 #东东小窝 #京东直播 #金榜创造营 #全民开红包
         parameters:
           name: cash_smallhome_live
