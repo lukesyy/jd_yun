@@ -63,7 +63,7 @@ class MovementFaker {
   }
 }
 
-$.inviteList = [];
+$.inviteList = [{inviteId:'HcmphLbwLg_yf4KYRNY21UQyRD3udwo8vm1_no81YFncraNN2KEnLDkJ3x8CY_wPs9W0ngJsL5M1Xnf6SUaDNg'}];
 let uuid = 8888;
 let cookiesArr = [];
 if ($.isNode()) {
