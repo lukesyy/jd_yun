@@ -24,7 +24,7 @@ if ($.isNode()) {
 }
 
 // 汪汪乐园 助力作者2个号，放心一般都是满的，爱护作者，人人有责。我自己的号加后面
-$.invitePinTaskList = ['W2j9nfW7Jzo5M5HApothz_CpgfyjcIG11hM6fOtM3es', 'cQoPKkkid0zr22o7Oej5yO0IMMy8J5ssaaGBRxTyspo', 'NZ42T3lD49qiTGpZsSucXRS8kD-wJ4K6FxwxUpNbb4I', 'zZkewfd3OKs-WtoJd8Jw6OIrD81WzO3SX56S2DGMlZ0', 'sAxL-dc5T6lS6wtKqP6SlA', 'bcVxt4PbZdbX7tiT1Q_ubg']
+$.invitePinTaskList = ['TMKFyu4IQa1Z3oSwgkg9dQAQqFRuOqD0inp0Kvj9LdI']
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
