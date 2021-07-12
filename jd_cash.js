@@ -2,21 +2,18 @@
 签到领现金，每日2毛～5毛
 可互助，助力码每日不变，只变日期
 活动入口：京东APP搜索领现金进入
-更新时间：2021-04-28
+更新时间：2021-06-07
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #签到领现金
 2 0-23/4 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
 ================Loon==============
 [Script]
 cron "2 0-23/4 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js,tag=签到领现金
-
 ===============Surge=================
 签到领现金 = type=cron,cronexp="2 0-23/4 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js
-
 ============小火箭=========
 签到领现金 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js, cronexpr="2 0-23/4 * * *", timeout=3600, enable=true
  */
@@ -28,11 +25,13 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = true;
-const randomCount = $.isNode() ? 0 : 5;
+const randomCount = $.isNode() ? 0 : 0;
 let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
 const inviteCodes = [
   `eU9Yab2zZ_5182vWn3QT0w`
 ]
+let myInviteCode;
+
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -49,7 +48,7 @@ let allMessage = '';
     return;
   }
   await requireConfig()
-  // await getAuthorShareCode();
+  // await getAuthorShareCode();//网址失效，注释
   // await getAuthorShareCode2();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -84,6 +83,7 @@ let allMessage = '';
       $.done();
     })
 async function jdCash() {
+  $.signMoney = 0;
   await index()
   await shareCodesFormat()
   await helpFriends()
@@ -92,6 +92,7 @@ async function jdCash() {
   $.exchangeBeanNum = 0;
   cash_exchange = $.isNode() ? (process.env.CASH_EXCHANGE ? process.env.CASH_EXCHANGE : `${cash_exchange}`) : ($.getdata('cash_exchange') ? $.getdata('cash_exchange') : `${cash_exchange}`);
   if (cash_exchange === 'true') {
+    if(Number($.signMoney) >= 2){
     console.log(`\n\n开始花费2元红包兑换200京豆，一周可换五次`)
     for (let item of ["-1", "0", "1", "2", "3"]) {
       $.canLoop = true;
@@ -108,6 +109,9 @@ async function jdCash() {
     if ($.exchangeBeanNum) {
       message += `兑换京豆成功，获得${$.exchangeBeanNum * 100}京豆\n`;
     }
+  }else{
+    console.log(`\n\n现金不够2元，不进行兑换200京豆，`)
+  }
   }
   await index(true)
   // await showMsg()
@@ -131,15 +135,24 @@ function index(info=false) {
                 console.log(`\n\n当前现金：${data.data.result.signMoney}元`);
                 return
               }
+              $.signMoney = data.data.result.signMoney;
               // console.log(`您的助力码为${data.data.result.inviteCode}`)
               console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.data.result.inviteCode}\n`);
               let helpInfo = {
                 'inviteCode': data.data.result.inviteCode,
                 'shareDate': data.data.result.shareDate
               }
+              myInviteCode = data.data.result.inviteCode;
               $.shareDate = data.data.result.shareDate;
-              // $.log(`shareDate: ${$.shareDate}`)
-              // console.log(helpInfo)
+              // console.log(`💰签到领现金-开始提交互助码💰`);
+              // const submitCodeRes = await submitCode();
+              // if (submitCodeRes && submitCodeRes.code === 200) {
+              //   console.log(`💰签到领现金-互助码提交成功！💰`);
+              // }else if (submitCodeRes.code === 300) {
+              //   console.log(`💰签到领现金-互助码已提交！💰`);
+              // }
+              $.log(`shareDate: ${$.shareDate}`)
+              console.log(helpInfo)
               for(let task of data.data.result.taskInfos){
                 if (task.type === 4) {
                   for (let i = task.doTimes; i < task.times; ++i) {
@@ -155,7 +168,7 @@ function index(info=false) {
                     await $.wait(5000)
                   }
                 }
-                else if (task.type === 16 || task.type===3 || task.type===5 || task.type===17 || task.type===21) {
+                else if (task.type === 15 || task.type===3 || task.type===5 || task.type===17 || task.type===21) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await doTask(task.type, task.jump.params.url)
@@ -222,7 +235,7 @@ function helpFriend(helpInfo) {
 }
 function doTask(type,taskInfo) {
   return new Promise((resolve) => {
-    $.get(taskUrl("cash_doTask",{"type":type,"taskInfo":taskInfo}), (err, resp, data) => {
+    $.post(taskUrl("cash_doTask",{"taskInfo":taskInfo,"type":type}), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -246,7 +259,7 @@ function doTask(type,taskInfo) {
     })
   })
 }
-function getReward(source = 1) {
+function getReward(source = 2) {
   return new Promise((resolve) => {
     $.get(taskUrl("cash_mob_reward",{"source": Number(source),"rewardNode":""}), (err, resp, data) => {
       try {
@@ -342,10 +355,11 @@ function showMsg() {
     resolve()
   })
 }
+
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `https://code.chiang.fun/api/v1/jd/jdcash/read/1/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `http://www.helpu.cf/jdcodes/getcode.php?type=cash&num=${randomCount}`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -366,6 +380,32 @@ function readShareCode() {
     resolve()
   })
 }
+
+//提交互助码
+function submitCode() {
+    return new Promise(async resolve => {
+    $.get({url: `http://www.helpu.cf/jdcodes/submit.php?code=${myInviteCode}&type=cash`, timeout: 10000}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            //console.log(`随机取个${randomCount}码放到您固定的互助码后面(不影响已有固定互助)`)
+            // data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+    await $.wait(15000);
+    resolve()
+  })
+}
+
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
@@ -377,13 +417,18 @@ function shareCodesFormat() {
       console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
-      $.newShareCodes = [ ...$.newShareCodes];
+    
+    }
+    const readShareCodeRes = await readShareCode();
+    if (readShareCodeRes && readShareCodeRes.code === 200) {
+      $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }
     $.newShareCodes.map((item, index) => $.newShareCodes[index] = { "inviteCode": item, "shareDate": $.shareDate })
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
   })
 }
+
 function requireConfig() {
   return new Promise(resolve => {
     console.log(`开始获取${$.name}配置文件\n`);
@@ -406,8 +451,8 @@ function requireConfig() {
         }
       })
     } else {
-      if ($.getdata('jd_cash_invite')) $.shareCodesArr = $.getdata('jd_cash_invite').split('\n').filter(item => !!item);
-      console.log(`\nBoxJs设置的领现金邀请码:${$.getdata('jd_cash_invite')}\n`);
+      if ($.getdata('JD_CASH_SHARECODES')) $.shareCodesArr = $.getdata('JD_CASH_SHARECODES').split('\n').filter(item => !!item);
+      console.log(`\nBoxJs设置的领现金邀请码:${$.getdata('JD_CASH_SHARECODES')}\n`);
     }
     console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
     resolve()
@@ -437,7 +482,7 @@ function taskUrl(functionId, body = {}) {
       'Cookie': cookie,
       'Host': 'api.m.jd.com',
       'Connection': 'keep-alive',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       'Referer': 'http://wq.jd.com/wxapp/pages/hd-interaction/index/index',
       'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       'Accept-Language': 'zh-cn',
@@ -446,6 +491,47 @@ function taskUrl(functionId, body = {}) {
   }
 }
 
+function getAuthorShareCode(url = "https://a.nz.lu/jd_cash.json") {
+  return new Promise(resolve => {
+    $.get({url, headers:{
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }, timeout: 200000,}, async (err, resp, data) => {
+      $.authorCode = [];
+      try {
+        if (err) {
+        } else {
+          $.authorCode = JSON.parse(data)
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function getAuthorShareCode2(url = "https://ghproxy.com/https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_updateCash.json") {
+  return new Promise(resolve => {
+    $.get({url, headers:{
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }, timeout: 200000,}, async (err, resp, data) => {
+      $.authorCode2 = [];
+      try {
+        if (err) {
+        } else {
+          $.authorCode2 = JSON.parse(data)
+          if ($.authorCode2 && $.authorCode2.length) {
+            $.authorCode.push(...$.authorCode2);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {

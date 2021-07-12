@@ -86,6 +86,7 @@ jobs:
       HELPAUTHOR_WXJ: ${{ secrets.HELPAUTHOR_WXJ}}
       JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL}}
       DEL_FRIENDS: ${{ secrets.DEL_FRIENDS }}
+      summer_movement_ShHelpFlag: ${{ secrets.summer_movement_ShHelpFlag}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -181,6 +182,7 @@ jobs:
           if [ $SHARECODE_WXJ ]; then sed -i "/variables/a\      SHARECODE_WXJ: $SHARECODE_WXJ" serverless.yml; fi;
           if [ $HELPAUTHOR_WXJ ]; then sed -i "/variables/a\      HELPAUTHOR_WXJ: $HELPAUTHOR_WXJ" serverless.yml; fi;
           if [ $DEL_FRIENDS ]; then sed -i "/variables/a\      DEL_FRIENDS: $DEL_FRIENDS" serverless.yml; fi;
+          if [ $summer_movement_ShHelpFlag ]; then sed -i "/variables/a\      summer_movement_ShHelpFlag: $summer_movement_ShHelpFlag" serverless.yml; fi;
           cat serverless.yml
           env
       - name: "压缩文件夹"

@@ -14,7 +14,7 @@
  const SYNTAX_MODULE = '!function(n){var r={};function o(e){if(r[e])';
  const REG_SCRIPT = /<script type="text\/javascript" src="([^><]+\/(app\.\w+\.js))\">/gm;
  const REG_ENTRY = /(__webpack_require__\(__webpack_require__.s=)(\d+)(?=\)})/;
- const needModuleId = 355
+ const needModuleId = 356
  const DATA = {appid:'50085',sceneid:'OY217hPageh5'};
  let smashUtils;
  class MovementFaker {
@@ -60,7 +60,7 @@
      });
    }
  }
-
+ 
  $.inviteList = [];
  let uuid = 8888;
  let cookiesArr = [];
@@ -106,11 +106,11 @@
        }
      }
    }
-
-
+ 
+ 
  })().catch((e) => {$.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')}).finally(() => {$.done();})
-
-
+ 
+ 
  async function main(){
    $.homeData = {};
    $.taskList = [];
@@ -209,9 +209,9 @@
      await $.wait(3000);
    }
  }
-
+ 
  async function getBody($) {const zf = new MovementFaker($.cookie);const ss = await zf.run();return ss;}
-
+ 
  async function takePostRequest(type) {
    let body = ``;
    let myRequest = ``;
@@ -265,7 +265,7 @@
      })
    })
  }
-
+ 
  async function dealReturn(type, data) {
    try {
      data = JSON.parse(data);
@@ -346,7 +346,7 @@
        console.log(`未判断的异常${type}`);
    }
  }
-
+ 
  //领取奖励
  function callbackResult(info) {
    return new Promise((resolve) => {
@@ -365,7 +365,7 @@
          'Referer': 'https://bunearth.m.jd.com'
        }
      }
-
+ 
      $.get(url, async (err, resp, data) => {
        try {
          data = JSON.parse(data);
@@ -378,7 +378,7 @@
      })
    })
  }
-
+ 
  async function getPostRequest(body) {
    const method = `POST`;
    const headers = {
@@ -394,7 +394,7 @@
    };
    return { method: method, headers: headers, body: body};
  }
-
+ 
  async function getPostBody(type) {
    return new Promise(async resolve => {
      let taskBody = '';
