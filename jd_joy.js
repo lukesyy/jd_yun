@@ -20,6 +20,8 @@
  const PNG = require('png-js');
  const UA = require('./USER_AGENTS.js').USER_AGENT;
  const fs = require("fs");
+ const { promisify } = require('util');
+ const pipelineAsync = promisify(stream.pipeline);
  
  
  Math.avg = function average() {
@@ -317,11 +319,10 @@
            let res = response;
            if (res.headers['content-encoding'] === 'gzip') {
              const unzipStream = new stream.PassThrough();
-             stream.pipeline(
-               response,
-               zlib.createGunzip(),
-               unzipStream,
-               reject,
+             pipelineAsync(
+              response,
+              zlib.createGunzip(),
+              unzipStream,
              );
              res = unzipStream;
            }
@@ -544,10 +545,10 @@
        $.isLogin = true;
        $.nickName = '';
        await TotalBean();
-      //  if (!require('./JS_USER_AGENTS').HelloWorld) {
-      //    console.log(`\n【京东账号${$.index}】${$.nickName || $.UserName}：运行环境检测失败\n`);
-      //    continue
-      //  }
+       if (!require('./JS_USER_AGENTS').HelloWorld) {
+         console.log(`\n【京东账号${$.index}】${$.nickName || $.UserName}：运行环境检测失败\n`);
+         continue
+       }
        console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
        if (!$.isLogin) {
          $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -559,6 +560,8 @@
        }
        message = '';
        subTitle = '';
+ 
+       await getFriends();
  
        await run('detail/v2');
        await run();
@@ -878,6 +881,69 @@
        } finally {
          resolve();
        }
+     })
+   })
+ }
+ 
+ function getFriends() {
+   return new Promise((resolve) => {
+     $.post({
+       url: 'https://jdjoy.jd.com/common/pet/enterRoom/h5?invitePin=&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE',
+       headers: {
+         'Host': 'jdjoy.jd.com',
+         'Content-Type': 'application/json',
+         'X-Requested-With': 'com.jingdong.app.mall',
+         'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html?babelChannel=ttt12&sid=445902658831621c5acf782ec27ce21w&un_area=12_904_3373_62101',
+         'Origin': 'https://h5.m.jd.com',
+         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+         'Cookie': cookie
+       },
+       body: JSON.stringify({})
+     }, async (err, resp, data) => {
+       await $.wait(1000)
+       $.get({
+         url: 'https://jdjoy.jd.com/common/pet/h5/getFriends?itemsPerPage=20&currentPage=1&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE',
+         headers: {
+           'Host': 'jdjoy.jd.com',
+           'Accept': '*/*',
+           'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
+           "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+           'cookie': cookie
+         }
+       }, async (err, resp, data) => {
+         data = JSON.parse(data)
+         for (let f of data.datas) {
+           if (f.stealStatus === 'can_steal') {
+             console.log('可偷:', f.friendPin)
+             $.get({
+               url: `https://jdjoy.jd.com/common/pet/enterFriendRoom?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE&friendPin=${encodeURIComponent(f.friendPin)}`,
+               headers: {
+                 'Host': 'jdjoy.jd.com',
+                 'Accept': '*/*',
+                 'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
+                 "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+                 'cookie': cookie
+               }
+             }, (err, resp, data) => {
+               $.get({
+                 url: `https://jdjoy.jd.com/common/pet/getRandomFood?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE&friendPin=${encodeURIComponent(f.friendPin)}`,
+                 headers: {
+                   'Host': 'jdjoy.jd.com',
+                   'Accept': '*/*',
+                   'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
+                   "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+                   'cookie': cookie
+                 }
+               }, (err, resp, data) => {
+                 data = JSON.parse(data)
+                 console.log('偷狗粮:', data.errorCode, data.data)
+               })
+             })
+           }
+           await $.wait(1500)
+         }
+         resolve();
+       })
      })
    })
  }
