@@ -12,7 +12,6 @@
     * 安装教程：[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
     * 相关补充说明：[点此查看](./backUp/elecV2P.md)  
 
-## 群:589445369
 
 ## AC运行常见问题  
 * 此处借用[RayWangQvQ](https://github.com/RayWangQvQ)大佬的教程  
