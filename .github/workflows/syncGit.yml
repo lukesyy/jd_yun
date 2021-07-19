@@ -23,7 +23,17 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com//lukesyy/jd_yun.git"
+          source_repo: "https://github.com/zero205/JD_tencent_scf.git"
           source_branch: "main"
           destination_branch: "main"
           github_token: ${{ secrets.PAT }}
+      # 我自己同步到gitee使用，其他人可忽略
+      - name: sync github -> gitee
+        uses: Yikun/hub-mirror-action@master
+        if: env.dst_key
+        with:
+          src: ${{ secrets.SRC_USER }}
+          dst: ${{ secrets.DST_USER }}
+          static_list: "JD_tencent_scf"
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}

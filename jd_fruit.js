@@ -30,16 +30,13 @@ let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, n
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
- '9bfe7b5b330f4af0b1f979fc87fe2944'
-
+  '9bfe7b5b330f4af0b1f979fc87fe2944'
 ]
-let delFriend = process.env.DEL_FRIENDS||true//是否开启自动删除好友 false否,true是
-
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
 let jdFruitBeanCard = false;//农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),true表示换豆(不浇水),false表示不换豆(继续浇水),脚本默认是浇水
-let randomCount = $.isNode() ? 0 : 5;
+let randomCount = $.isNode() ? 0 : 0;
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html%22%20%7D`;
 !(async () => {
@@ -121,14 +118,16 @@ async function jdFruit() {
       await predictionFruit();//预测水果成熟时间
     } else {
       console.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify($.farmInfo)}`);
-      message = `【数据异常】请手动登录京东app查看此账号${$.name}是否正常`;
+      console.log(`等待10秒后重试`);
+      await $.wait(10000);
+      await jdFruit();
     }
   } catch (e) {
     console.log(`任务执行异常，请检查执行日志 ‼️‼️`);
     $.logErr(e);
-    const errMsg = `京东账号${$.index} ${$.nickName || $.UserName}\n任务执行异常，请检查执行日志 ‼️‼️`;
-    if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
-    $.msg($.name, '', `${errMsg}`)
+    // const errMsg = `京东账号${$.index} ${$.nickName || $.UserName}\n任务执行异常，请检查执行日志 ‼️‼️`;
+    // if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
+    // $.msg($.name, '', `${errMsg}`)
   }
   await showMsg();
 }
@@ -788,7 +787,7 @@ async function getAwardInviteFriend() {
   if ($.friendList) {
     console.log(`\n今日已邀请好友${$.friendList.inviteFriendCount}个 / 每日邀请上限${$.friendList.inviteFriendMax}个`);
     console.log(`开始删除${$.friendList.friends && $.friendList.friends.length}个好友,可拿每天的邀请奖励`);
-    if (delFriend&&$.friendList.friends && $.friendList.friends.length > 0) {
+    if ($.friendList.friends && $.friendList.friends.length > 0) {
       for (let friend of $.friendList.friends) {
         console.log(`\n开始删除好友 [${friend.shareCode}]`);
         const deleteFriendForFarm = await request('deleteFriendForFarm', { "shareCode": `${friend.shareCode}`,"version":8,"channel":1 });
@@ -1252,7 +1251,7 @@ function timeFormat(time) {
 }
 function readShareCode() {
   return new Promise(async resolve => {
-    $.get({url: `http://share.turinglabs.net/api/v3/farm/query/${randomCount}/`, timeout: 10000,}, (err, resp, data) => {
+    $.get({url: `http://www.helpu.cf/jdcodes/getcode.php?type=farm&num=${randomCount}`, timeout: 10000,}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -1272,6 +1271,30 @@ function readShareCode() {
     await $.wait(10000);
     resolve()
   })
+}
+//提交互助码
+function submitCode() {
+  return new Promise(async resolve => {
+  $.get({url: `http://www.helpu.cf/jdcodes/submit.php?code=${$.farmInfo.farmUserPro.shareCode}&type=farm`, timeout: 10000}, (err, resp, data) => {
+    try {
+      if (err) {
+        console.log(`${JSON.stringify(err)}`)
+        console.log(`${$.name} API请求失败，请检查网路重试`)
+      } else {
+        if (data) {
+          //console.log(`随机取个${randomCount}码放到您固定的互助码后面(不影响已有固定互助)`)
+          data = JSON.parse(data);
+        }
+      }
+    } catch (e) {
+      $.logErr(e, resp)
+    } finally {
+      resolve(data);
+    }
+  })
+  await $.wait(15000);
+  resolve()
+})
 }
 function shareCodesFormat() {
   return new Promise(async resolve => {
@@ -1320,8 +1343,8 @@ function requireConfig() {
         }
       })
     } else {
-      if ($.getdata('jd_fruit_inviter')) $.shareCodesArr = $.getdata('jd_fruit_inviter').split('\n').filter(item => !!item);
-      console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_fruit_inviter') ? $.getdata('jd_fruit_inviter') : '暂无'}\n`);
+      if ($.getdata('FRUITSHARECODES')) $.shareCodesArr = $.getdata('FRUITSHARECODES').split('\n').filter(item => !!item);
+      console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('FRUITSHARECODES') ? $.getdata('FRUITSHARECODES') : '暂无'}\n`);
     }
     // console.log(`$.shareCodesArr::${JSON.stringify($.shareCodesArr)}`)
     // console.log(`jdFruitShareArr账号长度::${$.shareCodesArr.length}`)

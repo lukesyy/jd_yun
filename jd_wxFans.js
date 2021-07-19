@@ -1,4 +1,5 @@
 /*
+
 [task_local]
 #7月粉丝互动
 1 8 * * * https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_wxFans.js, tag=粉丝互动, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
@@ -299,7 +300,7 @@ function getActinfo(end) {
                             console.log(`福袋1 ${actorinfo.prizeOneStatus} 福袋2 ${actorinfo.prizeTwoStatus} 福袋3 ${actorinfo.prizeThreeStatus}`)
                             console.log(actorinfo.nicknameShow + "：" +( actorinfo.energyValue +actorinfo.fansLoveValue)+ "福气值")
                             $.energy =  actorinfo.energyValue +actorinfo.fansLoveValue
-
+                    
 
                         }
                     }

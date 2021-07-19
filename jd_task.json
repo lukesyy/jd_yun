@@ -96,13 +96,13 @@
       }
     },
     {
-      "name": "京喜财富岛提现",
+      "name": "京喜财富岛热气球挂机",
       "type": "cron",
-      "time": "0-5/1 0 0 * * *",
+      "time": "20 0,6-23 * * *",
       "running": true,
       "job": {
         "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_cfdtx.js"
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_cfd_loop.js"
       }
     },
     {
@@ -226,6 +226,16 @@
       }
     },
     {
+      "name": "京喜签到",
+      "type": "cron",
+      "time": "1 0 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_jxqd.js"
+      }
+    },
+    {
       "name": "京喜农场",
       "type": "cron",
       "time": "10 9,12,18 * * *",
@@ -266,15 +276,6 @@
       }
     },
     {
-      "name": "超级直播间红包雨",
-      "type": "cron",
-      "time": "0,30,31 20-23/1 18 * *",
-      "job": {
-        "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_live_redrain.js"
-      }
-    },
-    {
       "name": "京东抽奖机",
       "type": "cron",
       "time": "2 0 * * *",
@@ -292,6 +293,16 @@
       "job": {
         "type": "runjs",
         "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_moneyTree.js"
+      }
+    },
+    {
+      "name": "京东摇钱树助力",
+      "type": "cron",
+      "time": "*/30 6-23/1 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_moneyTree_help.js"
       }
     },
     {
@@ -485,16 +496,6 @@
       }
     },
     {
-      "name": "蒙牛有机牧场",
-      "type": "cron",
-      "time": "1 7-23/2 * * *",
-      "running": true,
-      "job": {
-        "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_monk_pasture.js"
-       }
-    },
-    {
       "name": "幸运大转盘",
       "type": "cron",
       "time": "20 10 * * *",
@@ -502,16 +503,6 @@
       "job": {
         "type": "runjs",
         "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_market_lottery.js"
-      }
-    },
-    {
-      "name": "京东超级盒子",
-      "type": "cron",
-      "time": "20 9,20 * 5,6 *",
-      "running": true,
-      "job": {
-        "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_adolf_superbox.js"
       }
     },
     {
@@ -585,13 +576,53 @@
       }
     },
     {
-      "name": "超级无线组队分京豆",
+      "name": "粉丝互动",
       "type": "cron",
-      "time": "15 6 * * 2",
+      "time": "15 8 * * *",
       "running": true,
       "job": {
         "type": "runjs",
-        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_z_shop_captain.js"
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_wxFans.js"
+      }
+    },
+    {
+      "name": "早起福利",
+      "type": "cron",
+      "time": "35 6 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_zqfl.js"
+      }
+    },
+    {
+      "name": "天天优惠大乐透",
+      "type": "cron",
+      "time": "50 7 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_DrawEntrance.js"
+      }
+    },
+    {
+      "name": "发财大赢家",
+      "type": "cron",
+      "time": "30 8-23 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_big_winner.js"
+      }
+    },
+    {
+      "name": "店铺签到",
+      "type": "cron",
+      "time": "20 8 * * *",
+      "running": true,
+      "job": {
+        "type": "runjs",
+        "target": "https://gitee.com/zero205/JD_tencent_scf/raw/main/jd_dpqd.js"
       }
     }
   ]

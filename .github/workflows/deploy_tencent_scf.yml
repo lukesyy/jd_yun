@@ -12,11 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
+      TZ: Asia/Shanghai
       JD_COOKIE: ${{ secrets.JD_COOKIE}}
       JD_DEBUG: ${{ secrets.JD_DEBUG}}
       JD_USER_AGENT: ${{ secrets.JD_USER_AGENT}}
       TENCENTSCF_SOURCE_TYPE: ${{ secrets.TENCENTSCF_SOURCE_TYPE}}
       TENCENTSCF_SOURCE_URL: ${{ secrets.TENCENTSCF_SOURCE_URL}}
+      TENCENTSCF_MEMORYSIZE: ${{ secrets.TENCENTSCF_MEMORYSIZE}}
       PUSH_KEY: ${{ secrets.PUSH_KEY}}
       BARK_PUSH: ${{ secrets.BARK_PUSH}}
       BARK_SOUND: ${{ secrets.BARK_SOUND}}
@@ -78,15 +80,15 @@ jobs:
       CFD_NOTIFY_CONTROL: ${{ secrets.CFD_NOTIFY_CONTROL}}
       JD_JXD_EXCHANGE: ${{ secrets.JD_JXD_EXCHANGE}}
       DYJ_PACKETID: ${{ secrets.DYJ_PACKETID}}
-      DYJ_INVITER: ${{ secrets.DYJ_INVITER}}
-      InviterPin: ${{ secrets.InviterPin}}
+      MONEYTREE_SHARECODES: ${{ secrets.MONEYTREE_SHARECODES}}
+      dyjCode: ${{ secrets.dyjCode}}
       JD_TRY: ${{ secrets.JD_TRY}}
-      JD_WXJ: ${{ secrets.JD_WXJ}}
-      SHARECODE_WXJ: ${{ secrets.SHARECODE_WXJ}}
+      TYT_PACKETID: ${{ secrets.TYT_PACKETID}}
+      JD_JOY_PARK: ${{ secrets.JD_JOY_PARK}}
       HELPAUTHOR_WXJ: ${{ secrets.HELPAUTHOR_WXJ}}
       JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL}}
-      DEL_FRIENDS: ${{ secrets.DEL_FRIENDS }}
       summer_movement_ShHelpFlag: ${{ secrets.summer_movement_ShHelpFlag}}
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -106,8 +108,10 @@ jobs:
           npm install js-yaml
           npm install promises
           npm install png-js
+
       - name: "将Secrets里面配置的变量添加到severless.yml里面作为环境变量"
         run: |
+          if [ $TZ ]; then sed -i "/variables/a\      TZ: $TZ" serverless.yml; fi
           if [ $JD_COOKIE ]; then sed -i "/variables/a\      JD_COOKIE: $JD_COOKIE" serverless.yml; fi;
           if [ $JD_DEBUG ]; then sed -i "/variables/a\      JD_DEBUG: $JD_DEBUG" serverless.yml; fi;
           if [ $JD_USER_AGENT ]; then sed -i "/variables/a\      JD_USER_AGENT: $JD_USER_AGENT" serverless.yml; fi;
@@ -174,17 +178,17 @@ jobs:
           if [ $CFD_NOTIFY_CONTROL ]; then sed -i "/variables/a\      CFD_NOTIFY_CONTROL: $CFD_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $JD_JXD_EXCHANGE ]; then sed -i "/variables/a\      JD_JXD_EXCHANGE: $JD_JXD_EXCHANGE" serverless.yml; fi;
           if [ $JXNC_NOTIFY_LEVEL ]; then sed -i "/variables/a\      JXNC_NOTIFY_LEVEL: $JXNC_NOTIFY_LEVEL" serverless.yml; fi;
-          if [ $InviterPin ]; then sed -i "/variables/a\      InviterPin: $InviterPin" serverless.yml; fi;
+          if [ $dyjCode ]; then sed -i "/variables/a\      dyjCode: $dyjCode" serverless.yml; fi;
           if [ $DYJ_PACKETID ]; then sed -i "/variables/a\      DYJ_PACKETID: $DYJ_PACKETID" serverless.yml; fi;
-          if [ $DYJ_INVITER ]; then sed -i "/variables/a\      DYJ_INVITER: $DYJ_INVITER" serverless.yml; fi;
+          if [ $MONEYTREE_SHARECODES ]; then sed -i "/variables/a\      MONEYTREE_SHARECODES: $MONEYTREE_SHARECODES" serverless.yml; fi;
           if [ $JD_TRY ]; then sed -i "/variables/a\      JD_TRY: $JD_TRY" serverless.yml; fi;
-          if [ $JD_WXJ ]; then sed -i "/variables/a\      JD_WXJ: $JD_WXJ" serverless.yml; fi;
-          if [ $SHARECODE_WXJ ]; then sed -i "/variables/a\      SHARECODE_WXJ: $SHARECODE_WXJ" serverless.yml; fi;
+          if [ $TYT_PACKETID ]; then sed -i "/variables/a\      TYT_PACKETID: $TYT_PACKETID" serverless.yml; fi;
+          if [ $JD_JOY_PARK ]; then sed -i "/variables/a\      JD_JOY_PARK: $JD_JOY_PARK" serverless.yml; fi;
           if [ $HELPAUTHOR_WXJ ]; then sed -i "/variables/a\      HELPAUTHOR_WXJ: $HELPAUTHOR_WXJ" serverless.yml; fi;
-          if [ $DEL_FRIENDS ]; then sed -i "/variables/a\      DEL_FRIENDS: $DEL_FRIENDS" serverless.yml; fi;
           if [ $summer_movement_ShHelpFlag ]; then sed -i "/variables/a\      summer_movement_ShHelpFlag: $summer_movement_ShHelpFlag" serverless.yml; fi;
           cat serverless.yml
           env
+
       - name: "压缩文件夹"
         run: zip -r myfile.zip ./*
 
@@ -192,6 +196,7 @@ jobs:
         run: |
           npm install
           npm install tencentcloud-sdk-nodejs
+
       - name: "部署到腾讯云函数"
         run: node tencentscf.js
         env:
@@ -201,6 +206,7 @@ jobs:
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
           TENCENT_REGION: ${{ secrets.SCF_REGION }}
           TENCENT_FUNCTION_NAME: ${{ secrets.TENCENT_FUNCTION_NAME }}
+          TENCENT_MemorySize: ${{ secrets.TENCENT_MemorySize }}
         
       - name: "部署失败通知"
         run: node action.js

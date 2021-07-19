@@ -3,6 +3,8 @@
  更新时间：2021-06-22
  活动入口：京东APP我的-宠汪汪
  完成度 1.01%
+
+
  默认500
  export JD_JOY_REWARD_NAME = 500
  */
@@ -626,7 +628,7 @@
  function init() {
    return new Promise(resolve => {
      $.get({
-       url: `https://jdjoy.jd.com/common/gift/getBeanConfigs?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+       url: `https://jdjoy.jd.com/common/gift/getBeanConfigs?reqSource=h5&invokeKey=qRKHmL4sna8ZOP9F`,
        headers: {
          'Host': 'jdjoy.jd.com',
          'accept': '*/*',
@@ -655,7 +657,7 @@
    console.log('exchange()')
    return new Promise(resolve => {
      $.post({
-       url: `https://jdjoy.jd.com/common/gift/new/exchange?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+       url: `https://jdjoy.jd.com/common/gift/new/exchange?reqSource=h5&invokeKey=qRKHmL4sna8ZOP9F`,
        headers: {
          "Host": "jdjoy.jd.com",
          "Accept-Language": "zh-cn",

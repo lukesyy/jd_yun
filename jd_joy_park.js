@@ -1,17 +1,23 @@
 /*
 ENV
 JD_JOY_PARK =            是否运行此脚本，默认运行，填false为不运行
+
 请确保新用户助力过开工位，否则开启游戏了就不算新用户，后面就不能助力开工位了！！！！！！！！！！
+
 更新地址：https://github.com/Tsukasa007/my_script
+
 ============Quantumultx===============
 [task_local]
 #汪汪乐园养joy
 20 0-23/3 * * * jd_joypark_joy.js, tag=汪汪乐园养joy, img-url=https://raw.githubusercontent.com/tsukasa007/icon/master/jd_joypark_joy.png, enabled=true
+
 ================Loon==============
 [Script]
 cron "20 0-23/3 * * *" script-path=jd_joypark_joy.js,tag=汪汪乐园养joy
+
 ===============Surge=================
 汪汪乐园养joy = type=cron,cronexp="20 0-23/3 * * *",wake-system=1,timeout=3600,script-path=jd_joypark_joy.js
+
 ============小火箭=========
 汪汪乐园养joy = type=cron,script-path=jd_joypark_joy.js, cronexpr="20 0-23/3 * * *", timeout=3600, enable=true
 */
