@@ -27,7 +27,7 @@ cron "1 6-22/3 * * *" script-path=https://raw.githubusercontent.com/Wenmoux/scri
 const $ = new Env('发财大赢家');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const dyjCode = $.isNode() ? (process.env.dyjCode ? process.env.dyjCode : '043a64af740942faa371a6e50df38db176311626710419179@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI') : null //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
+const dyjCode = $.isNode() ? (process.env.dyjCode ? process.env.dyjCode : '043a64af740942faa371a6e50df38db176311626710419179@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI') : '043a64af740942faa371a6e50df38db176311626710419179@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
     cookie = '';
@@ -163,7 +163,7 @@ function getid() {
                         } else {
                             if (data.data.state === 6) {
                                 $.needhelp = false
-                                $.canDraw = false
+                                $.canDraw = true
                             }
                             console.log(`\n获取成功，您的【redEnvelopeId】：${data.data.redEnvelopeId}`)
                             console.log(`\n【markPin】：${data.data.markedPin}`)
