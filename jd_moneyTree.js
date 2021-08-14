@@ -37,7 +37,7 @@ if ($.isNode()) {
 }
 
 let jdNotify = true;//是否开启静默运行，默认true
-let sellFruit = false;//是否卖出金果得到金币，默认'false'
+let sellFruit = true;//是否卖出金果得到金币，默认'true'
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
 !(async () => {
@@ -86,7 +86,7 @@ async function jd_moneyTree() {
     const userRes = await user_info();
     if (!userRes || !userRes.realName) return
     await signEveryDay();
-    await dayWork();
+    // await dayWork();
     await harvest();
     await sell();
     await myWealth();
@@ -147,7 +147,7 @@ function user_info() {
               console.log(`其他情况::${JSON.stringify(res)}`);
             }
           } else {
-            console.log(`京豆api返回数据为空，请检查自身原因`)
+            console.log(`京东api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {
@@ -670,7 +670,7 @@ async function friendRank() {
             data = JSON.parse(data);
             $.friendRankList = data.resultData.data;
           } else {
-            console.log(`京豆api返回数据为空，请检查自身原因`)
+            console.log(`京东api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {
@@ -719,7 +719,7 @@ async function friendTreeRoom(friendPin) {
             data = JSON.parse(data);
             $.friendTree = data.resultData.data;
           } else {
-            console.log(`京豆api返回数据为空，请检查自身原因`)
+            console.log(`京东api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {
@@ -768,7 +768,7 @@ async function stealFruit(friendPin, stoleId) {
           if (data) {
             data = JSON.parse(data);
           } else {
-            console.log(`京豆api返回数据为空，请检查自身原因`)
+            console.log(`京东api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {
@@ -794,7 +794,7 @@ async function request(function_id, body = {}) {
           if (data) {
             data = JSON.parse(data);
           } else {
-            console.log(`京豆api返回数据为空，请检查自身原因`)
+            console.log(`京东api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {

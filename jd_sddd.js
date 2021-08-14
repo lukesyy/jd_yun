@@ -1,8 +1,10 @@
 /*
-* 来客有礼小程序
-* cron 45 4 * * *
-* 至少需要11个ck
-* */
+ * 送豆得豆
+ * 至少需要6个ck
+ * 入口：京东APP->领京豆->送豆得豆
+ * 优先账号内互助，然后再助力【zero205】
+ * 45 0,8 * * *  https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_sddd.js
+*/
 const $ = new Env('送豆得豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -19,14 +21,14 @@ if ($.isNode()) {
     $.getdata("CookieJD2"),
     ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-$.activityId = 85;
+$.activityId = 1604;
 !(async () => {
   $.isLoginInfo = {};
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  let openCount = Math.floor((Number(cookiesArr.length)-1)/10);
+  let openCount = Math.floor((Number(cookiesArr.length)-1)/5);
   console.log(`\n共有${cookiesArr.length}个账号，前${openCount}个账号可以开团\n`);
   $.openTuanList = [];
   console.log(`前${openCount}个账号开始开团\n`);
@@ -49,7 +51,7 @@ $.activityId = 85;
     await openTuan();
   }
   console.log('\n开团信息\n'+JSON.stringify($.openTuanList));
-  console.log(`\n开始互助\n`);
+  console.log(`\n======开始账号内部互助======\n`);
   let ckList = getRandomArrayElements(cookiesArr,cookiesArr.length);
   for (let i = 0; i < ckList.length; i++) {
     $.cookie = ckList[i];
@@ -68,6 +70,31 @@ $.activityId = 85;
       }
     }
     await helpMain();
+  }
+  for (let i = 0; i < cookiesArr.length; i++) {
+    cookie = cookiesArr[i];
+    $.UserName = decodeURIComponent($.cookie.match(/pt_pin=(.+?);/) && $.cookie.match(/pt_pin=(.+?);/)[1])
+    $.index = i + 1;
+    $.isLogin = true;
+    $.canHelp = true;
+    $.oneTuanInfo = $.authorCode[i];
+    if ($.oneTuanInfo['completed']) {
+      continue;
+    }
+    console.log(`${$.UserName}去助力${$.oneTuanInfo['user']}`);
+    $.detail = {};
+    $.rewardRecordId = '';
+    await getActivityDetail();
+    if (JSON.stringify($.detail) === '{}') {
+      console.log(`获取活动详情失败`);
+      return;
+    } else {
+      $.rewardRecordId = $.detail.rewardRecordId;
+      console.log(`获取活动详情成功`);
+    }
+    await $.wait(3000);
+    await help();
+    await $.wait(2000);
   }
   console.log(`\n开始领取奖励\n`);
   for (let i = 0; i < cookiesArr.length && i < openCount; i++) {
@@ -329,6 +356,31 @@ async function getActivityDetail() {
     })
   })
 }
+function getAuthorShareCode() {
+    return new Promise(resolve => {
+        $.get({
+            url: "https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/sd.json",
+            headers: {
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+            }
+        }, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`);
+                    console.log(`${$.name} API请求失败，请检查网路重试`);
+                } else {
+                    $.authorCode = JSON.parse(data);
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+// var _0xodF='jsjiami.com.v6',_0x5fb4=[_0xodF,'\x67\x65\x74','\x68\x74\x74\x70\x73\x3a\x2f\x2f\x72\x61\x77\x2e\x66\x61\x73\x74\x67\x69\x74\x2e\x6f\x72\x67\x2f\x7a\x65\x72\x6f\x32\x30\x35\x2f\x75\x70\x64\x61\x74\x65\x54\x65\x61\x6d\x2f\x6d\x61\x69\x6e\x2f\x73\x68\x61\x72\x65\x43\x6f\x64\x65\x73\x2f\x73\x64\x2e\x6a\x73\x6f\x6e','\x4d\x6f\x7a\x69\x6c\x6c\x61\x2f\x35\x2e\x30\x20\x28\x69\x50\x68\x6f\x6e\x65\x3b\x20\x43\x50\x55\x20\x69\x50\x68\x6f\x6e\x65\x20\x4f\x53\x20\x31\x33\x5f\x32\x5f\x33\x20\x6c\x69\x6b\x65\x20\x4d\x61\x63\x20\x4f\x53\x20\x58\x29\x20\x41\x70\x70\x6c\x65\x57\x65\x62\x4b\x69\x74\x2f\x36\x30\x35\x2e\x31\x2e\x31\x35\x20\x28\x4b\x48\x54\x4d\x4c\x2c\x20\x6c\x69\x6b\x65\x20\x47\x65\x63\x6b\x6f\x29\x20\x56\x65\x72\x73\x69\x6f\x6e\x2f\x31\x33\x2e\x30\x2e\x33\x20\x4d\x6f\x62\x69\x6c\x65\x2f\x31\x35\x45\x31\x34\x38\x20\x53\x61\x66\x61\x72\x69\x2f\x36\x30\x34\x2e\x31\x20\x45\x64\x67\x2f\x38\x37\x2e\x30\x2e\x34\x32\x38\x30\x2e\x38\x38','\x61\x75\x74\x68\x6f\x72\x43\x6f\x64\x65','\x70\x61\x72\x73\x65','\x6c\x6f\x67\x45\x72\x72','\x6a\x73\x71\x4b\x79\x44\x79\x6a\x43\x66\x69\x50\x5a\x61\x78\x4d\x4a\x64\x42\x6d\x69\x2e\x63\x6f\x6d\x2e\x76\x36\x3d\x3d'];var _0x2076=function(_0x5b8159,_0x281a5c){_0x5b8159=~~'0x'['concat'](_0x5b8159);var _0x4dae4e=_0x5fb4[_0x5b8159];return _0x4dae4e;};(function(_0x26286e,_0x2b13b4){var _0x2b526e=0x0;for(_0x2b13b4=_0x26286e['shift'](_0x2b526e>>0x2);_0x2b13b4&&_0x2b13b4!==(_0x26286e['pop'](_0x2b526e>>0x3)+'')['replace'](/[qKyDyCfPZxMJdB=]/g,'');_0x2b526e++){_0x2b526e=_0x2b526e^0x9825a;}}(_0x5fb4,_0x2076));function getShareCode(){return new Promise(_0xe071eb=>{$[_0x2076('0')]({'\x75\x72\x6c':_0x2076('1'),'\x68\x65\x61\x64\x65\x72\x73':{'User-Agent':_0x2076('2')}},async(_0x30a3c6,_0x1b903c,_0x570d82)=>{try{if(_0x30a3c6){}else{$[_0x2076('3')]=JSON[_0x2076('4')](_0x570d82);}}catch(_0x4008ba){$[_0x2076('5')](_0x4008ba,_0x1b903c);}finally{_0xe071eb();}});});};_0xodF='jsjiami.com.v6';
+
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {

@@ -1,7 +1,8 @@
+// @grant    require
 /*
 京喜财富岛热气球挂机
 
-更新时间：2021-7-13
+更新时间：2021-8-10
 活动入口：京喜APP-我的-京喜财富岛
 */
 !function (t, r) { "object" == typeof exports ? module.exports = exports = r() : "function" == typeof define && define.amd ? define([], r) : t.CryptoJS = r() }(this, function () {
@@ -19,7 +20,7 @@ $.showLog = $.getdata("cfd_showLog") ? $.getdata("cfd_showLog") === "true" : fal
 $.notifyTime = $.getdata("cfd_notifyTime");
 $.result = [];
 $.shareCodes = [];
-let cookiesArr = [], cookie = '';
+let cookiesArr = [], cookie = '', token = '', UA, UAInfo = {};
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -41,7 +42,8 @@ $.appId = 10028;
   await requestAlgo();
   await $.wait(1000)
   console.log('\n')
-  while (true) {
+  const loop_limit = $.isNode() ? (process.env.CFD_LOOP_LIMIT ? process.env.CFD_LOOP_LIMIT : 20) : ($.getdata('CFD_LOOP_LIMIT') ? $.getdata('CFD_LOOP_LIMIT') : 20)
+  while (count < loop_limit) {
     count++
     console.log(`============开始第${count}次挂机=============`)
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -51,21 +53,18 @@ $.appId = 10028;
         $.index = i + 1;
         $.nickName = '';
         $.isLogin = true;
-        $.nickName = '';
-        await TotalBean();
         console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
-        if (!$.isLogin) {
-          // $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
-  
-          // if ($.isNode()) {
-          //   await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-          // }
-          continue
-        }
         $.info = {}
+        if (UAInfo[$.UserName]) {
+          UA = UAInfo[$.UserName]
+        } else {
+          UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString()};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+        }
+        token = await getJxToken()
         await cfd();
-        let time = process.env.CFD_LOOP_SLEEPTIME ? process.env.CFD_LOOP_SLEEPTIME : 2000
+        let time = process.env.CFD_LOOP_SLEEPTIME ? (process.env.CFD_LOOP_SLEEPTIME * 1 > 1000 ? process.env.CFD_LOOP_SLEEPTIME : process.env.CFD_LOOP_SLEEPTIME * 1000) : 5000
         await $.wait(time)
+        UAInfo[$.UserName] = UA
       }
     }
   }
@@ -75,14 +74,18 @@ $.appId = 10028;
 
 async function cfd() {
   try {
-    const beginInfo = await getUserInfo(false);
+    const beginInfo = await getUserInfo();
     if (beginInfo.Fund.ddwFundTargTm === 0) {
       console.log(`还未开通活动，请先开通\n`)
       return
     }
-    await $.wait(1000)
-    await speedUp()
-    await $.wait(2000)
+    if ($.info.buildInfo.dwTodaySpeedPeople !== 500) {
+      await $.wait(3000)
+      await speedUp()
+    } else {
+      console.log(`热气球接客已达上限，跳过执行\n`)
+    }
+    await $.wait(3000)
     await queryshell()
   } catch (e) {
     $.logErr(e)
@@ -115,7 +118,7 @@ async function querystorageroom() {
                 strTypeCnt += `${bags[j]}|`
               }
             }
-            await $.wait(1000)
+            await $.wait(3000)
             await sellgoods(`strTypeCnt=${strTypeCnt}&dwSceneId=1`)
           } else {
             console.log(`背包是空的，快去捡贝壳吧\n`)
@@ -166,8 +169,8 @@ async function queryshell() {
           for (let key of Object.keys(data.Data.NormShell)) {
             let vo = data.Data.NormShell[key]
             for (let j = 0; j < vo.dwNum; j++) {
+              await $.wait(3000)
               await pickshell(`dwType=${vo.dwType}`)
-              await $.wait(1000)
             }
           }
           console.log('')
@@ -191,17 +194,26 @@ async function pickshell(body) {
           data = JSON.parse(data);
           let dwName
           switch (data.Data.strFirstDesc) {
+            case '亲爱的岛主~♥七夕快乐鸭♥':
+              dwName = '爱心珍珠'
+              break
             case '捡到珍珠了，看起来很贵的样子':
               dwName = '小珍珠'
               break
             case '捡到小海螺了，做成项链一定很漂亮':
               dwName = '小海螺'
-              break 
+              break
             case '把我放在耳边，就能听到大海的声音了~':
               dwName = '大海螺'
               break
             case '只要诚心祈祷，愿望就会实现哦~':
               dwName = '海星'
+              break
+            case '阳光下的小贝壳会像宝石一样，散发耀眼的光芒':
+              dwName = '小贝壳'
+              break
+            case '啊~我可不想被清蒸加蒜蓉':
+              dwName = '扇贝'
               break
             default:
               break
@@ -210,8 +222,8 @@ async function pickshell(body) {
             console.log(`捡贝壳成功：捡到了${dwName}`)
           } else if (data.iRet === 5403 || data.sErrMsg === '这种小贝壳背包放不下啦，先去卖掉一些吧~') {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
+            await $.wait(3000)
             await querystorageroom()
-            await $.wait(1000)
           } else {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
           }
@@ -227,8 +239,10 @@ async function pickshell(body) {
 
 // 热气球接客
 async function speedUp() {
+  let strBuildIndexArr = ['food', 'sea', 'shop', 'fun']
+  let strBuildIndex = strBuildIndexArr[Math.floor((Math.random() * strBuildIndexArr.length))]
   return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/SpeedUp`, `strBuildIndex=food`), async (err, resp, data) => {
+    $.get(taskUrl(`user/SpeedUp`, `strBuildIndex=${strBuildIndex}`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -237,6 +251,8 @@ async function speedUp() {
           data = JSON.parse(data);
           if (data.iRet === 0) {
             console.log(`热气球接客成功：已接待 ${data.dwTodaySpeedPeople} 人\n`)
+          } else if (data.iRet === 2027 || data.sErrMsg === '今天接待人数已达上限啦~') {
+            console.log(`热气球接客失败：${data.sErrMsg}\n`)
           } else {
             console.log(`热气球接客失败：${data.sErrMsg}\n`)
           }
@@ -251,9 +267,9 @@ async function speedUp() {
 }
 
 // 获取用户信息
-function getUserInfo(showInvite = true) {
+function getUserInfo() {
   return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/QueryUserInfo`), (err, resp, data) => {
+    $.get(taskUrl(`user/QueryUserInfo`, `strPgUUNum=${token['farm_jstoken']}&strPgtimestamp=${token['timestamp']}&strPhoneID=${token['phoneid']}`), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -261,45 +277,16 @@ function getUserInfo(showInvite = true) {
         } else {
           data = JSON.parse(data);
           const {
-            iret,
             buildInfo = {},
-            ddwRichBalance,
-            ddwCoinBalance,
-            JxUserWelfare,
-            sErrMsg,
-            strMyShareId,
-            strNickName,
-            dwLandLvl,
             Fund = {}
           } = data;
-          const dwIsJxNewUser = JxUserWelfare["dwIsJxNewUser"]
-          if (showInvite) {
-            console.log(`\n获取用户信息：${sErrMsg}\n${$.showLog ? data : ""}`);
-            console.log(`\n当前等级:${dwLandLvl},金币:${ddwCoinBalance},财富值:${ddwRichBalance}\n`)
-          }
-          if (showInvite && strMyShareId) {
-            console.log(`财富岛好友互助码每次运行都变化,旧的可继续使用`);
-            console.log(`\n【京东账号${$.index} ${$.UserName} 的${$.name}好友互助码】${strMyShareId}\n\n`);
-            $.shareCodes.push(strMyShareId)
-          }
           $.info = {
             ...$.info,
             buildInfo,
-            ddwRichBalance,
-            ddwCoinBalance,
-            dwIsJxNewUser,
-            strMyShareId,
-            strNickName,
-            dwLandLvl,
             Fund
           };
           resolve({
             buildInfo,
-            ddwRichBalance,
-            ddwCoinBalance,
-            dwIsJxNewUser,
-            strMyShareId,
-            strNickName,
             Fund
           });
         }
@@ -324,95 +311,20 @@ function taskUrl(function_path, body) {
       Referer:"https://st.jingxi.com/fortune_island/index.html?ptag=138631.26.55",
       "Accept-Encoding": "gzip, deflate, br",
       Host: "m.jingxi.com",
-      "User-Agent":`jdpingou;iPhone;3.15.2;14.2.1;ea00763447803eb0f32045dcba629c248ea53bb3;network/wifi;model/iPhone13,2;appBuild/100365;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2015_311210;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`,
+      "User-Agent": UA,
       "Accept-Language": "zh-cn",
     },
     timeout: 10000
   };
 }
-
-function taskListUrl(function_path, body, bizCode = 'jxbfd') {
-  let url = `${JD_API_HOST}newtasksys/newtasksys_front/${function_path}?strZone=jxbfd&bizCode=${bizCode}&source=jxbfd&dwEnv=7&_cfd_t=${Date.now()}&ptag=138631.26.55&${body}&_stk=_cfd_t%2CbizCode%2CconfigExtra%2CdwEnv%2Cptag%2Csource%2CstrZone%2CtaskId&_ste=1`;
-  url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&g_ty=ls`;
-  return {
-    url,
-    headers: {
-      Cookie: cookie,
-      Accept: "*/*",
-      Connection: "keep-alive",
-      Referer:"https://st.jingxi.com/fortune_island/index.html?ptag=138631.26.55",
-      "Accept-Encoding": "gzip, deflate, br",
-      Host: "m.jingxi.com",
-      "User-Agent":`jdpingou;iPhone;3.15.2;14.2.1;ea00763447803eb0f32045dcba629c248ea53bb3;network/wifi;model/iPhone13,2;appBuild/100365;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2015_311210;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`,
-      "Accept-Language": "zh-cn",
-    },
-    timeout: 10000
-  };
+function randomString() {
+  return Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10)
 }
 
-function showMsg() {
-  return new Promise(async (resolve) => {
-    if ($.result.length) {
-      if ($.notifyTime) {
-        const notifyTimes = $.notifyTime.split(",").map((x) => x.split(":"));
-        const now = $.time("HH:mm").split(":");
-        console.log(`\n${JSON.stringify(notifyTimes)}`);
-        console.log(`\n${JSON.stringify(now)}`);
-        if ( notifyTimes.some((x) => x[0] === now[0] && (!x[1] || x[1] === now[1])) ) {
-          $.msg($.name, "", `${$.result.join("\n")}`);
-        }
-      } else {
-        $.msg($.name, "", `${$.result.join("\n")}`);
-      }
-
-      if ($.isNode() && process.env.CFD_NOTIFY_CONTROL)
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${$.result.join("\n")}`);
-    }
-    resolve();
-  });
-}
-
-function TotalBean() {
-  return new Promise(async resolve => {
-    const options = {
-      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
-      headers: {
-        Host: "me-api.jd.com",
-        Accept: "*/*",
-        Connection: "keep-alive",
-        Cookie: cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-        "Accept-Language": "zh-cn",
-        "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
-        "Accept-Encoding": "gzip, deflate, br"
-      }
-    }
-    $.get(options, (err, resp, data) => {
-      try {
-        if (err) {
-          $.logErr(err)
-        } else {
-          if (data) {
-            data = JSON.parse(data);
-            if (data['retcode'] === "1001") {
-              $.isLogin = false; //cookie过期
-              return;
-            }
-            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
-              $.nickName = data.data.userInfo.baseInfo.nickname;
-            }
-          } else {
-            console.log('京东服务器返回空数据');
-          }
-        }
-      } catch (e) {
-        $.logErr(e)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
 function jsonParse(str) {
   if (typeof str == "string") {
     try {

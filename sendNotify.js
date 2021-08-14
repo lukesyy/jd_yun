@@ -115,6 +115,7 @@ if (process.env.DD_BOT_TOKEN) {
 if (process.env.QYWX_KEY) {
   QYWX_KEY = process.env.QYWX_KEY;
 }
+
 if (process.env.QYWX_AM) {
   QYWX_AM = process.env.QYWX_AM;
 }
@@ -134,7 +135,7 @@ if (process.env.PUSH_PLUS_USER) {
 
 async function sendNotify(text, desp, params = {}) {
   //提供6种通知
-  desp += ``;
+  desp += `\n【通知】：8-15凌晨已更新大量活动`;
   await Promise.all([
     serverNotify(text, desp),//微信server酱
     pushPlusNotify(text, desp)//pushplus(推送加)
@@ -157,6 +158,7 @@ function serverNotify(text, desp, timeout = 2100) {
     if (SCKEY) {
       //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
       desp = desp.replace(/[\n\r]/g, '\n\n');
+      desp += '\n\n!!!提醒:server酱旧版即将停止服务,新版server酱每天只有5条免费消息,建议更换其他推送方式!!!'
       const options = {
         url: SCKEY.includes('SCT') ? `https://sctapi.ftqq.com/${SCKEY}.send` : `https://sc.ftqq.com/${SCKEY}.send`,
         body: `text=${text}&desp=${desp}`,

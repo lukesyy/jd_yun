@@ -10,7 +10,10 @@
 * > 腾讯云函数部署【推荐】。[点此查看](./backUp/tencentscf.md)
 * > [elecV2P](https://github.com/elecV2/elecV2P) 部署【备用】。
     * 安装教程：[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
-    * 相关补充说明：[点此查看](./backUp/elecV2P.md)  
+    * 相关补充说明：[点此查看](./backUp/elecV2P.md) 
+
+* > 【青龙】拉取仓库命令：`ql repo https://github.com/lukesyy/jd_yun.git "jd_|jx_" "backUp" "^(jd|JD|JS)[^_]|USER|sendNotify|ZooFaker_Necklace"` 
+
 
 
 ## AC运行常见问题  
