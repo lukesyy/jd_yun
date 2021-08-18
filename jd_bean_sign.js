@@ -2,10 +2,37 @@
 京东多合一签到,自用,可N个京东账号
 活动入口：各处的签到汇总
 Node.JS专用
+https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_bean_sign.js
 IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
-更新时间：2021-8-1
+更新时间：2021-8-15
+金融签到在测试,有能力可以单独反馈.
+JRBODY抓取网站:ms.jr.jd.com/gw/generic/hy/h5/m/appSign(进入金融APP签到页面手动签到);格式:"reqData=xxx"
+变量填写示例:JRBODY: reqData=xxx&reqData=xxx&&reqData=xxx(比如第三个号没有,则留空,长度要与CK一致)
+云函数AC用户Secrests添加JRBODY_SCF,每行一个jrbody,结尾行写'Finish',某个帐号无jrbody则留空行
+其他环境用户除了JRBODY环境变量可以选用JRBODY.txt文件,放在同目录下,规则同上一行AC用户.
+注:优先识别环境变量,如使用txt文件请不要设置环境变量.
  */
 const $ = new Env('京东多合一签到SCF')
+const fs = require('fs')
+const jr_file = 'JRBODY.txt'
+const readline = require('readline')
+
+async function processLineByLine(jrbodys) {
+  const fileStream = fs.createReadStream(jr_file)
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  })
+  for await (let line of rl) {
+    line = line.trim()
+    if (line == 'Finish'){
+      console.log(`识别到读取结束符号,结束.供读取${jrbodys.length}个`)
+      return
+    }
+    jrbodys.push(line)
+  }
+}
+
 // const vm = require('vm')
 let sendNotify
 if ($.isNode()){
@@ -42,9 +69,37 @@ if ($.isNode()) {
     }
   }
   cookiesArr = cookiesArr.filter((_, index) => cks[index])
-  cookiesArr = cookiesArr.map(cookie => {
-   return {'cookie':cookie}
-  })
+  let jrbodys
+  if(process.env.JRBODY) {
+    jrbodys = process.env.JRBODY.split('&')
+    if (jrbodys.length != cookiesArr.length) {
+      console.error('CK和JRBODY长度不匹配,不使用JRBODY,请阅读脚本开头说明')
+      jrbodys = undefined
+    }
+  }else{
+    console.log(`为检测到JRBODY环境变量,开始检测${jr_file}`)
+    try {
+      await fs.accessSync('./'+jr_file, fs.constants.F_OK)
+      console.log(`${jr_file} '存在,读取配置'`)
+      jrbodys = []
+      await processLineByLine(jrbodys)
+    } catch (err) {
+      console.log(`${jr_file} '不存在,跳过'`)
+    }
+  }
+  for (let i = 0; i < cookiesArr.length; i++) {
+    const data = {
+      'cookie':cookiesArr[i]
+    }
+    if (jrbodys) {
+      if(jrbodys[i].startsWith('reqData=')){
+          data['jrBody'] = jrbodys[i]
+        }else{
+          console.log(`跳过第${i+1}个JRBODY,为空或格式不正确`)
+        }
+    }
+    cookiesArr[i] = data
+  }
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】无可用cookie,结束');
     return;
@@ -60,9 +115,8 @@ if ($.isNode()) {
   const originalLog = console.log
   let notifyContent = ''
   console.log = (...args) => {
-    if(args[0].includes("【签到号")){
+    if(args[0].includes("【签到概览】") || args[0].includes("【签到号")){
       notifyContent += args[0].split('\n\n')[1] + '\n'
-      // originalLog('catch notifyContent:'+notifyContent)
     }
     originalLog.apply(
         console,
@@ -81,7 +135,6 @@ if ($.isNode()) {
       }
     }
   }
-  
   eval(changeFile(content,JSON.stringify(cookiesArr)))
   // new vm.Script('console.log("start");\n'+changeFile(content,JSON.stringify(cookiesArr))+'\nconsole.log("end");').runInThisContext()
   // new vm.Script(changeFile(content,JSON.stringify(cookiesArr))).runInContext(new vm.createContext({
@@ -95,7 +148,7 @@ if ($.isNode()) {
 
 function changeFile (content,cookie) {
   console.log(`开始替换变量`)
-  let newContent = content.replace(/var OtherKey = '.*'/, `var OtherKey = '${cookie}'`);
+  let newContent = content.replace(/var OtherKey = `.*`/, `var OtherKey = \`${cookie}\``);
   // newContent = newContent.replace(/const NodeSet = 'CookieSet.json'/, `const NodeSet = '${NodeSet}'`)
   if (process.env.JD_BEAN_STOP && process.env.JD_BEAN_STOP !== '0') {
     newContent = newContent.replace(/var stop = '0'/, `var stop = '${process.env.JD_BEAN_STOP}'`)
@@ -111,9 +164,9 @@ function changeFile (content,cookie) {
 function TotalBean(cookie) {
   return new Promise(async resolve => {
     const options = {
-      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
+      url: "https://wq.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2",
       headers: {
-        Host: "me-api.jd.com",
+        Host: "wq.jd.com",
         Accept: "*/*",
         Connection: "keep-alive",
         Cookie: cookie,
@@ -127,24 +180,24 @@ function TotalBean(cookie) {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-          resolve()
+          console.error(`${$.name} API请求失败，请检查网路重试`)
+          resolve(false)
         } else {
           if (data) {
             data = JSON.parse(data);
             if (data['retcode'] === "1001") {
-              resolve(); //cookie过期
+              resolve(false); //cookie过期
+              console.warn('CK过期')
               return
             }
             resolve(true)
           } else {
-            console.log(`京东服务器返回空数据`)
+            console.error(`京东服务器返回空数据`)
+            resolve(false)
           }
         }
       } catch (e) {
         $.logErr(e, resp)
-      } finally {
-        resolve()
       }
     })
   })
