@@ -3,6 +3,7 @@
 ## 已经创建公开仓库的请点击仓库右上角`Setting`，拉到页面最下方，点击`Change visibility`，选择`Make private`，填入黑体仓库名称进行确认!
 
 ### 方式一(如果有一定github基础，十分建议直接方式二)
+
 **建议阅读@hshx123大佬的[教程](https://66ccff.work/teach/jd.html)(就不用看下面步骤了)**
 
 
