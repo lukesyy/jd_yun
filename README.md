@@ -1,6 +1,5 @@
 
-## 使用教程（不要fork！觉得有用的可以点个 star:blush:）
-## text
+## 使用教程（不要fork！觉得有用的可以点个 star :blush:）
 ## 1.先去创建一个空白库 [立即创建](https://github.com/new)  </br>
 ## 2.进入空白的库,点击左下方的 Import code 输入 https://github.com/lukesyy/jd_yun 等待代码同步
    
