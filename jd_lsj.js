@@ -2,7 +2,7 @@
 #京东零食街
 #入口 京东 频道 美食馆
 
-由作者基于柠檬大佬原版修改
+由zero205基于柠檬大佬原版修改
 取消入会，加购功能
 优化脚本输出，查询金币数量，添加金币兑换牛奶提醒
 助力逻辑：优先账号内互助，然后再帮我助力
@@ -59,11 +59,11 @@ if ($.isNode()) {
         }
         continue
       }
+      await start()
       if (lsjdh.length !== 0) {
         $.log("检测到您设置了兑换变量，开始兑换")
         await duihuan()
       }
-      await start()
     }
   }
   console.log(`\n开始账号内互助\n`);
@@ -72,7 +72,6 @@ if ($.isNode()) {
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     if (!useInfo[$.UserName]) continue;
     $.canHelp = true;
-    
     for (let j = 0; j < newShareCodes.length && $.canHelp; j++) {
       $.oneCodeInfo = newShareCodes[j];
       if ($.UserName === newShareCodes[j].usr || $.oneCodeInfo.max) {
@@ -85,7 +84,7 @@ if ($.isNode()) {
     }
   }
   await $.wait(1000)
-  console.log(`\n开始帮【作者】助力，感谢！\n`);
+  console.log(`\n开始帮【zero205】助力，感谢！\n`);
   let shareCodes = [
     '0BC0AA82E6E6165FE75FF77CA78416F9D94866A81E8A79794C2841D76A8ED68349336DE54E26AA8F2834B248E6398CB7A755DF4FDAE585EC3E1ABE26F3DD3CFFC956D12974FF00A045D8E31A84FE84C18A8357DE96A1F617B8AC4D64BC24B689'
   ];
@@ -99,7 +98,7 @@ if ($.isNode()) {
       if ($.UserName === shareCodes[j].usr || $.oneCodeInfo.max) {
         continue;
       }
-      console.log(`${$.UserName}去助力【作者】`)
+      console.log(`${$.UserName}去助力【zero205】`)
       nick = useInfo[$.UserName];
       await dohelp(shareCodes[j]);
       await $.wait(3000)
@@ -178,12 +177,12 @@ function getinfo() {
               if (data.data.status === 200) {
                 $.cion = data.data.data.customer.remainChance;
                 console.log(`\n查询成功：京东账号【${$.nickName || $.UserName}】当前剩余金币为：${$.cion}`)
-                if ($.cion > 750000) {
-                  $.msg($.name, `【提示】\n京东账号【${$.nickName || $.UserName}】已可兑换牛奶`, `\n兑换入口：京东APP->美食馆->瓜分京豆\n每天10点开始兑换`, { "更多脚本": "https://github.com/作者/JD_tencent_scf" });
-                  if ($.isNode()) {
-                    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n已可兑换牛奶\n兑换入口：京东APP->美食馆->瓜分京豆，每天10点开始兑换\n更多脚本->"https://github.com/作者/JD_tencent_scf"`);
-                  }
-                }
+                // if ($.cion > 750000) {
+                //   $.msg($.name, `【提示】\n京东账号【${$.nickName || $.UserName}】已可兑换牛奶`, `\n兑换入口：京东APP->美食馆->瓜分京豆\n每天10点开始兑换`, { "更多脚本": "https://github.com/zero205/JD_tencent_scf" });
+                //   if ($.isNode()) {
+                //     await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n已可兑换牛奶\n兑换入口：京东APP->美食馆->瓜分京豆，每天10点开始兑换\n更多脚本->"https://github.com/zero205/JD_tencent_scf"`);
+                //   }
+                // }
               }
             } else {
               console.log(`查询失败：${JSON.stringify(data)}\n`);

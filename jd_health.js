@@ -7,17 +7,17 @@
 ===================quantumultx================
 [task_local]
 #东东健康社区
-13 1,6,22 * * * jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+13 0,6,22 * * * jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]
-cron "13 1,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
+cron "13 0,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
 
 ====================Surge================
-东东健康社区 = type=cron,cronexp="13 1,6,22 * * *",wake-system=1,timeout=3600,script-path=jd_health.js
+东东健康社区 = type=cron,cronexp="13 0,6,22 * * *",wake-system=1,timeout=3600,script-path=jd_health.js
 
 ============小火箭=========
-东东健康社区 = type=cron,script-path=jd_health.js, cronexpr="13 1,6,22 * * *", timeout=3600, enable=true
+东东健康社区 = type=cron,script-path=jd_health.js, cronexpr="13 0,6,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
@@ -152,7 +152,7 @@ function getTaskDetail(taskId = '') {
               await $.wait(1000 * (oc(() => data.data.result.taskVos[0].waitDuration) || 3));
               await doTask(oc(() => data.data.result.taskVos[0].shoppingActivityVos[0].taskToken), 22, 0);//完成任务
             } else {
-              for (let vo of nc(oc(() => data.data.result.taskVos.filter(vo => vo.taskType !== 19)) , [])) {
+              for (let vo of nc(oc(() => data.data.result.taskVos.filter(vo => vo.taskType !== 19 && vo.taskType !== 25)) , [])) {
                 console.log(`${vo.taskName}任务，完成次数：${vo.times}/${vo.maxTimes}`)
                 for (let i = vo.times; i < vo.maxTimes; i++) {
                   console.log(`去完成${vo.taskName}任务`)
@@ -235,6 +235,8 @@ function exchange(commodityType, commodityId) {
             if ($.isNode()) {
               allMessage += `【京东账号${$.index}】 ${$.UserName}\n兑换${data.data.result.jingBeanNum}京豆成功🎉${$.index !== cookiesArr.length ? '\n\n' : ''}`
             }
+          } else {
+            console.log(data.data.bizMsg)
           }
         }
       } catch (e) {

@@ -171,7 +171,7 @@ if (process.env.PUSH_PLUS_USER) {
  */
 async function sendNotify(text, desp, params = {}, author = '\n\n仅供用于学习') {
   //提供6种通知
-  desp += '\n\n仅供用于学习\n仓库地址：https://github.com/zero205/JD_tencent_scf';//增加作者信息，防止被贩卖等
+  desp += '';//增加作者信息，防止被贩卖等
   await Promise.all([
     serverNotify(text, desp), //微信server酱
     pushPlusNotify(text, desp) //pushplus(推送加)

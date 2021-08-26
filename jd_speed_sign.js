@@ -1,4 +1,5 @@
 /*
+0 7 * * * jd_speed_sign.js
 京东极速版签到+赚现金任务
 每日9毛左右，满3，10，50可兑换无门槛红包
 ⚠️⚠️⚠️一个号需要运行40分钟左右
@@ -52,7 +53,7 @@ const JD_API_HOST = 'https://api.m.jd.com/', actCode = 'visa-card-001';
   $.canhelp = true;
   if ($.isNode()) {
     if (process.env.HELP_YQYL && process.env.HELP_YQYL === 'false')
-    $.canhelp = false
+      $.canhelp = false
   }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -94,7 +95,11 @@ async function jdGlobal() {
 
     await signInit()
     await sign()
- 
+    if ($.canhelp) {
+      console.log(`\n京东账号${$.index}开始助力【zero205】邀请有礼，感谢！\n`);
+      await invite()
+      await invite2()
+    }
     $.score = 0
     $.total = 0
     await taskList()
@@ -684,8 +689,9 @@ function invite2() {
   let inviterId = [
     "/eNHdfn6fP+TFwVda3ipjWwvTFqeKBZaRG38adWABKk=",
     "R+eeS9UrTadw7yIF7ubkxBOARQK0BNXiQLVF0TyAf4Q=",
+    "Cg7WMrLsk/PPSHaOd9q2ULzDByNly0QecJ4K7QiZhLk=",
     "Sev6JWjut6GyaEHJIWpSQQ=="
-  ][Math.floor((Math.random() * 3))]
+  ][Math.floor((Math.random() * 4))]
   let headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
@@ -715,8 +721,11 @@ function invite() {
     "/eNHdfn6fP+TFwVda3ipjWwvTFqeKBZaRG38adWABKk=",
     "R+eeS9UrTadw7yIF7ubkxBOARQK0BNXiQLVF0TyAf4Q=",
     "Cg7WMrLsk/PPSHaOd9q2ULzDByNly0QecJ4K7QiZhLk=",
+    "4OAzIinjvoFYHDImve1/VA==",
+    "N0xw0OCPJTUt8xzWZPWs3w==",
+    "z///voP4pDo+KI13j5As9g==",
     "Sev6JWjut6GyaEHJIWpSQQ=="
-  ][Math.floor((Math.random() * 4))]
+  ][Math.floor((Math.random() * 7))]
   var headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',

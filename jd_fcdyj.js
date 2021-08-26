@@ -77,7 +77,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
                 console.log(`\n检测到您已填助力码${$.rid}，开始助力\n`)
                 await help($.rid, $.inviter, 1)
                 if (!$.canRun) {
-                    break;
+                    continue;
                 }
                 await $.wait(1000)
                 await help($.rid, $.inviter, 2)
@@ -88,6 +88,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         $.canWx = true
+        $.rewardType = 2
         if (cookie) {
             $.index = i + 1;
             console.log(`\n******查询【京东账号${$.index}】红包情况******\n`);
@@ -109,9 +110,9 @@ const JD_API_HOST = `https://api.m.jd.com`;
         $.done();
     })
 
-function exchange() {
+async function exchange() {
     return new Promise(async (resolve) => {
-        let options = taskUrl("exchange", `{"linkId":"${$.linkid}", "rewardType":2}`)
+        let options = taskUrl("exchange", `{"linkId":"${$.linkid}", "rewardType":${$.rewardType}}`)
         $.get(options, async (err, resp, data) => {
             try {
                 if (err) {
@@ -119,10 +120,12 @@ function exchange() {
                     console.log(`${$.name} API请求失败，请检查网路重试`);
                 } else {
                     data = JSON.parse(data);
-                    if (data.success) {
-                        console.log(`【京东账号${$.index}】提现成功`)
+                    if (data.success && data.data.chatEnvelopeVo.status == 50059) {
+                        console.log(`【京东账号${$.index}】${data.data.chatEnvelopeVo.message} ，尝试兑换红包...`)
+                        $.rewardType = 1
+                        await exchange()
                     } else {
-                        console.log(`【京东账号${$.index}】提现失败`)
+                        console.log(`【京东账号${$.index}】提现成功`)
                     }
                 }
             } catch (e) {
@@ -203,7 +206,7 @@ function getinfo() {
                                 $.needhelp = false
                                 $.canDraw = false
                             }
-                            if (data.data.state === 6) {
+                            if (data.data.state === 6 || data.data.state === 4) {
                                 $.needhelp = false
                                 $.canDraw = true
                             }
