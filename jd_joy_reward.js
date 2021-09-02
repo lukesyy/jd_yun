@@ -4,9 +4,7 @@ Last Modified time: 2021-07-27 01:42:50
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
 活动入口：京东APP我的-更多工具-宠汪汪
 兑换规则：一个账号一天只能兑换一次京豆。
-
 兑换逻辑：0，8点场次默认兑换500京豆，16点场次默认兑换20京豆
-
 兑换奖品成功后才会有系统弹窗通知
 每日京豆库存会在0:00、8:00、16:00更新。
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
@@ -14,14 +12,11 @@ Last Modified time: 2021-07-27 01:42:50
 [task_local]
 #宠汪汪积分兑换奖品
 59 7,15,23 * * * jd_joy_reward.js, tag=宠汪汪积分兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
-
 ==============Loon==============
 [Script]
 cron "59 7,15,23 * * *" script-path=jd_joy_reward.js,tag=宠汪汪积分兑换奖品
-
 ================Surge===============
 宠汪汪积分兑换奖品 = type=cron,cronexp="59 7,15,23 * * *",wake-system=1,timeout=3600,script-path=jd_joy_reward.js
-
 ===============小火箭==========
 宠汪汪积分兑换奖品 = type=cron,script-path=jd_joy_reward.js, cronexpr="59 7,15,23 * * *", timeout=3600, enable=true
  */
@@ -114,7 +109,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 async function joyReward() {
   try {
-    let starttime = process.env.JOY_STARTTIME ? process.env.JOY_STARTTIME : 59.8;
+    let starttime = process.env.JOY_STARTTIME ? process.env.JOY_STARTTIME : 60;
     let nowtime = new Date().Format("s.S")
     if ($.index == 1 && nowtime < starttime) {
       let sleeptime = (starttime - nowtime) * 1000;
@@ -245,7 +240,7 @@ async function joyReward() {
 }
 function getExchangeRewards() {
   let opt = {
-    url: "//jdjoy.jd.com/common/gift/getBeanConfigs?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P",
+    url: "//jdjoy.jd.com/common/gift/getBeanConfigs?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0",
     method: "GET",
     data: {},
     credentials: "include",
@@ -253,7 +248,7 @@ function getExchangeRewards() {
   }
   return new Promise((resolve) => {
     let lkt = new Date().getTime()
-    let lks = $.md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = $.md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     const option = {
       url: "https:" + taroRequest(opt)['url'] + $.validate[$.index-1],
       headers: {
@@ -293,13 +288,13 @@ function getExchangeRewards() {
 function exchange(saleInfoId, orderSource) {
   let body = { "buyParam": { "orderSource": orderSource, "saleInfoId": saleInfoId }, "deviceInfo": {} }
   let opt = {
-    "url": "//jdjoy.jd.com/common/gift/new/exchange?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P",
+    "url": "//jdjoy.jd.com/common/gift/new/exchange?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0",
     "data": body,
     "credentials": "include", "method": "POST", "header": { "content-type": "application/json" }
   }
   return new Promise((resolve) => {
     let lkt = new Date().getTime()
-    let lks = $.md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = $.md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     const option = {
       url: "https:" + taroRequest(opt)['url'] + $.validate[$.index-1],
       body: `${JSON.stringify(body)}`,

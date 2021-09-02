@@ -1,9 +1,14 @@
 /*
+ * @Date: 2021-08-25 14:02:18
+ * @LastEditors: OBKoro1
+ * @LastEditTime: 2021-09-02 10:08:36
+ */
+/*
 此文件为Node.js专用。其他用户请忽略
  */
 //此处填写京东账号cookie。
 let CookieJDs = [
-  '',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
+  'pt_key=AAJhMDH-ADBWRZMokfIKtTgVeryPAKsqFlA44Om_9SXX6Qi7dPU3gEhPLcbWtZ1pz0t6VBckYvA; pt_pin=jd_5a112c253d705;',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
   '',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
 ]
 // 判断环境变量里面是否有京东ck

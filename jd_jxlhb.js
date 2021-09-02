@@ -8,14 +8,11 @@
 [task_local]
 #京喜领88元红包
 4 10 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js, tag=京喜领88元红包, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
 ==============Loon==============
 [Script]
 cron "4 10 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js,tag=京喜领88元红包
-
 ================Surge===============
 京喜领88元红包 = type=cron,cronexp="4 10 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js
-
 ===============小火箭==========
 京喜领88元红包 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js, cronexpr="4 10 * * *", timeout=3600, enable=true
  */
@@ -47,8 +44,8 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
   console.log('京喜领88元红包\n' +
       '活动入口：京喜app-》我的-》京喜领88元红包\n' +
       '助力逻辑：脚本会助力作者，介意请取消脚本')
-  let res =  [{'activeId':'38lECqBL2gedWIxxZJSlp1h7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk'}];
-  let res2 =  [];
+  let res =  [];
+  let res2 = ['9tNSueoH7zr99SUaeIpSy1h7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk'];
   if (res && res.activeId) $.activeId = res.activeId;
   $.authorMyShareIds = [...((res && res.codes) || []), ...res2];
   //开启红包,获取互助码
@@ -97,7 +94,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
       if (!$.packetIdArr[i]) continue;
       console.log(`\n【${$.UserName}】去拆第${grade}个红包`);
       await openRedPack($.packetIdArr[i]['strUserPin'], grade);
-      await $.wait(1000);
+      await $.wait(15000);
     }
   }
 })()
@@ -200,6 +197,7 @@ function enrollFriend(strPin) {
               console.log(`温馨提示：如提示助力火爆，可尝试寻找京东客服`);
             }
             if (data.iRet === 2013) $.max = true;
+            if (data.iRet === 2000) $.canHelp = false;//未登录,可能未开通京喜
             console.log(`助力失败:${data.sErrMsg}\n`);
           }
         }
