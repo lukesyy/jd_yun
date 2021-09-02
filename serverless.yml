@@ -39,7 +39,7 @@ inputs:
           name: ccSign_beanchange_unsubscribe_lotteryMachine_ms_jintie_kxcdz
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_ccSign&jd_bean_change&jd_unsubscribe&jd_lotteryMachine&jd_ms&jd_jin_tie&jd_kxcdz
+          argument: jd_ccSign&jd_bean_change&jd_lotteryMachine&jd_ms&jd_jin_tie&jd_kxcdz
     - timer: #东东农场 #东东萌宠 #京喜农场 #极速版签到 #极速版红包 #健康社区 #柠檬我是大老板 #手机狂欢城 #骁龙品牌日
         parameters:
           name: fruit_pet_jxnc_speedsign_speedredpocke_health_wsdlb_carnivalcity_xl
@@ -57,7 +57,7 @@ inputs:
           name: joyreward_redPacket
           cronExpression: "0 59 7,15,23 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_redPacket
+          argument: jd_joy_reward&jd_redPacket&jd_unsubscribe
     - timer:  #天天提鹅 #柠檬赚金币 #发财大赢家 #京喜工厂 #东东工厂 #财富岛热气球
         parameters:
           name: dailyegg_zjb_bigwinner_dreamFactory_jdfactory_cfdloop
