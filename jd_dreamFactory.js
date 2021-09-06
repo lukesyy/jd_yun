@@ -1038,15 +1038,15 @@ async function joinLeaderTuan() {
   let res = await updateTuanIdsCDN('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_updateFactoryTuanId.json')
   if (!res) res = await updateTuanIdsCDN('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/jd_updateFactoryTuanId.json')
   $.authorTuanIds = [...(res && res.tuanIds || [])]
-  if ($.authorTuanIds && $.authorTuanIds.length) {
-    for (let tuanId of $.authorTuanIds) {
-      if (!tuanId) continue
-      if (!$.canHelp) break;
-      console.log(`\n账号${$.UserName} 参加zero205的团 【${tuanId}】`);
-      await JoinTuan(tuanId);
-      await $.wait(1000);
-    }
-  }
+  // if ($.authorTuanIds && $.authorTuanIds.length) {
+  //   for (let tuanId of $.authorTuanIds) {
+  //     if (!tuanId) continue
+  //     if (!$.canHelp) break;
+  //     console.log(`\n账号${$.UserName} 参加zero205的团 【${tuanId}】`);
+  //     await JoinTuan(tuanId);
+  //     await $.wait(1000);
+  //   }
+  // }
 }
 //可获取开团后的团ID，如果团ID为空并且surplusOpenTuanNum>0，则可继续开团
 //如果团ID不为空，则查询QueryTuan()
