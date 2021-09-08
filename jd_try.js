@@ -10,7 +10,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  *
  * @Address: https://github.com/X1a0He/jd_scripts_fixed/blob/main/jd_try_xh.js
- * @LastEditTime: 2021-09-08 13:37:01
+ * @LastEditTime: 2021-09-08 14:18:10
  * @LastEditors: LiJinGang
  */
 const $ = new Env('京东试用')
@@ -29,7 +29,7 @@ let args_xh = {
      * B商品原价99元，试用价0元，如果下面设置为50，那么B商品将会被加入到待提交的试用组
      * 默认为0
      * */
-    jdPrice: process.env.JD_TRY_PRICE * 1 || 40,
+    jdPrice: process.env.JD_TRY_PRICE * 1 || 10,
     /*
      * 获取试用商品类型，默认为1，原来不是数组形式，我以为就只有几个tab，结果后面还有我服了
      * 1 - 精选
