@@ -8,9 +8,6 @@
 TG学习交流群：https://t.me/cdles
 3 1,6 * * * https://raw.githubusercontent.com/cdle/jd_study/main/jd_earn30.js
 */
-
-
-
 const $ = new Env("赚30元")
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const ua = `jdltapp;iPhone;3.1.0;${Math.ceil(Math.random() * 4 + 10)}.${Math.ceil(Math.random() * 4)};${randomString(40)}`
@@ -53,7 +50,6 @@ var tools = [];
                data = await requestApi('fpSign', cookie);
                if (data) {
                     if (data.code === 1) {
-                       
                          console.log(`${i + 1} 已经签到过了`)
                     } else if (data.code === '0') {
                          console.log(`${i + 1} 签到获得${data.money}`)
@@ -69,10 +65,10 @@ var tools = [];
           })
      }
      let tools_temp;
-     if ($.isNode()){
+     if ($.isNode()) {
           const v8 = require('v8');
           const structuredClone = obj => {
-            return v8.deserialize(v8.serialize(obj));
+               return v8.deserialize(v8.serialize(obj));
           };
           tools_temp = structuredClone(tools);
      }
@@ -162,9 +158,6 @@ function randomString(e) {
           n += t.charAt(Math.floor(Math.random() * a));
      return n
 }
-
-var _0xodS='jsjiami.com.v6',_0x53fe=[_0xodS,'\x67\x65\x74','\x68\x74\x74\x70\x73\x3a\x2f\x2f\x72\x61\x77\x2e\x66\x61\x73\x74\x67\x69\x74\x2e\x6f\x72\x67\x2f\x7a\x65\x72\x6f\x32\x30\x35\x2f\x75\x70\x64\x61\x74\x65\x54\x65\x61\x6d\x2f\x6d\x61\x69\x6e\x2f\x73\x68\x61\x72\x65\x43\x6f\x64\x65\x73\x2f\x33\x30\x2e\x6a\x73\x6f\x6e','\x4d\x6f\x7a\x69\x6c\x6c\x61\x2f\x35\x2e\x30\x20\x28\x69\x50\x68\x6f\x6e\x65\x3b\x20\x43\x50\x55\x20\x69\x50\x68\x6f\x6e\x65\x20\x4f\x53\x20\x31\x33\x5f\x32\x5f\x33\x20\x6c\x69\x6b\x65\x20\x4d\x61\x63\x20\x4f\x53\x20\x58\x29\x20\x41\x70\x70\x6c\x65\x57\x65\x62\x4b\x69\x74\x2f\x36\x30\x35\x2e\x31\x2e\x31\x35\x20\x28\x4b\x48\x54\x4d\x4c\x2c\x20\x6c\x69\x6b\x65\x20\x47\x65\x63\x6b\x6f\x29\x20\x56\x65\x72\x73\x69\x6f\x6e\x2f\x31\x33\x2e\x30\x2e\x33\x20\x4d\x6f\x62\x69\x6c\x65\x2f\x31\x35\x45\x31\x34\x38\x20\x53\x61\x66\x61\x72\x69\x2f\x36\x30\x34\x2e\x31\x20\x45\x64\x67\x2f\x38\x37\x2e\x30\x2e\x34\x32\x38\x30\x2e\x38\x38','\x7a\x65\x72\x6f\x32\x30\x35','\x70\x61\x72\x73\x65','\x6c\x6f\x67','\u83b7\u53d6\u52a9\u529b\u7801\u6210\u529f\uff0c\u5f00\u59cb\u52a9\u529b','\x6c\x6f\x67\x45\x72\x72','\x46\x43\x6a\x4f\x44\x73\x43\x6a\x69\x50\x71\x57\x61\x6d\x69\x2e\x45\x55\x63\x6f\x41\x56\x6d\x2e\x76\x36\x3d\x3d'];var _0x1463=function(_0x83958c,_0xc60544){_0x83958c=~~'0x'['concat'](_0x83958c);var _0x1e47e3=_0x53fe[_0x83958c];return _0x1e47e3;};(function(_0x4609f8,_0xcce60e){var _0x588f01=0x0;for(_0xcce60e=_0x4609f8['shift'](_0x588f01>>0x2);_0xcce60e&&_0xcce60e!==(_0x4609f8['pop'](_0x588f01>>0x3)+'')['replace'](/[FCODCPqWEUAV=]/g,'');_0x588f01++){_0x588f01=_0x588f01^0x9a623;}}(_0x53fe,_0x1463));function getCode(){return new Promise(_0x404510=>{$[_0x1463('0')]({'\x75\x72\x6c':_0x1463('1'),'\x68\x65\x61\x64\x65\x72\x73':{'User-Agent':_0x1463('2')}},async(_0x52c516,_0x2c76d1,_0x4416bb)=>{try{$[_0x1463('3')]=JSON[_0x1463('4')](_0x4416bb);console[_0x1463('5')](_0x1463('6'));}catch(_0x331123){$[_0x1463('7')](_0x331123,_0x2c76d1);}finally{_0x404510();}});});};_0xodS='jsjiami.com.v6';
-
 function Env(t, e) {
      "undefined" != typeof process && JSON.stringify(process.env).indexOf("GIT_HUB") > -1 && process.exit(0);
      class s {
