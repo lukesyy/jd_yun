@@ -1,3 +1,8 @@
+<!--
+ * @Date: 2021-08-25 14:02:18
+ * @LastEditors: LiJinGang
+ * @LastEditTime: 2021-09-08 13:59:51
+-->
 
 ## 请勿直接fork！！云函数用户先按照下方教程建立私库！！！
 ## 已经创建公开仓库的请点击仓库右上角`Setting`，拉到页面最下方，点击`Change visibility`，选择`Make private`，填入黑体仓库名称进行确认!
@@ -8,7 +13,7 @@
 
 
 * 1.创建新仓库[点击创建自己的仓库](https://github.com/new)
-* 2.点击`Import a repository`，在`Your old repository’s clone URL`处填入https://github.com/zero205/JD_tencent_scf
+* 2.点击`Import a repository`，在`Your old repository’s clone URL`处填入https://github.com/lukesyy/jd_yun
 * 3.然后在`Repository name`处填写仓库名，选择`Private`
 * 4.最后点击最下方的`Begin import`
 * 5.仓库创建后，在仓库页面点击`main`分支，在下拉菜单中点击最下方`view all branches`，点击`Default branch`最右侧箭头，然后在新页面继续点击箭头，再弹出框中选择`scf`为主分支
