@@ -34,7 +34,7 @@ http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detai
 */
 // @grant    require
 const $ = new Env('宠汪汪赛跑');
-const injectToRequest2 = require('./JDJRValidator_Pure').injectToRequest2;
+const injectToRequest2 = require('./JDJRValidator_Aaron').injectToRequest2;
 $.get = injectToRequest2($.get.bind($));
 $.post = injectToRequest2($.post.bind($));
 //宠汪汪赛跑所需token，默认读取作者服务器的
@@ -46,10 +46,10 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : {};
 //下面给出好友邀请助力的示例填写规则
-let invite_pins = ['jd_5bb16d6462414,jd_7399bee01a89e,jd_6e0cd5023b791,13536765947_p,jd_LyVyYIZjfyOm,15022052312_p'];
-let run_pins = ['jd_5bb16d6462414,jd_7399bee01a89e,jd_6e0cd5023b791,13536765947_p,jd_LyVyYIZjfyOm,15022052312_p'];
+let invite_pins = ['jd_5a112c253d705,jd_7399bee01a89e,jd_6e0cd5023b791,13536765947_p,jd_LyVyYIZjfyOm,15022052312_p'];
+let run_pins = ['jd_5a112c253d705,jd_7399bee01a89e,jd_6e0cd5023b791,13536765947_p,jd_LyVyYIZjfyOm,15022052312_p'];
 //friendsArr内置太多会导致IOS端部分软件重启,可PR过来(此处目的:帮别人助力可得30g狗粮)
-let friendsArr = ["jd_5bb16d6462414", "jd_7399bee01a89e", "jd_6e0cd5023b791", "13536765947_p", "jd_LyVyYIZjfyOm","15022052312_p"]
+let friendsArr = ["jd_5a112c253d705", "jd_7399bee01a89e", "jd_6e0cd5023b791", "13536765947_p", "jd_LyVyYIZjfyOm","15022052312_p"]
 
 
 //IOS等用户直接用NobyDa的jd cookie
@@ -109,10 +109,9 @@ async function main() {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
   }
-  const readTokenRes = ''
-  // const readTokenRes = await readToken();
-  $.http.get({url: 'https://purge.jsdelivr.net/gh/zero205/updateTeam@main/shareCodes/lkyl.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
-  await updateToken()
+  const readTokenRes = await readToken();
+  // $.http.get({url: 'https://purge.jsdelivr.net/gh/zero205/updateTeam@main/shareCodes/lkyl.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
+  // await updateToken()
   if (readTokenRes && readTokenRes.code === 200) {
     $.LKYLToken = readTokenRes.data[0] || ($.isNode() ? (process.env.JOY_RUN_TOKEN ? process.env.JOY_RUN_TOKEN : jdJoyRunToken) : ($.getdata('jdJoyRunToken') || jdJoyRunToken));
   } else {
@@ -121,36 +120,23 @@ async function main() {
   console.log(`打印token：${$.LKYLToken ? $.LKYLToken : '暂无token'}\n`)
   if (!$.LKYLToken) {
     // $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "iOS用户微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token\n");
-    console.log(`未检测到来客有礼token，尝试使用【zero205】仓库token\n一天只更新一次，有效期几个小时，请留意TG群内消息\n`)
-    $.LKYLToken = $.lkyl
+    console.log(`未检测到来客有礼token\n`)
+    // console.log(`未检测到来客有礼token，尝试使用【zero205】仓库token\n一天只更新一次，有效期几个小时，请留意TG群内消息\n`)
+    // $.LKYLToken = $.lkyl
     // return;
   }
   // await getFriendPins();
+  if ($.isNode()) {
+    console.log(`\n赛跑会先给账号内部助力,如您当前账户有剩下助力机会则为zero205助力\n`)
+    let my_run_pins = [];
+    Object.values(jdCookieNode).filter(item => item.match(/pt_pin=([^; ]+)(?=;?)/)).map(item => my_run_pins.push(decodeURIComponent(item.match(/pt_pin=([^; ]+)(?=;?)/)[1])))
+    run_pins = [...new Set(my_run_pins), [...getRandomArrayElements([...run_pins[0].split(',')], [...run_pins[0].split(',')].length)]];
+    run_pins = [[...run_pins].join(',')];
+    invite_pins = run_pins;
+  }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.validate = '';
-      // const zooFaker = require('./utils/JDJRValidator_Pure');
-      // $.validate = await zooFaker.injectToRequest()
-      if ($.isNode()) {
-//         if (process.env.JOY_RUN_HELP_MYSELF) {
-          console.log(`\n赛跑会先给账号内部助力,如您当前账户有剩下助力机会则为zero205助力\n`)
-          let my_run_pins = [];
-          Object.values(jdCookieNode).filter(item => item.match(/pt_pin=([^; ]+)(?=;?)/)).map(item => my_run_pins.push(decodeURIComponent(item.match(/pt_pin=([^; ]+)(?=;?)/)[1])))
-          run_pins = [...new Set(my_run_pins), [...getRandomArrayElements([...run_pins[0].split(',')], [...run_pins[0].split(',')].length)]];
-          run_pins = [[...run_pins].join(',')];
-          invite_pins = run_pins;
-//         } else {
-//           console.log(`\n赛跑先给作者两个固定的pin进行助力,然后从账号内部与剩下的固定位置合并后随机抽取进行助力\n如需自己账号内部互助,设置环境变量 JOY_RUN_HELP_MYSELF 为true,则开启账号内部互助\n`)
-//           run_pins = run_pins[0].split(',')
-//           Object.values(jdCookieNode).filter(item => item.match(/pt_pin=([^; ]+)(?=;?)/)).map(item => run_pins.push(decodeURIComponent(item.match(/pt_pin=([^; ]+)(?=;?)/)[1])))
-//           run_pins = [...new Set(run_pins)];
-//           let fixPins = run_pins.splice(run_pins.indexOf('jd_5bb16d6462414'), 1);
-//           fixPins.push(...run_pins.splice(run_pins.indexOf('jd_7399bee01a89e'), 1));
-//           const randomPins = getRandomArrayElements(run_pins, run_pins.length);
-//           run_pins = [[...fixPins, ...randomPins].join(',')];
-//           invite_pins = run_pins;
-//         }
-      }
       cookie = cookiesArr[i];
       UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
@@ -162,7 +148,7 @@ async function main() {
       console.log(`=============【开始邀请助力】===============`)
       const inviteIndex = $.index > invite_pins.length ? (invite_pins.length - 1) : ($.index - 1);
       let new_invite_pins = invite_pins[inviteIndex].split(',');
-      new_invite_pins = [...new_invite_pins, ...getRandomArrayElements(friendsArr, friendsArr.length >= 18 ? 18 : friendsArr.length)];
+      // new_invite_pins = [...new_invite_pins, ...getRandomArrayElements(friendsArr, friendsArr.length)];
       await invite(new_invite_pins);
       if ($.jdLogin && $.LKYLLogin) {
         if (nowTimes.getHours() >= 9 && nowTimes.getHours() < 21) {
@@ -256,7 +242,7 @@ async function getToken() {
 }
 function readToken() {
   return new Promise(resolve => {
-    $.get({ url: `http://share.turinglabs.net/api/v3/joy/query/1/`, 'timeout': 10000 }, (err, resp, data) => {
+    $.get({url: `https://cdn.xia.me/gettoken`,headers:{'Host':'jdsign.cf'}, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -276,6 +262,7 @@ function readToken() {
     })
   })
 }
+
 function updateToken() {
   return new Promise(resolve => {
     $.get({

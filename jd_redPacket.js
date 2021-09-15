@@ -25,7 +25,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
-$.redPacketId = [];
+$.redPacketId = ['353723395'];
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
