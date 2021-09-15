@@ -1,7 +1,7 @@
 //'use strict';
 exports.main_handler = async (event, context, callback) => {
   if (!event["Message"]) {
-    console.error('没参数你在这测啥呢?!你是用Timer触发器触发的吗!教程最后一步咋写的啊?!参数呢?!(写这么清楚要是还敢截图去群里问.你看我ban不ban你!)')
+    console.error('没参数')
     return
   }
   ['log', 'warn', 'error', 'debug','info'].forEach((methodName) => {
@@ -45,12 +45,6 @@ exports.main_handler = async (event, context, callback) => {
     for (const script of scripts) {
       console.log(`run script:${script}`)
       switch (TENCENTSCF_SOURCE_TYPE) {
-        case 'git':
-          //2.执行github远端的js文件(因github的raw类型的文件被墙,此方法云函数不推荐)
-          request(`https://raw.fastgit.org/zero205/JD_tencent_scf/main/${script}.js`, function (error, response, body) {
-            eval(response.body)
-          })
-          break;
         case 'custom':
           //3.执行自定义远端js文件网址
           if (!TENCENTSCF_SOURCE_URL) return console.log('自定义模式需要设置TENCENTSCF_SOURCE_URL变量')
