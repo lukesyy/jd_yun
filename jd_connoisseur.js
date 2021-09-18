@@ -1,9 +1,4 @@
 /*
- * @Date: 2021-09-15 17:06:45
- * @LastEditors: LiJinGang
- * @LastEditTime: 2021-09-15 17:06:46
- */
-/*
 内容鉴赏官
 更新时间：2021-09-09
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -424,7 +419,7 @@ async function getshareCode() {
             data = JSON.parse(data)
             for (let key of Object.keys(data.floorList)) {
               let vo = data.floorList[key]
-              if (vo.ofn && (vo.ofn === "20" && vo.template === 'customcode')) {
+              if (vo.ofn && ((vo.ofn === "16" || vo.ofn === "18" || vo.ofn === "20") && vo.template === 'customcode')) {
                 await getTaskInfo("1", vo.boardParams.projectCode, vo.boardParams.taskCode, vo.ofn)
                 await $.wait(2000)
               } else if (vo.ofn && ((vo.ofn === "22" || vo.ofn === "24") && vo.template === 'customcode')) {
