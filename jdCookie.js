@@ -1,18 +1,14 @@
 /*
  * @Date: 2021-08-25 14:02:18
  * @LastEditors: LiJinGang
- * @LastEditTime: 2021-09-22 14:36:25
+ * @LastEditTime: 2021-09-22 17:31:27
  */
 /*
 此文件为Node.js专用。其他用户请忽略
  */
 //此处填写京东账号cookie。
 let CookieJDs = [
-	'pt_key=AAJhMDH-ADBWRZMokfIKtTgVeryPAKsqFlA44Om_9SXX6Qi7dPU3gEhPLcbWtZ1pz0t6VBckYvA; pt_pin=jd_5a112c253d705;', //账号一ck,例:pt_key=XXX;pt_pin=XXX;
-	'pt_key=AAJhQxV4ADBmXglkubFgkTutaByYQaqDmouEhL4k206_kuiQ2NcshJ8OWu_BwuiM5uzZmsQmsqA; pt_pin=wdTVKFZncYmMso; pt_token=5pwqsy49;',
-	'pt_key=AAJhQJAsADB_EcYCmY8pg0lo9ja5oaLaBibcEGa27fXDcrcckcTcYRGwqDQi2S0p1Zu1BTkZCsg; pt_pin=jd_gdOsYHgRihZV',
-	'pt_key=AAJhQJBrADA5NR-P3cHK6sOJ_4N5es_YtLo_ZBoUqzBxBYuAa62u_tevcHujS6Ovhs3loAs7-Rw;pt_pin=jd_nCgMCnrnOdnu;',
-	'pt_key=AAJhQJCvADDd3WL3s7zpmtChnKaImsGdzldFNBFNxGU8t_JOupQRr_tQ_RwNpxdPNinwymXGgYU;pt_pin=jd_kZhFaoDTrAle;' //账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
+	'' //账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
 ]
 // 判断环境变量里面是否有京东ck
 if (process.env.JD_COOKIE) {
