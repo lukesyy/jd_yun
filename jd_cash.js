@@ -1,4 +1,3 @@
-// @grant    require
 /*
 签到领现金，每日2毛～5毛
 可互助，助力码每日不变，只变日期
@@ -10,14 +9,11 @@
 [task_local]
 #签到领现金
 2 0-23/4 * * * jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
 ================Loon==============
 [Script]
 cron "2 0-23/4 * * *" script-path=jd_cash.js,tag=签到领现金
-
 ===============Surge=================
 签到领现金 = type=cron,cronexp="2 0-23/4 * * *",wake-system=1,timeout=3600,script-path=jd_cash.js
-
 ============小火箭=========
 签到领现金 = type=cron,script-path=jd_cash.js, cronexpr="2 0-23/4 * * *", timeout=3600, enable=true
  */
@@ -32,7 +28,7 @@ let helpAuthor = true;
 const randomCount = $.isNode() ? 5 : 5;
 let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
 const inviteCodes = [
-  `eU9Yab2zZ_5182vWn3QT0w`
+  `eU9Yab2zZ_5182vWn3QT0w`,
 ]
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -50,7 +46,7 @@ let allMessage = '';
     return;
   }
   await requireConfig()
-  $.authorCode = []
+  $.authorCode =  ['eU9Yab2zZ_5182vWn3QT0w']
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -441,13 +437,16 @@ function getSign(functionid, body, uuid) {
       "client":"apple",
       "clientVersion":"10.1.0"
     }
+    let HostArr = ['jdsign.cf', 'signer.nz.lu']
+    let Host = HostArr[Math.floor((Math.random() * HostArr.length))]
     let options = {
-      url: `https://jdsign.cf/ddo`,
+      url: `https://cdn.nz.lu/ddo`,
       body: JSON.stringify(data),
       headers: {
-        "Host": "jdsign.tk",
+        Host,
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }
+      },
+      timeout: 30 * 1000
     }
     $.post(options, (err, resp, data) => {
       try {
@@ -485,7 +484,7 @@ function showMsg() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `https://code.chiang.fun/api/v1/jd/jdcash/read/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `http://code.chiang.fun/api/v1/jd/jdcash/read/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -520,10 +519,10 @@ function shareCodesFormat() {
       let authorCode = deepCopy($.authorCode)
       $.newShareCodes = [...(authorCode.map((item, index) => authorCode[index] = item['inviteCode'])), ...$.newShareCodes];
     }
-    const readShareCodeRes = await readShareCode();
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
-    }
+    // const readShareCodeRes = await readShareCode();
+    // if (readShareCodeRes && readShareCodeRes.code === 200) {
+    //   $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
+    // }
     $.newShareCodes.map((item, index) => $.newShareCodes[index] = { "inviteCode": item, "shareDate": $.shareDate })
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();

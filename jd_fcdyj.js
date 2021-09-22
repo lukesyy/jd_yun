@@ -27,7 +27,8 @@ cron "1 6-22/3 * * *" script-path=https://raw.githubusercontent.com/Wenmoux/scri
 const $ = new Env('发财大赢家助力');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const dyjCode = $.isNode() ? (process.env.dyjCode ? process.env.dyjCode : null) : null //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
+const dyjCode = $.isNode() ? (process.env.dyjCode ? process.env.dyjCode : '182b42989fae4f2fbd043561c09ca51855151632240019136@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI') : '182b42989fae4f2fbd043561c09ca51855151632240019136@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
+
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
     cookie = '';
