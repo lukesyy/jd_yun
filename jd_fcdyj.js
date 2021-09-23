@@ -30,8 +30,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : ''
 const dyjCode = $.isNode()
 	? process.env.dyjCode
 		? process.env.dyjCode
-		: '7a41be28854b4454bc34deab03f16f2581861632326419350@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
-	: '7a41be28854b4454bc34deab03f16f2581861632326419350@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
+		: 'f9a2504a7d464675a09c87ca071246b958881632327611714@fzbeQLvbpFJp-zt-3U4FIQ'
+	: 'f9a2504a7d464675a09c87ca071246b958881632327611714@fzbeQLvbpFJp-zt-3U4FIQ' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
 const myCode = [
 	{
 		rid: '182b42989fae4f2fbd043561c09ca51855151632240019136',
@@ -218,7 +218,7 @@ function getinfo() {
 					console.log(`${$.name} API请求失败，请检查网路重试`)
 				} else {
 					data = JSON.parse(data)
-					console.log(data.data.state)
+					console.log(data)
 					if (data.data.state !== 0) {
 						if (data.success && data.data) {
 							if (data.data.state === 3) {
@@ -257,6 +257,7 @@ function getrewardIndex() {
 					console.log(`${$.name} API请求失败，请检查网路重试`)
 				} else {
 					data = JSON.parse(data)
+					console.log(data);
 					if (data.success && data.data) {
 						if (data.data.haveHelpNum === 10) {
 							console.log(`\n【京东账号${$.index}】已满足微信提现要求，开始提现\n`)
