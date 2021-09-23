@@ -28,9 +28,14 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-$.invitePinTaskList = ['TMKFyu4IQa1Z3oSwgkg9dQAQqFRuOqD0inp0Kvj9LdI']
+$.invitePinTaskList = []
 $.invitePin = [
-  "TMKFyu4IQa1Z3oSwgkg9dQAQqFRuOqD0inp0Kvj9LdI"
+  "TMKFyu4IQa1Z3oSwgkg9dQAQqFRuOqD0inp0Kvj9LdI","GxNf1Vw3A-CZo51mOk4upw","nbynzFOYPN02845QxiamBA","Q-5yKGmuG3nEIiTmUysWuQ","-q5spOPfUrD94XVcbBVdig"
+  // "zZkewfd3OKs-WtoJd8Jw6OIrD81WzO3SX56S2DGMlZ0",
+  // "7zG4VHS99AUEoX1mQTkC9Q",
+  // "BbsjCRrQudIL06kRvqmVln053h03GiApg7HN_Vhy_Og",
+  // "sAxL-dc5T6lS6wtKqP6SlA",
+  // "bcVxt4PbZdbX7tiT1Q_ubg"
 ]
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
@@ -181,7 +186,7 @@ message = ""
       $.newinvitePinTaskList = [...($.invitePinTaskList || []), ...($.invitePin || [])]
       for (const invitePinTaskListKey of $.newinvitePinTaskList) {
         $.log(`【京东账号${$.index}】${$.nickName || $.UserName} 助力 ${invitePinTaskListKey}`)
-        let resp = await getJoyBaseInfo(167, 1, invitePinTaskListKey);
+        let resp = await getJoyBaseInfo(261, 1, invitePinTaskListKey);
         if (resp.success) {
           if (resp.data.helpState === 1) {
             $.log("助力成功！");
@@ -251,6 +256,7 @@ function getJoyBaseInfo(taskId = '', inviteType = '', inviterPin = '') {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
+          console.log(data);
           $.joyBaseInfo = data.data
         }
       } catch (e) {
