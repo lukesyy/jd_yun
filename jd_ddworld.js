@@ -31,7 +31,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://ddsj-dz.isvjcloud.com/dd-api';
 let allMessage = '';
-$.shareCodes = []
+$.shareCodes = [
+  {"use":"111", code: 'GWXgO7OVPs5qqUI45U3yZDv6Lgt8tmQYcyKYJX7jrhk',"num":0 }, {"use":"2222", code: 'UY2t4p9SQVLyyl_OiwLTDZ-fnh4bPI89ArCuM06hGqs',"num":0 }, {"use":"3333",  code: 'OuZU_PpvxAMEffcozc1HtIwydh9eMhzZEZV9C1ZAUpI' ,"num":0}]
 let tokenInfo = {}, hotInfo = {}
 !(async () => {
   if (!cookiesArr[0]) {
@@ -63,18 +64,8 @@ let tokenInfo = {}, hotInfo = {}
       hotInfo[$.UserName] = $.hot
     }
   }
-  let res = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/ddworld.json')
-  if (!res) {
-    $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/ddworld.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
-    await $.wait(1000)
-    res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/ddworld.json')
-  }
-  let res2 = await getAuthorShareCode('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/ddworld.json')
-  if (!res2) {
-    await $.wait(1000)
-    res2 = await getAuthorShareCode('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/ddworld.json')
-  }
-  $.shareCodes = [...$.shareCodes, ...(res || []), ...(res2 || [])]
+  let res = []
+  $.shareCodes = [...$.shareCodes, ...(res || [])]
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
