@@ -30,7 +30,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : ''
 const dyjCode = $.isNode()
 	? process.env.dyjCode
 		? process.env.dyjCode
-		: '10fb3bf804a54bcea43c17f444d5270497611632241203349@fzbeQLvbpFJp-zt-3U4FIQ'
+		: '182b42989fae4f2fbd043561c09ca51855151632240019136@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
 	: '182b42989fae4f2fbd043561c09ca51855151632240019136@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
 const myCode = [
 	{
@@ -101,11 +101,6 @@ const JD_API_HOST = `https://api.m.jd.com`
 				}
 				await $.wait(1000)
 				await help($.rid, $.inviter, 2)
-				myCode.forEach(item => {
-					(async () => {
-						await help(item.rid, item.inviter, 1)
-					})()
-				})
 			}
 		}
 	}
