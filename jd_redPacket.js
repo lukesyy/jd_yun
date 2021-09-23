@@ -25,7 +25,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
-$.redPacketId = ['353723395'];
+$.redPacketId = ['357591829'];
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -69,7 +69,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.index = v + 1;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
-    $.redPacketId = [...new Set($.redPacketId)];
+    $.redPacketId = [...new Set($.redPacketId),'357591829'];
     if (cookiesArr && cookiesArr.length >= 2) {
       console.log(`\n\n自己账号内部互助`);
       for (let item of $.redPacketId) {
