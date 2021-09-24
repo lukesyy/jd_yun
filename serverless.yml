@@ -77,7 +77,7 @@ inputs:
           argument: jd_joy_steal&jd_joy_park&jd_tyt&jd_mohe&jd_joy_run&jd_jxlhb&jd_sddd&jd_qqxing
     - timer: #京东排行榜 #闪购盲盒 #汪汪乐园 #签到领现金 #东东小窝 #京东直播 #金榜创造营 #京喜签到 #众筹许愿池 #特务z
         parameters:
-          name: rankingList_beanhome_sgmh_joypark_cash_smallhome_live_goldcreator_jxsign_wish_jsuperBrand
+          name: rankingList_beanhome_sgmh_joypark_cash_smal
           cronExpression: "0 5 0,12 * * * *"
           enable: true
           argument: jd_rankingList&jd_sgmh&jd_joy_park_task&jd_cash&jd_small_home&jd_live&jd_gold_creator&jx_sign&jd_wish&jd_superBrand
