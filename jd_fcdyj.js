@@ -30,8 +30,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : ''
 const dyjCode = $.isNode()
 	? process.env.dyjCode
 		? process.env.dyjCode
-		: '3046c9243c234190a0d421bcbbd4644021951632412820232@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI@c038a90f6f0449ce94d67275e65d449179261632412808895@fzbeQLvbpFJp-zt-3U4FIQ'
-	: '3046c9243c234190a0d421bcbbd4644021951632412820232@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI@c038a90f6f0449ce94d67275e65d449179261632412808895@fzbeQLvbpFJp-zt-3U4FIQ' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
+		: '54155b3daf874df1829a538ad3706c1776081632499653940@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
+	: '54155b3daf874df1829a538ad3706c1776081632499653940@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
 const myCode = [
 	{
 		rid: '182b42989fae4f2fbd043561c09ca51855151632240019136',
