@@ -45,12 +45,12 @@ inputs:
           cronExpression: "0 1 0-18/6 * * * *"
           enable: true
           argument: jd_fruit&jd_pet&jd_speed_sign&jd_speed_redpocke&jd_health&jd_wsdlb&jd_jump&jd_ddworld&jd_carnivalcity
-    - timer: #摇钱树 #摇钱树助力 #种豆得豆 #京喜财富岛 #超级红包雨
+    - timer: #摇钱树 #摇钱树助力 #种豆得豆 #京喜财富岛
         parameters:
-          name: moneyTree_moneyTteehelp_plantBean_cfd_superRedrain
+          name: moneyTree_moneyTteehelp_plantBean_cfd
           cronExpression: "0 30 0,6-23/1 * * * *"
           enable: true
-          argument: jd_moneyTree&jd_moneyTree_help&jd_plantBean&jd_cfd&jd_super_redrain
+          argument: jd_moneyTree&jd_moneyTree_help&jd_plantBean&jd_cfd
     - timer: #宠汪汪积分兑换京豆 #全民开红包
         parameters:
           name: joyreward_redPacket_decompression
@@ -77,16 +77,16 @@ inputs:
           argument: jd_joy_steal&jd_joy_park&jd_tyt&jd_mohe&jd_joy_run&jd_jxlhb&jd_sddd&jd_qqxing
     - timer: #京东排行榜 #闪购盲盒 #汪汪乐园 #签到领现金 #东东小窝 #京东直播 #金榜创造营 #京喜签到 #众筹许愿池 #特务z
         parameters:
-          name: rankingList_beanhome_sgmh_joypark_cash_smal
+          name: rankingList_beanhome_sgmh_joypark_cash_smallhome_live_goldcreator_jxsign_wish_jsuperBrand
           cronExpression: "0 5 0,12 * * * *"
           enable: true
           argument: jd_rankingList&jd_sgmh&jd_joy_park_task&jd_cash&jd_small_home&jd_live&jd_gold_creator&jx_sign&jd_wish&jd_superBrand
-    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #东东乐园 #柠檬零食街 #领京豆 #积分换话费 #女装盲盒 #内容鉴赏官 #明星小店 #财富岛月饼合成
+    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #东东乐园 #柠檬零食街 #领京豆 #积分换话费 #女装盲盒 #内容鉴赏官 #明星小店 #财富岛月饼合成 #集魔方
         parameters:
-          name: pigPet_syj_kd_jdzz_ddly_lsj_ljd_dwapp_nzmh_connoisseur_starshop_mooncake
+          name: pigPet_syj_kd_jdzz_ddly_lsj_ljd_dwapp_nzmh_connoisseur_starshop_mooncake_jmf
           cronExpression: "0 20 0,20 * * * *"
           enable: true
-          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jd_ddly&jd_lsj&jd_ljd&jd_dwapp&jd_nzmh&jd_connoisseur&jd_star_shop&jd_cfd_mooncake
+          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jd_ddly&jd_lsj&jd_ljd&jd_dwapp&jd_nzmh&jd_connoisseur&jd_star_shop&jd_cfd_mooncake&jd_jmf
   environment: #  环境变量
     variables: #  环境变量对象
       AAA: BBB # 不要删除，用来格式化对齐追加的变量的
