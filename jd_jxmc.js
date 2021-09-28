@@ -63,7 +63,7 @@ let token ='';
   if (flag_hb) {
     console.log('\n##################开始账号内互助(红包)#################\n');
     // await getShareCode('jxmc_hb.json')
-    $.inviteCodeList_hb = [...($.inviteCodeList_hb || []), ...($.shareCode || []),{"use":"qqqqq","code":"g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcY6Z9GJWHxaN_T7EV1WeLljYGydzD3njdlo7IYJD8zVbQ","max":false}]
+    $.inviteCodeList_hb = [...($.inviteCodeList_hb || []), ...($.shareCode || []),{"use":"qqqqq","code":"g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHca4acQos27qfqvJ2Q8UHO24YGydzD3njdlo7IYJD8zVbQ","max":false}]
     for(let i = 0;i<$.helpCkList.length;i++){
       $.can_help = true
       $.cookie = $.helpCkList[i]
