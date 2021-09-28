@@ -1,8 +1,3 @@
-<!--
- * @Date: 2021-08-25 14:02:18
- * @LastEditors: LiJinGang
- * @LastEditTime: 2021-09-08 13:59:51
--->
 
 ## 请勿直接fork！！云函数用户先按照下方教程建立私库！！！
 ## 已经创建公开仓库的请点击仓库右上角`Setting`，拉到页面最下方，点击`Change visibility`，选择`Make private`，填入黑体仓库名称进行确认!
@@ -16,12 +11,6 @@
 * 2.点击`Import a repository`，在`Your old repository’s clone URL`处填入https://github.com/lukesyy/jd_yun
 * 3.然后在`Repository name`处填写仓库名，选择`Private`
 * 4.最后点击最下方的`Begin import`
-* 5.仓库创建后，在仓库页面点击`main`分支，在下拉菜单中点击最下方`view all branches`，点击`Default branch`最右侧箭头，然后在新页面继续点击箭头，再弹出框中选择`scf`为主分支
-* 6.在仓库页面点击`main`分支，在下拉菜单中点击最下方`view all branches`，点击`maim`分支右侧垃圾桶,确认删除分支
-* 7.点击刚才页面`scf`分支右侧笔图标，将其重命名为`main`，大功告成。
-### 方式二
-* 第一种:有能力用户可以进行尝试,通过任何方法都可以,在空仓库内(保证分支名称为`main`),运行一次本仓库`scf`分支的sync.yml即可
-* 第二种:直接clone一个`scf`分支(名字需要为`main`)
 
 ## 自动同步本仓库脚本教程：[点此查看](https://github.com/lukesyy/jd_yun/blob/main/backUp/reposync.md)  
 
