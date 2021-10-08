@@ -23,13 +23,13 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 let cookiesArr = [], cookie = '', message;
 let uuid
 $.shareCodes = [{
-    "code": 'S5KkcRU8Y9FaEIh_3wPAKcQ',
-    "use": 'jd_5a112c253d705'
-    },
-    {
-    "code": 'S-akXJmVvnwqESUeJ16g',
-        "use": 'wdTVKFZncYmMso'
-    }]
+  "code": 'S5KkcRU8Y9FaEIh_3wPAKcQ',
+  "use": 'jd_5a112c253d705'
+  },
+  {
+  "code": 'S-akXJmVvnwqESUeJ16g',
+      "use": 'wdTVKFZncYmMso'
+  }]
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -108,8 +108,8 @@ let allMessage = '';
 async function jdMofang() {
   console.log(`集魔方 赢大奖`)
   await getInteractionHomeInfo()
-  console.log(`\n集魔方 抽京豆 赢新品`)
-  await getInteractionInfo()
+  // console.log(`\n集魔方 抽京豆 赢新品`)
+  // await getInteractionInfo()
 }
 
 async function getInteractionHomeInfo() {
@@ -147,9 +147,9 @@ async function queryInteractiveInfo(encryptProjectId, sourceCode) {
               let vo = data.assignmentList[key]
               if (vo.ext.extraType === "sign1") {
                 console.log(`去做【${vo.assignmentName}】`)
-                let signDay = (vo.ext[vo.ext.extraType].signList && vo.ext[vo.ext.extraType].signList.length) || 0
-                $.type = vo.rewards[signDay].rewardType
                 if (vo.ext[vo.ext.extraType].status !== 2) {
+                  let signDay = (vo.ext[vo.ext.extraType].signList && vo.ext[vo.ext.extraType].signList.length) || 0
+                  $.type = vo.rewards[signDay].rewardType
                   await doInteractiveAssignment(vo.ext.extraType, encryptProjectId, sourceCode, vo.encryptAssignmentId, vo.ext[vo.ext.extraType].itemId)
                 } else {
                   console.log(`今日已签到`)

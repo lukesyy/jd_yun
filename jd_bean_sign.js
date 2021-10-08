@@ -1,13 +1,14 @@
 /*
 Node.JS专用
 https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_bean_sign.js
-金融签到在测试,有能力可以单独反馈.
+金融签到有一定使用门槛,需要请仔细阅读下方文字:
 JRBODY抓取网站:ms.jr.jd.com/gw/generic/hy/h5/m/appSign(进入金融APP签到页面手动签到);格式:"reqData=xxx"
 变量填写示例:JRBODY: reqData=xxx&reqData=xxx&&reqData=xxx(比如第三个号没有,则留空,长度要与CK一致)
-云函数AC用户Secrests添加JRBODY_SCF,每行一个jrbody,结尾行写'Finish',某个帐号无jrbody则留空行
-建议云函数用户使用配置文件部署方式,直接在config分支新建JRBODY.txt即可
-其他环境用户除了JRBODY环境变量可以选用JRBODY.txt文件,放在同目录下,规则同上一行AC用户.
+云函数用户在config分支新建diy/JRBODY.txt即可(也就是diy文件夹下新建JRBODY.txt).每行一个jrbody,结尾行写'Finish'
+其他环境用户除了JRBODY环境变量可以选用JRBODY.txt文件,放在同目录下,格式同上.
 注:优先识别环境变量,如使用txt文件请不要设置环境变量.JRBODY换行符(应为unix换行符)可能影响脚本读取!
+出现任何问题请先删除CookieSet.json(云函数不用操作)
+云函数提示写入失败正常,无任何影响
  */
 console.log('京东多合一签到SCF开始')
 const sendNotify = require('./sendNotify.js').sendNotify

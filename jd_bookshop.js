@@ -2,21 +2,18 @@
 口袋书店
 更新时间：2021-06-26 
 加了一个码,修复需要手动打开的问题
-活动入口：京东app首页-京东图书-右侧口袋书店
+活动入口：https://lzdz-isv.isvjcloud.com/dingzhi/book/develop/activity?activityId=dz2010100034444201(感谢TG群友@gh2923提供地址)
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #口袋书店
 1 8,12,18 * * *  https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/chinnkarahoi_jd_bookshop.js, tag=口袋书店, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
 ================Loon==============
 [Script]
 cron "1 8,12,18 * * *" script-path= https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/chinnkarahoi_jd_bookshop.js,tag=口袋书店
-
 ===============Surge=================
 口袋书店 = type=cron,cronexp="1 8,12,18 * * *",wake-system=1,timeout=3600,script-path= https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/chinnkarahoi_jd_bookshop.js
-
 ============小火箭=========
 口袋书店 = type=cron,script-path= https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/chinnkarahoi_jd_bookshop.js, cronexpr="1 8,12,18* * *", timeout=3600, enable=true
  */
@@ -32,7 +29,8 @@ ADD_CART = $.isNode() ? (process.env.PURCHASE_SHOPS ? process.env.PURCHASE_SHOPS
 // 加入购物车开关，与东东小窝共享
 
 let inviteCodes = [
-  '5994ff4eff7e472aac737b61ce99d952'
+  '4dd98623868f4292b5432822389fe3e9@daf75e50044144c68b2aff47de57fe49@e341962809ae42c5b8d2d61995bbb5a4@77f08ad1aea04b73acd4542f7fd1dac6@fe5536751f89403d87bad635a87bd956@7cac62f390074868949f72c18cc8469c',
+  '4dd98623868f4292b5432822389fe3e9@daf75e50044144c68b2aff47de57fe49@e341962809ae42c5b8d2d61995bbb5a4@77f08ad1aea04b73acd4542f7fd1dac6@fe5536751f89403d87bad635a87bd956@7cac62f390074868949f72c18cc8469c'
 ]
 
 if ($.isNode()) {
