@@ -45,7 +45,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
       '活动入口：京喜app-》我的-》京喜领88元红包\n' +
       '助力逻辑：脚本会助力作者，介意请取消脚本')
   let res =  [];
-  let res2 = ['SVPXNP6gcEOpxwCJuvv_31h7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk'];
+  let res2 = ['SkUKgSgOStzUXCmeBvkn3Vh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk'];
   if (res && res.activeId) $.activeId = res.activeId;
   $.authorMyShareIds = [...((res && res.codes) || []), ...res2];
   //开启红包,获取互助码
