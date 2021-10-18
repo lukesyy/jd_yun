@@ -1,19 +1,17 @@
 /*
 #京东零食街
 #入口 京东 频道 美食馆
-
 由zero205基于柠檬大佬原版修改
 取消入会，加购功能
 优化脚本输出，查询金币数量，添加金币兑换牛奶提醒
 助力逻辑：优先账号内互助，然后再帮我助力
-
 零食街自动兑换变量 
 export lsjdh="jdAward1" ##兑换5豆
 export lsjdh="jdAward2" ##兑换10豆
 export lsjdh="jdAward3" ##兑换100豆
 export lsjdh="jdAward4" ##兑换牛奶
 [task_local]
-0 11 * * *  jd_lsj.js
+0 0,6-22/2 * * *  jd_lsj.js
 */
 const $ = new Env('柠檬京东零食街');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -49,6 +47,7 @@ if ($.isNode()) {
       $.isLogin = true;
       $.nickName = '';
       message = '';
+      $.finish = false
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -63,6 +62,10 @@ if ($.isNode()) {
       if (lsjdh.length !== 0) {
         $.log("检测到您设置了兑换变量，开始兑换")
         await duihuan()
+      }
+      if ($.finish) {
+        console.log(`\n======牛奶库存监控完成，结束运行======\n`)
+        return;
       }
     }
   }
@@ -90,19 +93,9 @@ if ($.isNode()) {
   ];
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
-    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-    if (!useInfo[$.UserName]) continue;
     $.canHelp = true;
-    for (let j = 0; j < shareCodes.length && $.canHelp; j++) {
-      $.oneCodeInfo = shareCodes[j];
-      if ($.UserName === shareCodes[j].usr || $.oneCodeInfo.max) {
-        continue;
-      }
-      console.log(`${$.UserName}去助力【zero205】`)
-      nick = useInfo[$.UserName];
-      await dohelp(shareCodes[j]);
-      await $.wait(3000)
-    }
+    await dohelp(shareCodes);
+    await $.wait(2000)
   }
 })()
   .catch((e) => {
@@ -115,42 +108,44 @@ async function start() {
   await gettoken()
   await $.wait(1000)
   await getinfo()
+  await getAwardList()
   $.log("开始领取首页水滴")
   await dotree(1)
-  await $.wait(3000)
-  await dotree(2)
-  await $.wait(3000)
-  await dotree(3)
-  await $.wait(3000)
-  $.log("开始浏览会场")
-  await doliulan(1)
-  await $.wait(3000)
-  await doliulan(2)
-  await $.wait(3000)
-  await doliulan(3)
-  //await gettask()  
-  $.log("开始浏览旗舰店")
-  await doshop(1000014803)
-  await $.wait(3000)
-  await doshop(10299171)
-  await $.wait(3000)
-  await doshop(1000077335)
-  await $.wait(3000)
-  await doshop(1000008814)
-  await $.wait(3000)
-  await doshop(1000101562)
-  $.log("开始浏览推荐商品")
-  await doGoods(1)
-  await $.wait(3000)
-  await doGoods(2)
-  await $.wait(3000)
-  await doGoods(3)
-  await $.wait(3000)
-  await doGoods(4)
-  $.log("开始游戏刷分")
-  await playgame()
+  if (!$.finish) {
+    await $.wait(3000)
+    await dotree(2)
+    await $.wait(3000)
+    await dotree(3)
+    await $.wait(3000)
+    $.log("开始浏览会场")
+    await doliulan(1)
+    await $.wait(3000)
+    await doliulan(2)
+    await $.wait(3000)
+    await doliulan(3)
+    //await gettask()  
+    $.log("开始浏览旗舰店")
+    await doshop(1000014803)
+    await $.wait(3000)
+    await doshop(10299171)
+    await $.wait(3000)
+    await doshop(1000077335)
+    await $.wait(3000)
+    await doshop(1000008814)
+    await $.wait(3000)
+    await doshop(1000101562)
+    $.log("开始浏览推荐商品")
+    await doGoods(1)
+    await $.wait(3000)
+    await doGoods(2)
+    await $.wait(3000)
+    await doGoods(3)
+    await $.wait(3000)
+    await doGoods(4)
+    $.log("开始游戏刷分")
+    await playgame()
+  }
 }
-
 function getinfo() {
   return new Promise(async (resolve) => {
     let options = {
@@ -176,13 +171,54 @@ function getinfo() {
             if (data.success) {
               if (data.data.status === 200) {
                 $.cion = data.data.data.customer.remainChance;
-                console.log(`\n查询成功：京东账号【${$.nickName || $.UserName}】当前剩余金币为：${$.cion}`)
-                // if ($.cion > 750000) {
-                //   $.msg($.name, `【提示】\n京东账号【${$.nickName || $.UserName}】已可兑换牛奶`, `\n兑换入口：京东APP->美食馆->瓜分京豆\n每天10点开始兑换`, { "更多脚本": "https://github.com/zero205/JD_tencent_scf" });
-                //   if ($.isNode()) {
-                //     await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n已可兑换牛奶\n兑换入口：京东APP->美食馆->瓜分京豆，每天10点开始兑换\n更多脚本->"https://github.com/zero205/JD_tencent_scf"`);
-                //   }
-                // }
+                console.log(`\n查询金币成功：京东账号【${$.nickName || $.UserName}】当前剩余金币为：${$.cion}`)
+              }
+            } else {
+              console.log(`查询失败：${JSON.stringify(data)}\n`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    });
+  });
+}
+
+function getAwardList() {
+  return new Promise(async (resolve) => {
+    let options = {
+      url: `https://jinggengjcq-isv.isvjcloud.com/dm/front/foodRunning/AwardList?open_id=&mix_nick=&bizExtString=&user_id=10299171`,
+      body: `{"jsonRpc":"2.0","params":{"commonParameter":{"appkey":"51B59BB805903DA4CE513D29EC448375","m":"POST","sign":"65cca44e291e1c711229f0a3c80f4de1","timestamp":1630735244638,"userId":10299171},"admJson":{"method":"/foodRunning/AwardList","actId":"jd_food_running","buyerNick":"${nick}","pushWay":1,"userId":10299171}}}`,
+      headers: {
+        "Origin": "https://jinggengjcq-isv.isvjcloud.com",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Sec-Fetch-Site": "same-origin",
+        "Host": "jinggengjcq-isv.isvjcloud.com",
+        "Referer": "https://jinggengjcq-isv.isvjcloud.com/paoku/index.html?sid=75b413510cb227103e928769818a74ew&un_area=4_48201_54794_0",
+        "User-Agent": "jdapp;android;10.0.4;10;7303439343432346-7356431353233323;network/4g;model/PCAM00;addressid/4228801336;aid/7049442d7e415232;oaid/;osVer/29;appBuild/88641;partner/oppo;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; PCAM00 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36",
+      }
+    }
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.success) {
+              if (data.data.status === 200) {
+                $.item = data.data.data
+                if ($.item.length > 3 && $.cion > $.item[$.item.length - 1].needCoinNum && $.item[$.item.length - 1].num > 0) {
+                  if ($.isNode()) {
+                    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n已可兑换${$.item[$.item.length - 1].awardName}\n剩余数量：${$.item[$.item.length - 1].num}\n兑换入口：京东APP->美食馆->瓜分京豆\n更多脚本->"https://github.com/zero205/JD_tencent_scf"`);
+                  }
+                } else if ($.item.length <= 3) {
+                  console.log(`查询奖品成功：暂无牛奶，当前${$.item[$.item.length - 1].awardName}剩余数量：${$.item[$.item.length - 1].num}\n`);
+                }
               }
             } else {
               console.log(`查询失败：${JSON.stringify(data)}\n`);
@@ -284,7 +320,6 @@ function doshop(goodsNumId) {
 
           $.log(`${reust.data.data.remark}\n获得${reust.data.data.sendNum}`)
         } else if (reust.errorCode == 500) {
-
           $.log("今日已领取完毕,请明日再来！" + reust.errorMessage)
         }
       } catch (e) {
@@ -409,7 +444,8 @@ function dotree(goodsNumId) {
         if (reust.errorCode == 200) {
           $.log(`${reust.data.data.remark}\n获得${reust.data.data.sendNum}`)
         } else if (reust.errorCode == 500) {
-          $.log("今日已领取完毕,请明日再来！" + reust.errorMessage)
+          $.log(reust.errorMessage)
+          $.finish = true
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -436,7 +472,7 @@ function dohelp(inviterNick) {
     }
     $.post(options, async (err, resp, data) => {
       try {
-        console.log(data);
+        // console.log(data);
         const reust = JSON.parse(data)
         if (reust.errorCode == 200) {
           if (reust.data.data.remark === `好友助力数量已达上限，无法为好友助力！`) {

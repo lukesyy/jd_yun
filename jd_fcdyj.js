@@ -30,8 +30,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : ''
 const dyjCode = $.isNode()
 	? process.env.dyjCode
 		? process.env.dyjCode
-		: 'cefbea3e934e45269bc6e94a211cdd3318001634335202282@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
-	: 'cefbea3e934e45269bc6e94a211cdd3318001634335202282@TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
+		: ''
+	: '' //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
 const myCode = [
 	{
 		rid: '182b42989fae4f2fbd043561c09ca51855151632240019136',
@@ -199,7 +199,7 @@ function getid() {
 					console.log(`${$.name} API请求失败，请检查网路重试`)
 				} else {
 					data = JSON.parse(data)
-					console.log(data.data.state)
+					console.log(data)
 					if (data.data.state !== 0) {
 						if (data.success && data.data) {
 							console.log(`\n【您的redEnvelopeId】：${data.data.redEnvelopeId}`)
