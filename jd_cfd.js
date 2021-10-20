@@ -80,7 +80,7 @@ $.appId = 10028;
       await $.wait(2000);
     }
   }
-  $.strMyShareIds = ['7B3EB02C2F929E3EA7021FC2A4223F7285AEA6601701DFA93A8314FC106443BA']
+  $.strMyShareIds = ['7B3EB02C2F929E3EA7021FC2A4223F720D34C6176E92DA34C067C0BBCE3B7045']
   await shareCodesFormat()
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
@@ -100,6 +100,8 @@ $.appId = 10028;
           continue
         }
       }
+    } else {
+      break
     }
   }
   await showMsg();
@@ -126,13 +128,15 @@ async function cfd() {
 
     // 寻宝
     console.log(`寻宝`)
-    let XBDetail = beginInfo.XbStatus.XBDetail.filter((x) => x.dwRemainCnt !== 0 && x.dwRemainCnt !== 2)
+    let XBDetail = beginInfo.XbStatus.XBDetail.filter((x) => x.dwRemainCnt !== 0)
     if (XBDetail.length !== 0) {
       console.log(`开始寻宝`)
+      $.break = false
       for (let key of Object.keys(XBDetail)) {
         let vo = XBDetail[key]
         await $.wait(2000)
         await TreasureHunt(vo.strIndex)
+        if ($.break) break
       }
     } else {
       console.log(`暂无宝物`)
@@ -293,6 +297,7 @@ function TreasureHunt(strIndex) {
             }
           } else {
             console.log(`寻宝失败：${data.sErrMsg}`)
+            $.break = true
           }
         }
       } catch (e) {
