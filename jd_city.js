@@ -275,16 +275,13 @@ function readShareCode(num=3) {
 function shareCodesFormat() {
   return new Promise(async resolve => {
     // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
-    const readShareCodeRes = await readShareCode(3);
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      pool = readShareCodeRes.data || [];
-    }
+   
     if ($.index - 1 == 0) {
       console.log('首个帐号,助力作者和池子')
-      $.newShareCodes = [...new Set([...author_codes, ...pool])];
+      $.newShareCodes = [...new Set([...author_codes])];
     } else {
       console.log('非首个个帐号,优先向前助力')
-      $.newShareCodes = [...new Set([...self_code,...author_codes, ...pool])]
+      $.newShareCodes = [...new Set([...self_code,...author_codes])]
     }
     // const readShareCodeRes = await readShareCode();
     // if (readShareCodeRes && readShareCodeRes.code === 200) {
