@@ -100,7 +100,6 @@ function channelUserSignInfo_xh(shareId) {
                             $.keepSigned = 0;
                             let state = false;
                             console.log(`【京东账号${$.index}(${$.nickName || $.UserName})的邀请码】` + data.resultData.data.shareId)
-                            shareId = data.resultData.data.shareId
                             for (let i in data.resultData.data.signDetail) {
                                 if (data.resultData.data.signDetail[i].signed) $.keepSigned += 1
                                 if (data.resultData.data.dayId === data.resultData.data.signDetail[i].id) {
@@ -108,7 +107,8 @@ function channelUserSignInfo_xh(shareId) {
                                     console.log('获取签到状态成功', state ? '今日已签到' : '今日未签到', '连续签到', $.keepSigned, '天\n')
                                 }
                             }
-                            if (!state) await channelSignInSubsidy_xh()
+                            if (!state) await channelSignInSubsidy_xh(shareId)
+                            if ($.index === 1) shareId = data.resultData.data.shareId
                         } else {
                             console.log('获取签到状态失败', data.resultData.msg)
                         }
@@ -133,10 +133,11 @@ function channelSignInSubsidy_xh(shareId) {
             "channelLv": "",
             "apiVersion": "4.0.0",
             "riskDeviceParam": "{}",
-            "others": { "shareId": shareId }
+            "others": { "shareId": shareId, "token": "" }
         })
+        console.log(body)
         const options = taskUrl_xh('channelSignInSubsidy', body, 'jrm');
-        $.get(options, async (err, resp, data) => {
+        $.post(options, async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
@@ -484,7 +485,7 @@ function channelUserSubsidyInfo_xh(shareId) {
     })
 }
 
-function taskUrl_xh(function_id, body, type = 'mission') {
+function taskUrl_xh(function_id, body, type = 'mission', shareId) {
     return {
         url: `https://ms.jr.jd.com/gw/generic/${type}/h5/m/${function_id}?reqData=${encodeURIComponent(body)}`,
         headers: {
@@ -496,7 +497,7 @@ function taskUrl_xh(function_id, body, type = 'mission') {
             'Host': `ms.jr.jd.com`,
             'Connection': `keep-alive`,
             "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-            'Referer': `https://u.jr.jd.com/`,
+            'Referer': `https://u.jr.jd.com/uc-fe-growing/jintiepindao?channel=&channelLv=&sourceID=636&actflag=EF2CC09524&isPay=N&shareId=${shareId}&jrcontainer=h5&jrlogin=true&jrcloseweb=false&jrwallet=false&jrxviewtype=false&jrgobackrefresh=false&rawJumpUrl=https%3A%2F%2Fu.jr.jd.com%2Fuc-fe-growing%2Fjintiepindao%3Fchannel%3D%26channelLv%3D%26sourceID%3D636%26actflag%3DEF2CC09524%26isPay%3DN%26shareId%3D${shareId}&sid=89a729b1af7b4b8b3108887e16faedcw`,
             'Accept-Language': `zh-cn`
         }
     }
