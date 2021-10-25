@@ -1,20 +1,21 @@
 /*
 城城领现金
 首个帐号助力作者,其余帐号优先向前内部互助,作者和池子在最后
+优先助力池子,请入群上车!
 活动时间：2021-05-25到2021-06-03
 更新时间：2021-05-24 09:55
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
 #城城领现金
-0 0-23/1 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+0 0-23/5 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 =================================Loon===================================
 [Script]
-cron "0 0-23/1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js,tag=城城领现金
+cron "0 0-23/5 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js,tag=城城领现金
 ===================================Surge================================
-城城领现金 = type=cron,cronexp="0 0-23/1 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js
+城城领现金 = type=cron,cronexp="0 0-23/5 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js
 ====================================小火箭=============================
-城城领现金 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js, cronexpr="0 0-23/1 * * *", timeout=3600, enable=true
+城城领现金 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js, cronexpr="0 0-23/5 * * *", timeout=3600, enable=true
  */
 const $ = new Env('城城领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -38,6 +39,8 @@ const author_codes = ['RtGKzb2lQAjwfIaZQ9Mz07CFE_x2UuHeOtyNdpDmueF2NFIKrA'].sort
 const self_code = []
 let pool = []
 !(async () => {
+  console.log('内部互助没奖励了吧应该. 城城现在改为优先助力池子!(作者只吃第一个CK,其余池子!) 请查看群内频道通知!,10s后开始!')
+  await $.wait(10000)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -47,6 +50,10 @@ let pool = []
     console.log(`脚本自动抽奖`)
   } else {
     console.log(`脚本不会自动抽奖，建议活动快结束开启，默认关闭`)
+  }
+  if (process.env.CT_R != 'false') {
+    cookiesArr = cookiesArr.sort(() => 0.5 - Math.random())
+    console.log('CK顺序打乱!用来随机内部互助!,如需关闭CT_R为false')
   }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -176,58 +183,29 @@ function getInfo(inviteId, flag = false) {
     })
   })
 }
-function receiveCash(roundNum, type = 1) {
+function receiveCash(roundNum) {
+  let body = {"cashType":1,"roundNum":roundNum}
   return new Promise((resolve) => {
-    let body;
-    switch (type) {
-      case 1:
-        body = {"cashType":1,"roundNum":roundNum}
-        $.post(taskPostUrl("city_receiveCash", body), async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                console.log(`领红包结果${data}`);
-                data = JSON.parse(data);
-                if (data['data']['bizCode'] === 0) {
-                  console.log(`获得 ${data.data.result.currentTimeCash} 元，共计 ${data.data.result.totalCash} 元`)
-                }
-              }
+    $.post(taskPostUrl("city_receiveCash",body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            console.log(`领红包结果${data}`);
+            data = JSON.parse(data);
+            if (data['data']['bizCode'] === 0) {
+              console.log(`获得 ${data.data.result.currentTimeCash} 元，共计 ${data.data.result.totalCash} 元`)
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
-        break;
-      case 2:
-        body = {"cashType":"4"}
-        $.post(taskPostUrl("city_receiveCash", body), async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                if (data['data']['bizCode'] === 0) {
-                  console.log(`领取赏金 ${data.data.result.currentTimeCash} 元，共计 ${data.data.result.totalCash} 元`)
-                }
-              }
-            }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
-          }
-        })
-        break;
-      default:
-        break;
-    }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
   })
 }
 function getInviteInfo() {
@@ -241,12 +219,7 @@ function getInviteInfo() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.code === 0 && data.data.bizCode ===0) {
-              if (data.data.result.masterData.actStatus === 2) {
-                await receiveCash('', 2)
-                await $.wait(2000)
-              }
-            }
+            // console.log(data)
           }
         }
       } catch (e) {
@@ -309,18 +282,38 @@ function readShareCode(num=3) {
 function shareCodesFormat() {
   return new Promise(async resolve => {
     // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
-   
-    if ($.index - 1 == 0) {
-      console.log('首个帐号,助力作者和池子')
-      $.newShareCodes = [...new Set([...author_codes])];
-    } else {
-      console.log('非首个个帐号,优先向前助力')
-      $.newShareCodes = [...new Set([...self_code,...author_codes])]
+    $.newShareCodes = []
+    const readShareCodeRes = await readShareCode(3);
+    if (readShareCodeRes && readShareCodeRes.code === 200) {
+      pool = readShareCodeRes.data || [];
     }
-    // const readShareCodeRes = await readShareCode();
-    // if (readShareCodeRes && readShareCodeRes.code === 200) {
-    //   $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
+    if ($.isNode()) {
+      if (process.env.JD_CITY_EXCHANGE) {
+        exchangeFlag = process.env.JD_CITY_EXCHANGE || exchangeFlag;
+      }
+      if (process.env.CITY_SHARECODES) {
+        console.log('检测到助力码,优先. 内部互助0.01了吧,删了吧.')
+        if (process.env.CITY_SHARECODES.indexOf('\n') > -1) {
+          $.newShareCodes = process.env.CITY_SHARECODES.split('\n');
+        } else {
+          $.newShareCodes = process.env.CITY_SHARECODES.split('&');
+        }
+      }
+    }
+    // if ($.index - 1 == 0) {
+    //   console.log('首个帐号,助力作者和池子')
+    //   $.newShareCodes = [...new Set([...$.newShareCodes,...author_codes, ...pool])];
+    // } else {
+    //   console.log('非首个个帐号,优先向前助力')
+    //   $.newShareCodes = [...new Set([...$.newShareCodes,...self_code,...author_codes, ...pool])]
     // }
+    if ($.index == 1) {
+      console.log('首个帐号,助力作者和池子')
+      $.newShareCodes = [...new Set([...author_codes,...pool,...$.newShareCodes])]
+    } else{
+      console.log('非首个帐号,助力池子')
+      $.newShareCodes = [...new Set([...$.newShareCodes,...pool])]
+    }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
   })

@@ -1,6 +1,6 @@
 /*
 京东手机狂欢城活动，每日可获得20+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）
-活动时间: 2021-9-16至2021-10-1
+活动时间: 2021-10-23至2021-11-13
 活动入口：暂无 [活动地址](https://carnivalcity.m.jd.com/)
 往期奖励：
 a、第1名、第618名可获得实物手机一部
@@ -35,9 +35,8 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-let inviteCodes = [];
 const JD_API_HOST = 'https://api.m.jd.com/api';
-const activeEndTime = '2021/10/02 00:00:00+08:00';//活动结束时间
+const activeEndTime = '2021/11/14 00:00:00+08:00';//活动结束时间
 let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 !(async () => {
   if (!cookiesArr[0]) {
@@ -51,7 +50,6 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
     if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`);
     return
   }
-  await requireConfig();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -68,7 +66,7 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
       $.blockAccount = false;//黑号
       message = '';
       await TotalBean();
-      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
@@ -77,7 +75,6 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
         }
         continue
       }
-      await shareCodesFormat();
       await JD818();
     }
   }
@@ -99,10 +96,16 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
 async function JD818() {
   try {
     await indexInfo();//获取任务
-    // await supportList();//助力情况
-    // await getHelp();//获取邀请码
+    await supportList();//助力情况
+    await getHelp();//获取邀请码
     if ($.blockAccount) return
     await indexInfo(true);//获取任务
+    $.stop = false;
+    let num = 0;
+    do {
+      await headInfo()
+      num++
+    } while (!$.stop && num < 30)
     await doHotProducttask();//做热销产品任务
     await doBrandTask();//做品牌手机任务
     await doBrowseshopTask();//逛好货街，做任务
@@ -117,6 +120,115 @@ async function JD818() {
     $.logErr(e)
   }
 }
+
+function headInfo() {
+  return new Promise(resolve => {
+    const body = {"apiMapping":"/khc/index/headInfo"}
+    $.post(taskUrl(body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} headInfo API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              if (data.data.state === "0") {
+                if (data.data.taskType === "13" || data.data.taskType === "15") {
+                  console.log(`开始 【顶部】浏览任务,需等待6秒`)
+                  await doBrowseHead(data.data.taskIndex, data.data.taskId, data.data.taskType)
+                } else if (data.data.taskType === "14") {
+                  console.log(`开始 【顶部】加购任务`)
+                  await getHeadJoinPrize(data.data.taskId, data.data.taskIndex)
+                }
+              } else {
+                $.stop = true
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function doBrowseHead(taskIndex, taskId, taskType) {
+  return new Promise(resolve => {
+    const body = {"taskIndex":taskIndex,"taskId":taskId,"taskType":taskType,"apiMapping":"/khc/task/doBrowseHead"}
+    $.post(taskUrl(body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} doBrowseHead API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              await $.wait(6000)
+              await getHeadBrowsePrize(data.data.browseId)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function getHeadBrowsePrize(browseId) {
+  return new Promise(resolve => {
+    const body = {"browseId":browseId,"apiMapping":"/khc/task/getHeadBrowsePrize"}
+    $.post(taskUrl(body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} getHeadBrowsePrize API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              console.log(`getHeadBrowsePrize 领取奖励结果`, JSON.stringify(data), '\n')
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function getHeadJoinPrize(taskId, taskIndex) {
+  return new Promise(resolve => {
+    const body = {"taskId":taskId,"taskIndex":taskIndex,"apiMapping":"/khc/task/getHeadJoinPrize"}
+    $.post(taskUrl(body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} getHeadJoinPrize API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              console.log(`getHeadJoinPrize 领取奖励结果`, JSON.stringify(data), '\n')
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
 async function doHotProducttask() {
   $.hotProductList = $.hotProductList.filter(v => !!v && v['status'] === "1");
   if ($.hotProductList && $.hotProductList.length) console.log(`开始 【浏览热销手机产品】任务,需等待6秒`)
@@ -299,9 +411,9 @@ function indexInfo(flag = false) {
         } else {
           data = JSON.parse(data);
           if (data.code === 200) {
-            $.hotProductList = data['data']['hotProductList'];
-            $.brandList = data['data']['brandList'];
-            $.browseshopList = data['data']['browseshopList'];
+            $.hotProductList = data['data']['hotProductList'] || [];
+            $.brandList = data['data']['brandList'] || [];
+            $.browseshopList = data['data']['browseshopList'] || [];
             if (flag) {
               // console.log(`助力情况：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}`);
               // message += `邀请好友助力：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}\n`
@@ -482,7 +594,8 @@ async function doHelp() {
   }
 }
 //助力API
-function toHelp(code) {
+toHelp()
+function toHelp(code='05a5a96f-5fe9-4f8f-a6ec-e349d72662e5') {
   return new Promise(resolve => {
     const body = {"shareId":code,"apiMapping":"/khc/task/doSupport"}
     $.post(taskUrl(body), (err, resp, data) => {
@@ -625,54 +738,6 @@ function getListRank() {
   })
 }
 
-//格式化助力码
-function shareCodesFormat() {
-  return new Promise(async resolve => {
-    // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
-    $.newShareCodes = [];
-    if ($.shareCodesArr[$.index - 1]) {
-      $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
-    } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
-      $.newShareCodes = inviteCodes[tempIndex] && inviteCodes[tempIndex].split('@') || [];
-      if ($.updatePkActivityIdRes && $.updatePkActivityIdRes.length) $.newShareCodes = [...$.updatePkActivityIdRes, ...$.newShareCodes];
-    }
-    // const readShareCodeRes = await readShareCode();
-    // if (readShareCodeRes && readShareCodeRes.code === 200) {
-    //   $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
-    // }
-    // console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
-    resolve();
-  })
-}
-function requireConfig() {
-  return new Promise(resolve => {
-    console.log(`开始获取${$.name}配置文件\n`);
-    let shareCodes = [];
-    if ($.isNode()) {
-      if (process.env.JD818_SHARECODES) {
-        if (process.env.JD818_SHARECODES.indexOf('\n') > -1) {
-          shareCodes = process.env.JD818_SHARECODES.split('\n');
-        } else {
-          shareCodes = process.env.JD818_SHARECODES.split('&');
-        }
-      }
-    }
-    console.log(`共${cookiesArr.length}个京东账号\n`);
-    $.shareCodesArr = [];
-    if ($.isNode()) {
-      Object.keys(shareCodes).forEach((item) => {
-        if (shareCodes[item]) {
-          $.shareCodesArr.push(shareCodes[item])
-        }
-      })
-    }
-    console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
-    resolve()
-  })
-}
-
 function taskUrl(body = {}) {
   return {
     url: `${JD_API_HOST}?appid=guardian-starjd&functionId=carnivalcity_jd_prod&body=${JSON.stringify(body)}&t=${Date.now()}&loginType=2`,
@@ -681,7 +746,7 @@ function taskUrl(body = {}) {
       "Accept": "application/json, text/plain, */*",
       "Content-Type": "application/x-www-form-urlencoded",
       "Origin": "https://carnivalcity.m.jd.com",
-      "Accept-Language": "zh-cn",
+      "Accept-Language": "zh-CN,zh-Hans;q=0.9",
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       "Referer": "https://carnivalcity.m.jd.com/",
       "Accept-Encoding": "gzip, deflate, br",
