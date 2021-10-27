@@ -1,225 +1,227 @@
 if (!["card","car"].includes(process.env.FS_LEVEL)) {
-  console.log("请设置通用加购/开卡环境变量FS_LEVEL为\"car\"(或\"card\"开卡+加购)来运行加购脚本")
-  return
+    console.log("请设置通用加购/开卡环境变量FS_LEVEL为\"car\"(或\"card\"开卡+加购)来运行加购脚本")
+    return
 }
 /**
-电竞预言家瓜分京豆，链接： u.jd.com/3wyVFhp
-必须得做完任务才能参与竞猜，有加购，没开卡，参与竞猜后，如果猜对了，第二天可以瓜分京豆（蚊子腿。。。）
-暂时还有24号和25号  2场，，，
-cron 23 10,11 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_lol.js
-环境变量：ANSWERCODE, 选择哪一个队伍,默认随机； 例：ANSWERCODE="A" 选择第一个队伍，ANSWERCODE="B" 选择第二个队伍
-PS:只有押对队伍才能在第二天瓜分豆子。如果觉得哪个队伍胜率大，可以自己修改环境变量，梭哈一个队伍
-*/
+ 电竞预言家瓜分京豆，链接： u.jd.com/3wyVFhp
+ 必须得做完任务才能参与竞猜，有加购，没开卡，参与竞猜后，如果猜对了，第二天可以瓜分京豆（蚊子腿。。。）
+ 暂时还有24号和25号  2场，，，
+ cron 23 10,11 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_lol.js
+ 环境变量：ANSWERCODE, 选择哪一个队伍,默认随机； 例：ANSWERCODE="A" 选择第一个队伍，ANSWERCODE="B" 选择第二个队伍
+ PS:只有押对队伍才能在第二天瓜分豆子。如果觉得哪个队伍胜率大，可以自己修改环境变量，梭哈一个队伍
+ */
 const $ = new Env('电竞预言家');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [];
 // 环境变量：ANSWERCODE, 选择哪一个队伍,默认随机； 例：ANSWERCODE="A" 选择第一个队伍，ANSWERCODE="B" 选择第二个队伍
 let answerCode = $.isNode() ? (process.env.ANSWERCODE ? process.env.ANSWERCODE : `999`):`999`;
 if ($.isNode()) {
-  Object.keys(jdCookieNode).forEach((item) => {
-      cookiesArr.push(jdCookieNode[item])
-  })
-  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
-  };
+    Object.keys(jdCookieNode).forEach((item) => {
+        cookiesArr.push(jdCookieNode[item])
+    })
+    if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
+    };
 } else {
-  cookiesArr = [
-      $.getdata("CookieJD"),
-      $.getdata("CookieJD2"),
-      ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
+    cookiesArr = [
+        $.getdata("CookieJD"),
+        $.getdata("CookieJD2"),
+        ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
 let shareList = [];
 !(async () => {
-  if (!cookiesArr[0]) {
-      $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
-      return;
-  }
-  if(Date.now() > '1635177600000'){
-      console.log(`活动已结束`);
-      return ;
-  }
-  const promiseArr = cookiesArr.map((ck, index) => main(ck));
-  await Promise.all(promiseArr);
-  console.log(JSON.stringify(shareList));
-  if(shareList.length === 0){return;}
-  let allShareList = [];
-  for (let i = 0; i < cookiesArr.length; i++) {
-      let cookie = cookiesArr[i];
-      let userName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-      for (let j = 0; j < shareList.length; j++) {
-          if(shareList[j].user === userName){
-              allShareList.push(shareList[j]);
-              break;
-          }
-      }
-  }
-  for (let i = 0; i < cookiesArr.length; i++) {
-      let cookie = cookiesArr[i];
-      let userName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-      let canHelp = true;
-      let helpTime = 0;
-      for (let j = 0; j < allShareList.length && canHelp && helpTime < 5; j++) {
-          let oneCodeInfo = allShareList[j];
-          if(oneCodeInfo.user === userName || oneCodeInfo.need === 0){
-              continue;
-          }
-          console.log(`${userName}去助力:${oneCodeInfo.user},助力码：${oneCodeInfo.code}`);
-          let doSupport = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"shareId":"${oneCodeInfo.code}","apiMapping":"/api/doSupport"}&t=${Date.now()}&loginType=2`);
-          if(doSupport.status === 7){
-              console.log(`助力成功`);
-              oneCodeInfo.need--;
-              helpTime++;
-          }else if(doSupport.status === 5){
-              console.log(`助力次数已用完`);
-              canHelp=false;
-          }
-          console.log(`助力结果：${JSON.stringify(doSupport)}`);
-          await $.wait(2000);
-      }
-  }
+    if (!cookiesArr[0]) {
+        $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        return;
+    }
+    if(Date.now() > '1636560000000'){
+        console.log(`活动已结束`);
+        return ;
+    }
+    const promiseArr = cookiesArr.map((ck, index) => main(ck));
+    await Promise.all(promiseArr);
+    console.log(JSON.stringify(shareList));
+    if(shareList.length === 0){return;}
+    let allShareList = [];
+    for (let i = 0; i < cookiesArr.length; i++) {
+        let cookie = cookiesArr[i];
+        let userName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
+        for (let j = 0; j < shareList.length; j++) {
+            if(shareList[j].user === userName){
+                allShareList.push(shareList[j]);
+                break;
+            }
+        }
+    }
+    for (let i = 0; i < cookiesArr.length; i++) {
+        let cookie = cookiesArr[i];
+        let userName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
+        let canHelp = true;
+        let helpTime = 0;
+        for (let j = 0; j < allShareList.length && canHelp && helpTime < 5; j++) {
+            let oneCodeInfo = allShareList[j];
+            if(oneCodeInfo.user === userName || oneCodeInfo.need === 0){
+                continue;
+            }
+            console.log(`${userName}去助力:${oneCodeInfo.user},助力码：${oneCodeInfo.code}`);
+            let doSupport = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"shareId":"${oneCodeInfo.code}","apiMapping":"/api/doSupport"}&t=${Date.now()}&loginType=2`);
+            if(doSupport.status === 7){
+                console.log(`助力成功`);
+                oneCodeInfo.need--;
+                helpTime++;
+            }else if(doSupport.status === 5){
+                console.log(`助力次数已用完`);
+                canHelp=false;
+            }
+            console.log(`助力结果：${JSON.stringify(doSupport)}`);
+            await $.wait(2000);
+        }
+    }
 })().catch((e) => {
-  $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
-  $.done();
+    $.done();
 });
 
 async function main(cookie) {
-  let userName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-  await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/activityRules"}&t=${Date.now()}&loginType=2`);
-  let homePage = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/homePage"}&t=${Date.now()}&loginType=2`);
-  let getTaskList = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/task/getTaskList"}&t=${Date.now()}&loginType=2`);
-  await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/isRisk"}&t=${Date.now()}&loginType=2`);
-  if(JSON.stringify(homePage) === '{}' || JSON.stringify(getTaskList) === '{}'){
-      console.log(`${userName},获取活动详情失败`);
-      return ;
-  }
-  console.log(`${userName},获取活动详情成功`);
-  await $.wait(2000);
-  let time = 0;
-  let runFlag = false;
-  do {
-      runFlag = false;
-      for (let i = 0; i < getTaskList.length; i++) {
-          let oneTask = getTaskList[i];
-          if(oneTask.totalNum === oneTask.finishNum){
-              console.log(`${userName},任务：${oneTask.taskName},已完成`);
-              continue;
-          }
-          console.log(`${userName},任务：${oneTask.taskName},去执行`);
-          if(oneTask.type === 'JOIN_SHOPPING_CART'){
-              let getReward = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","activityDate":"${homePage.activityDate}","apiMapping":"/api/task/getReward"}&t=${Date.now()}&loginType=2`);
-              console.log(`${userName},执行结果：${JSON.stringify(getReward)}`);
-              await $.wait(2000);
-          }
-          if(oneTask.type === 'BROWSE_TASK' || oneTask.type === 'FOLLOW_CHANNEL_TASK'){
-              let doInfo = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","activityDate":"${homePage.activityDate}","apiMapping":"/api/task/doTask"}&t=${Date.now()}&loginType=2`);
-              let time = 2;
-              if(oneTask.browseTime > 0){
-                  time = oneTask.browseTime;
-              }
-              await $.wait(time*1000);
-              let getReward = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","timeStamp":${doInfo.timeStamp},"activityDate":"${homePage.activityDate}","apiMapping":"/api/task/getReward"}&t=${Date.now()}&loginType=2`);
-              console.log(`${userName},执行结果：${JSON.stringify(getReward)}`);
-          }
-          if(oneTask.type === 'FOLLOW_SHOP_TASK'){
-              let doTask = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","activityDate":"${homePage.activityDate}","apiMapping":"/api/task/doTask"}&t=${Date.now()}&loginType=2`);
-              console.log(`${userName},执行结果：${JSON.stringify(doTask.rewardVo)}`);
-          }
-          runFlag = true;
-      }
-      time ++;
-      if(runFlag && time < 2){
-          await $.wait(1000);
-          getTaskList = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/task/getTaskList"}&t=${Date.now()}&loginType=2`);
-      }
-  }while (runFlag && time < 2);
-  let questions = homePage.questions;
-  let questionInfo = {};
-  for (let i = 0; i < questions.length; i++) {
-      questionInfo[questions[i].answerCode] = questions[i].skuName;
-  }
-  if(answerCode === '999'){
-      answerCode =  Math.round((Math.random()*10))%2 === 0 ? "A" : "B";
-      console.log(`\n没有设置环境变量ANSWERCODE，随机选择队伍:${answerCode}\n`)
-  }
-  if(answerCode){
-      if(homePage.userAnswerCode === null){
-          await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${homePage.activityDate}","apiMapping":"/api/checkGuess"}&t=${Date.now()}&loginType=2`);
+    let userName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
+    await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/activityRules"}&t=${Date.now()}&loginType=2`);
+    let homePage = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/homePage"}&t=${Date.now()}&loginType=2`);
+    let getTaskList = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/task/getTaskList"}&t=${Date.now()}&loginType=2`);
+    await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/isRisk"}&t=${Date.now()}&loginType=2`);
+    if(JSON.stringify(homePage) === '{}' || JSON.stringify(getTaskList) === '{}'){
+        console.log(`${userName},获取活动详情失败`);
+        return ;
+    }
+    console.log(`${userName},获取活动详情成功`);
+    await $.wait(2000);
+    let time = 0;
+    let runFlag = false;
+    do {
+        runFlag = false;
+        for (let i = 0; i < getTaskList.length; i++) {
+            let oneTask = getTaskList[i];
+            if(oneTask.totalNum === oneTask.finishNum){
+                console.log(`${userName},任务：${oneTask.taskName},已完成`);
+                continue;
+            }
+            console.log(`${userName},任务：${oneTask.taskName},去执行`);
+            if(oneTask.type === 'JOIN_SHOPPING_CART'){
+                let getReward = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","activityDate":"${homePage.activityDate}","apiMapping":"/api/task/getReward"}&t=${Date.now()}&loginType=2`);
+                console.log(`${userName},执行结果：${JSON.stringify(getReward)}`);
+                await $.wait(2000);
+            }
+            if(oneTask.type === 'BROWSE_TASK' || oneTask.type === 'FOLLOW_CHANNEL_TASK'){
+                let doInfo = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","activityDate":"${homePage.activityDate}","apiMapping":"/api/task/doTask"}&t=${Date.now()}&loginType=2`);
+                let time = 2;
+                if(oneTask.browseTime > 0){
+                    time = oneTask.browseTime;
+                }
+                await $.wait(time*1000);
+                let getReward = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","timeStamp":${doInfo.timeStamp},"activityDate":"${homePage.activityDate}","apiMapping":"/api/task/getReward"}&t=${Date.now()}&loginType=2`);
+                console.log(`${userName},执行结果：${JSON.stringify(getReward)}`);
+            }
+            if(oneTask.type === 'FOLLOW_SHOP_TASK'){
+                let doTask = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"parentId":"${oneTask.parentId}","taskId":"${oneTask.taskId}","activityDate":"${homePage.activityDate}","apiMapping":"/api/task/doTask"}&t=${Date.now()}&loginType=2`);
+                console.log(`${userName},执行结果：${JSON.stringify(doTask.rewardVo)}`);
+            }
+            runFlag = true;
+        }
+        time ++;
+        if(runFlag && time < 2){
+            await $.wait(1000);
+            getTaskList = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/task/getTaskList"}&t=${Date.now()}&loginType=2`);
+        }
+    }while (runFlag && time < 2);
+    let questions = homePage.questions;
+    let questionInfo = {};
+    for (let i = 0; i < questions.length; i++) {
+        questionInfo[questions[i].answerCode] = questions[i].skuName;
+    }
+    let thisCode = '';
+    if(answerCode === '999'){
+        thisCode =  Math.round((Math.random()*10))%2 === 0 ? "A" : "B";
+        console.log(`\n没有设置环境变量ANSWERCODE，随机选择队伍:${thisCode}\n`)
+    }else{
+        thisCode = answerCode;
+    }
+    if(thisCode){
+        if(homePage.userAnswerCode === null){
+            await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${homePage.activityDate}","apiMapping":"/api/checkGuess"}&t=${Date.now()}&loginType=2`);
 
-          await $.wait(1000);
-          console.log(`${userName},选择队伍：${questionInfo[answerCode]}`);
-          let guessAnswer = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${homePage.activityDate}","answerCode":"${answerCode}","apiMapping":"/api/guessAnswer"}&t=${Date.now()}&loginType=2`);
-          console.log(`${userName},选择返回：${JSON.stringify(guessAnswer)}`);
-          await $.wait(1000);
-          homePage = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/homePage"}&t=${Date.now()}&loginType=2`);
+            await $.wait(1000);
+            console.log(`${userName},选择队伍：${questionInfo[thisCode]}`);
+            let guessAnswer = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${homePage.activityDate}","answerCode":"${thisCode}","apiMapping":"/api/guessAnswer"}&t=${Date.now()}&loginType=2`);
+            console.log(`${userName},选择返回：${JSON.stringify(guessAnswer)}`);
+            await $.wait(1000);
+            homePage = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"apiMapping":"/api/homePage"}&t=${Date.now()}&loginType=2`);
 
-      }
-  }else if(homePage.userAnswerCode === null){
-      console.log(`${userName},没有选择答案`);
-  }else{
-      console.log(`${userName},已选择队伍：${questionInfo[homePage.userAnswerCode]}`);
-  }
-  await $.wait(1000);
-  if(homePage.lotteryButtonStatus === 1){
-      console.log(`${userName},进行一次抽奖`);
-      let lottery = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${homePage.activityDate}","apiMapping":"/api/lottery/lottery"}&t=${Date.now()}&loginType=2`);
-      console.log(`${userName},抽奖结果：${JSON.stringify(lottery)}`);
-  }
-  let shareId = homePage.shareId;
-  if(shareId){
-      let initSupport = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"shareId":"${shareId}","apiMapping":"/api/initSupport"}&t=${Date.now()}&loginType=2`);
-      console.log(`\n${userName},助力码：${shareId},已被助力：${initSupport.supportedNum}次,需要被助力：${initSupport.supportNeedNum}次，当前倍数：${initSupport.doubleNum}倍`);
-      let need = Number(initSupport.supportNeedNum) - Number(initSupport.supportedNum);
-      if(need > 0){
-          shareList.push({'user':userName,'code':shareId,'need':need});
-      }
-  }
-  let activityDateList = homePage.activityDateList;
-  for (let i = 0; i < activityDateList.length; i++) {
-      let activityDate = activityDateList[i];
-      let homePage = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":${activityDate},"apiMapping":"/api/homePage"}&t=${Date.now()}&loginType=2`);
-      await $.wait(2000);
-      if(homePage.lotteryButtonStatus === 2){
-          console.log(`领取${activityDate}竞猜奖励`);
-          let lotteryInfo = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${activityDate}","apiMapping":"/api/lottery"}&t=${Date.now()}&loginType=2`);
-          console.log(JSON.stringify(lotteryInfo));
-          await $.wait(2000);
-      }
-      break;
-  }
+        }
+    }else if(homePage.userAnswerCode === null){
+        console.log(`${userName},没有选择答案`);
+    }else{
+        console.log(`${userName},已选择队伍：${questionInfo[homePage.userAnswerCode]}`);
+    }
+    await $.wait(1000);
+    if(homePage.lotteryButtonStatus === 1){
+        console.log(`${userName},进行一次抽奖`);
+        let lottery = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${homePage.activityDate}","apiMapping":"/api/lottery/lottery"}&t=${Date.now()}&loginType=2`);
+        console.log(`${userName},抽奖结果：${JSON.stringify(lottery)}`);
+    }
+    let shareId = homePage.shareId;
+    if(shareId){
+        let initSupport = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"shareId":"${shareId}","apiMapping":"/api/initSupport"}&t=${Date.now()}&loginType=2`);
+        console.log(`\n${userName},助力码：${shareId},已被助力：${initSupport.supportedNum}次,需要被助力：${initSupport.supportNeedNum}次，当前倍数：${initSupport.doubleNum}倍`);
+        let need = Number(initSupport.supportNeedNum) - Number(initSupport.supportedNum);
+        if(need > 0){
+            shareList.push({'user':userName,'code':shareId,'need':need});
+        }
+    }
+    let activityDateList = homePage.activityDateList;
+    for (let i = 0; i < activityDateList.length; i++) {
+        let activityDate = activityDateList[i];
+        let homePage = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":${activityDate},"apiMapping":"/api/homePage"}&t=${Date.now()}&loginType=2`);
+        await $.wait(2000);
+        if(homePage.lotteryButtonStatus === 2){
+            console.log(`领取${activityDate}竞猜奖励`);
+            let lotteryInfo = await takeRequest(cookie,`appid=china-joy&functionId=champion_game_prod&body={"activityDate":"${activityDate}","apiMapping":"/api/lottery"}&t=${Date.now()}&loginType=2`);
+            console.log(JSON.stringify(lotteryInfo));
+            await $.wait(2000);
+        }
+    }
 }
 async function takeRequest(cookie,body){
-  let url = 'https://api.m.jd.com/api';
-  const headers = {
-      'Origin' : `https://dnsm618-100million.m.jd.com`,
-      'Cookie' : cookie ,
-      'Connection' : `keep-alive`,
-      'Accept' : `application/json, text/plain, */*`,
-      'Referer' : `https://dnsm618-100million.m.jd.com/`,
-      'Host' : `api.m.jd.com`,
-      'user-agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-      'Accept-Language' : `zh-cn`,
-      'Accept-Encoding' : `gzip, deflate, br`
-  };
-  let myRequest =  {url: url, headers: headers,body:body};
-  return new Promise(async resolve => {
-      $.post(myRequest, (err, resp, data) => {
-          try {
-              if(err){
-                  console.log(err);
-              }else{
-                  data = JSON.parse(data);
-                  if(data && data.data && JSON.stringify(data.data) === '{}'){
-                      console.log(JSON.stringify(data))
-                  }
-              }
-          } catch (e) {
-              console.log(data);
-              $.logErr(e, resp)
-          } finally {
-              resolve(data.data || {});
-          }
-      })
-  })
+    let url = 'https://api.m.jd.com/api';
+    const headers = {
+        'Origin' : `https://dnsm618-100million.m.jd.com`,
+        'Cookie' : cookie ,
+        'Connection' : `keep-alive`,
+        'Accept' : `application/json, text/plain, */*`,
+        'Referer' : `https://dnsm618-100million.m.jd.com/`,
+        'Host' : `api.m.jd.com`,
+        'user-agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        'Accept-Language' : `zh-cn`,
+        'Accept-Encoding' : `gzip, deflate, br`
+    };
+    let myRequest =  {url: url, headers: headers,body:body};
+    return new Promise(async resolve => {
+        $.post(myRequest, (err, resp, data) => {
+            try {
+                if(err){
+                    console.log(err);
+                }else{
+                    data = JSON.parse(data);
+                    if(data && data.data && JSON.stringify(data.data) === '{}'){
+                        console.log(JSON.stringify(data))
+                    }
+                }
+            } catch (e) {
+                console.log(data);
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data || {});
+            }
+        })
+    })
 }
 
 
