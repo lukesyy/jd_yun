@@ -63,9 +63,9 @@ const JD_API_HOST = `https://api.m.jd.com`;
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
         }
         if (!dyjCode) {
-            console.log(`\n环境变量中没有检测到助力码,开始获取【京东账号${$.index}】助力码\n`)
             await open()
             if ($.hotFlag) continue;
+            console.log(`\n环境变量中没有检测到助力码,开始获取【京东账号${$.index}】助力码\n`)
             await getid()
         } else {
             dyjStr = dyjCode.split("@")
@@ -84,7 +84,6 @@ const JD_API_HOST = `https://api.m.jd.com`;
         }
     }
     if (new Date().getHours() >= 10) {
-        // await getAuthorShareCode()
         $.authorCode = [{
             redEnvelopeId: '055cf1707f0f4eeea7338f0ca38538d270131635386508590',
             inviter:'TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
