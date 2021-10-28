@@ -86,7 +86,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
     if (new Date().getHours() >= 10) {
         // await getAuthorShareCode()
         $.authorCode = [{
-            redEnvelopeId: '79b18e749d024e81b264b49d31289c2067611635301468218',
+            redEnvelopeId: '055cf1707f0f4eeea7338f0ca38538d270131635386508590',
             inviter:'TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
         }]
         if ($.authorCode && $.authorCode.length) {
