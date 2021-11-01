@@ -1,4 +1,3 @@
-   
 /**
  惊喜牧场
  cron 23 0-23/3 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_jxmc.js
@@ -17,6 +16,7 @@
 });
 const $ = new Env('惊喜牧场');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 const JXUserAgent =  $.isNode() ? (process.env.JX_USER_AGENT ? process.env.JX_USER_AGENT : ``):``;
 const ByType = $.isNode() ? (process.env.BYTYPE ? process.env.BYTYPE : `888`):`888`;
 let cookiesArr = [],token = {},ua = '';
@@ -24,7 +24,6 @@ $.appId = 10028;
 let activeid = 'null';
 $.inviteCodeList = [];
 $.inviteCodeList_rp = [];
-$.inviteCodeList_hb = [];
 let flag_hb = true
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
@@ -40,12 +39,12 @@ if ($.isNode()) {
 }
 !(async () => {
     $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
+    $.fingerprint = '';$.token = '';
     await requestAlgo();
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
         return;
     }
-    $.fingerprint = '';$.token = '';
     for (let i = 0; i < cookiesArr.length; i++) {
         $.index = i + 1;
         $.cookie = cookiesArr[i];
@@ -74,15 +73,15 @@ if ($.isNode()) {
     }
     if (flag_hb) {
         console.log('\n##################开始账号内互助(红包)#################\n');
-        $.inviteCodeList_hb = [...($.inviteCodeList_hb || []), ...($.shareCode || []),{"use":"qqqqq","code":"g_eiitD1h9-a-PX-GytKiCP4Y59In6jxprR7viqVfh9dwmd_qIrEjCxTkitYX7k882f9F7ZT3uMPv39RCCWjve76QhwYYI-M_K_zDIwahmb23aCj9VXSkZCBkj8CCG07",
+        $.inviteCodeList_rp = [...($.inviteCodeList_hb || []), ...($.shareCode || []),{"use":"qqqqq","code":"g_eiitD1h9-a-PX-GytKiCP4Y59In6jxprR7viqVfh9dwmd_qIrEjCxTkitYX7k882f9F7ZT3uMPv39RCCWjve76QhwYYI-M_K_zDIwahmb23aCj9VXSkZCBkj8CCG07",
         "max": false}]
         for (let j = 0; j < cookiesArr.length; j++) {
             $.cookie = cookiesArr[j];
             $.UserName = decodeURIComponent($.cookie.match(/pt_pin=(.+?);/) && $.cookie.match(/pt_pin=(.+?);/)[1]);
             token = await getJxToken();
             $.canHelp = true;
-            for (let k = 0; k < $.inviteCodeList.length; k++) {
-                $.oneCodeInfo = $.inviteCodeList[k];
+            for (let k = 0; k < $.inviteCodeList_rp.length; k++) {
+                $.oneCodeInfo = $.inviteCodeList_rp[k];
                 activeid = $.oneCodeInfo.activeid;
                 if($.oneCodeInfo.use === $.UserName) continue;
                 if (!$.canHelp) break;
@@ -91,14 +90,13 @@ if ($.isNode()) {
                 }
                 console.log(`\n${$.UserName}去助力${$.oneCodeInfo.use},助力码：${$.oneCodeInfo.code}\n`);
                 let helpInfo = await takeRequest(`jxmc`,`operservice/InviteEnroll`,`&sharekey=${$.oneCodeInfo.code}`,`activeid%2Cactivekey%2Cchannel%2Cjxmc_jstoken%2Cphoneid%2Csceneid%2Csharekey%2Ctimestamp`,true);
-                console.debug(helpInfo)
+                // console.debug(helpInfo)
                 await $.wait(2000);
             }
         }
     }
     console.log('\n##################开始账号内互助#################\n');
-    // $.shareCode = undefined
-    // await getShareCode('jxmc.json')
+    $.shareCode = undefined
     $.inviteCodeList = [...($.inviteCodeList || []), {
         "use": "aaa",
         "code": "g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcbjxvWGgUCQnY1Lk37N1UBNYGydzD3njdlo7IYJD8zVbQ",
@@ -162,7 +160,7 @@ async function get_rp(){
     if (rpInfo.ret === 0) {
         if(rpInfo.data.sharekey){
             console.log(`红包邀请码:${rpInfo.data.sharekey}`);
-            $.inviteCodeList_hb.push({'use':$.UserName,'code':rpInfo.data.sharekey,'max':false,'activeid':activeid});
+            $.inviteCodeList_rp.push({'use':$.UserName,'code':rpInfo.data.sharekey,'max':false,'activeid':activeid});
         }
     } else if(rpInfo.ret === 2704){
         console.log('红包今天领完了,跳过红包相关')
@@ -194,9 +192,6 @@ async function main() {
         console.log(`初始化失败,可能是牧场黑号`);
         return ;
     }
-    if (flag_hb) {
-      await get_rp()
-    }
     if(homePageInfo.maintaskId !== 'pause'){
         let runTime = 0;
         let doMainTaskInfo = {};
@@ -226,6 +221,13 @@ async function main() {
         return;
     }
     console.log(`获取获得详情成功,总共有小鸡：${petidList.length}只,鸡蛋:${homePageInfo.eggcnt}个,金币:${homePageInfo.coins},互助码：${homePageInfo.sharekey}`);
+    if(!petidList || petidList.length === 0){
+        console.log(`账号内没有小鸡，暂停执行`);
+        return ;
+    }
+    if (flag_hb) {
+      await get_rp()
+    }
     $.inviteCodeList.push({'use':$.UserName,'code':homePageInfo.sharekey,'max':false,'activeid':activeid});
     if(JSON.stringify(visitBackInfo) !== '{}'){
         if(visitBackInfo.iscandraw === 1){
@@ -238,7 +240,7 @@ async function main() {
         }
     }
     if(JSON.stringify(signInfo) !== '{}'){
-        if(signInfo.signlist){
+        if(signInfo.signlist && signInfo.condneed === signInfo.condstep){
             let signList = signInfo.signlist;
             let signFlag = true;
             for (let j = 0; j < signList.length; j++) {
@@ -253,6 +255,10 @@ async function main() {
             if(signFlag){
                 console.log(`已完成每日签到`);
             }
+        }else if(signInfo.condneed !== signInfo.condstep){
+            console.log(`暂不满足签到条件`);
+        }else{
+            console.log(`暂无签到列表`);
         }
     }
     if (homePageInfo.cow) {
@@ -285,7 +291,14 @@ async function main() {
     }
     //购买小鸡
     await buyChick(configInfo,homePageInfo,cardInfo);
-    await doTask();
+
+    $.freshFlag = false;
+    let runTime = 0;
+    do {
+        $.freshFlag = false;
+        await doTask();
+        runTime++;
+    }while ($.freshFlag  && runTime <5)
     await $.wait(2000);
     await doMotion(petidList);
     await buyCabbage(homePageInfo);
@@ -295,6 +308,21 @@ async function buyChick(configInfo,homePageInfo,cardInfo){
     console.log(`现共有小鸡：${homePageInfo.petinfo.length}只,小鸡上限：6只`);
     if(homePageInfo.petinfo.length === 6){
         return;
+    }
+    let canBuy = 6 - Number(homePageInfo.petinfo.length)
+    let cardList = cardInfo.cardinfo || [];
+    for (let i = cardList.length-1; i >= 0 && canBuy > 0; i--) {
+        let oneCardInfo = cardList[i];
+        if(oneCardInfo.currnum === oneCardInfo.neednum && canBuy > 0){
+            console.log(`合成一只小鸡`);
+            let combineInfo = await takeRequest(`jxmc`,`operservice/Combine`,`&cardtype=${oneCardInfo.cardtype}`,`activeid%2Cactivekey%2Cchannel%2Cjxmc_jstoken%2Cphoneid%2Csceneid%2Ctimestamp`,true);
+            console.log(`现共有小鸡：${combineInfo.petinfo.length || null}只`);
+            canBuy--;
+            break;
+        }
+    }
+    if(canBuy === 0){
+        return ;
     }
     if(ByType === '888'){
         console.log(`不购买小鸡，若需要购买小鸡，则设置环境变量【BYTYPE】`);
@@ -464,6 +492,7 @@ async function doTask(){
                 awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc&taskId=${oneTask.taskId}&bizCode=jxmc`,`bizCode%2Csource%2CtaskId`,true);
                 console.log(`领取金币成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
                 await $.wait(2000);
+                $.freshFlag = true;
             }
         } else {//每日任务
             if(oneTask.awardStatus === 1){
@@ -474,6 +503,7 @@ async function doTask(){
                     awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc&taskId=${oneTask.taskId}&bizCode=jxmc`,`bizCode%2Csource%2CtaskId`,true);
                     console.log(`领取金币成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
                     await $.wait(2000);
+                    $.freshFlag = true;
                 }else {
                     console.log(`任务：${oneTask.taskName},未完成`);
                 }
@@ -483,6 +513,7 @@ async function doTask(){
                     awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc&taskId=${oneTask.taskId}&bizCode=jxmc`,`bizCode%2Csource%2CtaskId`,true);
                     console.log(`领取金币成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
                     await $.wait(2000);
+                    $.freshFlag = true;
                 }
                 for (let j = Number(oneTask.completedTimes); j < Number(oneTask.configTargetTimes); j++) {
                     console.log(`去做任务：${oneTask.description}，等待5S`);
@@ -491,11 +522,13 @@ async function doTask(){
                     console.log(`完成任务：${oneTask.description}`);
                     awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc&taskId=${oneTask.taskId}&bizCode=jxmc`,`bizCode%2Csource%2CtaskId`,true);
                     console.log(`领取金币成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
+                    $.freshFlag = true;
                 }
             } else if (oneTask.awardStatus === 2 && oneTask.completedTimes === oneTask.targetTimes) {
                 console.log(`完成任务：${oneTask.taskName}`);
                 awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc&taskId=${oneTask.taskId}&bizCode=jxmc`,`bizCode%2Csource%2CtaskId`,true);
                 console.log(`领取金币成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
+                $.freshFlag = true;
                 await $.wait(2000);
             }
         }
