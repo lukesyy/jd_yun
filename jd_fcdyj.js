@@ -85,7 +85,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
     }
     if (new Date().getHours() >= 10) {
         $.authorCode = [{
-            redEnvelopeId: '530ce6a986874404936e0aef09cb8cfa50671635731220807',
+            redEnvelopeId: 'cf0a6bfedec44dae9d3db8e78d4a66f993961635904586367',
             inviter:'TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
         }]
         if ($.authorCode && $.authorCode.length) {
