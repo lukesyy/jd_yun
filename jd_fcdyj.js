@@ -27,6 +27,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const dyjCode = $.isNode() ? (process.env.dyjCode ? process.env.dyjCode : null) : null //邀请码变量，不支持多账号，格式：redEnvelopeId@markedPin
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
+    
     cookie = '';
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
@@ -84,10 +85,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
         }
     }
     if (new Date().getHours() >= 10) {
-        $.authorCode = [{
-            redEnvelopeId: 'cf0a6bfedec44dae9d3db8e78d4a66f993961635904586367',
-            inviter:'TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'
-        }]
+         $.authorCode = [{redEnvelopeId:'1ca3485cc0be4b269dc8cb2dda73b65562911636077613282', invite:'TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'}]
         if ($.authorCode && $.authorCode.length) {
             for (let i = 0; i < cookiesArr.length; i++) {
                 cookie = cookiesArr[i];
@@ -141,10 +139,12 @@ async function exchange() {
                     console.log(`${$.name} API请求失败，请检查网路重试`);
                 } else {
                     data = JSON.parse(data);
-                    if (data.success && data.data.chatEnvelopeVo.status == 50059) {
-                        console.log(`【京东账号${$.index}】${data.data.chatEnvelopeVo.message} ，尝试兑换红包...`)
-                        $.rewardType = 1
-                        await exchange()
+                    if (data.success && data.data) {
+                        if (data.data.chatEnvelopeVo.status == 50053 || data.data.chatEnvelopeVo.status == 50059) {
+                            console.log(`【京东账号${$.index}】${data.data.chatEnvelopeVo.message} ，尝试兑换红包...`)
+                            $.rewardType = 1
+                            await exchange()
+                        }
                     } else {
                         console.log(`【京东账号${$.index}】提现成功`)
                     }
