@@ -97,11 +97,8 @@ if ($.isNode()) {
     }
     console.log('\n##################开始账号内互助#################\n');
     $.shareCode = undefined
-    $.inviteCodeList = [...($.inviteCodeList || []), {
-        "use": "aaa",
-        "code": "g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcbjxvWGgUCQnY1Lk37N1UBNYGydzD3njdlo7IYJD8zVbQ",
-        "max": false
-        }]
+    await getShareCode('jxmc.json')
+    $.inviteCodeList = [...($.inviteCodeList || []), ...($.shareCode || [])]
     for (let j = 0; j < cookiesArr.length; j++) {
         $.cookie = cookiesArr[j];
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=(.+?);/) && $.cookie.match(/pt_pin=(.+?);/)[1]);
@@ -305,6 +302,7 @@ async function main() {
     await feed();
     await doUserLoveInfo();
 }
+
 async function doUserLoveInfo() {
     console.log(`助农活动`);
     let taskLiskInfo = await takeRequest(`newtasksys`, `newtasksys_front/GetUserTaskStatusList`, `&source=jxmc_zanaixin&bizCode=jxmc_zanaixin&dateType=2&showAreaTaskFlag=0&jxpp_wxapp_type=7`, `bizCode%2CdateType%2Cjxpp_wxapp_type%2CshowAreaTaskFlag%2Csource`, false);
@@ -337,7 +335,11 @@ async function doUserLoveInfo() {
             await $.wait(5500);
             console.log(`完成任务：${oneTask.description}`);
             awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin`,`bizCode%2Csource%2CtaskId`,true);
-            console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
+            if(awardInfo && awardInfo.prizeInfo && JSON.parse(awardInfo.prizeInfo)){
+                console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo || ''}`);
+            }else{
+                console.log(`领取爱心：${JSON.stringify(awardInfo)}`);
+            }
         }
     }
     let userLoveInfo = await takeRequest(`jxmc`, `queryservice/GetUserLoveInfo`, ``, undefined, true);
@@ -351,6 +353,7 @@ async function doUserLoveInfo() {
         }
     }
 }
+
 async function buyChick(configInfo,homePageInfo,cardInfo){
     console.log(`现共有小鸡：${homePageInfo.petinfo.length}只,小鸡上限：6只`);
     if(homePageInfo.petinfo.length === 6){
@@ -493,7 +496,7 @@ async function doMotion(petidList){
         console.log(`开始第${i + 1}次割草`);
         let mowingInfo = await takeRequest(`jxmc`,`operservice/Action`,`&type=2`,'activeid%2Cactivekey%2Cchannel%2Cjxmc_jstoken%2Cphoneid%2Csceneid%2Ctimestamp%2Ctype',true);
         console.log(`获得金币：${mowingInfo.addcoins || 0}`);
-        await $.wait(1000);
+        await $.wait(2000);
         if(Number(mowingInfo.addcoins) >0 ){
             runFlag = true;
         }else{
@@ -523,7 +526,7 @@ async function doMotion(petidList){
             runFlag = false;
             console.log(`未获得金币暂停割鸡腿`);
         }
-        await $.wait(1000);
+        await $.wait(2000);
     }
 }
 async function doTask(){
