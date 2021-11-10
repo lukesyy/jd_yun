@@ -32,7 +32,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-let UA, UAInfo = {};
+let UA, UAInfo = {}, isLoginInfo = {};
 $.shareCodes = [];
 $.blackInfo = {}
 $.appId = 10028;
@@ -57,19 +57,24 @@ if ($.isNode()) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
       $.isLogin = true;
-      await TotalBean()
-      if (!$.isLogin) {
-        continue
+      UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+      UAInfo[$.UserName] = UA
+      if (isLoginInfo[$.UserName] === false) {
+      
+      } else {
+        if (!isLoginInfo[$.UserName]) {
+          await TotalBean();
+          isLoginInfo[$.UserName] = $.isLogin
+        }
       }
       if (i === 0) console.log(`\n正在收集助力码请等待\n`)
-      UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+      if (!isLoginInfo[$.UserName]) continue
       await signhb(1)
       await $.wait(500)
-      UAInfo[$.UserName] = UA
     }
   }
   console.log('作者助力码追加至最后!如有剩余次数则给作者助力!感谢!')
-  const author = ['0835255e912f819bc9a990359d62479f']
+  const author = ['a591e640e867399f627a8e2b47d6f903']
   for (let i = 0; i < author.length; i++) {
     $.shareCodes.push({
       'use': 'zero205',
@@ -90,9 +95,16 @@ if ($.isNode()) {
       $.bxNum = []
       $.black = false
       $.canHelp = true
-      await TotalBean()
+      if (isLoginInfo[$.UserName] === false) {
+      
+      } else {
+        if (!isLoginInfo[$.UserName]) {
+          await TotalBean();
+          isLoginInfo[$.UserName] = $.isLogin
+        }
+      }
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`)
-      if (!$.isLogin) {
+      if (!isLoginInfo[$.UserName]) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" })
 
         if ($.isNode()) {
@@ -164,7 +176,7 @@ if ($.isNode()) {
 // 查询信息
 function signhb(type = 1) {
   return new Promise((resolve) => {
-    $.get(taskUrl("fanxiantask/signhb/query"), async (err, resp, data) => {
+    $.get(taskUrl("signhb/query"), async (err, resp, data) => {
       try {
         if (err) {
           console.log(JSON.stringify(err));
@@ -233,7 +245,7 @@ function signhb(type = 1) {
 // 签到 助力
 function helpSignhb(smp = '') {
   return new Promise((resolve) => {
-    $.get(taskUrl("fanxiantask/signhb/query", `signhb_source=1000&smp=${smp}&type=1`, "signhb_source,smp,type"), async (err, resp, data) => {
+    $.get(taskUrl("signhb/query", `type=1&signhb_source=1000&smp=${smp}&ispp=0&tk=`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(JSON.stringify(err))
@@ -267,7 +279,7 @@ function helpSignhb(smp = '') {
 // 任务
 function dotask(task) {
   return new Promise((resolve) => {
-    $.get(taskUrl("fanxiantask/signhb/dotask", `signhb_source=1000&task=${task}`, "signhb_source,task"), async (err, resp, data) => {
+    $.get(taskUrl("signhb/dotask", `signhb_source=1000&task=${task}&ispp=0&tk=`), async (err, resp, data) => {
         try {
           if (err) {
             console.log(JSON.stringify(err));
@@ -292,7 +304,7 @@ function dotask(task) {
 // 宝箱
 function bxdraw() {
   return new Promise((resolve) => {
-    $.get(taskUrl("fanxiantask/signhb/bxdraw"), async (err, resp, data) => {
+    $.get(taskUrl("signhb/bxdraw"), async (err, resp, data) => {
       try {
         if (err) {
           console.log(JSON.stringify(err));
@@ -317,7 +329,20 @@ function bxdraw() {
 // 双签
 function doubleSign() {
   return new Promise((resolve) => {
-    $.get(taskUrl("double_sign/IssueReward"), async (err, resp, data) => {
+    let options = {
+      url: `${JD_API_HOST}double_sign/IssueReward?sceneval=2&g_login_type=1&_ste=1&g_ty=ajax`,
+      headers: {
+        "Host": "m.jingxi.com",
+        "Accept": "application/json",
+        "Origin": "https://st.jingxi.com",
+        "Accept-Encoding": "gzip, deflate, br",
+        "User-Agent": UA,
+        "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+        "Referer": "https://st.jingxi.com/",
+        "Cookie": cookie
+      }
+    }
+    $.get(options, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -339,34 +364,31 @@ function doubleSign() {
   })
 }
 
-function taskUrl(functionId, body = '', stk) {
+function taskUrl(functionId, body = '') {
   let url = ``
   if (body) {
-    url = `${JD_API_HOST}${functionId}?${body ? `${body}&` : ''}sceneval=2&g_login_type=1&_=${Date.now()}&_ste=1&callback=jsonpCBKC&g_ty=ls`;
-    url += `&h5st=${decrypt(Date.now(), stk, '', url)}`;
-    if (stk) {
-      url += `&_stk=${encodeURIComponent(stk)}`;
-    }
+    url = `${JD_API_HOST}fanxiantask/${functionId}?${body}`;
+    url += `&_stk=${getStk(url)}`;
+    url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
   } else {
-    if (functionId === 'double_sign/IssueReward') {
-      url = `${JD_API_HOST}${functionId}?sceneval=2&g_login_type=1&_ste=1&g_ty=ajax`;
-    } else {
-      url = `${JD_API_HOST}${functionId}?_=${Date.now()}&sceneval=2&g_login_type=1&callback=jsonpCBKC&g_ty=ls`
-    }
+    url = `${JD_API_HOST}fanxiantask/${functionId}?_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
   }
   return {
-    url: url,
+    url,
     headers: {
-      Cookie: cookie,
-      Host: "m.jingxi.com",
-      Accept: "*/*",
-      Connection: "keep-alive",
-      "User-Agent": UA,
-      "Accept-Language": "zh-cn",
-      Referer: "https://wqsd.jd.com/pingou/dream_factory/index.html",
+      "Host": "m.jingxi.com",
+      "Accept": "*/*",
       "Accept-Encoding": "gzip, deflate, br",
+      "User-Agent": UA,
+      "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+      "Referer": "https://st.jingxi.com/",
+      "Cookie": cookie
     }
   }
+}
+function getStk(url) {
+  let arr = url.split('&').map(x => x.replace(/.*\?/, "").replace(/=.*/, ""))
+  return encodeURIComponent(arr.filter(x => x).sort().join(','))
 }
 function randomString(e) {
   e = e || 32;
@@ -376,20 +398,17 @@ function randomString(e) {
   return n
 }
 
-
 function TotalBean() {
-  return new Promise(async resolve => {
+  return new Promise(resolve => {
     const options = {
-      url: "https://wq.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2",
+      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
       headers: {
-        Host: "wq.jd.com",
-        Accept: "*/*",
-        Connection: "keep-alive",
-        Cookie: cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-        "Accept-Language": "zh-cn",
-        "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
-        "Accept-Encoding": "gzip, deflate, br"
+        "Host": "me-api.jd.com",
+        "Accept": "*/*",
+        "User-Agent": "ScriptableWidgetExtension/185 CFNetwork/1312 Darwin/21.0.0",
+        "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cookie": cookie
       }
     }
     $.get(options, (err, resp, data) => {
@@ -399,11 +418,11 @@ function TotalBean() {
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data['retcode'] === 1001) {
+            if (data['retcode'] === "1001") {
               $.isLogin = false; //cookie过期
               return;
             }
-            if (data['retcode'] === 0 && data.data && data.data.hasOwnProperty("userInfo")) {
+            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
               $.nickName = data.data.userInfo.baseInfo.nickname;
             }
           } else {
@@ -411,9 +430,9 @@ function TotalBean() {
           }
         }
       } catch (e) {
-        $.logErr(e)
+        $.logErr(e, resp)
       } finally {
-        resolve();
+        resolve()
       }
     })
   })
