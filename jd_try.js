@@ -253,12 +253,6 @@ function requireConfig(){
             //IOS等用户直接用NobyDa的jd $.cookie
             $.cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
         }
-        if(typeof process.env.JD_TRY_WHITELIST === "undefined") args_xh.whiteList = false;
-        else args_xh.whiteList = process.env.JD_TRY_WHITELIST === 'true';
-        if(typeof process.env.JD_TRY_PLOG === "undefined") args_xh.printLog = true;
-        else args_xh.printLog = process.env.JD_TRY_PLOG === 'true';
-        if(typeof process.env.JD_TRY_PASSZC === "undefined") args_xh.passZhongCao = true;
-        else args_xh.passZhongCao = process.env.JD_TRY_PASSZC === 'true';
         for(let keyWord of $.innerKeyWords) args_xh.titleFilters.push(keyWord)
         console.log(`共${$.cookiesArr.length}个京东账号\n`)
         console.log('=====环境变量配置如下=====')
