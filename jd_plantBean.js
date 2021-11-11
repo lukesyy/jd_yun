@@ -1,26 +1,23 @@
 /*
 种豆得豆 脚本更新地址：https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
-更新时间：2021-04-9
+更新时间：2021-08-20
 活动入口：京东APP我的-更多工具-种豆得豆
 已支持IOS京东多账号,云端多京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 注：会自动关注任务中的店铺跟商品，介意者勿使用。
 互助码shareCode请先手动运行脚本查看打印可看到
 每个京东账号每天只能帮助3个人。多出的助力码将会助力失败。
+// zero205：已添加自己账号内部互助，有剩余助力次数再帮我助力
 =====================================Quantumult X=================================
 [task_local]
 1 7-21/2 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
-
 =====================================Loon================================
 [Script]
 cron "1 7-21/2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js,tag=京东种豆得豆
-
 ======================================Surge==========================
 京东种豆得豆 = type=cron,cronexp="1 7-21/2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
-
 ====================================小火箭=============================
 京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, cronexpr="1 7-21/2 * * *", timeout=3600, enable=true
-
 */
 const $ = new Env('京东种豆得豆');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -34,18 +31,21 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'mlrdw3aw26j3wflpva4usauts5ecdk3fted7y5q',
-  //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'mlrdw3aw26j3wflpva4usauts5ecdk3fted7y5q',
+  'mlrdw3aw26j3wflpva4usauts5ecdk3fted7y5q'
 ]
+const ZLC = !(process.env.JD_JOIN_ZLC && process.env.JD_JOIN_ZLC === 'false')
 let allMessage = ``;
 let currentRoundId = null;//本期活动id
 let lastRoundId = null;//上期id
 let roundList = [];
 let awardState = '';//上期活动的京豆是否收取
-let randomCount = $.isNode() ? 20 : 0;
+let randomCount = $.isNode() ? 20 : 5;
 let num;
+$.newShareCode = [];
 !(async () => {
+  if (!process.env.JD_JOIN_ZLC) {
+    console.log(`【注意】本脚本默认会给助力池进行助力！\n如需加入助力池请添加TG群：https://t.me/jd_zero_205\n如不加入助力池互助，可添加变量名称：JD_JOIN_ZLC，变量值：false\n`)
+  }
   await requireConfig();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -71,43 +71,18 @@ let num;
       message = '';
       subTitle = '';
       option = {};
-      await shareCodesFormat();
       await jdPlantBean();
       await showMsg();
     }
   }
   for (let j = 0; j < cookiesArr.length; j++) {
-    cookie = cookiesArr[j];
-    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-    if (jdPlantBeanShareArr && jdPlantBeanShareArr.length) {
-      if ($.isNode() && !process.env.PLANT_BEAN_SHARECODES) {
-        console.log(`\n======开始账号内互助======\n`);
-        for (let item of jdPlantBeanShareArr) {
-          console.log(`账号${$.UserName} 去助力 ${item}`)
-          await helpShare(item);
-          if ($.helpResult && $.helpResult.code === '0') {
-            if ($.helpResult.data.helpShareRes) {
-              if ($.helpResult.data.helpShareRes.state === '1') {
-                console.log(`助力好友${item}成功`)
-                console.log(`${$.helpResult.data.helpShareRes.promptText}\n`);
-              } else if ($.helpResult.data.helpShareRes.state === '2') {
-                console.log('您今日助力的机会已耗尽，已不能再帮助好友助力了\n');
-                break;
-              } else if ($.helpResult.data.helpShareRes.state === '3') {
-                console.log('该好友今日已满9人助力/20瓶营养液,明天再来为Ta助力吧\n')
-              } else if ($.helpResult.data.helpShareRes.state === '4') {
-                console.log(`${$.helpResult.data.helpShareRes.promptText}\n`)
-              } else {
-                console.log(`助力其他情况：${JSON.stringify($.helpResult.data.helpShareRes)}`);
-              }
-            }
-          } else {
-            console.log(`助力好友失败: ${JSON.stringify($.helpResult)}`);
-          }
-        }
-      }
+    if (cookiesArr[j]) {
+      cookie = cookiesArr[j];
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      $.index = j + 1;
+      await shareCodesFormat();
+      await doHelp()
     }
-    await doHelp()
   }
   if ($.isNode() && allMessage) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`)
@@ -122,6 +97,10 @@ async function jdPlantBean() {
   try {
     console.log(`获取任务及基本信息`)
     await plantBeanIndex();
+    if ($.plantBeanIndexResult.errorCode === 'PB101') {
+      console.log(`\n活动太火爆了，还是去买买买吧！\n`)
+      return
+    }
     for (let i = 0; i < $.plantBeanIndexResult.data.roundList.length; i++) {
       if ($.plantBeanIndexResult.data.roundList[i].roundState === "2") {
         num = i
@@ -134,6 +113,24 @@ async function jdPlantBean() {
       $.myPlantUuid = getParam(shareUrl, 'plantUuid')
       console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
       jdPlantBeanShareArr.push($.myPlantUuid)
+
+      // ***************************
+      // 报告运行次数
+      if (ZLC) {
+      $.get({
+          url: `https://api.jdsharecode.xyz/api/runTimes?activityId=bean&sharecode=${$.myPlantUuid}`
+        }, (err, resp, data) => {
+          if (err) {
+            console.log('上报失败', err)
+          } else {
+            if (data === '1' || data === '0') {
+              console.log('上报成功')
+            }
+          }
+        })
+      }
+      // ***************************
+
       roundList = $.plantBeanIndexResult.data.roundList;
       currentRoundId = roundList[num].roundId;//本期的roundId
       lastRoundId = roundList[num - 1].roundId;//上期的roundId
@@ -144,7 +141,7 @@ async function jdPlantBean() {
       message += `【上期成长值】${roundList[num - 1].growth}\n`;
       await receiveNutrients();//定时领取营养液
       await doTask();//做日常任务
-      await doEgg();
+      // await doEgg();
       await stealFriendWater();
       await doCultureBean();
       await doGetReward();
@@ -427,8 +424,14 @@ function showTaskProcess() {
 }
 //助力好友
 async function doHelp() {
-  for (let plantUuid of newShareCodes) {
-    console.log(`开始助力京东账号${$.index} - ${$.nickName}的好友: ${plantUuid}`);
+  if ($.isNode() && !process.env.PLANT_BEAN_SHARECODES) {
+    console.log(`您未填写助力码变量，开始账号内互助，再帮【zero205】助力`);
+    $.newShareCode = [...(jdPlantBeanShareArr || []), ...(newShareCodes || [])]
+  } else {
+    $.newShareCode = newShareCodes
+  }
+  for (let plantUuid of $.newShareCode) {
+    console.log(`${$.UserName}开始助力: ${plantUuid}`);
     if (!plantUuid) continue;
     if (plantUuid === $.myPlantUuid) {
       console.log(`\n跳过自己的plantUuid\n`)
@@ -568,45 +571,49 @@ async function helpShare(plantUuid) {
 async function plantBeanIndex() {
   $.plantBeanIndexResult = await request('plantBeanIndex');//plantBeanIndexBody
 }
-// function readShareCode() {
-//   return new Promise(async resolve => {
-//     $.get({ url: `http://share.turinglabs.net/api/v3/bean/query/${randomCount}/`, timeout: 10000 }, (err, resp, data) => {
-//       try {
-//         if (err) {
-//           console.log(`${JSON.stringify(err)}`)
-//           console.log(`${$.name} API请求失败，请检查网路重试`)
-//         } else {
-//           if (data) {
-//             console.log(`随机取个${randomCount}码放到您固定的互助码后面(不影响已有固定互助)`)
-//             data = JSON.parse(data);
-//           }
-//         }
-//       } catch (e) {
-//         $.logErr(e, resp)
-//       } finally {
-//         resolve(data);
-//       }
-//     })
-//     await $.wait(15000);
-//     resolve()
-//   })
-// }
+function readShareCode() {
+  return new Promise(async resolve => {
+    $.get({url: `https://api.jdsharecode.xyz/api/bean/${randomCount}`, timeout: 10000}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log(`随机取${randomCount}个码放到您固定的互助码后面(不影响已有固定互助)`)
+            data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+    await $.wait(15000);
+    resolve()
+  })
+}
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
-    // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
+    console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
     newShareCodes = [];
     if ($.shareCodesArr[$.index - 1]) {
       newShareCodes = $.shareCodesArr[$.index - 1].split('@');
     } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
+      // console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
-    // const readShareCodeRes = await readShareCode();
-    // if (readShareCodeRes && readShareCodeRes.code === 200) {
-    //   newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-    // }
+    if (!ZLC) {
+      console.log(`您设置了不加入助力池，跳过\n`)
+    } else {
+      // const readShareCodeRes = await readShareCode();
+      // if (readShareCodeRes && readShareCodeRes.code === 200) {
+      //   newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+      // }
+    }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
