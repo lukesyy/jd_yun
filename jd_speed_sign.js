@@ -45,7 +45,7 @@ let llAPIError = false
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
   }
-  $.canhelp = false;
+  $.canhelp = true;
   if ($.isNode()) {
     if (process.env.HELP_YQYL && process.env.HELP_YQYL === 'false')
       $.canhelp = false
@@ -794,7 +794,7 @@ function taskGetUrl(function_id, body) {
 function invite2() {
   let t = +new Date()
   let inviterId = [
-    "/eNHdfn6fP+TFwVda3ipjWwvTFqeKBZaRG38adWABKk=",
+    "CSVwFW4APxEJQS7ZEhKLMPD14QE6TsD1DEsweu1BsT8",
     "Sev6JWjut6GyaEHJIWpSQQ=="
   ][Math.floor((Math.random() * 2))]
   let headers = {
@@ -808,8 +808,7 @@ function invite2() {
     'Cookie': cookie
   }
 
-  let dataString = `functionId=TaskInviteService&body={"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":"${encodeURIComponent(inviterId)}","type":1}}&appid=market-task-h5&uuid=&_t=${t}`;
-
+  let dataString = `functionId=TaskInviteService&body={"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":${encodeURIComponent(inviterId)},"type":1}}&appid=market-task-h5&uuid=&_t=${t}`;
   var options = {
     url: 'https://api.m.jd.com/',
     headers: headers,
@@ -823,13 +822,14 @@ function invite2() {
 function invite() {
   let t = +new Date()
   let inviterId = [
-    "/eNHdfn6fP+TFwVda3ipjWwvTFqeKBZaRG38adWABKk=",
+    "CSVwFW4APxEJQS7ZEhKLMPD14QE6TsD1DEsweu1BsT8",
     "R+eeS9UrTadw7yIF7ubkxBOARQK0BNXiQLVF0TyAf4Q=",
     "4OAzIinjvoFYHDImve1/VA==",
     "N0xw0OCPJTUt8xzWZPWs3w==",
     "z///voP4pDo+KI13j5As9g==",
     "Sev6JWjut6GyaEHJIWpSQQ=="
   ][Math.floor((Math.random() * 6))]
+  console.log(encodeURIComponent(inviterId))
   var headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
