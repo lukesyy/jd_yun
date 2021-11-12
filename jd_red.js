@@ -7,7 +7,7 @@ const $ = new Env('双11红包');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 console.log('使用返利软件/有特殊需求者,请自己设置返利变量或者停用脚本!请阅读群内置顶!')
-let author = ['3MXlMUn', '3CXSSSW', 'yKC97vH']
+let author = ['2MIoo0I']
 author = author[Math.floor((Math.random() * author.length))]
 const flCode = $.isNode() ? (process.env.FLCODE ? process.env.FLCODE : author) : author;
 let cookiesArr = [];

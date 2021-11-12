@@ -85,7 +85,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
         }
     }
     if (new Date().getHours() >= 10) {
-         $.authorCode = [{redEnvelopeId:'14fa524f61af4934b97db7e2e41e218c62301636593847781', invite:'TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'}]
+         $.authorCode = [{redEnvelopeId:'66fa90423ae044f9b72abd65701b4cc188971636684235971', invite:'TLkD8_PycMVws_9HtL2YLxaNNJ_CYAljNZtiKqj2jvI'}]
         if ($.authorCode && $.authorCode.length) {
             for (let i = 0; i < cookiesArr.length; i++) {
                 cookie = cookiesArr[i];
