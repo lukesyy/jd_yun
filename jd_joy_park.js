@@ -1,7 +1,7 @@
 // @grant nodejs
 /*
 ENV
-JOY_COIN_MAXIMIZE =      最大化硬币收益，如果合成后全部挖土后还有空位，则开启此模式（默认关闭） 0关闭 1开启
+JOY_COIN_MAXIMIZE =      最大化硬币收益，如果合成后全部挖土后还有空位，则开启此模式（默认开启） 0关闭 1开启
 请确保新用户助力过开工位，否则开启游戏了就不算新用户，后面就不能助力开工位了！！！！！！！！！！
 脚本会默认帮zero205助力开工位，如需关闭请添加变量，变量名：HELP_JOYPARK，变量值：false
 更新地址：https://github.com/Tsukasa007/my_script
@@ -35,7 +35,7 @@ if ($.isNode()) {
 
 //最大化硬币收益模式
 $.JOY_COIN_MAXIMIZE = process.env.JOY_COIN_MAXIMIZE === '1'
-$.log(`最大化收益模式: 已${$.JOY_COIN_MAXIMIZE ? `默认已开启` : `关闭`}  `)
+$.log(`最大化收益模式: 已${$.JOY_COIN_MAXIMIZE ? `默认开启` : `关闭`}  `)
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
@@ -74,26 +74,25 @@ message = ""
         continue
       }
       console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
-      $.kgw_invitePin = ['TMKFyu4IQa1Z3oSwgkg9dQAQqFRuOqD0inp0Kvj9LdI'];
       if ($.isNode()) {
         if (process.env.HELP_JOYPARK && process.env.HELP_JOYPARK == "false") {
         } else {
           // await getShareCode()
-          if ($.kgw_invitePin && $.kgw_invitePin.length) {
-            $.log("开始帮【zero205】助力开工位\n");
-       
-            let resp = await getJoyBaseInfo(undefined, 2, $.kgw_invitePin);
-            if (resp.helpState && resp.helpState === 1) {
-              $.log("帮【zero205】开工位成功，感谢！\n");
-            } else if (resp.helpState && resp.helpState === 3) {
-              $.log("你不是新用户！跳过开工位助力\n");
-            } else if (resp.helpState && resp.helpState === 2) {
-              $.log(`他的工位已全部开完啦！\n`);
-            } else {
-              $.log("开工位失败！\n");
-              console.log(`${JSON.stringify(resp)}`)
-            }
-          }
+          // if ($.kgw_invitePin && $.kgw_invitePin.length) {
+          //   $.log("开始帮【zero205】助力开工位\n");
+          //   $.kgw_invitePin = [...($.kgw_invitePin || [])][Math.floor((Math.random() * $.kgw_invitePin.length))];
+          //   let resp = await getJoyBaseInfo(undefined, 2, $.kgw_invitePin);
+          //   if (resp.helpState && resp.helpState === 1) {
+          //     $.log("帮【zero205】开工位成功，感谢！\n");
+          //   } else if (resp.helpState && resp.helpState === 3) {
+          //     $.log("你不是新用户！跳过开工位助力\n");
+          //   } else if (resp.helpState && resp.helpState === 2) {
+          //     $.log(`他的工位已全部开完啦！\n`);
+          //   } else {
+          //     $.log("开工位失败！\n");
+          //     console.log(`${JSON.stringify(resp)}`)
+          //   }
+          // }
         }
       }
       //下地后还有有钱买Joy并且买了Joy
@@ -216,9 +215,9 @@ async function doJoyMoveUpAll(activityJoyList, workJoyInfoList) {
     await getJoyList()
     await doJoyMoveUpAll($.activityJoyList, $.workJoyInfoList)
   }
-  // else if ($.JOY_COIN_MAXIMIZE) {
-  //   await joyCoinMaximize(workJoyInfoUnlockList)
-  // }
+  else if ($.JOY_COIN_MAXIMIZE) {
+    await joyCoinMaximize(workJoyInfoUnlockList)
+  }
 
 }
 

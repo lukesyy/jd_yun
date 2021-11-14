@@ -80,7 +80,7 @@ if ($.isNode()) {
       await $.wait(2000);
     }
   }
-  $.strMyShareIds = ['7B3EB02C2F929E3EA7021FC2A4223F72F41BBE5B6AF3D6028342F09F7DC8241D']
+  $.strMyShareIds = ['7B3EB02C2F929E3EA7021FC2A4223F72461800ED9C1FE83A70CB6F3CB4A5D4B6']
   await shareCodesFormat()
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
@@ -190,25 +190,30 @@ async function composePearlState(type) {
               if (data.iRet === 0) {
                 console.log(`当前已合成${data.dwCurProgress}颗月饼，总计获得${data.ddwVirHb / 100}元红包`)
                 if (data.strDT) {
-                  let beacon = data.PearlList[0]
-                  data.PearlList.shift()
-                  let beaconType = beacon.type
-                  let num = Math.ceil(Math.random() * 12 + 12)
+                  // let num = Math.ceil(Math.random() * 12 + 12)
+                  let num = data.PearlList.length
+                  let div = Math.ceil(Math.random() * 4 + 2)
                   console.log(`合成月饼：模拟操作${num}次`)
                   for (let v = 0; v < num; v++) {
                     console.log(`模拟操作进度：${v + 1}/${num}`)
-                    await $.wait(2000)
-                    await realTmReport(data.strMyShareId)
+                    let beacon = data.PearlList[0]
+                    data.PearlList.shift()
+                    let beaconType = beacon.type
+                    if (v % div === 0){
+                      await realTmReport(data.strMyShareId)
+                      await $.wait(5000)
+                    }
                     if (beacon.rbf) {
                       let size = 1
-                      for (let key of Object.keys(data.PearlList)) {
-                        let vo = data.PearlList[key]
-                        if (vo.rbf && vo.type === beaconType) {
-                          size = 2
-                          vo.rbf = 0
-                          break
-                        }
-                      }
+                      // for (let key of Object.keys(data.PearlList)) {
+                      //   let vo = data.PearlList[key]
+                      //   if (vo.rbf && vo.type === beaconType) {
+                      //     data.PearlList.splice(key, 1)
+                      //     size = 2
+                      //     vo.rbf = 0
+                      //     break
+                      //   }
+                      // }
                       await composePearlAward(data.strDT, beaconType, size)
                     }
                   }
