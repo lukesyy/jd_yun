@@ -115,17 +115,14 @@ async function jdFruit() {
       // ***************************
       // 报告运行次数
       if (ZLC) {
-        $.get({
-          url: `https://api.jdsharecode.xyz/api/runTimes?activityId=farm&sharecode=${$.farmInfo.farmUserPro.shareCode}`
-        }, (err, resp, data) => {
-          if (err) {
-            console.log('上报失败', err)
-          } else {
-            if (data === '1' || data === '0') {
-              console.log('上报成功')
-            }
+        for (let k = 0; k < 5; k++) {
+          try {
+            await runTimes()
+            break
+          } catch (e) {
           }
-        })
+          await $.wait(Math.floor(Math.random() * 10 + 3) * 1000)
+        }
       }
       // ***************************
       // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
@@ -178,6 +175,21 @@ async function jdFruit() {
     // $.msg($.name, '', `${errMsg}`)
   }
   await showMsg();
+}
+function runTimes() {
+  return new Promise((resolve, reject) => {
+    $.get({
+      url: `https://api.jdsharecode.xyz/api/runTimes?activityId=farm&sharecode=${$.farmInfo.farmUserPro.shareCode}`
+    }, (err, resp, data) => {
+      if (err) {
+        console.log('上报失败', err)
+        reject(err)
+      } else {
+        console.log(data)
+        resolve()
+      }
+    })
+  })
 }
 async function doDailyTask() {
   await taskInitForFarm();
@@ -1435,7 +1447,10 @@ function shareCodesFormat() {
     if (!ZLC) {
       console.log(`您设置了不加入助力池，跳过\n`)
     } else {
-     
+      const readShareCodeRes = await readShareCode();
+      if (readShareCodeRes && readShareCodeRes.code === 200) {
+        newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+      }
     }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();

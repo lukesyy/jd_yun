@@ -30,7 +30,6 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
-  //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
   'mlrdw3aw26j3wflpva4usauts5ecdk3fted7y5q'
 ]
 const ZLC = !(process.env.JD_JOIN_ZLC && process.env.JD_JOIN_ZLC === 'false')
@@ -117,17 +116,14 @@ async function jdPlantBean() {
       // ***************************
       // 报告运行次数
       if (ZLC) {
-      $.get({
-          url: `https://api.jdsharecode.xyz/api/runTimes?activityId=bean&sharecode=${$.myPlantUuid}`
-        }, (err, resp, data) => {
-          if (err) {
-            console.log('上报失败', err)
-          } else {
-            if (data === '1' || data === '0') {
-              console.log('上报成功')
-            }
+        for (let k = 0; k < 5; k++) {
+          try {
+            await runTimes()
+            break
+          } catch (e) {
           }
-        })
+          await $.wait(Math.floor(Math.random() * 10 + 3) * 1000)
+        }
       }
       // ***************************
 
@@ -156,6 +152,21 @@ async function jdPlantBean() {
     // if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
     $.msg($.name, '', `${errMsg}`)
   }
+}
+function runTimes(){
+  return new Promise((resolve, reject) => {
+    $.get({
+        url: `https://api.jdsharecode.xyz/api/runTimes?activityId=bean&sharecode=${$.myPlantUuid}`
+      }, (err, resp, data) => {
+        if (err) {
+        console.log('上报失败', err)
+        reject(err)
+      } else {
+        console.log(data)
+        resolve()
+      }
+    })
+  })
 }
 async function doGetReward() {
   console.log(`【上轮京豆】${awardState === '4' ? '采摘中' : awardState === '5' ? '可收获了' : '已领取'}`);
@@ -609,10 +620,10 @@ function shareCodesFormat() {
     if (!ZLC) {
       console.log(`您设置了不加入助力池，跳过\n`)
     } else {
-      // const readShareCodeRes = await readShareCode();
-      // if (readShareCodeRes && readShareCodeRes.code === 200) {
-      //   newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-      // }
+      const readShareCodeRes = await readShareCode();
+      if (readShareCodeRes && readShareCodeRes.code === 200) {
+        newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+      }
     }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
