@@ -42,14 +42,14 @@ const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
       '助力逻辑：先自己京东账号相互助力，如有剩余助力机会，则助力作者\n' +
       '温馨提示：如提示助力火爆，可尝试寻找京东客服')
 
-  $.authorMyShareIds = ['junT3Vmi0UOHglwJPbXZZlh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk'];
+  $.authorMyShareIds = ['ThFwjRexsX7jxZ94R8zadFh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk'];
   //开启红包,获取互助码
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     $.index = i + 1;
     $.isLogin = true
-    $.nickName = ''
+    $.nickName = '' 
     UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
     UAInfo[$.UserName] = UA
     await TotalBean();
