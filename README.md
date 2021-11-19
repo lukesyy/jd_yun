@@ -1,5 +1,6 @@
 # 589445369
-## 搬运整合 原仓库地址 https://github.com/zero205/JD_tencent_scf
+## 本仓库地址 https://github.com/lukesyy/jd_yun
+## 搬运整合自原仓库地址 https://github.com/zero205/JD_tencent_scf
 ## 请勿直接fork！！云函数用户先按照下方教程建立私库！！！
 ## 已经创建公开仓库的请点击仓库右上角`Setting`，拉到页面最下方，点击`Change visibility`，选择`Make private`，填入黑体仓库名称进行确认!
 
