@@ -148,7 +148,7 @@ if ($.isNode()) {
           console.log("开始做红包任务")
           for (let j = 0; j < $.commonlist.length; j++) {
             await dotask($.commonlist[j]);
-            await $.wait(2000);
+            await $.wait(8000);
           }
         } else {
           console.log("红包任务已完成")
