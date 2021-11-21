@@ -8,14 +8,11 @@
 [task_local]
 #5G超级盲盒
 0 0,1-23/3 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js, tag=5G超级盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
 =================================Loon===================================
 [Script]
 cron "0 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js,tag=5G超级盲盒
-
 ===================================Surge================================
 5G超级盲盒 = type=cron,cronexp="0 0,1-23/3 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js
-
 ====================================小火箭=============================
 5G超级盲盒 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js, cronexpr="0 0,1-23/3 * * *", timeout=3600, enable=true
  */
@@ -47,11 +44,6 @@ $.shareId = [];
       '活动地址: https://blindbox5g.jd.com\n' +
       '活动时间：2021-8-2到2021-10-29\n' +
       '更新时间：2021-8-8 19:00');
-  $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_shareCodes.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
-  await $.wait(1000)
-  await updateShareCodesCDN('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_shareCodes.json')
-  await $.wait(1000)
-  // await getShareCode()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -83,7 +75,7 @@ $.shareId = [];
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
     $.msg($.name, '', allMessage, {"open-url": "https://blindbox5g.jd.com"})
   }
-  $.shareId = [...($.shareId || ['f0ace09f-64a8-4a08-81b8-9e59f134b5b3'])];
+  $.shareId = [...($.shareId || []), ...($.updatePkActivityIdRes || [])];
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
     $.index = v + 1;
@@ -457,7 +449,7 @@ function getShareCode() {
       try {
         if (err) {
         } else {
-          $.zero205Code = JSON.parse(data);
+          $.zero205Code = JSON.parse(data) || []
         }
       } catch (e) {
         $.logErr(e, resp)
