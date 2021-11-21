@@ -51,8 +51,11 @@ let joyRunNotify = true;//宠汪汪赛跑获胜后是否推送通知，true推�
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  if (process.env.JD_RUNJOY && process.env.JD_RUNJOY === 'false') return
-  for (let i = 0; i < cookiesArr.length; i++) {
+  if (process.env.JD_RUNJOY && process.env.JD_RUNJOY === 'true'){}
+  else {
+    return
+
+  }  for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
