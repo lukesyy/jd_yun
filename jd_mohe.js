@@ -8,11 +8,14 @@
 [task_local]
 #5G超级盲盒
 0 0,1-23/3 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js, tag=5G超级盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+
 =================================Loon===================================
 [Script]
 cron "0 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js,tag=5G超级盲盒
+
 ===================================Surge================================
 5G超级盲盒 = type=cron,cronexp="0 0,1-23/3 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js
+
 ====================================小火箭=============================
 5G超级盲盒 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_mohe.js, cronexpr="0 0,1-23/3 * * *", timeout=3600, enable=true
  */
@@ -75,7 +78,7 @@ $.shareId = [];
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
     $.msg($.name, '', allMessage, {"open-url": "https://blindbox5g.jd.com"})
   }
-  $.shareId = [...($.shareId || []), ...($.updatePkActivityIdRes || [])];
+  $.shareId = [...($.shareId || []), ...($.updatePkActivityIdRes || []), ...($.zero205Code || [])];
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
     $.index = v + 1;
@@ -86,6 +89,9 @@ $.shareId = [];
       const res = await addShare(item);
       if (res && res['code'] === 2005) {
         console.log(`次数已用完，跳出助力`)
+        break
+      } else if (res && res['code'] === 1002) {
+        console.log(`账号火爆，跳出助力`)
         break
       }
     }
