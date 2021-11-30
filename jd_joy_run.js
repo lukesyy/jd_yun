@@ -71,6 +71,10 @@ const headers = {
   'Accept' : '*/*',
   'LKYLToken' : ''
 }
+if (process.env.JD_RUNJOY && process.env.JD_RUNJOY === 'true'){}
+else {
+  return
+} 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
