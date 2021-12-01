@@ -2,22 +2,7 @@
 exports.main_handler = async (event, context, callback) => {
     let params = {}
     let scripts = []
-    if (event["TriggerName"] == 'remote') {
-        console.log('remote触发:', event["Message"])
-        const got = require('got')
-        let response
-        try {
-            response = await got(`https://raw.fastgit.org/zero205/JD_tencent_scf/main/${event["Message"]}.js`, {
-                timeout: 3000,
-                retry: 0
-            })
-        } catch (error) {
-            console.error(`got error:`, error)
-            return
-        }
-        eval(response.body)
-        return
-    } else if (event["TriggerName"] == 'config') {
+ if (event["TriggerName"] == 'config') {
         let now_hour = (new Date().getUTCHours() + 8) % 24
         console.log('hourly config触发,当前:', now_hour)
         if (event["Message"]) {
