@@ -301,7 +301,7 @@ async function main() {
     await doMotion(petidList);
     await buyCabbage(homePageInfo);
     await feed();
-    await doUserLoveInfo();
+    // await doUserLoveInfo();
 }
 
 async function doUserLoveInfo() {
