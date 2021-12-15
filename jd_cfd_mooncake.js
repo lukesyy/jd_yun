@@ -80,7 +80,7 @@ if ($.isNode()) {
       await $.wait(2000);
     }
   }
-  $.strMyShareIds = ['7B3EB02C2F929E3EA7021FC2A4223F72461800ED9C1FE83A70CB6F3CB4A5D4B6']
+  $.strMyShareIds = ['7B3EB02C2F929E3EA7021FC2A4223F724AF8DE13A18C2F3A412969A8FC2E4B7E']
   await shareCodesFormat()
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];

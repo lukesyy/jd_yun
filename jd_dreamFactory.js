@@ -40,7 +40,7 @@ const JD_API_HOST = 'https://m.jingxi.com';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //通知级别 1=生产完毕可兑换通知;2=可兑换通知+生产超时通知+兑换超时通知;3=可兑换通知+生产超时通知+兑换超时通知+未选择商品生产通知(前提：已开通京喜工厂活动);默认第2种通知
 let notifyLevel = $.isNode() ? process.env.JXGC_NOTIFY_LEVEL || 2 : 2;
-const randomCount = $.isNode() ? 20 : 0;
+const randomCount = $.isNode() ? 20 : 5;
 let tuanActiveId = ``, hasSend = false;
 const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
 let cookiesArr = [], cookie = '', message = '', allMessage = '', jdDreamFactoryShareArr = [], newShareCodes;
@@ -48,6 +48,7 @@ const inviteCodes = [
   'xE2FHpwP8-NFxEoASj29sw=='
 ];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const ZLC = !(process.env.JD_JOIN_ZLC && process.env.JD_JOIN_ZLC === 'false')
 $.tuanIds = [];
 $.appId = 10001;
 $.newShareCode = [];
@@ -61,6 +62,9 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 !(async () => {
+  if (!process.env.JD_JOIN_ZLC) {
+    console.log(`【注意】本脚本默认会给助力池进行助力！\n如需加入助力池请添加TG群：https://t.me/jd_zero_205\n如不加入助力池互助，可添加变量名称：JD_JOIN_ZLC，变量值：false\n`)
+  }
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -147,8 +151,8 @@ async function jdDreamFactory() {
     await taskList();
     await investElectric();
     await QueryHireReward();//收取招工电力
-    await PickUp();//收取自家的地下零件
-    await stealFriend();
+//     await PickUp();//收取自家的地下零件
+//     await stealFriend();
     if (tuanActiveId) {
       await tuanActivity();
       await QueryAllTuan();
@@ -457,6 +461,12 @@ async function helpFriends() {
   }
   if ($.canHelpFlag) {
     await shareCodesFormat();
+    if ($.isNode() && !process.env.DREAM_FACTORY_SHARE_CODES) {
+      console.log(`您未填写助力码变量，开始账号内互助，再帮【zero205】助力`);
+      $.newShareCode = [...(jdDreamFactoryShareArr || []), ...(newShareCodes || [])]
+    } else {
+      $.newShareCode = newShareCodes
+    }
     for (let code of $.newShareCode) {
       if (code) {
         if ($.encryptPin === code) {
@@ -646,6 +656,19 @@ function userInfo() {
                 $.productionId = production.productionId;//商品ID
                 $.commodityDimId = production.commodityDimId;
                 $.encryptPin = data.user.encryptPin;
+                // ***************************
+                // 报告运行次数
+                if (ZLC) {
+                  for (let k = 0; k < 5; k++) {
+                    try {
+                      await runTimes()
+                      break
+                    } catch (e) {
+                    }
+                    await $.wait(Math.floor(Math.random() * 10 + 3) * 1000)
+                  }
+                }
+                // ***************************
                 // subTitle = data.user.pin;
                 await GetCommodityDetails();//获取已选购的商品信息
                 if (productionStage['productionStageAwardStatus'] === 1) {
@@ -708,6 +731,21 @@ function userInfo() {
         $.logErr(e, resp)
       } finally {
         resolve();
+      }
+    })
+  })
+}
+function runTimes() {
+  return new Promise((resolve, reject) => {
+    $.get({
+      url: `https://api.jdsharecode.xyz/api/runTimes?activityId=jxfactory&sharecode=${$.encryptPin}`
+    }, (err, resp, data) => {
+      if (err) {
+        console.log('上报失败', err)
+        reject(err)
+      } else {
+        console.log(data)
+        resolve()
       }
     })
   })
@@ -1035,18 +1073,18 @@ async function tuanActivity() {
   }
 }
 async function joinLeaderTuan() {
-  let res = await updateTuanIdsCDN('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/jd_updateFactoryTuanId.json')
-  if (!res) res = await updateTuanIdsCDN('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/jd_updateFactoryTuanId.json')
-  $.authorTuanIds = [...(res && res.tuanIds || [])]
-  // if ($.authorTuanIds && $.authorTuanIds.length) {
-  //   for (let tuanId of $.authorTuanIds) {
-  //     if (!tuanId) continue
-  //     if (!$.canHelp) break;
-  //     console.log(`\n账号${$.UserName} 参加zero205的团 【${tuanId}】`);
-  //     await JoinTuan(tuanId);
-  //     await $.wait(1000);
-  //   }
-  // }
+  $.authorTuanIds = [{"tuanActiveId": "xeqnltMDk5x_VWiD8Bq1_A==","tuanIds": [
+"DAT5VzB22kN-feaBYnzTAA==",
+]}]
+  if ($.authorTuanIds && $.authorTuanIds.length) {
+    for (let tuanId of $.authorTuanIds) {
+      if (!tuanId) continue
+      if (!$.canHelp) break;
+      console.log(`\n账号${$.UserName} 参加zero205的团 【${tuanId}】`);
+      await JoinTuan(tuanId);
+      await $.wait(1000);
+    }
+  }
 }
 //可获取开团后的团ID，如果团ID为空并且surplusOpenTuanNum>0，则可继续开团
 //如果团ID不为空，则查询QueryTuan()
@@ -1360,30 +1398,30 @@ async function showMsg() {
     resolve()
   })
 }
-// function readShareCode() {
-//   console.log(`开始`)
-//   return new Promise(async resolve => {
-//     $.get({url: `http://share.turinglabs.net/api/v3/jxfactory/query/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
-//       try {
-//         if (err) {
-//           console.log(`${JSON.stringify(err)}`)
-//           console.log(`${$.name} API请求失败，请检查网路重试`)
-//         } else {
-//           if (data) {
-//             console.log(`随机取${randomCount}个码放到您固定的互助码后面(不影响已有固定互助)`)
-//             data = JSON.parse(data);
-//           }
-//         }
-//       } catch (e) {
-//         $.logErr(e, resp)
-//       } finally {
-//         resolve(data);
-//       }
-//     })
-//     await $.wait(10000);
-//     resolve()
-//   })
-// }
+function readShareCode() {
+  console.log(`开始`)
+  return new Promise(async resolve => {
+    $.get({url: `https://api.jdsharecode.xyz/api/jxfactory/${randomCount}`, 'timeout': 10000}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            console.log(`随机取${randomCount}个码放到您固定的互助码后面(不影响已有固定互助)`)
+            data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+    await $.wait(10000);
+    resolve()
+  })
+}
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
@@ -1396,38 +1434,12 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    // const readShareCodeRes = await readShareCode();
-    // if (readShareCodeRes && readShareCodeRes.code === 200) {
-    //   newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-    // }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
 }
 function requireConfig() {
   return new Promise(async resolve => {
-    // tuanActiveId = $.isNode() ? (process.env.TUAN_ACTIVEID || tuanActiveId) : ($.getdata('tuanActiveId') || tuanActiveId);
-    // if (!tuanActiveId) {
-    //   await updateTuanIdsCDN('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/jd_updateFactoryTuanId.json');
-    //   if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
-    //     tuanActiveId = $.tuanConfigs['tuanActiveId'];
-    //     console.log(`拼团活动ID: 获取成功 ${tuanActiveId}\n`)
-    //   } else {
-    //     if (!$.tuanConfigs) {
-    //       $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
-    //       await $.wait(1000)
-    //       await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
-    //       if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
-    //         tuanActiveId = $.tuanConfigs['tuanActiveId'];
-    //         console.log(`拼团活动ID: 获取成功 ${tuanActiveId}\n`)
-    //       } else {
-    //         console.log(`拼团活动ID：获取失败，将采取脚本内置活动ID\n`)
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   console.log(`自定义拼团活动ID: 获取成功 ${tuanActiveId}`)
-    // }
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
     const shareCodes = $.isNode() ? require('./jdDreamFactoryShareCodes.js') : '';
@@ -1541,7 +1553,8 @@ function taskurl(functionId, body = '', stk) {
       'Accept-Language': 'zh-cn',
       'Referer': 'https://wqsd.jd.com/pingou/dream_factory/index.html',
       'Accept-Encoding': 'gzip, deflate, br',
-    }
+    },
+    timeout: 10000
   }
 }
 function newtasksysUrl(functionId, taskId, stk) {
@@ -1622,7 +1635,7 @@ async function requestAlgo() {
       "expandParams": ""
     })
   }
-  new Promise(async resolve => {
+  return new Promise(async resolve => {
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
