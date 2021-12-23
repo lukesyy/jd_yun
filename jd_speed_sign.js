@@ -195,7 +195,7 @@ async function cashout() {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`cashout API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -244,7 +244,7 @@ async function orderReward(type) {
     try {
       if (err) {
         console.log(`${JSON.stringify(err)}`)
-        console.log(`${$.name} orderReward API请求失败，请检查网路重试`)
+        console.log(`orderReward API请求失败，请检查网路重试`)
       } else {
         if (safeGet(data)) {
           data = JSON.parse(data);
@@ -290,7 +290,7 @@ async function taskList() {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`taskList API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -338,7 +338,7 @@ async function doTask(taskId) {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`doTask API请求失败，请检查网路重试`)
           llAPIError = true
         } else {
           if (safeGet(data)) {
@@ -366,7 +366,7 @@ async function queryJoy() {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`queryJoy API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -395,7 +395,7 @@ async function rewardTask(id, taskId) {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`rewardTask API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -426,7 +426,7 @@ async function queryItem(activeType = 1) {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`queryItem API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -463,7 +463,7 @@ async function startItem(activeId, activeType) {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`startItem API请求失败，请检查网路重试`)
           llAPIError = true
           $.canStartNewItem = false
         } else {
@@ -515,7 +515,7 @@ async function endItem(uuid, activeType, activeId = "", videoTimeLength = "") {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`endItem API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -553,7 +553,7 @@ async function rewardItem(uuid, activeType, activeId = "", videoTimeLength = "")
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`rewardItem API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -582,7 +582,7 @@ async function cash() {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`cash API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -607,7 +607,7 @@ function wheelsHome() {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`wheelsHome API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -637,7 +637,7 @@ function wheelsLottery() {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`wheelsLottery API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -666,7 +666,7 @@ function apTaskList() {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`apTaskList API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -699,7 +699,7 @@ function apDoTask(taskType, taskId, channel, itemId) {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
+            console.log(`apDoTask API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -725,7 +725,7 @@ function richManIndex() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`richManIndex API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -752,7 +752,7 @@ function shootRichManDice() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`shootRichManDice API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -792,7 +792,6 @@ function taskGetUrl(function_id, body) {
 }
 
 function invite2() {
-  let t = +new Date()
   let inviterId = [
     "CSVwFW4APxEJQS7ZEhKLMPD14QE6TsD1DEsweu1BsT8",
     "Sev6JWjut6GyaEHJIWpSQQ=="
@@ -808,7 +807,8 @@ function invite2() {
     'Cookie': cookie
   }
 
-  let dataString = `functionId=TaskInviteService&body={"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":${encodeURIComponent(inviterId)},"type":1}}&appid=market-task-h5&uuid=&_t=${t}`;
+  let dataString = `functionId=TaskInviteService&body={"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":"${encodeURIComponent(inviterId)}","type":1}}&appid=market-task-h5&uuid=&_t=${Date.now()}`;
+
   var options = {
     url: 'https://api.m.jd.com/',
     headers: headers,
@@ -829,7 +829,6 @@ function invite() {
     "z///voP4pDo+KI13j5As9g==",
     "Sev6JWjut6GyaEHJIWpSQQ=="
   ][Math.floor((Math.random() * 6))]
-  console.log(encodeURIComponent(inviterId))
   var headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
@@ -871,7 +870,7 @@ function TotalBean() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`TotalBean API请求失败，请检查网路重试`)
         } else {
           if (data) {
             data = JSON.parse(data);
