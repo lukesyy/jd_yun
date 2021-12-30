@@ -7,7 +7,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  *
  * @Address: https://github.com/X1a0He/jd_scripts_fixed/blob/main/jd_try_xh.js
- * @LastEditors: LiJinGang
+ * @LastEditors: X1a0He
  */
 const $ = new Env('京东试用')
 const URL = 'https://api.m.jd.com/client.action'
@@ -403,7 +403,7 @@ function try_feedsList(tabId, page){
                         }
                         console.log(`当前试用组长度为：${trialActivityIdList.length}`)
                         args_xh.printLog ? console.log(`${trialActivityIdList}`) : ''
-                        if(page === $.totalPages && $.nowTabIdIndex < args_xh.tabId.length){
+                        if(page >= $.totalPages && $.nowTabIdIndex < args_xh.tabId.length){
                             //这个是因为每一个tab都会有对应的页数，获取完如果还不够的话，就获取下一个tab
                             $.nowTabIdIndex++;
                             $.nowPage = 1;

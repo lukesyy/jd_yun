@@ -1,23 +1,25 @@
 /*
+ * @Date: 2021-08-25 14:02:18
+ * @LastEditors: LiJinGang
+ * @LastEditTime: 2021-12-30 15:51:00
+ */
+
+/*
 京喜财富岛
 cron 1 0,6-23 * * * jd_cfd.js
 更新时间：2021-9-11
 活动入口：京喜APP-我的-京喜财富岛
-
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #京喜财富岛
 1 0,6-23 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js, tag=京喜财富岛, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
-
 ================Loon==============
 [Script]
 cron "1 0,6-23 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js,tag=京喜财富岛
-
 ===============Surge=================
 京喜财富岛 = type=cron,cronexp="1 0,6-23 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js
-
 ============小火箭=========
 京喜财富岛 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js, cronexpr="1 0,6-23 * * *", timeout=3600, enable=true
  */
@@ -163,14 +165,13 @@ async function cfd() {
     //小程序每日签到
     await $.wait(2000)
     await getTakeAggrPage('wxsign')
-
-    //使用道具
+    
     if (new Date().getHours() < 22){
       //使用道具
       await $.wait(2000)
       await GetPropCardCenterInfo()
     }
-
+    
     //助力奖励
     await $.wait(2000)
     await getTakeAggrPage('helpdraw')
@@ -1608,7 +1609,13 @@ function uploadShareCode(code) {
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
+    $.newShareCodes = []
+    const readShareCodeRes = await readShareCode();
+    if (readShareCodeRes && readShareCodeRes.code === 200) {
+      $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds, ...(readShareCodeRes.data || [])])];
+    } else {
       $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds])];
+    }
     console.log(`您将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
   })
