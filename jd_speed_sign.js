@@ -90,8 +90,8 @@ async function jdGlobal() {
     await wheelsHome()
     if ($.canhelp) {
       console.log(`\n京东账号${$.index}开始助力【zero205】邀请有礼，感谢！\n`);
-      // await invite()
-      // await invite2()
+      await invite()
+      await invite2()
     }
     $.score = 0
     $.total = 0
@@ -824,10 +824,11 @@ function invite() {
   let inviterId = [
     "/eNHdfn6fP+TFwVda3ipjWwvTFqeKBZaRG38adWABKk=",
     "R+eeS9UrTadw7yIF7ubkxBOARQK0BNXiQLVF0TyAf4Q=",
+    "Cg7WMrLsk/PPSHaOd9q2ULzDByNly0QecJ4K7QiZhLk=",
     "4OAzIinjvoFYHDImve1/VA==",
     "z///voP4pDo+KI13j5As9g==",
     "Sev6JWjut6GyaEHJIWpSQQ=="
-  ][Math.floor((Math.random() * 5))]
+  ][Math.floor((Math.random() * 6))]
   var headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
