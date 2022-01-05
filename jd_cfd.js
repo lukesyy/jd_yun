@@ -1,10 +1,4 @@
 /*
- * @Date: 2021-08-25 14:02:18
- * @LastEditors: LiJinGang
- * @LastEditTime: 2021-12-30 15:51:00
- */
-
-/*
 京喜财富岛
 cron 1 0,6-23 * * * jd_cfd.js
 更新时间：2021-9-11
@@ -165,13 +159,13 @@ async function cfd() {
     //小程序每日签到
     await $.wait(2000)
     await getTakeAggrPage('wxsign')
-    
+
+    //使用道具
     if (new Date().getHours() < 22){
-      //使用道具
       await $.wait(2000)
       await GetPropCardCenterInfo()
     }
-    
+
     //助力奖励
     await $.wait(2000)
     await getTakeAggrPage('helpdraw')
@@ -485,7 +479,7 @@ async function mermaidOper(strStoryId, dwType, ddwTriggerDay) {
                 console.log(`昨日解救美人鱼领奖成功：获得${data.Data.Prize.strPrizeName}\n`)
               } else {
                 console.log(`昨日解救美人鱼领奖失败：${data.sErrMsg}\n`)
-              }             
+              }
               break
             default:
               break
@@ -832,7 +826,7 @@ async function getActTask(type = true) {
           if (type) {
             for (let key of Object.keys(data.Data.TaskList)) {
               let vo = data.Data.TaskList[key]
-              if ([1, 2].includes(vo.dwOrderId) && (vo.dwCompleteNum !== vo.dwTargetNum) && vo.dwTargetNum < 10) {
+              if ([0, 1, 2].includes(vo.dwOrderId) && (vo.dwCompleteNum !== vo.dwTargetNum) && vo.dwTargetNum < 10) {
                 console.log(`开始【🐮牛牛任务】${vo.strTaskName}`)
                 for (let i = vo.dwCompleteNum; i < vo.dwTargetNum; i++) {
                   console.log(`【🐮牛牛任务】${vo.strTaskName} 进度：${i + 1}/${vo.dwTargetNum}`)
@@ -887,7 +881,11 @@ function awardActTask(function_path, taskInfo = '') {
               if (msg.indexOf('活动太火爆了') !== -1) {
                 str = '任务为成就任务或者未到任务时间';
               } else {
-                str = msg + prizeInfo ? `获得金币 ¥ ${JSON.parse(prizeInfo).ddwCoin}` : '';
+                if (JSON.parse(prizeInfo).dwPrizeType == 4) {
+                  str = msg + prizeInfo ? `获得红包 ¥ ${JSON.parse(prizeInfo).strPrizeName}` : '';
+                } else {
+                  str = msg + prizeInfo ? `获得金币 ¥ ${JSON.parse(prizeInfo).ddwCoin}` : '';
+                }
               }
               console.log(`【🐮领牛牛任务奖励】${strTaskName} ${str}\n${$.showLog ? data : ''}`);
             }
@@ -1316,7 +1314,7 @@ function doTask(taskId, type = 1, bizCodeXx) {
     let bizCode = `jxbfd`;
     if (type === 2) bizCode = `jxbfddch`;
     if (type === 3) bizCode = `jxbfdprop`;
-    if (bizCodeXx) bizCode = bizCodeXx 
+    if (bizCodeXx) bizCode = bizCodeXx
     $.get(taskListUrl(`DoTask`, `taskId=${taskId}`, bizCode), (err, resp, data) => {
       try {
         if (err) {

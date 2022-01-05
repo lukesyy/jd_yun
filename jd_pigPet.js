@@ -29,7 +29,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let UA = $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
 let shareId = ['MXOBdAzkir2drT7_mG3QEcAdoUJQ3Dik'][Math.floor((Math.random() * 4))];
- $.shareCodes = ['3be01b21-dd3c-4b61-9e1e-b55823ee4689'];
+$.shareCodes = ['3be01b21-dd3c-4b61-9e1e-b55823ee4689'];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -43,6 +43,9 @@ if ($.isNode()) {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
+  }
+  if (process.env.PIGPETSHARECODE) {
+    shareId = process.env.PIGPETSHARECODE
   }
   console.log(`\n【原作者：LXK大佬】\n\nBy：zero205\n添加：邀请新用户，大转盘助力，抢粮食\n修改：优化日志输出，自动喂食\n\n默认不抢粮食（成功机率小），需要的请添加变量JD_PIGPET_PK，值填true\nTodo：领取成就奖励\n`);
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -84,12 +87,12 @@ if ($.isNode()) {
     $.msg($.name, '', allMessage);
   }
 })()
-  .catch((e) => {
-    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-  })
-  .finally(() => {
-    $.done();
-  })
+    .catch((e) => {
+      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+    })
+    .finally(() => {
+      $.done();
+    })
 async function jdPigPet() {
   try {
     await pigPetLogin();
@@ -186,8 +189,8 @@ function pigPetUserBag() {
                   }
                   for (let item of data.resultData.resultData.goods) {
                     if (item.count >= 20) {
-                      let i = 50
-                      console.log(`\n每次运行最多喂食50次`)
+                      let i = parseInt(process.env.PIG_FEED_LIMIT || 50)
+                      console.log(`\n每次运行最多喂食${i}次(环境变量PIG_FEED_LIMIT)`)
                       do {
                         console.log(`\n10秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
                         await $.wait(10000);
