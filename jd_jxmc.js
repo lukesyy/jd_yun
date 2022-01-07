@@ -8,11 +8,14 @@
 [task_local]
 #京喜牧场
 20 * * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_jxmc.js, tag=京喜牧场, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
+
 ================Loon==============
 [Script]
 cron "20 * * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_jxmc.js,tag=京喜牧场
+
 ===============Surge=================
 京喜牧场 = type=cron,cronexp="20 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_jxmc.js
+
 ============小火箭=========
 京喜牧场 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_jxmc.js, cronexpr="20 * * * *", timeout=3600, enable=true
  */
@@ -107,7 +110,8 @@ if ($.isNode()) {
         await pasture();
         await $.wait(2000);
     }
-    $.newShareCodes = ['g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcZrqICIoQ3Kauv6T43u6XqeYGydzD3njdlo7IYJD8zVbQ']
+    $.res = ['g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcYKfytafZHoGi2cTGSCo4mZYGydzD3njdlo7IYJD8zVbQ']
+    await shareCodesFormat()
     for (let i = 0; i < cookiesArr.length; i++) {
         $.cookie = cookiesArr[i];
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -896,9 +900,10 @@ function getAuthorShareCode(url) {
 function shareCodesFormat() {
     return new Promise(async resolve => {
         $.newShareCodes = []
-
-
-
+        const readShareCodeRes = []
+        $.newShareCodes = [...new Set([...$.inviteCodeList, ...($.res || [])])];
+        console.log(`\n您将要助力的好友${JSON.stringify($.newShareCodes)}`)
+        resolve();
     })
 }
 function readShareCode() {
