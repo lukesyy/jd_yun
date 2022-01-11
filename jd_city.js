@@ -36,7 +36,7 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-let author_codes = ['ryUXP0NZ2YQYRfHHtzF8roZov2HI0zr'].sort(() => 0.5 - Math.random())
+let author_codes = ['-ryUXP0NZ2YQYRfHHtzF8roZov2HI0zr'].sort(() => 0.5 - Math.random())
 const self_code = []
 let pool = []
 !(async () => {
@@ -59,6 +59,7 @@ let pool = []
     cookiesArr = cookiesArr.sort(() => 0.5 - Math.random())
     console.log('CK顺序打乱!用来随机内部互助!,如需关闭CT_R为false')
   }
+
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -162,7 +163,7 @@ function taskPostUrl(functionId,body) {
   }
 }
 function getInfo(inviteId, flag = false) {
-  let body = {"lbsCity":"16","realLbsCity":"1315","inviteId":inviteId,"headImg":"","userName":""}
+  let body = {"lbsCity":"16","realLbsCity":"1315","inviteId":inviteId,"headImg":"","userName":"","taskChannel":"1"}
   return new Promise((resolve) => {
     $.post(taskPostUrl("city_getHomeDatav1",body), async (err, resp, data) => {
       // console.debug(data)
@@ -185,6 +186,12 @@ function getInfo(inviteId, flag = false) {
             }
 //             if (process.env.CT_RE == 'true') {
               if (data.data && data['data']['bizCode'] === 0) {
+                for(let vo of data.data.result && data.data.result.popWindows || []){
+                  if (vo && vo.type === "dailycash_second") {
+                    await receiveCash()
+                    await $.wait(2*1000)
+                  }
+                }
                 for(let vo of data.data.result && data.data.result.mainInfos || []){
                   if (vo && vo.remaingAssistNum === 0 && vo.status === "1") {
                     console.log(vo.roundNum)
@@ -206,8 +213,10 @@ function getInfo(inviteId, flag = false) {
     })
   })
 }
-function receiveCash(roundNum) {
-  let body = {"cashType":1,"roundNum":roundNum}
+function receiveCash(roundNum = '') {
+  let body = {"cashType":2}
+  if(roundNum) body = {"cashType":1,"roundNum":roundNum}
+  if(roundNum == -1) body = {"cashType":4}
   return new Promise((resolve) => {
     $.post(taskPostUrl("city_receiveCash",body), async (err, resp, data) => {
       try {
@@ -306,10 +315,7 @@ function shareCodesFormat() {
   return new Promise(async resolve => {
     // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
     $.newShareCodes = []
-    const readShareCodeRes = await readShareCode(1);
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      pool = readShareCodeRes.data || [];
-    }
+    pool =  [];
     if ($.isNode()) {
       if (process.env.CITY_SHARECODES) {
         console.log('检测到助力码,优先. 内部互助0.01了吧,删了吧.')

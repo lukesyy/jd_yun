@@ -1,19 +1,19 @@
 /*
 京东超级盒子
-更新时间：2021-10-30
+更新时间：2022-1-9
 活动入口：京东APP-搜索-超级盒子
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #京东超级盒子
-24 3,13 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_cjhz.js, tag=京东超级盒子, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
+24 3,13 * * * https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js, tag=京东超级盒子, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
 ================Loon==============
 [Script]
-cron "24 3,13 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_cjhz.js,tag=京东超级盒子
+cron "24 3,13 * * *" script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js,tag=京东超级盒子
 ===============Surge=================
-京东超级盒子 = type=cron,cronexp="24 3,13 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_cjhz.js
+京东超级盒子 = type=cron,cronexp="24 3,13 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js
 ============小火箭=========
-京东超级盒子 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_cjhz.js, cronexpr="24 3,13 * * *", timeout=3600, enable=true
+京东超级盒子 = type=cron,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js, cronexpr="24 3,13 * * *", timeout=3600, enable=true
  */
 
 const $ = new Env('京东超级盒子');
@@ -61,7 +61,7 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
             await main()
         }
     };
-    $.shareCoseList = [...new Set([...$.shareCoseList,'OUQLmtEaB_NvchToJzAMvZAdmH5AViPedhGWG9Xfncs'])]
+    $.shareCoseList = [...new Set([...$.shareCoseList,'QmLpaFXm34BaWgn3C3O2WA','ffn_Yc--WKEab2iPzmVB4BM3VKR8-0h7mdYsY627fC0','c_HK4TBhdsqsRJPgFj7RpA'])]
     //去助力与开箱
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
@@ -77,16 +77,28 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
             if ($.shareCoseList.length >= 2) {
                 for (let y = 0; y < $.shareCoseList.length; y++) {
                     console.log(`京东账号${$.index} ${$.nickName || $.UserName}去助力${$.shareCoseList[y]}`)
-                    await helpShare({ "taskId": $.helpId, "linkId": "DQFdr1ttvWWzn0wsQ7JDZQ", "encryptPin": $.shareCoseList[y] });
+                    await helpShare({ "taskId": $.helpId, "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": $.shareCoseList[y] });
                     await $.wait(1000);
                 }
             }
-            
+        }
+    }
+    for (let i = 0; i < cookiesArr.length; i++) {
+        cookie = cookiesArr[i];
+        if (cookie) {
+            $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+            $.index = i + 1;
+            $.isLogin = true;
+            $.nickName = '';
+            if (!$.isLogin) {
+                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
+                continue
+            }            
             //开箱
             console.log(`京东账号${$.index}去开箱`)
             for (let y = 0; y < $.lotteryNumber; y++) {
                 console.log(`可以开箱${$.lotteryNumber}次 ==>>第${y+1}次开箱`)
-                await openBox({ "linkId": "DQFdr1ttvWWzn0wsQ7JDZQ", "encryptPin": "" });
+                await openBox({ "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": "" });
                 await $.wait(1000);
             }
         }
@@ -96,10 +108,10 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
     .finally(() => $.done())
 
 async function main() {
-    await superboxSupBoxHomePage({ "taskId": "", "linkId": "DQFdr1ttvWWzn0wsQ7JDZQ", "encryptPin": "" })
+    await superboxSupBoxHomePage({ "taskId": "", "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": "" })
     console.log(`【京东账号${$.index}】${$.nickName || $.UserName}互助码：${$.encryptPin}`)
     await $.wait(1000);
-    await apTaskList({ "linkId": "DQFdr1ttvWWzn0wsQ7JDZQ", "encryptPin": $.encryptPin });
+    await apTaskList({ "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": $.encryptPin });
     if ($.allList) {
         for (let i = 0; i < $.allList.length; i++) {
             $.oneTask = $.allList[i];
@@ -108,13 +120,13 @@ async function main() {
                 $.helpLimit = $.oneTask.taskLimitTimes;
             };
             if (["BROWSE_SHOP"].includes($.oneTask.taskType) && $.oneTask.taskFinished === false) {
-                await apTaskDetail({ "taskId": $.oneTask.id, "taskType": $.oneTask.taskType, "channel": 4, "linkId": "DQFdr1ttvWWzn0wsQ7JDZQ", "encryptPin": "7pcfSWHrAG9MKu3RKLl127VL5L4aIE1sZ1eRRdphpl8" });
+                await apTaskDetail({ "taskId": $.oneTask.id, "taskType": $.oneTask.taskType, "channel": 4, "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": "7pcfSWHrAG9MKu3RKLl127VL5L4aIE1sZ1eRRdphpl8" });
                 await $.wait(1000)
                 for (let y = 0; y < ($.doList.status.finishNeed - $.doList.status.userFinishedTimes); y++) {
                     $.startList = $.doList.taskItemList[y];
                     $.itemName = $.doList.taskItemList[y].itemName;
                     console.log(`去浏览${$.itemName}`)
-                    await apDoTask({ "taskId": $.allList[i].id, "taskType": $.allList[i].taskType, "channel": 4, "itemId": $.startList.itemId, "linkId": "DQFdr1ttvWWzn0wsQ7JDZQ", "encryptPin": "7pcfSWHrAG9MKu3RKLl127VL5L4aIE1sZ1eRRdphpl8" })
+                    await apDoTask({ "taskId": $.allList[i].id, "taskType": $.allList[i].taskType, "channel": 4, "itemId": $.startList.itemId, "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": "7pcfSWHrAG9MKu3RKLl127VL5L4aIE1sZ1eRRdphpl8" })
                     await $.wait(1000)
                 }
             }
@@ -319,7 +331,7 @@ function taskGetUrl(functionId, body = {}) {
             'Host': 'api.m.jd.com',
             'Cookie': cookie,
             'Origin': 'https://prodev.m.jd.com',
-            'Referer': 'https://prodev.m.jd.com/mall/active/3z9BVbnAa1sVy88yEyKdp9wcWZ7Z/index.html?',
+            'Referer': 'https://pro.m.jd.com/mall/active/j8U2SMhmw3aKgfWwYQfoRR4idTT/index.html?',
         }
     }
 }
@@ -334,7 +346,7 @@ function taskPostUrl(functionId, body = {}) {
             'Host': 'api.m.jd.com',
             'Cookie': cookie,
             'Origin': 'https://prodev.m.jd.com',
-            'Referer': 'https://prodev.m.jd.com/mall/active/3z9BVbnAa1sVy88yEyKdp9wcWZ7Z/index.html?',
+            'Referer': 'https://pro.m.jd.com/mall/active/j8U2SMhmw3aKgfWwYQfoRR4idTT/index.html?',
         }
     }
 }
