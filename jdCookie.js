@@ -1,14 +1,14 @@
 /*
  * @Date: 2021-08-25 14:02:18
  * @LastEditors: LiJinGang
- * @LastEditTime: 2021-10-18 09:25:53
+ * @LastEditTime: 2022-01-13 18:15:54
  */
 /*
 此文件为Node.js专用。其他用户请忽略
  */
-//此处填写京东账号cookie。
+//此处填写京东账号cookie。 草拟吗的狗东西 盗号 死全家
 let CookieJDs = [
-	'pt_key=AAJhuUMiADBSzSZf5iS828_mvFRiuuUg5k81pj00aDTPGzC574B7Sm66PWsuTRjf2M6sWRTvWhw; pt_pin=jd_5a112c253d705;'
+	''
 ]
 // 判断环境变量里面是否有京东ck
 if (process.env.JD_COOKIE) {
