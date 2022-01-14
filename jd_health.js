@@ -2,20 +2,16 @@
 东东健康社区
 更新时间：2021-4-22
 活动入口：京东APP首页搜索 "玩一玩"即可
-
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
 #东东健康社区
 13 0,6,22 * * * jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
 =====================Loon================
 [Script]
 cron "13 0,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
-
 ====================Surge================
 东东健康社区 = type=cron,cronexp="13 0,6,22 * * *",wake-system=1,timeout=3600,script-path=jd_health.js
-
 ============小火箭=========
 东东健康社区 = type=cron,script-path=jd_health.js, cronexpr="13 0,6,22 * * *", timeout=3600, enable=true
  */
@@ -82,6 +78,9 @@ const JD_API_HOST = "https://api.m.jd.com/";
 
 async function main() {
   try {
+    if (reward) {
+      await getCommodities()
+    }
     $.score = 0
     $.earn = false
     await getTaskDetail(-1)
@@ -98,9 +97,7 @@ async function main() {
     await getTaskDetail(22);
     await getTaskDetail(-1)
 
-    if (reward) {
-      await getCommodities()
-    }
+   
 
   } catch (e) {
     $.logErr(e)
@@ -404,11 +401,6 @@ function shareCodesFormat() {
     }
     if (!ZLC) {
       console.log(`您设置了不加入助力池，跳过\n`)
-    } else {
-      const readShareCodeRes = await readShareCode();
-      if (readShareCodeRes && readShareCodeRes.code === 200) {
-        $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
-      }
     }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
