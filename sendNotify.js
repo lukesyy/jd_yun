@@ -199,7 +199,7 @@ async function sendNotify(
   text,
   desp,
   params = {'github':'https://github.com/lukesyy/jd_yun'},
-  author = 'https://github.com/lukesyy/jd_yun',
+  author = '本通知 By: https://github.com/lukesyy/jd_yun',
 ) {
   let no_notify = process.env.no_notify
   if (no_notify) {
