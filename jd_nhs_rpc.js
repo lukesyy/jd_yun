@@ -1,4 +1,4 @@
-jd_nhs_rpc.js/*
+/*
 cron 0 0,10,20 * * * jd_nhs_rpc.js
 脚本可能会改名字来改cron,但环境变量不会改
 设置NHS_F为false禁用脚本,不受改名字影响
@@ -49,7 +49,7 @@ async function main(ck){
     }
     let code = flCode;
     if(flCode === '999'){
-        let codeList = ['Stu1CsC','SIIDESU','SIi6kde'];
+        let codeList = ['Stu1CsC','Stu1CsC','SIi6kde'];
         code =  getRandomArrayElements(codeList,1)[0];
     }
     let userName = decodeURIComponent(ck.match(/pt_pin=([^; ]+)(?=;?)/) && ck.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -60,10 +60,10 @@ async function main(ck){
     let actId = url2.match(/mall\/active\/([^/]+)\/index\.html/) && url2.match(/mall\/active\/([^/]+)\/index\.html/)[1] || '2UboZe4RXkJPrpkp6SkpJJgtRmod';
     await getHtml(url2,ck,UA)
     $.max = false;
-    for (let i = 0; i < 5 && !$.max; i++) {
+    //for (let i = 0; i < 5 && !$.max; i++) {
         await takeRequest(ck,UA,userName,actId,code);
-        await $.wait(3000);
-    }
+        await $.wait(500);
+    //}
 }
 function getUA() {
     let UUID = randomString(40)
