@@ -1426,14 +1426,7 @@ function shareCodesFormat() {
       console.log(`您未填写助力码变量，优先进行账号内互助，再帮【zero205】助力`);
       newShareCodes = [...(jdFruitShareArr || []), ...(newShareCodes || [])]
     }
-    if (!ZLC) {
-      console.log(`您设置了不加入助力池，跳过\n`)
-    } else {
-      const readShareCodeRes = await readShareCode();
-      if (readShareCodeRes && readShareCodeRes.code === 200) {
-        newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-      }
-    }
+  
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })

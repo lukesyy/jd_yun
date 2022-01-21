@@ -2,14 +2,13 @@
 京东金榜
 活动入口：https://h5.m.jd.com/babelDiy/Zeus/2H5Ng86mUJLXToEo57qWkJkjFPxw/index.html
 by:小手冰凉 tg:@chianPLA
-脚本更新时间：2021-11-18 14:20
+脚本更新时间：2022-1-5
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 新手写脚本，难免有bug，能用且用。
 ===================quantumultx================
 [task_local]
 #京东金榜
-13 6 * * * jd_gold_sign.js, tag=京东金榜, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
+13 7 * * * jd_gold_sign.js, tag=京东金榜, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
  */
 const $ = new Env('京东金榜');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -59,6 +58,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         }
         continue
       }
+      await goldCreatorDoTask({ "type": 1 })
       await goldCenterHead();
 
     }
@@ -86,8 +86,8 @@ function goldCenterHead() {
           if (safeGet(data)) {
             data = JSON.parse(data)
             if (data.code === '0') {
-               await goldCreatorDoTask({ "type": 1 })
               if (data.result.medalNum === 5) {
+                await $.wait(1500)
                 await goldCreatorDoTask({ "type": 2 })
               }
             } else {
@@ -107,7 +107,6 @@ function goldCenterHead() {
 function goldCreatorDoTask(body) {
   return new Promise(resolve => {
     const options = taskUrl('goldCenterDoTask', body)
-    // console.log(options);
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
