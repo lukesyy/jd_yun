@@ -47,6 +47,10 @@ $.shareId = [];
       '活动地址: https://blindbox5g.jd.com\n' +
       '活动时间：2021-8-2到2021-10-29\n' +
       '更新时间：2021-8-8 19:00');
+//   $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_shareCodes.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
+//   await $.wait(1000)
+
+ 
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -79,7 +83,7 @@ $.shareId = [];
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
     $.msg($.name, '', allMessage, {"open-url": "https://blindbox5g.jd.com"})
   }
-  $.shareId = [...($.shareId || []), ...($.updatePkActivityIdRes || []), ...($.zero205Code || [])];
+  $.shareId = [...($.shareId || []), ...($.updatePkActivityIdRes || []),'ece18c7a-34fd-4f4f-a719-53718de7ffa6'];
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
     $.index = v + 1;
@@ -456,12 +460,13 @@ function getShareCode() {
       url: "https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/jd_mohe.json",
       headers: {
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }
+      },
+      "timeout": 10000
     }, async (err, resp, data) => {
       try {
         if (err) {
         } else {
-          $.zero205Code = JSON.parse(data) || []
+      
         }
       } catch (e) {
         $.logErr(e, resp)
