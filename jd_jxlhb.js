@@ -49,7 +49,7 @@ $.appId = "e395f"
     return;
   }
   
-  $.authorMyShareIds = [`MQBZdS9f47k1D1BBOutCFlh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk`];
+  $.authorMyShareIds = [`6jDV5_3WyNAnzM8P-tjLXFh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk`];
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo()
   await $.wait(1000)
