@@ -36,7 +36,7 @@ let cookiesArr = [], cookie = '', token = '';
 let UA, UAInfo = {};
 let nowTimes;
 const randomCount = $.isNode() ? 20 : 3;
-$.appId = 10032;
+$.appId = '92a36';
 function oc(fn, defaultVal) {//optioanl chaining
   try {
     return fn()
