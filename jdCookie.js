@@ -1,14 +1,14 @@
 /*
  * @Date: 2021-08-25 14:02:18
  * @LastEditors: LiJinGang
- * @LastEditTime: 2021-10-18 09:25:53
+ * @LastEditTime: 2022-02-09 17:39:57
  */
 /*
 此文件为Node.js专用。其他用户请忽略
  */
 //此处填写京东账号cookie。
 let CookieJDs = [
-	'pt_key=AAJh3_3-ADAdKbNqUYmA5t-Q6Hn22y2sDdF_JC0KlvFtXQGP46WfEAx_7C31dn1HEiZPGaH-J5k; pt_pin=jd_5a112c253d705;'
+	''
 ]
 // 判断环境变量里面是否有京东ck
 if (process.env.JD_COOKIE) {
