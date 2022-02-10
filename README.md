@@ -1,6 +1,9 @@
-# 589445369
-## 本仓库地址 https://github.com/lukesyy/jd_yun
-## 搬运整合自原仓库地址 https://github.com/zero205/JD_tencent_scf
+<!--
+ * @Date: 2021-08-25 14:02:18
+ * @LastEditors: Lukesy
+ * @LastEditTime: 2022-02-10 10:52:28
+-->
+
 ## 请勿直接fork！！云函数用户先按照下方教程建立私库！！！
 ## 已经创建公开仓库的请点击仓库右上角`Setting`，拉到页面最下方，点击`Change visibility`，选择`Make private`，填入黑体仓库名称进行确认!
 
@@ -18,17 +21,6 @@
 * > 【青龙】拉取仓库命令：`ql repo https://github.com/lukesyy/jd_yun.git "jd_|jx_|getJDCookie"  "backUp|icon" "^jd[^_]|USER|sendNotify|sign_graphics_validate|JDJR"`  
 
 * > 腾讯云函数部署建议阅读@hshx123大佬的[教程](https://66ccff.work/teach/jd.html)【推荐】.[旧教程](./backUp/tencentscf.md)【不推荐】
-
-* > [elecV2P](https://github.com/elecV2/elecV2P) 部署【备用】
-    * 安装教程：[点此查看](https://github.com/elecV2/elecV2P-dei/blob/master/docs/01-overview.md)  
-    * 订阅任务：`https://ghproxy.com/https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_task.json`
-    * elecV2P京东CK、通知填写格式等相关补充说明：[点此查看](./backUp/elecV2P.md)  
-
-- 获取京东cookie教程可参考：
-  
-  + [浏览器获取京东cookie教程](./backUp/GetJdCookie.md)
-    
-  + [插件获取京东cookie教程](./backUp/GetJdCookie2.md)
 
 ## 特别声明: 
 
@@ -51,30 +43,3 @@
 
 ## 环境变量
 - [环境变量集合](./githubAction.md)
-
-## 特别感谢(排名不分先后)：
-
-
-* [@NobyDa](https://github.com/NobyDa)
-
-* [@chavyleung](https://github.com/chavyleung)
-
-* [@liuxiaoyucc](https://github.com/liuxiaoyucc)
-
-* [@Zero-S1](https://github.com/Zero-S1)
-
-* [@uniqueque](https://github.com/uniqueque)
-
-* [@nzw9314](https://github.com/nzw9314)
-
-* [@JDHelloWorld](https://github.com/JDHelloWorld)
-
-* [@smiek2221](https://github.com/smiek2221)
-
-* [@star261](https://github.com/star261)
-
-* [@Wenmoux](https://github.com/Wenmoux)
-
-* [@Tsukasa007](https://github.com/Tsukasa007)
-
-* [@Aaron](https://github.com/Aaron)
