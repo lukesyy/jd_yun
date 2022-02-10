@@ -110,7 +110,7 @@ if ($.isNode()) {
         await pasture();
         await $.wait(2000);
     }
-    $.res = ['g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcYKfytafZHoGi2cTGSCo4mZYGydzD3njdlo7IYJD8zVbQ']
+    $.res = ['g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcb0pqY4uJSZrAkOzhF453kHYGydzD3njdlo7IYJD8zVbQ']
     await shareCodesFormat()
     for (let i = 0; i < cookiesArr.length; i++) {
         $.cookie = cookiesArr[i];
