@@ -1,5 +1,4 @@
 {
-	"jd_xfxd": [0],
 	"jd_wish": [0, 3],
 	"jd_computer": [0],
 	"jd_m_sign":[0],
@@ -42,7 +41,7 @@
 	"jd_plantBean": [7, 9, 11, 13, 15, 17, 19, 21],
 	"jd_sddd": [1, 12],
 	"jd_sgmh": [8],
-	"jd_productZ4Brand": [14,20],
+	"jd_productZ4Brand": [10,20],
 	"jd_tyt": [6, 10, 14, 18, 22],
 	"jd_wsdlb": [6, 12, 18],
 	"jd_z_health_energy": [6, 8, 10, 12, 14, 16, 18, 20, 22],
