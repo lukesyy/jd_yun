@@ -55,11 +55,11 @@ const JD_API_HOST = `https://m.jingxi.com`;
         }
     }
     $.shareCoseList = [{
-      user: 'jd_5a112c253d705',
+      user: 'jd_5a112c253d705joyytoken=50084',
       code: 'ba10cb7f',
-      redId: 4,
+      redId: 8,
       beHelp: 0,
-      helpId: 3142
+      helpId: 3306
     },...$.shareCoseList]
     console.log(`要助力的助理码${JSON.stringify($.shareCoseList.length)}个\n`)
     //助力任务
