@@ -53,9 +53,8 @@
          // await drawUserTask();
      }
      shareCodes = shareCodes.filter(code => code)
-     const author = Math.random() > 0.5 ? 'zero205' : 'ZXX2021'
     //  await getShareCode('nnfls.json', author, 3, true)
-     shareCodes = [...new Set([...shareCodes, '_3pz9us-lxjo2JeozgcPLlNwyqiOt5yM15t_m5xE3DOHODKwRunV_grtW6bVu2s2'])];
+     shareCodes = [...new Set([...shareCodes, '7UBKo_BVhyj3Cwd7QlJ2fMJdBOqKwwrYRrZiKuVfiPgkQczma_KqB5VQ69p1g5tU'])];
      if (shareCodes.length > 0) {
          console.log(`\n*********开始互助**********\n`);
      }
