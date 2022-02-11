@@ -54,13 +54,13 @@ const JD_API_HOST = `https://m.jingxi.com`;
             }
         }
     }
-    $.shareCoseList = [...$.shareCoseList,  {
+    $.shareCoseList = [{
       user: 'jd_5a112c253d705',
       code: 'ba10cb7f',
       redId: 4,
       beHelp: 0,
       helpId: 3142
-    }]
+    },...$.shareCoseList]
     console.log(`要助力的助理码${JSON.stringify($.shareCoseList.length)}个\n`)
     //助力任务
     for (let i = 0; i < cookiesArr.length; i++) {
