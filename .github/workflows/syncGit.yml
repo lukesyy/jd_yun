@@ -1,4 +1,4 @@
-name: 1获取最新脚本
+name: 获取最新脚本
 on:
   schedule:
     - cron: '5 */3 * * *'
@@ -19,7 +19,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync zero205-scripts
+      - name: sync lukeys-scripts
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
@@ -27,13 +27,3 @@ jobs:
           source_branch: "main"
           destination_branch: "main"
           github_token: ${{ secrets.PAT }}
-      # 我自己同步到gitee使用，其他人可忽略
-      - name: sync github -> gitee
-        uses: Yikun/hub-mirror-action@master
-        if: env.dst_key
-        with:
-          src: ${{ secrets.SRC_USER }}
-          dst: ${{ secrets.DST_USER }}
-          static_list: "JD_tencent_scf"
-          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
-          dst_token: ${{ secrets.GITEE_TOKEN }}
