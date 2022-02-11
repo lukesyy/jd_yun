@@ -110,7 +110,6 @@ if ($.isNode()) {
         await pasture();
         await $.wait(2000);
     }
-    $.res = ['g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcb0pqY4uJSZrAkOzhF453kHYGydzD3njdlo7IYJD8zVbQ']
     await shareCodesFormat()
     for (let i = 0; i < cookiesArr.length; i++) {
         $.cookie = cookiesArr[i];
@@ -899,34 +898,9 @@ function getAuthorShareCode(url) {
 //格式化助力码
 function shareCodesFormat() {
     return new Promise(async resolve => {
-        $.newShareCodes = []
-        const readShareCodeRes = []
-        $.newShareCodes = [...new Set([...$.inviteCodeList, ...($.res || [])])];
+        $.newShareCodes = [...new Set(['g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHcYryb_qPHrXRf--Bs9DaZiaYGydzD3njdlo7IYJD8zVbQ',...$.inviteCodeList ] )]
         console.log(`\n您将要助力的好友${JSON.stringify($.newShareCodes)}`)
         resolve();
-    })
-}
-function readShareCode() {
-    return new Promise(async resolve => {
-        $.get({url: `https://transfer.nz.lu/jxmc`, timeout: 30 * 1000}, (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(JSON.stringify(err))
-                    console.log(`${$.name} readShareCode API请求失败，请检查网路重试`)
-                } else {
-                    if (data) {
-                        console.log(`\n随机取20个码放到您固定的互助码后面(不影响已有固定互助)`)
-                        data = JSON.parse(data);
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data);
-            }
-        })
-        await $.wait(30 * 1000);
-        resolve()
     })
 }
 function uploadShareCode(code) {
