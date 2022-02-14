@@ -103,12 +103,6 @@ let notify, allMessage = '';
                     }
 
                     console.debug(`尝试用 ${tool.id} 账号助力 ${help.id} 账号，用于互助的账号剩余 ${tools.length}`)
-                    await helpThisUser({
-                        redPacketId: 429756752,
-                        assist_full: false,
-                        id: 66,
-                        helpCount: 0
-                      }, tool)
                     await helpThisUser(help, tool)
                     if (!tool.assisted) {
                         // 如果没有助力成功，则放入互助列表头部

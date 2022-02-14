@@ -1,5 +1,6 @@
-/*
+/* 
 cron 14 10 * * * https://raw.githubusercontent.com/smiek2121/scripts/master/jd_sign_graphics.js
+
 */
 
 // const Faker=require('./sign_graphics_validate.js');
@@ -83,12 +84,12 @@ const turnTableId = [
   }
   await showMsg();
 })()
-    .catch((e) => {
-      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-      $.done();
-    })
+  .catch((e) => {
+    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+    $.done();
+  })
 
 async function showMsg() {
   $.msg($.name, `【签到数量】:  ${turnTableId.length}个\n` + subTitle + message);
@@ -344,10 +345,10 @@ async function requestAlgo() {
 
 function getRandomIDPro() {
   var e,
-      t,
-      a = void 0 === (n = (t = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : {}).size) ? 10 : n,
-      n = void 0 === (n = t.dictType) ? 'number' : n,
-      i = '';
+    t,
+    a = void 0 === (n = (t = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : {}).size) ? 10 : n,
+    n = void 0 === (n = t.dictType) ? 'number' : n,
+    i = '';
   if ((t = t.customDict) && 'string' == typeof t) e = t;
   else
     switch (n) {
@@ -387,25 +388,25 @@ function format(a, time) {
     t = new Date(time);
   }
   var e,
-      n = new Date(t),
-      d = a,
-      l = {
-        'M+': n.getMonth() + 1,
-        'd+': n.getDate(),
-        'D+': n.getDate(),
-        'h+': n.getHours(),
-        'H+': n.getHours(),
-        'm+': n.getMinutes(),
-        's+': n.getSeconds(),
-        'w+': n.getDay(),
-        'q+': Math.floor((n.getMonth() + 3) / 3),
-        'S+': n.getMilliseconds(),
-      };
+    n = new Date(t),
+    d = a,
+    l = {
+      'M+': n.getMonth() + 1,
+      'd+': n.getDate(),
+      'D+': n.getDate(),
+      'h+': n.getHours(),
+      'H+': n.getHours(),
+      'm+': n.getMinutes(),
+      's+': n.getSeconds(),
+      'w+': n.getDay(),
+      'q+': Math.floor((n.getMonth() + 3) / 3),
+      'S+': n.getMilliseconds(),
+    };
   /(y+)/i.test(d) && (d = d.replace(RegExp.$1, ''.concat(n.getFullYear()).substr(4 - RegExp.$1.length)));
   Object.keys(l).forEach(e => {
     if (new RegExp('('.concat(e, ')')).test(d)) {
       var t,
-          a = 'S+' === e ? '000' : '00';
+        a = 'S+' === e ? '000' : '00';
       d = d.replace(RegExp.$1, 1 == RegExp.$1.length ? l[e] : ''.concat(a).concat(l[e]).substr(''.concat(l[e]).length));
     }
   });
@@ -719,10 +720,10 @@ class JDJRValidator {
         if (res.headers['content-encoding'] === 'gzip') {
           const unzipStream = new stream.PassThrough();
           stream.pipeline(
-              response,
-              zlib.createGunzip(),
-              unzipStream,
-              reject,
+            response,
+            zlib.createGunzip(),
+            unzipStream,
+            reject,
           );
           res = unzipStream;
         }
@@ -759,9 +760,9 @@ class JDJRValidator {
 function getCoordinate(c) {
   function string10to64(d) {
     var c = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-~".split("")
-        , b = c.length
-        , e = +d
-        , a = [];
+      , b = c.length
+      , e = +d
+      , a = [];
     do {
       mod = e % b;
       e = (e - mod) / b;
