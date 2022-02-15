@@ -81,6 +81,8 @@ let notify, allMessage = '';
         try {
             // 按需获取账号的锦鲤信息
             let help = await getHelpInfoForCk(cookieIndex, cookiesArr[cookieIndex])
+            let Aucode = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/lukesyy/Jsons@main/codes/jinli.json') 
+            console.log(Aucode);
             if (help) {
                 console.log(help);
                 while (tools.length > 0 && remainingTryCount > 0) {
@@ -103,6 +105,13 @@ let notify, allMessage = '';
                     }
 
                     console.debug(`尝试用 ${tool.id} 账号助力 ${help.id} 账号，用于互助的账号剩余 ${tools.length}`)
+                    let { redPacketId, assist_full, id, helpCount } = Aucode
+                    await helpThisUser({
+                        redPacketId,
+                        assist_full,
+                        id,
+                        helpCount
+                      }, tool)
                     await helpThisUser(help, tool)
                     if (!tool.assisted) {
                         // 如果没有助力成功，则放入互助列表头部
@@ -147,7 +156,21 @@ let notify, allMessage = '';
     .finally(() => {
         $.done();
     })
-
+function getAuthorShareCode(url) {
+    const options = {
+        url: `${url}?${new Date()}`
+        }
+    return new Promise(resolve => {
+    $.get(options, async (err, resp, data) => {
+        try {
+          resolve(JSON.parse(data))
+        } catch (e) {
+        } finally {
+          resolve();
+        }
+    })
+})
+}
 // https://stackoverflow.com/a/2450976
 function shuffle(array) {
     let currentIndex = array.length, randomIndex;
