@@ -19,33 +19,13 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', allMessage = '', message;
 const JD_API_HOST = 'https://api.m.jd.com/api?appid=interCenter_shopSign';
- let token = await getCodes('https://cdn.jsdelivr.net/gh/lukesyy/Jsons@main/codes/dpqd.json') 
+let token  = []
+ 
 let activityId=''
 let vender=''
 let num=0
 let shopname = ''
-if (token.length==0) {
-  token = [
-    "B8167EC9BAC16BBD9284DD3C757D60D3",
-    "4C17B0D0B81E4874662357E7F558D2FB",
-    "A518A5F74992F82258E9E859443A7CFA",
-    "D8FBBB03E5B3F7671BDCB73728957C56",
-    "F658709F1069375C7F7EB1D2DB8A85DD",
-    "E3B62366D81FA9DC53E5E1088FD5FA46",
-    "9C6F70D339EA675C0CC0A2D7FBECCC57",
-    "247751BD7E2B94A0C91E1FA956841022",
-    "69B31DB107B9FE242E286E4E8B3E0E75",
-    "1071B720BDB54B6ED8163A6B4116F35F",
-    "448830F150804FF9EF123B2BABBD00EA",
-    "EC519D173D371D156FCB3EB3D07D0CF2",
-    "3F1ACF8E669258AFABAE6D5084AD4138",
-    "8049AC5EE59DBBB7146F6BA61E494CC2",
-    "CDE449E3CCFC77AA637133C88399EAC5",
-    "186ACAEA426F9C07CB2E0BC790DA78FA",
-    "E5254610D0CF9752133E206292D83256",
-    "E314BA43DB1C59C7A58AB5BAB929D604"
-  ]
-}
+
 
 
 if ($.isNode()) {
@@ -64,6 +44,30 @@ if ($.isNode()) {
 }
 
 !(async () => {
+  token = await getCodes('https://cdn.jsdelivr.net/gh/lukesyy/Jsons@main/codes/dpqd.json') 
+  console.log(token);
+  if (token.length==0) {
+    token = [
+      "B8167EC9BAC16BBD9284DD3C757D60D3",
+      "4C17B0D0B81E4874662357E7F558D2FB",
+      "A518A5F74992F82258E9E859443A7CFA",
+      "D8FBBB03E5B3F7671BDCB73728957C56",
+      "F658709F1069375C7F7EB1D2DB8A85DD",
+      "E3B62366D81FA9DC53E5E1088FD5FA46",
+      "9C6F70D339EA675C0CC0A2D7FBECCC57",
+      "247751BD7E2B94A0C91E1FA956841022",
+      "69B31DB107B9FE242E286E4E8B3E0E75",
+      "1071B720BDB54B6ED8163A6B4116F35F",
+      "448830F150804FF9EF123B2BABBD00EA",
+      "EC519D173D371D156FCB3EB3D07D0CF2",
+      "3F1ACF8E669258AFABAE6D5084AD4138",
+      "8049AC5EE59DBBB7146F6BA61E494CC2",
+      "CDE449E3CCFC77AA637133C88399EAC5",
+      "186ACAEA426F9C07CB2E0BC790DA78FA",
+      "E5254610D0CF9752133E206292D83256",
+      "E314BA43DB1C59C7A58AB5BAB929D604"
+    ]
+  }
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
