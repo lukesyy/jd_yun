@@ -6,6 +6,9 @@ by:小手冰凉 tg:@chianPLA
 脚本兼容: Node.js
 新手写脚本，难免有bug，能用且用。
 ===========================
+[task_local]
+#微信签到领红包
+3 0,11 * * * jd_wq_wxsign.js, tag=微信签到领红包, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
 const $ = new Env("微信签到领红包");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
