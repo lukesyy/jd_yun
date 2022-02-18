@@ -102,14 +102,16 @@ let notify, allMessage = '';
                     }
 
                     console.debug(`尝试用 ${tool.id} 账号助力 ${help.id} 账号，用于互助的账号剩余 ${tools.length}`)
-                    let { redPacketId, assist_full, id, helpCount } = Aucode
-                    console.log(Aucode);
+                    if (Aucode) {
+                        let { redPacketId, assist_full, id, helpCount } = Aucode
                     await helpThisUser({
                         redPacketId,
                         assist_full,
                         id,
                         helpCount
                       }, tool)
+                    }
+                    
                     await helpThisUser(help, tool)
                     if (!tool.assisted) {
                         // 如果没有助力成功，则放入互助列表头部
