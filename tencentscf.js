@@ -160,7 +160,7 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
       Type: "timer",
       TriggerDesc: vo.timer.parameters.cronExpression,
       CustomArgument: vo.timer.parameters.argument,
-      Enable: "OPEN"
+      Enable: vo.timer.parameters.enable ? 'OPEN' : 'CLOSE'
     };
     await client.CreateTrigger(param).then(
       data => {
