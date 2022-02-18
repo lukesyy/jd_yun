@@ -46,11 +46,13 @@ if ($.isNode()) {
 !(async () => {
   token = await getCodes('https://cdn.jsdelivr.net/gh/lukesyy/Jsons@main/codes/dpqd.json') 
   console.log(token);
-  if (token.length==0) {
+  if (!token||token.length==0) {
     token = [
-      "B8167EC9BAC16BBD9284DD3C757D60D3",
+      "EC8098CDD87260EE9458913F02AA19F5",
       "4C17B0D0B81E4874662357E7F558D2FB",
       "A518A5F74992F82258E9E859443A7CFA",
+      "70BB75A3E199645C329556D33A6FE0B4",
+      "96CA1B4773730B31113441AF0CEF79CA",
       "D8FBBB03E5B3F7671BDCB73728957C56",
       "F658709F1069375C7F7EB1D2DB8A85DD",
       "E3B62366D81FA9DC53E5E1088FD5FA46",
@@ -59,13 +61,14 @@ if ($.isNode()) {
       "69B31DB107B9FE242E286E4E8B3E0E75",
       "1071B720BDB54B6ED8163A6B4116F35F",
       "448830F150804FF9EF123B2BABBD00EA",
-      "EC519D173D371D156FCB3EB3D07D0CF2",
+      "98E3218582D0CDEA2B684A3BADBE5ED4",
       "3F1ACF8E669258AFABAE6D5084AD4138",
       "8049AC5EE59DBBB7146F6BA61E494CC2",
       "CDE449E3CCFC77AA637133C88399EAC5",
       "186ACAEA426F9C07CB2E0BC790DA78FA",
       "E5254610D0CF9752133E206292D83256",
-      "E314BA43DB1C59C7A58AB5BAB929D604"
+      "F98343185FAFB04F0776238CD1BE1E51",
+      "428D0D4607EE334A7AB74FFB2639795C"
     ]
   }
   if (!cookiesArr[0]) {
@@ -107,12 +110,13 @@ if ($.isNode()) {
     function getCodes(url) {
       return new Promise(resolve => {
         const options = {
-          url: `${url}?${new Date()}`
+          url
         };
         $.get(options, async (err, resp, data) => {
           try {
             if (err) {
             } else {
+              console.log(data);
               if (data) data = JSON.parse(data)
             }
           } catch (e) {

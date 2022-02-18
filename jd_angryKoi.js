@@ -70,19 +70,16 @@ let notify, allMessage = '';
     }
     console.log(`最终互助顺序如下（优先互助满前面的）：\n${cookieIndexOrder}`)
     allMessage += `本次互助顺序(车头优先，其余等概率随机，每次运行都不一样): ${cookieIndexOrder}\n\n`
-
+    let Aucode = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/lukesyy/Jsons@main/codes/jinli.json')
     console.log("开始助力")
     // 最多尝试2*账号数目次，避免无限尝试，保底
     let remainingTryCount = 2 * cookiesArr.length
     let helpIndex = 0
     while (helpIndex < cookiesArr.length && tools.length > 0 && remainingTryCount > 0) {
         let cookieIndex = cookieIndexOrder[helpIndex]
-
         try {
             // 按需获取账号的锦鲤信息
             let help = await getHelpInfoForCk(cookieIndex, cookiesArr[cookieIndex])
-            let Aucode = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/lukesyy/Jsons@main/codes/jinli.json') 
-            console.log(Aucode);
             if (help) {
                 console.log(help);
                 while (tools.length > 0 && remainingTryCount > 0) {
@@ -106,6 +103,7 @@ let notify, allMessage = '';
 
                     console.debug(`尝试用 ${tool.id} 账号助力 ${help.id} 账号，用于互助的账号剩余 ${tools.length}`)
                     let { redPacketId, assist_full, id, helpCount } = Aucode
+                    console.log(Aucode);
                     await helpThisUser({
                         redPacketId,
                         assist_full,
