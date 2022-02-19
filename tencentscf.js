@@ -85,7 +85,7 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
           process.env.action++;
         }
       );
-      await sleep(1000 * 50); // 等待50秒
+      await sleep(1000 * 100); // 等待100秒
     },
     err => {
       console.error("error", err);
