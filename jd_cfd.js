@@ -1130,7 +1130,12 @@ function getUserInfo(showInvite = true) {
           console.log(`${$.name} QueryUserInfo API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
-          $.showPp = data?.AreaAddr?.dwIsSHowPp ?? 0
+          $.showPp =  0
+          if(data&&data.AreaAddr){
+             if(data.AreaAddr.dwIsSHowPp){
+                $.showPp  =   data.AreaAddr.dwIsSHowPp
+            }
+          }
           const {
             buildInfo = {},
             ddwRichBalance,
