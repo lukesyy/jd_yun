@@ -2,20 +2,22 @@
 赚京豆-瓜分京豆脚本，一：做任务 天天领京豆(加速领京豆)
 Last Modified time: 2022-2-8 
 活动入口：赚京豆-瓜分京豆(微信小程序)-赚京豆-瓜分京豆-瓜分京豆
-更新地址：jd_syj.js
+如需设置助力前面多少账号请在代码80行（i < cookiesArr.length;）修改为i < 车头数字;
+更新地址：jd_zjd.js
+作者：搞鸡玩家
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #赚京豆-瓜分京豆
-10 0,7,23 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+10 0,9,12,15 * * * jd_zjd.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
 ================Loon==============
 [Script]
-cron "10 0,7,23 * * *" script-path=jd_syj.js, tag=赚京豆-瓜分京豆
+cron "10 0,9,12,15 * * *" script-path=jd_zjd.js, tag=赚京豆-瓜分京豆
 ===============Surge=================
-赚京豆-瓜分京豆 = type=cron,cronexp="10 0,7,23 * * *",wake-system=1,timeout=3600,script-path=jd_syj.js
+赚京豆-瓜分京豆 = type=cron,cronexp="10 0,9,12,15 * * *",wake-system=1,timeout=3600,script-path=jd_zjd.js
 ============小火箭=========
-赚京豆-瓜分京豆 = type=cron,script-path=jd_syj.js, cronexpr="10 0,7,23 * * *", timeout=3600, enable=true
+赚京豆-瓜分京豆 = type=cron,script-path=jd_zjd.js, cronexpr="10 0,9,12,15 * * *", timeout=3600, enable=true
  */
 const $ = new Env('赚京豆-瓜分京豆');
 $.appId = 'dde2b';
@@ -41,16 +43,12 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const JD_API_HOST = 'https://api.m.jd.com/api';
-let do_syj = process.env.JD_SYJ ? process.env.JD_SYJ : false;
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  console.log("搬运脚本[搞鸡玩家],有加密部份,不放心的慎用!!!, 需要执行设置环境变量 JD_SYJ = true")
-  if (do_syj === false) {
-    return
-  }
+
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];

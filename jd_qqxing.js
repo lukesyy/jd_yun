@@ -1,12 +1,10 @@
+   
 /*
 星系牧场
 活动入口：QQ星儿童牛奶京东自营旗舰店->品牌会员->星系牧场
-每次都要手动打开才能跑 不知道啥问题
-号1默认给我助力,后续接龙 2给1 3给2
- 19.0复制整段话 http:/J7ldD7ToqMhRJI星系牧场养牛牛，可获得DHA专属奶！%VAjYb8me2b!→去猄倲←
 [task_local]
 #星系牧场
-1 0-23/2 * * * jd_qqxing.js
+22 4-22/3 * * * jd_qqxing.js
 */
 const $ = new Env('QQ星系牧场');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -37,7 +35,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
-$.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
+$.shareuuid = ["bf3ffb1c973a49acbac4983ac15162f3", "be5c05485b624d69b2bb1acee71ffc87"][Math.floor((Math.random() * 2))];
     !(async () => {
         if (!cookiesArr[0]) {
             $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -86,42 +84,43 @@ $.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
                         if (task.taskid == "interact") {
                             for (l = 0; l < 20 - task.curNum; l++) {
                                 await dotask(task.taskid, task.params)
-                                await $.wait(10000)
+                                await $.wait(18000)
                             }
                         } else if (task.taskid == "scansku") {
                             await getproduct()
                             await writePersonInfo($.vid)
                             await dotask(task.taskid, $.pparam)
-                        } else if (task.taskid !== "add2cart") {
+						} else if (task.taskid !== "add2cart") {
                             await dotask(task.taskid, task.params)
-                            await $.wait(10000)
+                            await $.wait(18000)
                         }
                     }
                     await getinfo()
                     for (k = 0; k < $.drawchance; k++) {
                         await draw()
                     }
-                    // let exchanges = Math.floor($.foodNum / 1000)
-                    // console.log(`可兑换 ${exchanges} 次 20京🐶`)
-                    // if (!Exchange) { console.log("你 默认 不兑换东西,请自行进去活动兑换") } else {
-                    //     for (q = 0; q < exchanges && Exchange; q++) {
-                    //         await exchange(13)
-                    //     }
-                    // }
-                    // await getinfo()
-                    // message += `【京东账号${$.index}】${$.nickName || $.UserName}\n${$.cow} 兑换京🐶 ${$.exchange}  ${$.drawresult}\n`
+                    let exchanges =Math.floor($.foodNum/10000)
+                    console.log(`可兑换 ${exchanges} 次 100京🐶`)
+                    for(q = 0;q<exchanges && Exchange;q++){
+                    await exchange(14)   //16是100豆，14是50豆，13是20豆
+                    }
+                    await getinfo()
+                    if(!Exchange){console.log("你 默认 不兑换东西,请自行进去活动兑换")}
+                    message += `【京东账号${$.index}】${$.nickName || $.UserName}\n${$.cow} 兑换京🐶 ${$.exchange}  ${$.drawresult}\n`
+                    console.log("休息休息~") 
+                    await $.wait(80*1000) 
                 } else {
                   $.msg($.name, "", "跑不起来了~请自己进去一次牧场")
                 }
             }
         }
-//         if (message.length != 0) {
-//         if ($.isNode()) {
-//            await notify.sendNotify("星系牧场", `${message}\n牧场入口：QQ星儿童牛奶京东自营旗舰店->星系牧场\n\n吹水群：https://t.me/wenmouxx`);
-//    }  else {
-//             $.msg($.name, "", '星系牧场' + message)
-//         }
-//            }
+        if (message.length != 0) {
+        if ($.isNode()) {
+           await notify.sendNotify("星系牧场", `${message}\n牧场入口：QQ星儿童牛奶京东自营旗舰店->星系牧场\n\n`);
+   }  else {
+            $.msg($.name, "", '星系牧场' + message)
+        }
+           }
     })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
@@ -230,7 +229,7 @@ function getToken2() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    // console.log(data)
+                    //console.log(data)
                     $.token2 = data['token']
                     //     console.log($.token2)
                 }
