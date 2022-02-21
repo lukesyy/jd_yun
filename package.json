@@ -15,6 +15,7 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.0",
+    "download": "^8.0.0",
     "got": "^11.8.2",
     "jsdom": "^17.0.0",
     "png-js": "^1.0.0",
