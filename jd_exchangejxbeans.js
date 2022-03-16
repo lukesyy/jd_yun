@@ -10,8 +10,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '';
 let exjxbeans = false;
-if (process.env.exjxbeans) {
-    exjxbeans = process.env.exjxbeans;
+if (process.env.EXJXBEANS) {
+    exjxbeans = process.env.EXJXBEANS;
 }
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
@@ -85,7 +85,7 @@ async function domain() {
             console.log('您未来7天内无过期京豆')
         }
     } else {
-        console.log('脚本默认不兑换豆子，如需兑换请设置环境变量exjxbeans为true')
+        console.log('脚本默认不兑换豆子，如需兑换请设置环境变量EXJXBEANS为true')
     }
 }
 function queryexpirebeans() {
