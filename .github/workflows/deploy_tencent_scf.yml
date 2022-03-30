@@ -187,6 +187,7 @@ jobs:
           if [ $HELPAUTHOR_WXJ ]; then sed -i "/variables/a\      HELPAUTHOR_WXJ: $HELPAUTHOR_WXJ" serverless.yml; fi;
           if [ $summer_movement_ShHelpFlag ]; then sed -i "/variables/a\      summer_movement_ShHelpFlag: $summer_movement_ShHelpFlag" serverless.yml; fi;
           if [ $FS_LEVEL ]; then sed -i "/variables/a\      FS_LEVEL: $FS_LEVEL" serverless.yml; fi;
+          if [ $EXJXBEANS ]; then sed -i "/variables/a\      EXJXBEANS: $EXJXBEANS" serverless.yml; fi;
           cat serverless.yml
           env
 
