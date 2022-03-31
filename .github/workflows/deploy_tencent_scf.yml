@@ -89,6 +89,7 @@ jobs:
       JXNC_NOTIFY_LEVEL: ${{ secrets.JXNC_NOTIFY_LEVEL}}
       summer_movement_ShHelpFlag: ${{ secrets.summer_movement_ShHelpFlag}}
       FS_LEVEL: ${{ secrets.FS_LEVEL}}
+      EXJXBEANS: ${{ secrets.EXJXBEANS}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
