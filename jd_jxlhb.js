@@ -51,7 +51,7 @@ $.appId = "e395f"
   let res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/lukesyy/Jsons@main/codes/jx88.json')
    console.log(res);
    if( !res){ res = await getAuthorShareCode('https://raw.githubusercontent.com/lukesyy/Jsons/main/codes/jx88.json')  }
-  $.authorMyShareIds = res || ['r7tJotwQ0Sp04KJiw3qWPFh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk']
+  $.authorMyShareIds = res || ['zT1Sh1UC54CtbKp4ClsnZlh7cxC4iAxUS1uChsZ0exxF6WdiJb9dao0kz57escCk']
   console.log($.authorMyShareIds);
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo()
@@ -140,12 +140,9 @@ $.appId = "e395f"
       $.done();
     })
 async function main() {
-  $.openFail=false
   await joinActive();
   await $.wait(2000);
-  if (!$.openFail){
   await getUserInfo();
-  }
 }
 //参与活动
 function joinActive() {
