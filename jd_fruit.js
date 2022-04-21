@@ -62,7 +62,7 @@ if (Fileexists) {
 }
 
 let WP_APP_TOKEN_ONE = "";
-if ($.isNode()) {
+/* if ($.isNode()) {
 	if (process.env.WP_APP_TOKEN_ONE) {		
 		WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
 	}
@@ -75,9 +75,10 @@ if (WP_APP_TOKEN_ONE) {
         console.log(`农场只在9点后和22点前启用一对一推送，故此次暂时取消一对一推送...`);
     }
 } else
-    console.log(`检测到未配置Wxpusher的Token，禁用一对一推送...`);
+    console.log(`检测到未配置Wxpusher的Token，禁用一对一推送...`); */
 let lnrun=0;
 let llgetshare=false;
+let NoNeedCodes = [];
 !(async () => {
 
   await requireConfig();
@@ -137,8 +138,8 @@ let llgetshare=false;
   for (let i = 0; i < cookiesArr.length; i++) {
       if (cookiesArr[i]) {
           cookie = cookiesArr[i];
-          $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-              $.index = i + 1;
+          $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+          $.index = i + 1;
           $.isLogin = true;
           $.nickName = '';
           await TotalBean();
@@ -193,7 +194,7 @@ async function jdFruit() {
           await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`);
         }
 		if ($.isNode() && WP_APP_TOKEN_ONE) {
-			await notify.sendNotifybyWxPucher($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
+			await notify.sendNotifybyWxPucher($.name, `【京东账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
 		}
         return
       } else if ($.farmInfo.treeState === 1) {
@@ -394,7 +395,7 @@ async function doTenWater() {
                     await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}水果已可领取`, `京东账号${$.index} ${$.nickName || $.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
                 }
                 if ($.isNode() && WP_APP_TOKEN_ONE) {
-                    await notify.sendNotifybyWxPucher($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
+                    await notify.sendNotifybyWxPucher($.name, `【京东账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
                 }
             }
         } else {
@@ -530,7 +531,7 @@ async function doTenWaterAgain() {
         await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}水果已可领取`, `京东账号${$.index} ${$.nickName || $.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
 	  if ($.isNode() && WP_APP_TOKEN_ONE) {
-			await notify.sendNotifybyWxPucher($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
+			await notify.sendNotifybyWxPucher($.name, `【京东账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
 		}
     }
   } else if (overageEnergy >= 10) {
@@ -561,7 +562,7 @@ async function doTenWaterAgain() {
         await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}水果已可领取`, `京东账号${$.index} ${$.nickName || $.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
 	  if ($.isNode() && WP_APP_TOKEN_ONE) {
-			await notify.sendNotifybyWxPucher($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
+			await notify.sendNotifybyWxPucher($.name, `【京东账号】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n【领取步骤】京东->我的->东东农场兑换京东红包,可以用于京东app的任意商品.`, `${$.UserName}`);
 		}
     }
   } else {
@@ -782,6 +783,19 @@ async function masterHelpShare() {
   if(llhelp){
 	  console.log('开始助力好友')
 	  for (let code of newShareCodes) {
+		if(NoNeedCodes){
+			var llnoneed=false;
+			for (let NoNeedCode of NoNeedCodes) {
+				if (code==NoNeedCode){
+					llnoneed=true;
+					break;
+				}
+			}
+			if(llnoneed){
+				console.log(`${code}助力已满，跳过...`);
+				continue;
+			}
+		}        
 		console.log(`${$.UserName}开始助力: ${code}`);
 		if (!code) continue;
 		if (!$.farmInfo.farmUserPro) {
@@ -805,6 +819,7 @@ async function masterHelpShare() {
 		  } else if ($.helpResult.helpResult.code === '9') {
 			console.log(`【助力好友结果】: 之前给【${$.helpResult.helpResult.masterUserInfo.nickName}】助力过了`);
 		  } else if ($.helpResult.helpResult.code === '10') {
+			NoNeedCodes.push(code);
 			console.log(`【助力好友结果】: 好友【${$.helpResult.helpResult.masterUserInfo.nickName}】已满五人助力`);
 		  } else {
 			console.log(`助力其他情况：${JSON.stringify($.helpResult.helpResult)}`);
