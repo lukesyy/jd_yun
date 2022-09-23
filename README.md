@@ -4,6 +4,7 @@
 * 4.最后点击最下方的`Begin import`
 # 云函数收费好久了，不再更新了
 # 公众号机器人【小慕资源】
+![Image text](https://raw.githubusercontent.com/lukesyy/jd_yun/111/plus.png)
 * COOKIE给机器人
 * 上车成功后
 * 发送 查询 查询当前账号状态
